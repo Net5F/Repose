@@ -1,0 +1,3 @@
+[submodule "Libraries/AmalgamEngine"]
+	path = Libraries/AmalgamEngine
+	url = git@github.com:Net5F/AmalgamEngine.git

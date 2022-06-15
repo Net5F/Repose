@@ -1,0 +1,10 @@
+Binaries/
+.settings/
+/Build/
+/out/
+*.tar.gz
+/Output/
+*.log
+*.swp
+.vs/
+SystemPATHBackup.txt
