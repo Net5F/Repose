@@ -6,10 +6,10 @@ add_executable(Server "")
 
 target_link_libraries(Server
     PRIVATE
-        Amalgam::ServerLib
+        AmalgamEngine::ServerLib
 )
 
-# Compile with C++20
+# Compile with C++20.
 target_compile_features(Server PRIVATE cxx_std_20)
 set_target_properties(Server PROPERTIES CXX_EXTENSIONS OFF)
 
