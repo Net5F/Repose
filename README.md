@@ -9,6 +9,7 @@ Reference project for [The Amalgam Engine](https://github.com/Net5F/AmalgamEngin
 1. Update CMakeSettings.json (in this repo) to point at the various SDL folders in your installation path.
    1. You'll leave this file dirty. Don't try to commit it back upstream with your personal paths.
    1. You can optionally enable `AM_BUILD_SPRITE_EDITOR` to build the sprite editor.
+   1. You can optionally enable `BUILD_TOOLS` to build our extra tools, such as the Map Generator.
 1. `Project` -> `Generate CMake cache` (or just let it run if you have auto-config on).
 1. `Build` -> `Build All`
 
@@ -28,6 +29,7 @@ I haven't yet locked down an SDL2 or CMake version, we'll see where it ends up.
 1. `cd Build/Linux/Release`
 1. `cmake -DCMAKE_BUILD_TYPE=Release -G Ninja ../../../Source/`
    1. You can optionally add `-DAM_BUILD_SPRITE_EDITOR=ON` to build the sprite editor.
+   1. You can optionally add `-DBUILD_TOOLS` to build our extra tools, such as the Map Generator.
 1. `ninja all`
 
 ## Contributing
