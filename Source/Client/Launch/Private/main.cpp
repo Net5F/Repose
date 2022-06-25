@@ -1,25 +1,32 @@
 #include "Log.h"
 #include "Application.h"
+#include "UserInterfaceExtension.h"
 #include "Ignore.h"
 
 #include "SDL2pp/Exception.hh"
 
 #include <exception>
 
+using namespace AM;
+using namespace AM::Client;
+
 int main(int argc, char** argv)
 try {
     // SDL2 needs this signature for main, but we don't use the parameters.
-    AM::ignore(argc);
-    AM::ignore(argv);
+    ignore(argc);
+    ignore(argv);
 
     // Set up file logging.
     // TODO: This currently will do weird stuff if you have 2 clients open.
     //       If we need a temporary solution we can use PIDs, but the real
     //       solution will be to eventually use account IDs in the file name.
-    AM::Log::enableFileLogging("Client.log");
+    Log::enableFileLogging("Client.log");
+
+    // Construct the app and register our extension classes.
+    Application app;
+    app.registerUserInterfaceExtension<UserInterfaceExtension>();
 
     // Start the application (assumes control of the thread).
-    AM::Client::Application app;
     app.start();
 
     return 0;

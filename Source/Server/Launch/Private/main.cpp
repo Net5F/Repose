@@ -6,17 +6,20 @@
 
 #include <exception>
 
+using namespace AM;
+using namespace AM::Server;
+
 int main(int argc, char** argv)
 try {
     // SDL2 needs this signature for main, but we don't use the parameters.
-    AM::ignore(argc);
-    AM::ignore(argv);
+    ignore(argc);
+    ignore(argv);
 
     // Set up file logging.
-    AM::Log::enableFileLogging("Server.log");
+    Log::enableFileLogging("Server.log");
 
     // Start the application (assumes control of the thread).
-    AM::Server::Application app;
+    Application app;
     app.start();
 
     return 0;

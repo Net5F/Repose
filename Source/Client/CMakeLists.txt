@@ -30,3 +30,4 @@ file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
 
 # Build all of the subdirectories
 add_subdirectory(Launch)
+add_subdirectory(UserInterface)
