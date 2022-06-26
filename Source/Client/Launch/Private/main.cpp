@@ -1,5 +1,8 @@
 #include "Log.h"
 #include "Application.h"
+#include "MessageProcessorExtension.h"
+#include "RendererExtension.h"
+#include "SimulationExtension.h"
 #include "UserInterfaceExtension.h"
 #include "Ignore.h"
 
@@ -24,6 +27,9 @@ try {
 
     // Construct the app and register our extension classes.
     Application app;
+    app.registerMessageProcessorExtension<MessageProcessorExtension>();
+    app.registerRendererExtension<RendererExtension>();
+    app.registerSimulationExtension<SimulationExtension>();
     app.registerUserInterfaceExtension<UserInterfaceExtension>();
 
     // Start the application (assumes control of the thread).
