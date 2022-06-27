@@ -14,7 +14,7 @@ namespace Client
 class RendererExtension : public IRendererExtension
 {
 public:
-    // Note: This is the canonical constructor, expected by the factory that 
+    // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
     RendererExtension(RendererExDependencies deps);
 
@@ -30,8 +30,8 @@ public:
 
     /**
      * See OSEventHandler for details.
-     * 
-     * Note: Renderer will pass events to this class first. If the event is 
+     *
+     * Note: Renderer will pass events to this class first. If the event is
      *       not handled, then Renderer will attempt to handle it.
      */
     bool handleOSEvent(SDL_Event& event) override;

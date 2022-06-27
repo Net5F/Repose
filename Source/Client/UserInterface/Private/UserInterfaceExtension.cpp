@@ -20,7 +20,8 @@ UserInterfaceExtension::UserInterfaceExtension(UserInterfaceExDependencies deps)
 : worldSinks{deps.worldSignals}
 , auiInitializer{deps.sdlRenderer,
                  {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT}}
-, mainScreen{worldSinks, deps.uiEventDispatcher, deps.assetCache, deps.spriteData}
+, mainScreen{worldSinks, deps.uiEventDispatcher, deps.assetCache,
+             deps.spriteData}
 , currentScreen{&mainScreen}
 {
     AUI::Core::setActualScreenSize(

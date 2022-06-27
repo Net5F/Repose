@@ -7,7 +7,8 @@ namespace AM
 namespace Client
 {
 
-SimulationExtension::SimulationExtension([[maybe_unused]] SimulationExDependencies deps)
+SimulationExtension::SimulationExtension(
+    [[maybe_unused]] SimulationExDependencies deps)
 {
 }
 

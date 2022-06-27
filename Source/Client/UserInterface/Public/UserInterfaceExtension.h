@@ -29,7 +29,7 @@ namespace Client
 class UserInterfaceExtension : public IUserInterfaceExtension
 {
 public:
-    // Note: This is the canonical constructor, expected by the factory that 
+    // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
     UserInterfaceExtension(UserInterfaceExDependencies deps);
 

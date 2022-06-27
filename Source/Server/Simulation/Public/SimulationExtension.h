@@ -14,7 +14,7 @@ namespace Server
 class SimulationExtension : public ISimulationExtension
 {
 public:
-    // Note: This is the canonical constructor, expected by the factory that 
+    // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
     SimulationExtension(SimulationExDependencies deps);
 
@@ -35,8 +35,8 @@ public:
 
     /**
      * See OSEventHandler for details.
-     * 
-     * Note: Simulation will pass events to this class first. If the event is 
+     *
+     * Note: Simulation will pass events to this class first. If the event is
      *       not handled, then Simulation will attempt to handle it.
      */
     bool handleOSEvent(SDL_Event& event) override;

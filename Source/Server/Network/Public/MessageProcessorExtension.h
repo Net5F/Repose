@@ -14,7 +14,7 @@ namespace Server
 class MessageProcessorExtension : public IMessageProcessorExtension
 {
 public:
-    // Note: This is the canonical constructor, expected by the factory that 
+    // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
     MessageProcessorExtension(MessageProcessorExDependencies deps);
 
