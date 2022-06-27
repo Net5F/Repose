@@ -5,7 +5,7 @@
 
 namespace AM
 {
-namespace Client
+namespace Server
 {
 
 /**
@@ -22,11 +22,12 @@ public:
      * Called when a message is received that the engine doesn't have a handler
      * for.
      */
-    void processReceivedMessage(MessageType messageType, Uint8* messageBuffer,
-                                unsigned int messageSize) override;
+    Sint64 processReceivedMessage(NetworkID netID, MessageType messageType,
+                                  Uint8* messageBuffer,
+                                  unsigned int messageSize) override;
 
 private:
 };
 
-} // End namespace Client
+} // End namespace Server
 } // End namespace AM

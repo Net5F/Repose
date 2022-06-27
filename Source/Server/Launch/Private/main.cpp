@@ -1,5 +1,7 @@
 #include "Log.h"
 #include "Application.h"
+#include "MessageProcessorExtension.h"
+#include "SimulationExtension.h"
 #include "Ignore.h"
 
 #include "SDL2pp/Exception.hh"
@@ -18,8 +20,12 @@ try {
     // Set up file logging.
     Log::enableFileLogging("Server.log");
 
-    // Start the application (assumes control of the thread).
+    // Construct the app and register our extension classes.
     Application app;
+    app.registerMessageProcessorExtension<MessageProcessorExtension>();
+    app.registerSimulationExtension<SimulationExtension>();
+
+    // Start the application (assumes control of the thread).
     app.start();
 
     return 0;

@@ -30,3 +30,5 @@ file(COPY ${PROJECT_SOURCE_DIR}/Resources/Server/Common/TileMap.bin
 
 # Build all of the subdirectories
 add_subdirectory(Launch)
+add_subdirectory(Network)
+add_subdirectory(Simulation)

@@ -6,6 +6,7 @@ namespace AM
 {
 namespace Client
 {
+
 MessageProcessorExtension::MessageProcessorExtension([[maybe_unused]] MessageProcessorExDependencies deps) {}
 
 void MessageProcessorExtension::processReceivedMessage([[maybe_unused]] MessageType messageType, [[maybe_unused]] Uint8* messageBuffer,

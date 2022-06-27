@@ -5,7 +5,7 @@
 
 namespace AM
 {
-namespace Client
+namespace Server
 {
 
 /**
@@ -44,5 +44,5 @@ public:
 private:
 };
 
-} // End namespace Client
+} // End namespace Server
 } // End namespace AM
