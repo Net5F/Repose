@@ -8,6 +8,10 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
 ###############################################################################
 # Options
 ###############################################################################
+set(AM_CONFIG_OVERRIDE_PATH
+    "${PROJECT_SOURCE_DIR}/Source/ConfigOverrides" CACHE PATH 
+    "Override the engine's default config files with the file at the provided path." FORCE)
+
 option(BUILD_TOOLS "Build tools, such as the Map Generator." OFF)
 
 ###############################################################################
