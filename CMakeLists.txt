@@ -8,7 +8,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
 ###############################################################################
 # Options
 ###############################################################################
-option(BUILD_TOOLS "Build tools, such as the Map Generator." OFF)
+option(BUILD_TOOLS "Build tools, such as the Map Generator." ON)
 
 ###############################################################################
 # Dependencies

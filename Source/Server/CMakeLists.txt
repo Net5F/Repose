@@ -7,6 +7,7 @@ add_executable(Server "")
 target_link_libraries(Server
     PRIVATE
         AmalgamEngine::ServerLib
+        Shared
 )
 
 # Compile with C++20.
@@ -29,6 +30,7 @@ file(COPY ${PROJECT_SOURCE_DIR}/Resources/Server/Common/TileMap.bin
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
 # Build all of the subdirectories
+add_subdirectory(Config)
 add_subdirectory(Launch)
 add_subdirectory(Network)
 add_subdirectory(Simulation)

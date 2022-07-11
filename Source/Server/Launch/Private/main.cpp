@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "MessageProcessorExtension.h"
 #include "SimulationExtension.h"
+#include "ProjectConfig.h"
+#include "ProjectSharedConfig.h"
 #include "Ignore.h"
 
 #include "SDL2pp/Exception.hh"
@@ -19,6 +21,10 @@ try {
 
     // Set up file logging.
     Log::enableFileLogging("Server.log");
+
+    // Initialize our configuration singletons.
+    SharedConfig::init(ProjectSharedConfig::getEngineSettings());
+    Config::init(ProjectConfig::getEngineSettings());
 
     // Construct the app and register our extension classes.
     Application app;

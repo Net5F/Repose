@@ -4,6 +4,9 @@
 #include "RendererExtension.h"
 #include "SimulationExtension.h"
 #include "UserInterfaceExtension.h"
+#include "SharedConfig.h"
+#include "ProjectConfig.h"
+#include "ProjectSharedConfig.h"
 #include "Ignore.h"
 
 #include "SDL2pp/Exception.hh"
@@ -24,6 +27,10 @@ try {
     //       If we need a temporary solution we can use PIDs, but the real
     //       solution will be to eventually use account IDs in the file name.
     Log::enableFileLogging("Client.log");
+
+    // Initialize our configuration singletons.
+    SharedConfig::init(ProjectSharedConfig::getEngineSettings());
+    Config::init(ProjectConfig::getEngineSettings());
 
     // Construct the app and register our extension classes.
     Application app;

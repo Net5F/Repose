@@ -19,13 +19,15 @@ namespace Client
 UserInterfaceExtension::UserInterfaceExtension(UserInterfaceExDependencies deps)
 : worldSinks{deps.worldSignals}
 , auiInitializer{deps.sdlRenderer,
-                 {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT}}
+                 {static_cast<int>(Config::getLogicalScreenWidth()),
+                  static_cast<int>(Config::getLogicalScreenHeight())}}
 , mainScreen{worldSinks, deps.uiEventDispatcher, deps.assetCache,
              deps.spriteData}
 , currentScreen{&mainScreen}
 {
     AUI::Core::setActualScreenSize(
-        {Config::ACTUAL_SCREEN_WIDTH, Config::ACTUAL_SCREEN_HEIGHT});
+        {static_cast<int>(Config::getActualScreenWidth()),
+         static_cast<int>(Config::getActualScreenHeight())});
 }
 
 bool UserInterfaceExtension::handleOSEvent(SDL_Event& event)
