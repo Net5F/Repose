@@ -24,11 +24,16 @@ endif()
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/Assets/
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Assets/)
 
+# Copy UserConfig.json to the build directory.
+file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/UserConfig.json
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+
 # Copy SpriteData.json to the build directory.
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
 # Build all of the subdirectories
+add_subdirectory(Config)
 add_subdirectory(Launch)
 add_subdirectory(Network)
 add_subdirectory(Renderer)

@@ -1,5 +1,6 @@
 #include "Log.h"
 #include "Application.h"
+#include "ProjectUserConfig.h"
 #include "MessageProcessorExtension.h"
 #include "RendererExtension.h"
 #include "SimulationExtension.h"
@@ -25,8 +26,13 @@ try {
     //       solution will be to eventually use account IDs in the file name.
     Log::enableFileLogging("Client.log");
 
-    // Construct the app and register our extension classes.
+    // Construct the app.
     Application app;
+
+    // Init the project user config before it's used in the extension classes.
+    ProjectUserConfig::get();
+
+    // Register our extension classes.
     app.registerMessageProcessorExtension<MessageProcessorExtension>();
     app.registerRendererExtension<RendererExtension>();
     app.registerSimulationExtension<SimulationExtension>();

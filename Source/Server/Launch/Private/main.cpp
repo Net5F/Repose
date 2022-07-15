@@ -1,5 +1,6 @@
 #include "Log.h"
 #include "Application.h"
+#include "ProjectUserConfig.h"
 #include "MessageProcessorExtension.h"
 #include "SimulationExtension.h"
 #include "Ignore.h"
@@ -20,8 +21,13 @@ try {
     // Set up file logging.
     Log::enableFileLogging("Server.log");
 
-    // Construct the app and register our extension classes.
+    // Construct the app.
     Application app;
+
+    // Init the project user config before it's used in the extension classes.
+    ProjectUserConfig::get();
+
+    // Register our extension classes.
     app.registerMessageProcessorExtension<MessageProcessorExtension>();
     app.registerSimulationExtension<SimulationExtension>();
 

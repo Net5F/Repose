@@ -28,10 +28,6 @@ public:
         without it. */
     static constexpr bool RUN_OFFLINE{false};
 
-    // static constexpr char SERVER_IP[] = "127.0.0.1";
-    static constexpr char SERVER_IP[] = "104.237.139.17";
-    static constexpr unsigned int SERVER_PORT{41499};
-
     /** How far our client's simulation will be ahead of the server's
         simulation.
         We start with this offset, then keep ourselves ahead by using the
@@ -54,10 +50,6 @@ public:
     //-------------------------------------------------------------------------
     // Renderer, User Interface
     //-------------------------------------------------------------------------
-    /** The actual size of the window we're rendering to. */
-    static constexpr unsigned int ACTUAL_SCREEN_WIDTH{1600};
-    static constexpr unsigned int ACTUAL_SCREEN_HEIGHT{900};
-
     /**
      * The logical screen size that we're targeting.
      *
@@ -66,14 +58,6 @@ public:
      */
     static constexpr unsigned int LOGICAL_SCREEN_WIDTH{1920};
     static constexpr unsigned int LOGICAL_SCREEN_HEIGHT{1080};
-
-    /**
-     * Sets full screen preference.
-     * 0 = windowed.
-     * 1 = Real fullscreen.
-     * 2 = Fullscreen windowed.
-     */
-    static constexpr unsigned int FULLSCREEN_MODE{0};
 
     /**
      * Sets the quality of scaling algorithm used.

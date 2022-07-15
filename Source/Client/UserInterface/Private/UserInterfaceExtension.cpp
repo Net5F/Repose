@@ -5,6 +5,7 @@
 #include "SpriteData.h"
 #include "Camera.h"
 #include "SharedConfig.h"
+#include "UserConfig.h"
 #include "Transforms.h"
 #include "ClientTransforms.h"
 #include "Log.h"
@@ -24,8 +25,9 @@ UserInterfaceExtension::UserInterfaceExtension(UserInterfaceExDependencies deps)
              deps.spriteData}
 , currentScreen{&mainScreen}
 {
-    AUI::Core::setActualScreenSize(
-        {Config::ACTUAL_SCREEN_WIDTH, Config::ACTUAL_SCREEN_HEIGHT});
+    ScreenRect windowSize{UserConfig::get().getWindowSize()};
+    AUI::Core::setActualScreenSize({static_cast<int>(windowSize.width),
+                                    static_cast<int>(windowSize.height)});
 }
 
 bool UserInterfaceExtension::handleOSEvent(SDL_Event& event)
