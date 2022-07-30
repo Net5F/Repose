@@ -10,6 +10,11 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
 ###############################################################################
 option(BUILD_TOOLS "Build tools, such as the Map Generator." OFF)
 
+option(AM_BUILD_SPRITE_EDITOR "Build Amalgam Engine Sprite Editor." OFF)
+option(AM_BUILD_TESTS "Build Amalgam Engine tests." OFF)
+option(AM_THREADSANITIZER "Enable ThreadSanitizer data race detector." OFF)
+option(AM_ADDRESSSANITIZER "Enable AddressSanitizer memory error detector." OFF)
+
 ###############################################################################
 # Dependencies
 ###############################################################################
@@ -17,10 +22,6 @@ option(BUILD_TOOLS "Build tools, such as the Map Generator." OFF)
 set(AM_CONFIG_OVERRIDE_PATH
     "${PROJECT_SOURCE_DIR}/Source/ConfigOverrides" CACHE PATH 
     "Override the engine's default config files with the file at the provided path." FORCE)
-option(AM_BUILD_SPRITE_EDITOR "Build Amalgam Engine Sprite Editor." OFF)
-option(AM_BUILD_TESTS "Build Amalgam Engine tests." OFF)
-option(AM_THREADSANITIZER "Enable ThreadSanitizer data race detector." OFF)
-option(AM_ADDRESSSANITIZER "Enable AddressSanitizer memory error detector." OFF)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Libraries/AmalgamEngine/"
                  "${PROJECT_BINARY_DIR}/Libraries/AmalgamEngine/")
 
