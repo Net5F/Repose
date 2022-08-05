@@ -71,6 +71,17 @@ public:
     static constexpr unsigned int UI_TICKS_PER_SECOND{30};
     static constexpr double UI_TICK_TIMESTEP_S{
         1.0 / static_cast<double>(UI_TICKS_PER_SECOND)};
+
+    /** The minimum "time to next call" required to trigger a main loop sleep.
+        We sleep for 1ms when possible to reduce our CPU usage. We can't trust
+        the scheduler to come back to us after exactly 1ms though, so we busy 
+        wait if something needs to be called soon.
+        Higher value == more CPU usage.
+        If you pick too small of a number, two issues can occur:
+          1. If < ~.003, the scheduler may not give us time when we need it.
+          2. If < ~.010, our low CPU usage might cause Windows to put us into 
+             energy saving mode, causing visual jitter. */
+    static constexpr double SLEEP_MINIMUM_TIME_S = .010;
 };
 
 } // End namespace Client
