@@ -1,7 +1,9 @@
 target_sources(Server
     PRIVATE
+        Private/MazeGenerationSystem.cpp
         Private/SimulationExtension.cpp
     PUBLIC
+        Public/MazeGenerationSystem.h
         Public/SimulationExtension.h
 )
 

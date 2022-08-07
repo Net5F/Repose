@@ -9,7 +9,10 @@ namespace Client
 {
 
 /**
- * PLACEHOLDER - Currently not simulating anything at the project level.
+ * An extension of the engine's Simulation class.
+ * 
+ * Manages the project-level simulation, including world state and system 
+ * processing.
  */
 class SimulationExtension : public ISimulationExtension
 {
