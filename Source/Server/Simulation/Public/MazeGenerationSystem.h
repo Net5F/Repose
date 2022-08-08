@@ -10,10 +10,10 @@ namespace Server
 class World;
 
 /**
- * Generates the maze in the middle of the world. Every so often, the maze is 
+ * Generates the maze in the middle of the world. Every so often, the maze is
  * regenerated.
- * 
- * When the maze is regenerated, it lines up to the pre-set exits and goes 
+ *
+ * When the maze is regenerated, it lines up to the pre-set exits and goes
  * around players.
  */
 class MazeGenerationSystem
@@ -40,7 +40,7 @@ private:
     /** Used to get entity positions and modify the tile map. */
     World& world;
 
-    /** Used to track how much time has passed since the last maze 
+    /** Used to track how much time has passed since the last maze
         regeneration. */
     Timer regenerationTimer;
 };

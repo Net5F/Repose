@@ -11,8 +11,8 @@ namespace Server
 
 /**
  * An extension of the engine's Simulation class.
- * 
- * Manages the project-level simulation, including world state and system 
+ *
+ * Manages the project-level simulation, including world state and system
  * processing.
  */
 class SimulationExtension : public ISimulationExtension

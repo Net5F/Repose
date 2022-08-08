@@ -24,8 +24,7 @@ ProjectUserConfig::ProjectUserConfig()
     nlohmann::json json;
     try {
         json = nlohmann::json::parse(workingFile, nullptr, true, true);
-    }
-    catch (nlohmann::json::exception& e) {
+    } catch (nlohmann::json::exception& e) {
         LOG_FATAL("Failed to parse UserConfig.json: %s", e.what());
     }
 
@@ -43,9 +42,7 @@ ProjectUserConfig& ProjectUserConfig::get()
     return userConfig;
 }
 
-void ProjectUserConfig::init([[maybe_unused]] nlohmann::json& json)
-{
-}
+void ProjectUserConfig::init([[maybe_unused]] nlohmann::json& json) {}
 
 } // End namespace Client
 } // End namespace AM

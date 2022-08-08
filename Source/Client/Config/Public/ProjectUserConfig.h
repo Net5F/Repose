@@ -7,20 +7,20 @@ namespace AM
 namespace Client
 {
 /**
- * A singleton instance that loads the user-defined configuration from 
- * UserConfig.json into memory and provides an interface for accessing and 
+ * A singleton instance that loads the user-defined configuration from
+ * UserConfig.json into memory and provides an interface for accessing and
  * modifying it.
  *
- * This class holds project-specific user config. Engine-defined user config 
+ * This class holds project-specific user config. Engine-defined user config
  * can be accessed through UserConfig.
  *
  * Note: This class expects a UserConfig.json file to be present in the same
  *       directory as the application executable.
  *
- * TODO: If we eventually decide to live-refresh some of these fields, we can 
+ * TODO: If we eventually decide to live-refresh some of these fields, we can
  *       add signals that get emitted on change.
  *       E.g.:
- *           Public 
+ *           Public
  *               entt::sigh<void(ScreenRect)> windowSizeChanged;
  *           Private
  *               entt::sink<void(ScreenRect)> windowSizeSink;
