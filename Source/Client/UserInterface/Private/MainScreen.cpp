@@ -13,7 +13,7 @@ MainScreen::MainScreen(WorldSinks& inWorldSinks,
                        EventDispatcher& inUiEventDispatcher,
                        AssetCache& inAssetCache, SpriteData& inSpriteData)
 : AUI::Screen("MainScreen")
-, buildOverlay{inWorldSinks, inUiEventDispatcher}
+, buildOverlay{inSpriteData, inWorldSinks, inUiEventDispatcher}
 , buildPanel{inAssetCache, inSpriteData, buildOverlay}
 {
     // Add our windows so they're included in rendering, etc.

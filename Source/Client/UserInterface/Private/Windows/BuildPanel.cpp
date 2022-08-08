@@ -140,12 +140,13 @@ void BuildPanel::addTile(const Sprite& sprite)
     std::unique_ptr<AUI::Widget> thumbnailPtr{
         std::make_unique<MainThumbnail>(assetCache, "BuildPanelThumbnail")};
     MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
-    thumbnail.setText(sprite.displayName);
+    thumbnail.setText(spriteData.getDisplayName(sprite.numericID));
     thumbnail.setIsActivateable(false);
 
     // Load the sprite's image.
-    thumbnail.thumbnailImage.addResolution({1280, 720}, sprite.texture,
-                                           sprite.textureExtent);
+    SpriteRenderData renderData{spriteData.getRenderData(sprite.numericID)};
+    thumbnail.thumbnailImage.addResolution({1280, 720}, renderData.texture,
+                                           renderData.textureExtent);
 
     // Add a callback to deactivate all other thumbnails when one is activated.
     thumbnail.setOnSelected([this, &sprite](AUI::Thumbnail* selectedThumb) {

@@ -9,11 +9,11 @@
 namespace AM
 {
 class AssetCache;
+struct Sprite;
 
 namespace Client
 {
 class SpriteData;
-struct Sprite;
 class BuildOverlay;
 
 /**

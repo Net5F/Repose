@@ -1,5 +1,5 @@
 #include "BuildOverlay.h"
-#include "MainScreen.h"
+#include "SpriteData.h"
 #include "Sprite.h"
 #include "Paths.h"
 #include "Transforms.h"
@@ -14,9 +14,10 @@ namespace AM
 {
 namespace Client
 {
-BuildOverlay::BuildOverlay(WorldSinks& inWorldSinks,
+BuildOverlay::BuildOverlay(SpriteData& inSpriteData, WorldSinks& inWorldSinks,
                            EventDispatcher& inUiEventDispatcher)
 : AUI::Window({0, 0, 1920, 744}, "BuildOverlay")
+, spriteData{inSpriteData}
 , uiEventDispatcher{inUiEventDispatcher}
 , selectedTile{nullptr}
 , tileLayerIndex{0}
@@ -49,18 +50,20 @@ void BuildOverlay::setCamera(const Camera& inCamera)
 void BuildOverlay::render()
 {
     if (showTile && (selectedTile != nullptr)) {
+        SpriteRenderData renderData{
+            spriteData.getRenderData(selectedTile->numericID)};
         SDL_Rect screenExtent{ClientTransforms::tileToScreenExtent(
-            mouseTilePosition, *selectedTile, camera)};
+            mouseTilePosition, renderData, camera)};
 
         // Set the texture's alpha to make the tile semi-transparent.
-        SDL_SetTextureAlphaMod(selectedTile->texture.get(), 150);
+        SDL_SetTextureAlphaMod(renderData.texture.get(), 150);
 
         // Draw the semi-transparent tile.
-        SDL_RenderCopy(AUI::Core::getRenderer(), selectedTile->texture.get(),
-                       &(selectedTile->textureExtent), &screenExtent);
+        SDL_RenderCopy(AUI::Core::getRenderer(), renderData.texture.get(),
+                       &(renderData.textureExtent), &screenExtent);
 
         // Set the texture's alpha back.
-        SDL_SetTextureAlphaMod(selectedTile->texture.get(), 255);
+        SDL_SetTextureAlphaMod(renderData.texture.get(), 255);
     }
 }
 

@@ -7,11 +7,12 @@
 namespace AM
 {
 class EventDispatcher;
+struct Sprite;
 
 namespace Client
 {
+class SpriteData;
 class WorldSinks;
-struct Sprite;
 
 /**
  * The build mode overlay on the main screen. Allows the user to place tiles
@@ -25,7 +26,7 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    BuildOverlay(WorldSinks& inWorldSinks,
+    BuildOverlay(SpriteData& inSpriteData, WorldSinks& inWorldSinks,
                  EventDispatcher& inUiEventDispatcher);
 
     /**
@@ -70,6 +71,9 @@ private:
      * Sets mapTileExtent to the new extent of the tile map.
      */
     void onTileMapExtentChanged(TileExtent inTileExtent);
+
+    /** Used to get data for rendering sprites. */
+    SpriteData& spriteData;
 
     /** Used to send TileUpdateRequest events when a tile is selected. */
     EventDispatcher& uiEventDispatcher;
