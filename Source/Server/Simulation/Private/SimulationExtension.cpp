@@ -15,7 +15,7 @@ SimulationExtension::SimulationExtension(
 
 void SimulationExtension::beforeAll() {}
 
-void SimulationExtension::afterMapAndLifetimeUpdates() {}
+void SimulationExtension::afterMapAndConnectionUpdates() {}
 
 void SimulationExtension::afterMovement()
 {
