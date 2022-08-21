@@ -36,10 +36,6 @@ void MazeGenerationSystem::generateMaze()
 
     // Generate the new maze.
 
-    // TODO: Make a function in world or tileMap, maybe with a queue handled by a 
-    //       system, that takes tile updates, applies them, and ships messages to 
-    //       anyone in range. Systems shouldn't have to know about message range.
-    // TODO: Make TileUpdate have a vector?
     // Send the tile updates to all clients that are in range.
 }
 

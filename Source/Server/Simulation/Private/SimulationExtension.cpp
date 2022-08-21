@@ -15,13 +15,13 @@ SimulationExtension::SimulationExtension(
 
 void SimulationExtension::beforeAll() {}
 
-void SimulationExtension::afterMapAndConnectionUpdates() {}
-
-void SimulationExtension::afterMovement()
+void SimulationExtension::afterMapAndConnectionUpdates()
 {
     // Regenerate the maze, if enough time has passed.
     mazeGenerationSystem.regenerateMazeIfNecessary();
 }
+
+void SimulationExtension::afterMovement() {}
 
 bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
 {
