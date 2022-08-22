@@ -32,11 +32,8 @@ void MazeGenerationSystem::generateMaze()
 {
     // Clear the area.
     world.tileMap.clearExtent(mazeExtent, 1);
-    LOG_INFO("Cleared area.");
 
     // Generate the new maze.
-
-    // Send the tile updates to all clients that are in range.
 }
 
 } // End namespace Server
