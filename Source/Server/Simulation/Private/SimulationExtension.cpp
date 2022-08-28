@@ -7,9 +7,8 @@ namespace AM
 namespace Server
 {
 
-SimulationExtension::SimulationExtension(
-    [[maybe_unused]] SimulationExDependencies deps)
-: mazeGenerationSystem{deps.world}
+SimulationExtension::SimulationExtension(SimulationExDependencies deps)
+: mazeGenerationSystem{deps.world, deps.spriteData}
 {
 }
 
