@@ -4,6 +4,7 @@
 #include "TileExtent.h"
 #include "TilePosition.h"
 #include <SDL_rect.h>
+#include <random>
 
 namespace AM
 {
@@ -13,6 +14,7 @@ namespace Server
 class World;
 class SpriteData;
 struct MazeTopology;
+struct MazeCell;
 
 /**
  * Generates the maze in the middle of the world. Every so often, the maze is
@@ -106,6 +108,13 @@ private:
                                      const std::vector<TilePosition>& neighbors,
                                      std::vector<TilePosition>& path);
 
+    /**
+     * Applies the given cell to the 2x2 map area starting at the given 
+     * coordinates.
+     */
+    void applyCellToMap(unsigned int mapStartX, unsigned int mapStartY,
+                        const MazeCell& cell);
+
     /** Used to get entity positions and modify the tile map. */
     World& world;
 
@@ -134,7 +143,6 @@ private:
     std::vector<TilePosition> workingNeighbors;
 
     // For randomly choosing tiles.
-    std::random_device randDevice;
     std::mt19937 randGenerator;
 };
 

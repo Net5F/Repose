@@ -18,8 +18,7 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld, SpriteData& inSpriteD
 , exitTiles{{1, 0}, {0, 11}, {17, 2}}
 , workingPath{}
 , workingNeighbors{}
-, randDevice{}
-, randGenerator{randDevice}
+, randGenerator{std::random_device()()}
 {
     // Generate the initial maze state.
     MazeTopology maze{};
@@ -40,6 +39,8 @@ void MazeGenerationSystem::regenerateMazeIfNecessary()
 
         // Apply the generated maze to the map.
         applyMazeToMap(maze);
+
+        LOG_INFO("Regenerated maze");
 
         regenerationTimer.updateSavedTime();
     }
@@ -70,11 +71,19 @@ void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
     // Clear the maze area in the tile map.
     world.tileMap.clearExtent(mazeExtent, 1);
 
-    // Apply the maze.
-    const Sprite& northWall{spriteData.get("")};
-    const Sprite& westWall{spriteData.get("")};
-    const Sprite& northwestGapFill{spriteData.get("")};
-    const Sprite& southeastGapFill{spriteData.get("")};
+    // Apply the maze to the tile map.
+    unsigned int mazeMaxX{static_cast<unsigned int>(mazeExtent.xLength / 2)};
+    unsigned int mazeMaxY{static_cast<unsigned int>(mazeExtent.yLength / 2)};
+    for (unsigned int mazeX = 0; mazeX < mazeMaxX; ++mazeX) {
+        for (unsigned int mazeY = 0; mazeY < mazeMaxY; ++mazeY) {
+            unsigned int mapStartX{mazeExtent.x + (mazeX * 2)};
+            unsigned int mapStartY{mazeExtent.y + (mazeY * 2)};
+            const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
+
+            // Apply this cell's walls to the corresponding 2x2 map area.
+            applyCellToMap(mapStartX, mapStartY, cell);
+        }
+    }
 }
 
 void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& startPosition)
@@ -168,7 +177,7 @@ void
                                  std::vector<TilePosition>& path)
 {
     // Choose a random neighbor and prepare the cells we'll be acting on.
-    std::uniform_int_distribution<unsigned int> dist{0, neighbors.size()};
+    std::uniform_int_distribution<std::size_t> dist{0, neighbors.size()};
 
     const TilePosition& chosenNeighbor{neighbors[dist(randGenerator)]};
     MazeCell& neighborCell{
@@ -199,6 +208,64 @@ void
     // Move to the neighbor.
     neighborCell.wasVisited = true;
     path.push_back(chosenNeighbor);
+}
+
+void MazeGenerationSystem::applyCellToMap(unsigned int mapStartX, unsigned int mapStartY,
+                    const MazeCell& cell)
+{
+    int northWallID{spriteData.get("wall_2").numericID};
+    int westWallID{spriteData.get("wall_0").numericID};
+    int northeastGapFillID{spriteData.get("gap_fill_0").numericID};
+    int northwestGapFillID{spriteData.get("gap_fill_1").numericID};
+
+    // Determine which walls this cell has and apply them to the map.
+    if (cell.northWall && cell.westWall) {
+        // Northwest corner, place the 2 west walls, the north wall, and the 
+        // northeast gap fill.
+        world.tileMap.setTileSpriteLayer(mapStartX, mapStartY, 1, westWallID);
+        world.tileMap.setTileSpriteLayer(mapStartX, (mapStartY + 1), 1,
+                                         westWallID);
+        world.tileMap.setTileSpriteLayer((mapStartX + 1), mapStartY, 1,
+                                         northWallID);
+        world.tileMap.setTileSpriteLayer(mapStartX, mapStartY, 2,
+                                         northeastGapFillID);
+    }
+    else if (cell.northWall) {
+        // North only, place the 2 north walls.
+        world.tileMap.setTileSpriteLayer(mapStartX, mapStartY, 1, northWallID);
+        world.tileMap.setTileSpriteLayer((mapStartX + 1), mapStartY, 1,
+                                         northWallID);
+    }
+    else if (cell.westWall) {
+        // West only, place the 2 west walls.
+        world.tileMap.setTileSpriteLayer(mapStartX, mapStartY, 1, westWallID);
+        world.tileMap.setTileSpriteLayer(mapStartX, (mapStartY + 1), 1,
+                                         westWallID);
+    }
+    else {
+        // No walls. First check if there are tiles to the north and west.
+        if ((mapStartX > 0) && (mapStartY > 0)) {
+            // There are tiles to the north and west, check if they have walls 
+            // that form a gap.
+            const Tile& northTile{
+                world.tileMap.getTile(mapStartX, (mapStartY - 1))};
+            const Tile& westTile{
+                world.tileMap.getTile((mapStartX - 1), mapStartY)};
+
+            bool northTileHasWestWall{
+                (northTile.spriteLayers.size() > 1)
+                && (northTile.spriteLayers[1].sprite.numericID == westWallID)};
+            bool westTileHasNorthWall{
+                (westTile.spriteLayers.size() > 1)
+                && (westTile.spriteLayers[1].sprite.numericID == northWallID)};
+
+            // If there's a gap, fill it.
+            if (northTileHasWestWall && westTileHasNorthWall) {
+                world.tileMap.setTileSpriteLayer(mapStartX, mapStartY, 1,
+                                                 northwestGapFillID);
+            }
+        }
+    }
 }
 
 } // End namespace Server
