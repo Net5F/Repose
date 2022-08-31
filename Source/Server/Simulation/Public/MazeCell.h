@@ -20,8 +20,9 @@ struct MazeCell
     bool northWall{true};
     bool westWall{true};
 
-    /** If true, this cell has been visited. */
-    bool wasVisited{false};
+    /** Tracks which generation pass this cell was last visited during.
+        If -1, this cell has not been visited. */
+    int lastVisitedPassNumber{-1};
 };
 
 } // End namespace Server

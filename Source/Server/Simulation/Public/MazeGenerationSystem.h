@@ -66,21 +66,17 @@ private:
     void generateMaze(MazeTopology& outMaze);
 
     /**
-     * Sets the map to reflect the given maze topology.
+     * Clears a path from the given starting position to an exit.
      */
-    void applyMazeToMap(const MazeTopology& maze);
+    void clearToExit(MazeTopology& maze, const TilePosition& startPosition,
+                     int passNumber);
 
     /**
-     * Clears a path from the given start position, stopping when an exit is 
-     * found.
+     * Clears a path from the given starting position to an already-visited tile 
+     * or an exit.
      */
-    void clearToExit(MazeTopology& maze, const TilePosition& startPosition);
-
-    /**
-     * Clears a path from the given start position, stopping when an already-
-     * visited tile is found.
-     */
-    void clearToVisited(MazeTopology& maze, const TilePosition& startPosition);
+    void clearToVisitedOrExit(MazeTopology& maze, const TilePosition& startPosition,
+                     int passNumber);
 
     /**
      * Fills outNeighbors with the given position's neighbors.
@@ -90,7 +86,8 @@ private:
      * @post outNeighbors now holds the valid neighbors, if any were found.
      */
     void getNeighboringTiles(const MazeTopology& maze,
-                             const TilePosition& position, bool includeVisited,
+                             const std::vector<TilePosition>& path,
+                             bool includeVisited, int passNumber,
                              std::vector<TilePosition>& outNeighbors);
 
     /**
@@ -108,7 +105,22 @@ private:
     void
         clearAndMoveToRandomNeighbor(MazeTopology& maze,
                                      const std::vector<TilePosition>& neighbors,
-                                     std::vector<TilePosition>& path);
+                                     std::vector<TilePosition>& path, int passNumber);
+
+    /**
+     * Checks all neighbors in the given vector. If any have already been 
+     * visited, clears the appropriate wall.
+     * 
+     * @return true if a visited neighbor was found, else false.
+     */
+    bool clearToNeighborIfVisited(MazeTopology& maze,
+                                  const std::vector<TilePosition>& neighbors,
+                                  std::vector<TilePosition>& path, int passNumber);
+
+    /**
+     * Sets the map to reflect the given maze topology.
+     */
+    void applyMazeToMap(const MazeTopology& maze);
 
     /**
      * Applies the given cell to the 2x2 map area starting at the given 

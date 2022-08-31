@@ -49,7 +49,11 @@ void MazeGenerationSystem::regenerateMazeIfNecessary()
 
 void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
 {
-    // Allocate memory for the new maze.
+    // TODO: Why are we getting walls in the middle of the entrance?
+    //       Happens to exits too
+    //       Probably cause they're on odd numbers. Move them to match
+
+    // Allocate memory for the temporary abstract maze.
     outMaze.cells.resize(
         abstractMazeExtent.xLength * abstractMazeExtent.yLength, MazeCell{});
 
@@ -59,87 +63,97 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
     northExit.northWall = false;
     MazeCell& westExit{
         outMaze.cells[linearizeCellIndex(exitTiles[1].x, exitTiles[1].y)]};
-    northExit.westWall = false;
+    westExit.westWall = false;
 
     // Clear a path from the entrance to an exit.
-    clearToExit(outMaze, entranceTile);
+    int passNumber{0};
+    clearToExit(outMaze, entranceTile, passNumber++);
 
-    // Clear a path from each exit to the existing path.
-    //for (const TilePosition& exitTile : exitTiles) {
-    //    clearToVisited(outMaze, exitTile);
-    //}
+    // Clear a path from each exit to the existing path or another exit.
+    for (const TilePosition& exitTile : exitTiles) {
+        clearToVisitedOrExit(outMaze, exitTile, passNumber++);
+    }
 
     // Clear a path from each player's position to the existing path.
 }
 
-void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
-{
-    // Clear the maze area in the tile map.
-    world.tileMap.clearExtent(mazeExtent, 1);
-
-    // Apply the maze to the tile map.
-    int mazeMaxX{abstractMazeExtent.xLength};
-    int mazeMaxY{abstractMazeExtent.yLength};
-    for (int mazeX = 0; mazeX < mazeMaxX; ++mazeX) {
-        for (int mazeY = 0; mazeY < mazeMaxY; ++mazeY) {
-            int mapX{mazeExtent.x + (mazeX * 2)};
-            int mapY{mazeExtent.y + (mazeY * 2)};
-            const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
-
-            // Apply this cell's walls to the corresponding 2x2 map area.
-            applyCellToMap(mapX, mapY, cell);
-        }
-    }
-}
-
-void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& startPosition)
+void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& startPosition, int passNumber)
 {
     // Note: Uses a "backtracking generator" maze algorithm.
 
-    // Clear the working vector and start tracking the path we've taken.
+    // Clear the working vector and start tracking our path.
     workingPath.clear();
     workingPath.push_back(startPosition);
 
     // Find an exit.
-    bool exitFound{false};
-    while (!exitFound) {
+    while (true) {
         // Get a valid neighboring tile to move to.
         workingNeighbors.clear();
-        getNeighboringTiles(maze, workingPath.back(), false, workingNeighbors);
+        getNeighboringTiles(maze, workingPath, false, passNumber, workingNeighbors);
 
         // If there's a valid neighbor, remove the wall and move to it.
         if (workingNeighbors.size() > 0) {
-            clearAndMoveToRandomNeighbor(maze, workingNeighbors, workingPath);
-            LOG_INFO("Moved to: %d, %d", workingPath.back().x, workingPath.back().y);
+            clearAndMoveToRandomNeighbor(maze, workingNeighbors, workingPath,
+                                         passNumber);
         }
         else {
             // There were no valid neighbors, backtrack.
             workingPath.pop_back();
-            LOG_INFO("Backtrack: %d, %d", workingPath.back().x, workingPath.back().y);
         }
 
         // If the current tile is an exit, we're done.
         if (isExitTile(workingPath.back())) {
-            LOG_INFO("Exit found: %d, %d", workingPath.back().x, workingPath.back().y);
-            exitFound = true;
+            return;
         }
     }
 }
 
-void MazeGenerationSystem::clearToVisited(MazeTopology& maze, const TilePosition& startPosition)
+void MazeGenerationSystem::clearToVisitedOrExit(MazeTopology& maze
+    , const TilePosition& startPosition, int passNumber)
 {
     // Note: Uses a "backtracking generator" maze algorithm.
+
+    // Clear the working vector and start tracking our path.
+    workingPath.clear();
+    workingPath.push_back(startPosition);
+
+    // Find an already-visited cell, or an exit.
+    while (true) {
+        // Get a valid neighboring tile to move to.
+        workingNeighbors.clear();
+        getNeighboringTiles(maze, workingPath, true, passNumber, workingNeighbors);
+
+        // If any of the neighbors were already visited, we're done.
+        if (clearToNeighborIfVisited(maze, workingNeighbors, workingPath, passNumber)) {
+            return;
+        }
+
+        // If there's a valid neighbor, remove the wall and move to it.
+        if (workingNeighbors.size() > 0) {
+            clearAndMoveToRandomNeighbor(maze, workingNeighbors, workingPath, passNumber);
+        }
+        else {
+            // There were no valid neighbors, backtrack.
+            workingPath.pop_back();
+        }
+
+        // If the current tile is an exit, we're done.
+        if (isExitTile(workingPath.back())) {
+            return;
+        }
+    }
 }
 
 void MazeGenerationSystem::getNeighboringTiles(const MazeTopology& maze,
-                         const TilePosition& position, bool includeVisited,
+                         const std::vector<TilePosition>& path, bool includeVisited, int passNumber,
                          std::vector<TilePosition>& outNeighbors)
 {
     // Add the coordinates that are directly N,S,E,W of the given position.
-    outNeighbors.emplace_back(position.x + 1, position.y);
-    outNeighbors.emplace_back(position.x - 1, position.y);
-    outNeighbors.emplace_back(position.x, position.y + 1);
-    outNeighbors.emplace_back(position.x, position.y - 1);
+    const TilePosition& currentPosition{path.back()};
+    outNeighbors.emplace_back(currentPosition.x + 1, currentPosition.y);
+    outNeighbors.emplace_back(currentPosition.x - 1, currentPosition.y);
+    outNeighbors.emplace_back(currentPosition.x, currentPosition.y + 1);
+    outNeighbors.emplace_back(currentPosition.x, currentPosition.y - 1);
 
     // Remove any invalid neighbors.
     for (auto it = outNeighbors.begin(); it != outNeighbors.end();) {
@@ -149,12 +163,21 @@ void MazeGenerationSystem::getNeighboringTiles(const MazeTopology& maze,
         if (!(abstractMazeExtent.containsPosition(*it))) {
             removeNeighbor = true;
         }
+        // Else if we're including visited tiles.
+        else if (includeVisited && (path.size() > 1)) {
+            // If this tile was already visited on this run, remove it.
+            const MazeCell& cell{
+                maze.cells[linearizeCellIndex(it->x, it->y)]};
+            if (cell.lastVisitedPassNumber == passNumber) {
+                removeNeighbor = true;
+            }
+        }
         else {
             // If we're ignoring visited cells and this neighbor was visited, 
             // remove it.
             const MazeCell& cell{
                 maze.cells[linearizeCellIndex(it->x, it->y)]};
-            if (!includeVisited && cell.wasVisited) {
+            if (!includeVisited && (cell.lastVisitedPassNumber != -1)) {
                 removeNeighbor = true;
             }
         }
@@ -183,7 +206,7 @@ bool MazeGenerationSystem::isExitTile(const TilePosition& position)
 void
     MazeGenerationSystem::clearAndMoveToRandomNeighbor(MazeTopology& maze,
                                  const std::vector<TilePosition>& neighbors,
-                                 std::vector<TilePosition>& path)
+                                 std::vector<TilePosition>& path, int passNumber)
 {
     // Choose a random neighbor and prepare the cells we'll be acting on.
     std::uniform_int_distribution<std::size_t> dist{0, (neighbors.size() - 1)};
@@ -215,8 +238,72 @@ void
     }
 
     // Move to the neighbor.
-    neighborCell.wasVisited = true;
+    neighborCell.lastVisitedPassNumber = passNumber;
     path.push_back(chosenNeighbor);
+}
+
+bool MazeGenerationSystem::clearToNeighborIfVisited(MazeTopology& maze,
+                              const std::vector<TilePosition>& neighbors,
+                              std::vector<TilePosition>& path, int passNumber)
+{
+    // Check all the neighbors.
+    for (const TilePosition& neighborTile : neighbors) {
+        MazeCell& neighborCell{
+            maze.cells[linearizeCellIndex(neighborTile.x, neighborTile.y)]};
+
+        // If this neighbor was already visited, remove the wall.
+        if (neighborCell.lastVisitedPassNumber != -1) {
+            const TilePosition& currentTile{path.back()};
+            MazeCell& currentCell{
+                maze.cells[linearizeCellIndex(currentTile.x, currentTile.y)]};
+
+            // Remove the wall.
+            if (neighborTile.x < currentTile.x) {
+                // West
+                currentCell.westWall = false;
+            }
+            else if (neighborTile.x > currentTile.x) {
+                // East
+                neighborCell.westWall = false;
+            }
+            else if (neighborTile.y < currentTile.y) {
+                // North
+                currentCell.northWall = false;
+            }
+            else {
+                // South
+                neighborCell.northWall = false;
+            }
+
+            // Move to the neighbor.
+            neighborCell.lastVisitedPassNumber = passNumber;
+            path.push_back(neighborTile);
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
+{
+    // Clear the maze area in the tile map.
+    world.tileMap.clearExtent(mazeExtent, 1);
+
+    // Apply the maze to the tile map.
+    int mazeMaxX{abstractMazeExtent.xLength};
+    int mazeMaxY{abstractMazeExtent.yLength};
+    for (int mazeX = 0; mazeX < mazeMaxX; ++mazeX) {
+        for (int mazeY = 0; mazeY < mazeMaxY; ++mazeY) {
+            int mapX{mazeExtent.x + (mazeX * 2)};
+            int mapY{mazeExtent.y + (mazeY * 2)};
+            const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
+
+            // Apply this cell's walls to the corresponding 2x2 map area.
+            applyCellToMap(mapX, mapY, cell);
+        }
+    }
 }
 
 void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
