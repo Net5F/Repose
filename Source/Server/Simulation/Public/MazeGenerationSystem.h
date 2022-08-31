@@ -35,12 +35,14 @@ public:
 
 private:
     /**
-     * Returns the index in the cells vector where the cells with the given
-     * coordinates can be found.
+     * Returns the index in the MazeTopology's cells vector where the cell with the 
+     * given coordinates can be found.
      */
     inline unsigned int linearizeCellIndex(int x, int y) const
     {
-        return (y * mazeExtent.xLength) + x;
+        unsigned int mazeHalfLength{
+            static_cast<unsigned int>(mazeExtent.xLength / 2)};
+        return (y * mazeHalfLength) + x;
     }
 
     /** How often the maze should be regenerated. */
@@ -112,8 +114,7 @@ private:
      * Applies the given cell to the 2x2 map area starting at the given 
      * coordinates.
      */
-    void applyCellToMap(unsigned int mapStartX, unsigned int mapStartY,
-                        const MazeCell& cell);
+    void applyCellToMap(int mapX, int mapY, const MazeCell& cell);
 
     /** Used to get entity positions and modify the tile map. */
     World& world;
@@ -125,15 +126,20 @@ private:
         regeneration. */
     Timer regenerationTimer;
 
-    /** The maze's total extent. */
+    /** The maze's total extent in world-space. */
     const TileExtent mazeExtent;
 
-    /** The coordinates of the maze's entrance. */
+    /** The extent of our abstract representation of the maze that we use 
+        during generation. 
+        Since we want the hallways to be 2 tiles wide, we make the abstract 
+        representation half the size of the real thing. Then at the end, we 
+        double it. */
+    const TileExtent abstractMazeExtent;
+
+    /** The abstract-space coordinates of the maze's entrance. */
     TilePosition entranceTile;
 
-    /** A list of the coordinates of each exit tile.
-        Note: These are in half-coordinates to match MazeTopology during 
-              the generation process. */
+    /** A list of the abstract-space coordinates of each exit tile. */
     std::vector<TilePosition> exitTiles;
 
     /** Used to store the tiles that we've traversed during generation. */

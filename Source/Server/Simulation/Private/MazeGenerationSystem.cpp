@@ -14,6 +14,7 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld, SpriteData& inSpriteD
 , spriteData{inSpriteData}
 , mazeExtent{MAZE_ORIGIN_TILE.x, MAZE_ORIGIN_TILE.y,
              MAZE_WIDTH, MAZE_HEIGHT}
+, abstractMazeExtent{0, 0, (mazeExtent.xLength / 2), (mazeExtent.yLength / 2)}
 , entranceTile{8, 17}
 , exitTiles{{1, 0}, {0, 11}, {17, 2}}
 , workingPath{}
@@ -31,37 +32,42 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld, SpriteData& inSpriteD
 void MazeGenerationSystem::regenerateMazeIfNecessary()
 {
     // If enough time has passed, regenerate the maze.
-    if (regenerationTimer.getDeltaSeconds(false)
-        >= MAZE_REGENERATION_PERIOD_S) {
-        // Generate the maze topology.
-        MazeTopology maze{};
-        generateMaze(maze);
+    //if (regenerationTimer.getDeltaSeconds(false)
+    //    >= MAZE_REGENERATION_PERIOD_S) {
+    //    // Generate the maze topology.
+    //    MazeTopology maze{};
+    //    generateMaze(maze);
 
-        // Apply the generated maze to the map.
-        applyMazeToMap(maze);
+    //    // Apply the generated maze to the map.
+    //    applyMazeToMap(maze);
 
-        LOG_INFO("Regenerated maze");
+    //    LOG_INFO("Regenerated maze");
 
-        regenerationTimer.updateSavedTime();
-    }
+    //    regenerationTimer.updateSavedTime();
+    //}
 }
 
 void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
 {
     // Allocate memory for the new maze.
-    // Note: Since we want the hallways to be 2 tiles wide, we generate the 
-    //       maze at half size and double it at the end.
-    unsigned int mazeWidth{static_cast<unsigned int>(mazeExtent.xLength / 2)};
-    unsigned int mazeHeight{static_cast<unsigned int>(mazeExtent.yLength / 2)};
-    outMaze.cells.resize(mazeWidth * mazeHeight);
+    outMaze.cells.resize(
+        abstractMazeExtent.xLength * abstractMazeExtent.yLength, MazeCell{});
+
+    // Clear out the north and west exit walls (south and east are fine).
+    MazeCell& northExit{
+        outMaze.cells[linearizeCellIndex(exitTiles[0].x, exitTiles[0].y)]};
+    northExit.northWall = false;
+    MazeCell& westExit{
+        outMaze.cells[linearizeCellIndex(exitTiles[1].x, exitTiles[1].y)]};
+    northExit.westWall = false;
 
     // Clear a path from the entrance to an exit.
     clearToExit(outMaze, entranceTile);
 
     // Clear a path from each exit to the existing path.
-    for (const TilePosition& exitTile : exitTiles) {
-        clearToVisited(outMaze, exitTile);
-    }
+    //for (const TilePosition& exitTile : exitTiles) {
+    //    clearToVisited(outMaze, exitTile);
+    //}
 
     // Clear a path from each player's position to the existing path.
 }
@@ -72,16 +78,16 @@ void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
     world.tileMap.clearExtent(mazeExtent, 1);
 
     // Apply the maze to the tile map.
-    unsigned int mazeMaxX{static_cast<unsigned int>(mazeExtent.xLength / 2)};
-    unsigned int mazeMaxY{static_cast<unsigned int>(mazeExtent.yLength / 2)};
-    for (unsigned int mazeX = 0; mazeX < mazeMaxX; ++mazeX) {
-        for (unsigned int mazeY = 0; mazeY < mazeMaxY; ++mazeY) {
-            unsigned int mapStartX{mazeExtent.x + (mazeX * 2)};
-            unsigned int mapStartY{mazeExtent.y + (mazeY * 2)};
+    int mazeMaxX{abstractMazeExtent.xLength};
+    int mazeMaxY{abstractMazeExtent.yLength};
+    for (int mazeX = 0; mazeX < mazeMaxX; ++mazeX) {
+        for (int mazeY = 0; mazeY < mazeMaxY; ++mazeY) {
+            int mapX{mazeExtent.x + (mazeX * 2)};
+            int mapY{mazeExtent.y + (mazeY * 2)};
             const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
 
             // Apply this cell's walls to the corresponding 2x2 map area.
-            applyCellToMap(mapStartX, mapStartY, cell);
+            applyCellToMap(mapX, mapY, cell);
         }
     }
 }
@@ -104,14 +110,17 @@ void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& s
         // If there's a valid neighbor, remove the wall and move to it.
         if (workingNeighbors.size() > 0) {
             clearAndMoveToRandomNeighbor(maze, workingNeighbors, workingPath);
+            LOG_INFO("Moved to: %d, %d", workingPath.back().x, workingPath.back().y);
         }
         else {
             // There were no valid neighbors, backtrack.
             workingPath.pop_back();
+            LOG_INFO("Backtrack: %d, %d", workingPath.back().x, workingPath.back().y);
         }
 
         // If the current tile is an exit, we're done.
         if (isExitTile(workingPath.back())) {
+            LOG_INFO("Exit found: %d, %d", workingPath.back().x, workingPath.back().y);
             exitFound = true;
         }
     }
@@ -137,14 +146,14 @@ void MazeGenerationSystem::getNeighboringTiles(const MazeTopology& maze,
         bool removeNeighbor{false};
 
         // If this neighbor is out of bounds, remove it.
-        if (!(mazeExtent.containsPosition(position))) {
+        if (!(abstractMazeExtent.containsPosition(*it))) {
             removeNeighbor = true;
         }
         else {
             // If we're ignoring visited cells and this neighbor was visited, 
             // remove it.
             const MazeCell& cell{
-                maze.cells[linearizeCellIndex(position.x, position.y)]};
+                maze.cells[linearizeCellIndex(it->x, it->y)]};
             if (!includeVisited && cell.wasVisited) {
                 removeNeighbor = true;
             }
@@ -177,7 +186,7 @@ void
                                  std::vector<TilePosition>& path)
 {
     // Choose a random neighbor and prepare the cells we'll be acting on.
-    std::uniform_int_distribution<std::size_t> dist{0, neighbors.size()};
+    std::uniform_int_distribution<std::size_t> dist{0, (neighbors.size() - 1)};
 
     const TilePosition& chosenNeighbor{neighbors[dist(randGenerator)]};
     MazeCell& neighborCell{
@@ -210,7 +219,7 @@ void
     path.push_back(chosenNeighbor);
 }
 
-void MazeGenerationSystem::applyCellToMap(unsigned int mapStartX, unsigned int mapStartY,
+void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
                     const MazeCell& cell)
 {
     int northWallID{spriteData.get("wall_2").numericID};
@@ -222,35 +231,35 @@ void MazeGenerationSystem::applyCellToMap(unsigned int mapStartX, unsigned int m
     if (cell.northWall && cell.westWall) {
         // Northwest corner, place the 2 west walls, the north wall, and the 
         // northeast gap fill.
-        world.tileMap.setTileSpriteLayer(mapStartX, mapStartY, 1, westWallID);
-        world.tileMap.setTileSpriteLayer(mapStartX, (mapStartY + 1), 1,
+        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, westWallID);
+        world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
                                          westWallID);
-        world.tileMap.setTileSpriteLayer((mapStartX + 1), mapStartY, 1,
+        world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
                                          northWallID);
-        world.tileMap.setTileSpriteLayer(mapStartX, mapStartY, 2,
+        world.tileMap.setTileSpriteLayer(mapX, mapY, 2,
                                          northeastGapFillID);
     }
     else if (cell.northWall) {
         // North only, place the 2 north walls.
-        world.tileMap.setTileSpriteLayer(mapStartX, mapStartY, 1, northWallID);
-        world.tileMap.setTileSpriteLayer((mapStartX + 1), mapStartY, 1,
+        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, northWallID);
+        world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
                                          northWallID);
     }
     else if (cell.westWall) {
         // West only, place the 2 west walls.
-        world.tileMap.setTileSpriteLayer(mapStartX, mapStartY, 1, westWallID);
-        world.tileMap.setTileSpriteLayer(mapStartX, (mapStartY + 1), 1,
+        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, westWallID);
+        world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
                                          westWallID);
     }
     else {
         // No walls. First check if there are tiles to the north and west.
-        if ((mapStartX > 0) && (mapStartY > 0)) {
+        if ((mapX > 0) && (mapY > 0)) {
             // There are tiles to the north and west, check if they have walls 
             // that form a gap.
             const Tile& northTile{
-                world.tileMap.getTile(mapStartX, (mapStartY - 1))};
+                world.tileMap.getTile(mapX, (mapY - 1))};
             const Tile& westTile{
-                world.tileMap.getTile((mapStartX - 1), mapStartY)};
+                world.tileMap.getTile((mapX - 1), mapY)};
 
             bool northTileHasWestWall{
                 (northTile.spriteLayers.size() > 1)
@@ -261,7 +270,7 @@ void MazeGenerationSystem::applyCellToMap(unsigned int mapStartX, unsigned int m
 
             // If there's a gap, fill it.
             if (northTileHasWestWall && westTileHasNorthWall) {
-                world.tileMap.setTileSpriteLayer(mapStartX, mapStartY, 1,
+                world.tileMap.setTileSpriteLayer(mapX, mapY, 1,
                                                  northwestGapFillID);
             }
         }
