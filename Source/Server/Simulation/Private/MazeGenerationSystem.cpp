@@ -49,9 +49,8 @@ void MazeGenerationSystem::regenerateMazeIfNecessary()
 
 void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
 {
-    // TODO: Why are we getting walls in the middle of the entrance?
-    //       Happens to exits too
-    //       Probably cause they're on odd numbers. Move them to match
+    Timer timer;
+    timer.updateSavedTime();
 
     // Allocate memory for the temporary abstract maze.
     outMaze.cells.resize(
@@ -75,6 +74,8 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
     }
 
     // Clear a path from each player's position to the existing path.
+
+    LOG_INFO("Maze generated in %.8fs", timer.getDeltaSeconds(false));
 }
 
 void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& startPosition, int passNumber)
@@ -101,8 +102,9 @@ void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& s
             workingPath.pop_back();
         }
 
-        // If the current tile is an exit, we're done.
-        if (isExitTile(workingPath.back())) {
+        // If the current tile is an exit other than the one we started on, 
+        // we're done.
+        if ((workingPath.back() != workingPath.front()) && isExitTile(workingPath.back())) {
             return;
         }
     }
@@ -137,8 +139,9 @@ void MazeGenerationSystem::clearToVisitedOrExit(MazeTopology& maze
             workingPath.pop_back();
         }
 
-        // If the current tile is an exit, we're done.
-        if (isExitTile(workingPath.back())) {
+        // If the current tile is an exit other than the one we started on, 
+        // we're done.
+        if ((workingPath.back() != workingPath.front()) && isExitTile(workingPath.back())) {
             return;
         }
     }
