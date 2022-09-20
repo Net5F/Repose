@@ -32,19 +32,17 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld, SpriteData& inSpriteD
 void MazeGenerationSystem::regenerateMazeIfNecessary()
 {
     // If enough time has passed, regenerate the maze.
-    //if (regenerationTimer.getDeltaSeconds(false)
-    //    >= MAZE_REGENERATION_PERIOD_S) {
-    //    // Generate the maze topology.
-    //    MazeTopology maze{};
-    //    generateMaze(maze);
+    if (regenerationTimer.getDeltaSeconds(false)
+        >= MAZE_REGENERATION_PERIOD_S) {
+        // Generate the maze topology.
+        MazeTopology maze{};
+        generateMaze(maze);
 
-    //    // Apply the generated maze to the map.
-    //    applyMazeToMap(maze);
+        // Apply the generated maze to the map.
+        applyMazeToMap(maze);
 
-    //    LOG_INFO("Regenerated maze");
-
-    //    regenerationTimer.updateSavedTime();
-    //}
+        regenerationTimer.updateSavedTime();
+    }
 }
 
 void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)

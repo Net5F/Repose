@@ -90,7 +90,7 @@ public:
 
         Note: Each simulated client in LoadTestClient instantiates a buffer,
               so you may need to be conscious of this size in that case. */
-    static constexpr unsigned int MAX_BATCH_SIZE{10'000};
+    static constexpr unsigned int MAX_BATCH_SIZE{15'000};
 
     //-------------------------------------------------------------------------
     // Renderer
