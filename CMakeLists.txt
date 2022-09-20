@@ -12,8 +12,16 @@ option(BUILD_TOOLS "Build tools, such as the Map Generator." OFF)
 
 option(AM_BUILD_SPRITE_EDITOR "Build Amalgam Engine Sprite Editor." OFF)
 option(AM_BUILD_TESTS "Build Amalgam Engine tests." OFF)
+
 option(AM_THREADSANITIZER "Enable ThreadSanitizer data race detector." OFF)
+if (AM_THREADSANITIZER)
+    include("${PROJECT_SOURCE_DIR}/Libraries/AmalgamEngine/CMake/ThreadSanitizer.cmake")
+endif()
+
 option(AM_ADDRESSSANITIZER "Enable AddressSanitizer memory error detector." OFF)
+if (AM_ADDRESSSANITIZER)
+    include("${PROJECT_SOURCE_DIR}/Libraries/AmalgamEngine/CMake/AddressSanitizer.cmake")
+endif()
 
 ###############################################################################
 # Dependencies
