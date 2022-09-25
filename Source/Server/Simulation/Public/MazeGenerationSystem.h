@@ -40,9 +40,7 @@ private:
      */
     inline unsigned int linearizeCellIndex(int x, int y) const
     {
-        unsigned int mazeHalfLength{
-            static_cast<unsigned int>(mazeExtent.xLength / 2)};
-        return (y * mazeHalfLength) + x;
+        return (y * abstractMazeExtent.xLength) + x;
     }
 
     /** How often the maze should be regenerated. */
@@ -77,6 +75,8 @@ private:
      */
     void clearToVisitedOrExit(MazeTopology& maze, const TilePosition& startPosition,
                      int passNumber);
+
+    void clearFromPlayersToExit();
 
     /**
      * Fills outNeighbors with the given position's neighbors.

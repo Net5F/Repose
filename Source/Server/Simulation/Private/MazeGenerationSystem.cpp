@@ -41,6 +41,8 @@ void MazeGenerationSystem::regenerateMazeIfNecessary()
         // Apply the generated maze to the map.
         applyMazeToMap(maze);
 
+        // TODO: Remove any walls that are intersecting entities.
+
         regenerationTimer.updateSavedTime();
     }
 }
@@ -71,7 +73,25 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
         clearToVisitedOrExit(outMaze, exitTile, passNumber++);
     }
 
-    // Clear a path from each player's position to the existing path.
+    // For each entity in the maze, clear to the existing path or an exit.
+    std::vector<entt::entity>& entitiesInMaze{
+        world.entityLocator.getEntitiesFine(mazeExtent)};
+    for (entt::entity entity : entitiesInMaze) {
+        // Calc the tile that the entity's center is on.
+        const Position& position{world.registry.get<Position>(entity)};
+        TilePosition tilePosition{position.asTilePosition()};
+        TilePosition abstractTilePosition{(tilePosition.x - mazeExtent.x) / 2,
+                                          (tilePosition.y - mazeExtent.y) / 2};
+
+        // Clear a path to the existing path or another exit.
+        LOG_INFO("Clearing for entity");
+        clearToVisitedOrExit(outMaze, abstractTilePosition, passNumber++);
+        TilePosition end{workingPath.back()};
+        end.x = (end.x * 2) + mazeExtent.x;
+        end.y = (end.y * 2) + mazeExtent.y;
+        LOG_INFO("Cleared from entity at (%d, %d) to (%d, %d)", tilePosition.x,
+                 tilePosition.y, end.x, end.y);
+    }
 
     LOG_INFO("Maze generated in %.8fs", timer.getDeltaSeconds(false));
 }
