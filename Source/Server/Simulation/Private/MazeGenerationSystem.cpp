@@ -2,6 +2,7 @@
 #include "World.h"
 #include "SpriteData.h"
 #include "MazeTopology.h"
+#include "AMAssert.h"
 #include <algorithm>
 
 namespace AM
@@ -20,13 +21,22 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld, SpriteData& inSpriteD
 , workingPath{}
 , workingNeighbors{}
 , randGenerator{std::random_device()()}
+, NORTH_WALL_ID{spriteData.get("wall_2").numericID}
+, WEST_WALL_ID{spriteData.get("wall_0").numericID}
+, NORTHEAST_GAP_FILL_ID{spriteData.get("gap_fill_0").numericID}
+, NORTHWEST_GAP_FILL_ID{spriteData.get("gap_fill_1").numericID}
 {
+    Timer timer;
+    timer.updateSavedTime();
+
     // Generate the initial maze state.
     MazeTopology maze{};
     generateMaze(maze);
     applyMazeToMap(maze);
 
     regenerationTimer.updateSavedTime();
+
+    LOG_INFO("Maze generated in %.8fs", timer.getDeltaSeconds(false));
 }
 
 void MazeGenerationSystem::regenerateMazeIfNecessary()
@@ -34,6 +44,9 @@ void MazeGenerationSystem::regenerateMazeIfNecessary()
     // If enough time has passed, regenerate the maze.
     if (regenerationTimer.getDeltaSeconds(false)
         >= MAZE_REGENERATION_PERIOD_S) {
+        Timer timer;
+        timer.updateSavedTime();
+
         // Generate the maze topology.
         MazeTopology maze{};
         generateMaze(maze);
@@ -41,17 +54,14 @@ void MazeGenerationSystem::regenerateMazeIfNecessary()
         // Apply the generated maze to the map.
         applyMazeToMap(maze);
 
-        // TODO: Remove any walls that are intersecting entities.
-
         regenerationTimer.updateSavedTime();
+
+        LOG_INFO("Maze generated in %.8fs", timer.getDeltaSeconds(false));
     }
 }
 
 void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
 {
-    Timer timer;
-    timer.updateSavedTime();
-
     // Allocate memory for the temporary abstract maze.
     outMaze.cells.resize(
         abstractMazeExtent.xLength * abstractMazeExtent.yLength, MazeCell{});
@@ -74,9 +84,9 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
     }
 
     // For each entity in the maze, clear to the existing path or an exit.
-    std::vector<entt::entity>& entitiesInMaze{
+    const std::vector<entt::entity>& entitiesInMaze{
         world.entityLocator.getEntitiesFine(mazeExtent)};
-    for (entt::entity entity : entitiesInMaze) {
+    for (const entt::entity entity : entitiesInMaze) {
         // Calc the tile that the entity's center is on.
         const Position& position{world.registry.get<Position>(entity)};
         TilePosition tilePosition{position.asTilePosition()};
@@ -84,16 +94,14 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
                                           (tilePosition.y - mazeExtent.y) / 2};
 
         // Clear a path to the existing path or another exit.
-        LOG_INFO("Clearing for entity");
         clearToVisitedOrExit(outMaze, abstractTilePosition, passNumber++);
         TilePosition end{workingPath.back()};
         end.x = (end.x * 2) + mazeExtent.x;
         end.y = (end.y * 2) + mazeExtent.y;
-        LOG_INFO("Cleared from entity at (%d, %d) to (%d, %d)", tilePosition.x,
-                 tilePosition.y, end.x, end.y);
-    }
 
-    LOG_INFO("Maze generated in %.8fs", timer.getDeltaSeconds(false));
+        // Clear any tiles that the entity is touching.
+        clearTilesTouchingEntity(outMaze, entity);
+    }
 }
 
 void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& startPosition, int passNumber)
@@ -330,34 +338,29 @@ void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
 void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
                     const MazeCell& cell)
 {
-    int northWallID{spriteData.get("wall_2").numericID};
-    int westWallID{spriteData.get("wall_0").numericID};
-    int northeastGapFillID{spriteData.get("gap_fill_0").numericID};
-    int northwestGapFillID{spriteData.get("gap_fill_1").numericID};
-
     // Determine which walls this cell has and apply them to the map.
     if (cell.northWall && cell.westWall) {
         // Northwest corner, place the 2 west walls, the north wall, and the 
         // northeast gap fill.
-        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, westWallID);
+        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, WEST_WALL_ID);
         world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
-                                         westWallID);
+                                         WEST_WALL_ID);
         world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
-                                         northWallID);
+                                         NORTH_WALL_ID);
         world.tileMap.setTileSpriteLayer(mapX, mapY, 2,
-                                         northeastGapFillID);
+                                         NORTHEAST_GAP_FILL_ID);
     }
     else if (cell.northWall) {
         // North only, place the 2 north walls.
-        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, northWallID);
+        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, NORTH_WALL_ID);
         world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
-                                         northWallID);
+                                         NORTH_WALL_ID);
     }
     else if (cell.westWall) {
         // West only, place the 2 west walls.
-        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, westWallID);
+        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, WEST_WALL_ID);
         world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
-                                         westWallID);
+                                         WEST_WALL_ID);
     }
     else {
         // No walls. First check if there are tiles to the north and west.
@@ -371,15 +374,49 @@ void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
 
             bool northTileHasWestWall{
                 (northTile.spriteLayers.size() > 1)
-                && (northTile.spriteLayers[1].sprite.numericID == westWallID)};
+                && (northTile.spriteLayers[1].sprite.numericID == WEST_WALL_ID)};
             bool westTileHasNorthWall{
                 (westTile.spriteLayers.size() > 1)
-                && (westTile.spriteLayers[1].sprite.numericID == northWallID)};
+                && (westTile.spriteLayers[1].sprite.numericID == NORTH_WALL_ID)};
 
             // If there's a gap, fill it.
             if (northTileHasWestWall && westTileHasNorthWall) {
                 world.tileMap.setTileSpriteLayer(mapX, mapY, 1,
-                                                 northwestGapFillID);
+                                                 NORTHWEST_GAP_FILL_ID);
+            }
+        }
+    }
+}
+
+void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
+                                                    const entt::entity entity)
+{
+    // Get the tile extent that this entity is touching, clip it to the 
+    // maze bounds, and make it relative to the maze origin.
+    const BoundingBox& boundingBox{world.registry.get<BoundingBox>(entity)};
+    TileExtent tileExtent{boundingBox.asTileExtent()};
+    tileExtent.intersectWith(mazeExtent);
+    tileExtent.x -= mazeExtent.x;
+    tileExtent.y -= mazeExtent.y;
+
+    // Convert the extent so we can work with the abstract representation.
+    const TileExtent abstractTileExtent{
+        (tileExtent.x / 2), (tileExtent.y / 2),
+        static_cast<int>(
+            std::ceil(tileExtent.xMax() / 2.f) - (tileExtent.x / 2)),
+        static_cast<int>(
+            std::ceil(tileExtent.yMax() / 2.f) - (tileExtent.y / 2))};
+
+    // Clear all walls from any tiles that the entity is touching.
+    for (int x = abstractTileExtent.x; x < abstractTileExtent.xMax(); ++x) {
+        for (int y = abstractTileExtent.y; y < abstractTileExtent.yMax();
+             ++y) {
+            MazeCell& cell{maze.cells[linearizeCellIndex(x, y)]};
+            if ((y != 0) && cell.northWall) {
+                cell.northWall = false;
+            }
+            if ((x != 0) && cell.westWall) {
+                cell.westWall = false;
             }
         }
     }

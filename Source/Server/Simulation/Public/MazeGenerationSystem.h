@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Timer.h"
+#include "Tile.h"
 #include "TileExtent.h"
 #include "TilePosition.h"
+#include "entt/fwd.hpp"
 #include <SDL_rect.h>
 #include <random>
 
@@ -128,6 +130,12 @@ private:
      */
     void applyCellToMap(int mapX, int mapY, const MazeCell& cell);
 
+    /**
+     * Clears the walls in all tiles that are touching the given entity.
+     */
+    void clearTilesTouchingEntity(MazeTopology& maze,
+                                  const entt::entity entity);
+
     /** Used to get entity positions and modify the tile map. */
     World& world;
 
@@ -160,8 +168,14 @@ private:
     /** Used to store neighboring tiles during generation. */
     std::vector<TilePosition> workingNeighbors;
 
-    // For randomly choosing tiles.
+    /** Used for randomly choosing tiles. */
     std::mt19937 randGenerator;
+
+    /** Used for identifying walls by numeric ID. */
+    const int NORTH_WALL_ID;
+    const int WEST_WALL_ID;
+    const int NORTHEAST_GAP_FILL_ID;
+    const int NORTHWEST_GAP_FILL_ID;
 };
 
 } // End namespace Server
