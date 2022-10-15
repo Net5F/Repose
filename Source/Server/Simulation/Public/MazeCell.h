@@ -20,6 +20,11 @@ struct MazeCell
     bool northWall{true};
     bool westWall{true};
 
+    /** Represents a fully filled cell.
+        When a cell has 4 walls, we replace the walls with this full fill.
+        If true, northWall/westWall will be ignored. */
+    bool fullFill{false};
+
     /** Tracks which generation pass this cell was last visited during.
         If -1, this cell has not been visited. */
     int lastVisitedPassNumber{-1};

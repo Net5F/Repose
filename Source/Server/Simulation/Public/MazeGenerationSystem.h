@@ -40,7 +40,7 @@ private:
      * Returns the index in the MazeTopology's cells vector where the cell with the 
      * given coordinates can be found.
      */
-    inline unsigned int linearizeCellIndex(int x, int y) const
+    inline std::size_t linearizeCellIndex(int x, int y) const
     {
         return (y * abstractMazeExtent.xLength) + x;
     }
@@ -120,6 +120,12 @@ private:
                                   std::vector<TilePosition>& path, int passNumber);
 
     /**
+     * Finds any cell that is enclosed by 4 walls and flags it to use the 
+     * "full fill" sprite.
+     */
+    void fillEnclosedCells(MazeTopology& maze);
+
+    /**
      * Sets the map to reflect the given maze topology.
      */
     void applyMazeToMap(const MazeTopology& maze);
@@ -176,6 +182,7 @@ private:
     const int WEST_WALL_ID;
     const int NORTHEAST_GAP_FILL_ID;
     const int NORTHWEST_GAP_FILL_ID;
+    const int FULL_FILL_ID;
 };
 
 } // End namespace Server

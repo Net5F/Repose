@@ -25,6 +25,7 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld, SpriteData& inSpriteD
 , WEST_WALL_ID{spriteData.get("wall_0").numericID}
 , NORTHEAST_GAP_FILL_ID{spriteData.get("gap_fill_0").numericID}
 , NORTHWEST_GAP_FILL_ID{spriteData.get("gap_fill_1").numericID}
+, FULL_FILL_ID{spriteData.get("full_0").numericID}
 {
     Timer timer;
     timer.updateSavedTime();
@@ -102,6 +103,9 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
         // Clear any tiles that the entity is touching.
         clearTilesTouchingEntity(outMaze, entity);
     }
+
+    // Flag any fully-enclosed cells to use the "full fill" sprite.
+    fillEnclosedCells(outMaze);
 }
 
 void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& startPosition, int passNumber)
@@ -315,6 +319,63 @@ bool MazeGenerationSystem::clearToNeighborIfVisited(MazeTopology& maze,
     return false;
 }
 
+void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
+{
+    // Iterate through the maze.
+    int mazeMaxX{abstractMazeExtent.xLength};
+    int mazeMaxY{abstractMazeExtent.yLength};
+    for (int mazeX = 0; mazeX < mazeMaxX; ++mazeX) {
+        for (int mazeY = 0; mazeY < mazeMaxY; ++mazeY) {
+            MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
+
+            // Check if this cell has a north wall or a fill to the north.
+            bool hasNorthWall{cell.northWall};
+            if (!hasNorthWall && (mazeY > 0)) {
+                MazeCell& northCell{
+                    maze.cells[linearizeCellIndex(mazeX, (mazeY - 1))]};
+                hasNorthWall = northCell.fullFill;
+            }
+
+            // Check if this cell has a west wall or a fill to the west.
+            bool hasWestWall{cell.westWall};
+            if (!hasWestWall && (mazeX > 0)) {
+                MazeCell& westCell{
+                    maze.cells[linearizeCellIndex((mazeX - 1), mazeY)]};
+                hasWestWall = westCell.fullFill;
+            }
+
+            // If there's a cell to the east, check if it has a west wall.
+            // Note: If there's no cell to the east, we're on the edge of the 
+            //       maze and know there's an enclosing wall. 
+            bool hasEastWall{true};
+            if ((mazeX + 1) < mazeMaxX) {
+                MazeCell& eastCell{
+                    maze.cells[linearizeCellIndex((mazeX + 1), mazeY)]};
+                hasEastWall = eastCell.westWall;
+            }
+
+            // If there's a cell to the south, check if it has a north wall.
+            // Note: If there's no cell to the south, we're on the edge of the 
+            //       maze and know there's an enclosing wall. 
+            bool hasSouthWall{true};
+            if ((mazeY + 1) < mazeMaxY) {
+                MazeCell& southCell{
+                    maze.cells[linearizeCellIndex(mazeX, (mazeY + 1))]};
+                hasSouthWall = southCell.northWall;
+            }
+
+            // If this cell is fully enclosed by walls, replace it with a 
+            // full fill.
+            if (hasNorthWall && hasWestWall && hasEastWall && hasSouthWall) {
+                cell.northWall = false;
+                cell.westWall = false;
+
+                cell.fullFill = true;
+            }
+        }
+    }
+}
+
 void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
 {
     // Clear the maze area in the tile map.
@@ -339,16 +400,20 @@ void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
                     const MazeCell& cell)
 {
     // Determine which walls this cell has and apply them to the map.
-    if (cell.northWall && cell.westWall) {
-        // Northwest corner, place the 2 west walls, the north wall, and the 
+    if (cell.fullFill) {
+        // Fully-filled cell. Place the 4 fills.
+        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, FULL_FILL_ID);
+        world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1, FULL_FILL_ID);
+        world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1, FULL_FILL_ID);
+        world.tileMap.setTileSpriteLayer((mapX + 1), (mapY + 1), 1, FULL_FILL_ID);
+    }
+    else if (cell.northWall && cell.westWall) {
+        // Northwest corner, place the 2 west walls, the north wall, and the
         // northeast gap fill.
         world.tileMap.setTileSpriteLayer(mapX, mapY, 1, WEST_WALL_ID);
-        world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
-                                         WEST_WALL_ID);
-        world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
-                                         NORTH_WALL_ID);
-        world.tileMap.setTileSpriteLayer(mapX, mapY, 2,
-                                         NORTHEAST_GAP_FILL_ID);
+        world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1, WEST_WALL_ID);
+        world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1, NORTH_WALL_ID);
+        world.tileMap.setTileSpriteLayer(mapX, mapY, 2, NORTHEAST_GAP_FILL_ID);
     }
     else if (cell.northWall) {
         // North only, place the 2 north walls.
@@ -408,10 +473,11 @@ void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
             std::ceil(tileExtent.yMax() / 2.f) - (tileExtent.y / 2))};
 
     // Clear all walls from any tiles that the entity is touching.
-    for (int x = abstractTileExtent.x; x < abstractTileExtent.xMax(); ++x) {
-        for (int y = abstractTileExtent.y; y < abstractTileExtent.yMax();
+    for (int x = abstractTileExtent.x; x <= abstractTileExtent.xMax(); ++x) {
+        for (int y = abstractTileExtent.y; y <= abstractTileExtent.yMax();
              ++y) {
             MazeCell& cell{maze.cells[linearizeCellIndex(x, y)]};
+            // Note: We check for x/y == 0 to preserve the surrounding walls.
             if ((y != 0) && cell.northWall) {
                 cell.northWall = false;
             }
