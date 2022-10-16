@@ -54,7 +54,7 @@ public:
     static constexpr unsigned int MAX_TILE_LAYERS{5};
 
     /** The string ID of our default sprite for character entities. */
-    static constexpr char DEFAULT_CHARACTER_SPRITE[] = "roberto_0";
+    static constexpr const char* DEFAULT_CHARACTER_SPRITE{"roberto_0"};
 
     /** The speed that entities will move at. Eventually we'll support
         dynamically setting this based on stats, for now it's a constant. */
