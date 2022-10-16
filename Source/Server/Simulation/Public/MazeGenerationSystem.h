@@ -46,8 +46,7 @@ private:
     }
 
     /** How often the maze should be regenerated. */
-    //static constexpr float MAZE_REGENERATION_PERIOD_S{60 * 5};
-    static constexpr float MAZE_REGENERATION_PERIOD_S{15};
+    static constexpr float MAZE_REGENERATION_PERIOD_S{60 * 15};
 
     /** The top left tile of the maze. */
     static constexpr SDL_Point MAZE_ORIGIN_TILE{16, 18};
