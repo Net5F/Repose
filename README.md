@@ -1,4 +1,4 @@
-## Simple Game World - A virtual world with simple games.
+## The World of Repose
 Reference project for [The Amalgam Engine](https://github.com/Net5F/AmalgamEngine).
 
 ## Building
