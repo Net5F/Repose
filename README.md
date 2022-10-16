@@ -1,4 +1,4 @@
-## The World of Repose
+## The World of Repose - A calm world of constant change.
 Reference project for [The Amalgam Engine](https://github.com/Net5F/AmalgamEngine).
 
 ## Building
