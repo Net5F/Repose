@@ -9,13 +9,12 @@ namespace Server
 
 /**
  * A single cell in the maze.
- * 
+ *
  * Note: We only place north and west walls. East walls are placed by putting a
- *       west wall on the cell to the east, and south walls are placed by 
+ *       west wall on the cell to the east, and south walls are placed by
  *       putting a north wall on the cell to the south.
  */
-struct MazeCell
-{
+struct MazeCell {
     /** If true, the wall is present. */
     bool northWall{true};
     bool westWall{true};

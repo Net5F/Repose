@@ -37,8 +37,8 @@ public:
 
 private:
     /**
-     * Returns the index in the MazeTopology's cells vector where the cell with the 
-     * given coordinates can be found.
+     * Returns the index in the MazeTopology's cells vector where the cell with
+     * the given coordinates can be found.
      */
     inline std::size_t linearizeCellIndex(int x, int y) const
     {
@@ -46,7 +46,7 @@ private:
     }
 
     /** How often the maze should be regenerated. */
-    static constexpr float MAZE_REGENERATION_PERIOD_S{60 * 15};
+    static constexpr float MAZE_REGENERATION_PERIOD_S{60 * 5};
 
     /** The top left tile of the maze. */
     static constexpr SDL_Point MAZE_ORIGIN_TILE{16, 18};
@@ -71,18 +71,19 @@ private:
                      int passNumber);
 
     /**
-     * Clears a path from the given starting position to an already-visited tile 
+     * Clears a path from the given starting position to an already-visited tile
      * or an exit.
      */
-    void clearToVisitedOrExit(MazeTopology& maze, const TilePosition& startPosition,
-                     int passNumber);
+    void clearToVisitedOrExit(MazeTopology& maze,
+                              const TilePosition& startPosition,
+                              int passNumber);
 
     void clearFromPlayersToExit();
 
     /**
      * Fills outNeighbors with the given position's neighbors.
-     * 
-     * @param includeVisited  If false, neighbors will be excluded if 
+     *
+     * @param includeVisited  If false, neighbors will be excluded if
      *                        neighborCell.wasVisited == true.
      * @post outNeighbors now holds the valid neighbors, if any were found.
      */
@@ -97,29 +98,29 @@ private:
     bool isExitTile(const TilePosition& position);
 
     /**
-     * Chooses a random neighbor from the given vector, clears the appropriate 
+     * Chooses a random neighbor from the given vector, clears the appropriate
      * wall, and pushes the neighbor into the path.
      *
-     * @post The maze topology has been updated appropriately, and path.back() 
+     * @post The maze topology has been updated appropriately, and path.back()
      *       is now set to the chosen neighbor.
      */
-    void
-        clearAndMoveToRandomNeighbor(MazeTopology& maze,
-                                     const std::vector<TilePosition>& neighbors,
-                                     std::vector<TilePosition>& path, int passNumber);
+    void clearAndMoveToRandomNeighbor(
+        MazeTopology& maze, const std::vector<TilePosition>& neighbors,
+        std::vector<TilePosition>& path, int passNumber);
 
     /**
-     * Checks all neighbors in the given vector. If any have already been 
+     * Checks all neighbors in the given vector. If any have already been
      * visited, clears the appropriate wall.
-     * 
+     *
      * @return true if a visited neighbor was found, else false.
      */
     bool clearToNeighborIfVisited(MazeTopology& maze,
                                   const std::vector<TilePosition>& neighbors,
-                                  std::vector<TilePosition>& path, int passNumber);
+                                  std::vector<TilePosition>& path,
+                                  int passNumber);
 
     /**
-     * Finds any cell that is enclosed by 4 walls and flags it to use the 
+     * Finds any cell that is enclosed by 4 walls and flags it to use the
      * "full fill" sprite.
      */
     void fillEnclosedCells(MazeTopology& maze);
@@ -130,7 +131,7 @@ private:
     void applyMazeToMap(const MazeTopology& maze);
 
     /**
-     * Applies the given cell to the 2x2 map area starting at the given 
+     * Applies the given cell to the 2x2 map area starting at the given
      * coordinates.
      */
     void applyCellToMap(int mapX, int mapY, const MazeCell& cell);
@@ -154,10 +155,10 @@ private:
     /** The maze's total extent in world-space. */
     const TileExtent mazeExtent;
 
-    /** The extent of our abstract representation of the maze that we use 
-        during generation. 
-        Since we want the hallways to be 2 tiles wide, we make the abstract 
-        representation half the size of the real thing. Then at the end, we 
+    /** The extent of our abstract representation of the maze that we use
+        during generation.
+        Since we want the hallways to be 2 tiles wide, we make the abstract
+        representation half the size of the real thing. Then at the end, we
         double it. */
     const TileExtent abstractMazeExtent;
 

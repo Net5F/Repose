@@ -1,9 +1,13 @@
 target_sources(Server
     PRIVATE
         Private/MazeGenerationSystem.cpp
+        Private/PlantSystem.cpp
         Private/SimulationExtension.cpp
     PUBLIC
         Public/MazeGenerationSystem.h
+        Public/Plant.h
+        Public/PlantRegion.h
+        Public/PlantSystem.h
         Public/MazeTopology.h
         Public/MazeCell.h
         Public/SimulationExtension.h

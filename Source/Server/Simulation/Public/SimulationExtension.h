@@ -3,6 +3,7 @@
 #include "ISimulationExtension.h"
 #include "SimulationExDependencies.h"
 #include "MazeGenerationSystem.h"
+#include "PlantSystem.h"
 
 namespace AM
 {
@@ -28,7 +29,7 @@ public:
     void beforeAll();
 
     /**
-     * Called after the tile map is updated and client entities are 
+     * Called after the tile map is updated and client entities are
      * added/removed.
      */
     void afterMapAndConnectionUpdates();
@@ -48,6 +49,8 @@ public:
 
 private:
     MazeGenerationSystem mazeGenerationSystem;
+
+    PlantSystem plantSystem;
 };
 
 } // End namespace Server

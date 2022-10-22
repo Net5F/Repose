@@ -63,8 +63,8 @@ robocopy "%BasePath%\Resources\Shared\Common" "%PackagePath%\Client" /E >nul 2>&
 robocopy "%BasePath%\Resources\Shared\Common" "%PackagePath%\Server" /E >nul 2>&1
 
 rem Detect and copy dependencies.
-cmake -P "%BasePath%\CMake\copy_windows_deps.cmake" "%PackagePath%\Client" false
-cmake -P "%BasePath%\CMake\copy_windows_deps.cmake" "%PackagePath%\Server" true
+cmake -P "%BasePath%\Libraries\AmalgamEngine\CMake\copy_windows_deps.cmake" "%PackagePath%\Client" false
+cmake -P "%BasePath%\Libraries\AmalgamEngine\CMake\copy_windows_deps.cmake" "%PackagePath%\Server" true
 
 echo "Packaging complete. Package can be found at %PackagePath%"
 

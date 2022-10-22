@@ -2,6 +2,7 @@
 #include "World.h"
 #include "SpriteData.h"
 #include "MazeTopology.h"
+#include "Log.h"
 #include "AMAssert.h"
 #include <algorithm>
 
@@ -10,11 +11,11 @@ namespace AM
 namespace Server
 {
 
-MazeGenerationSystem::MazeGenerationSystem(World& inWorld, SpriteData& inSpriteData)
+MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
+                                           SpriteData& inSpriteData)
 : world{inWorld}
 , spriteData{inSpriteData}
-, mazeExtent{MAZE_ORIGIN_TILE.x, MAZE_ORIGIN_TILE.y,
-             MAZE_WIDTH, MAZE_HEIGHT}
+, mazeExtent{MAZE_ORIGIN_TILE.x, MAZE_ORIGIN_TILE.y, MAZE_WIDTH, MAZE_HEIGHT}
 , abstractMazeExtent{0, 0, (mazeExtent.xLength / 2), (mazeExtent.yLength / 2)}
 , entranceTile{8, 17}
 , exitTiles{{1, 0}, {0, 11}, {17, 2}}
@@ -108,7 +109,9 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
     fillEnclosedCells(outMaze);
 }
 
-void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& startPosition, int passNumber)
+void MazeGenerationSystem::clearToExit(MazeTopology& maze,
+                                       const TilePosition& startPosition,
+                                       int passNumber)
 {
     // Note: Uses a "backtracking generator" maze algorithm.
 
@@ -120,7 +123,8 @@ void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& s
     while (true) {
         // Get a valid neighboring tile to move to.
         workingNeighbors.clear();
-        getNeighboringTiles(maze, workingPath, false, passNumber, workingNeighbors);
+        getNeighboringTiles(maze, workingPath, false, passNumber,
+                            workingNeighbors);
 
         // If there's a valid neighbor, remove the wall and move to it.
         if (workingNeighbors.size() > 0) {
@@ -132,16 +136,17 @@ void MazeGenerationSystem::clearToExit(MazeTopology& maze, const TilePosition& s
             workingPath.pop_back();
         }
 
-        // If the current tile is an exit other than the one we started on, 
+        // If the current tile is an exit other than the one we started on,
         // we're done.
-        if ((workingPath.back() != workingPath.front()) && isExitTile(workingPath.back())) {
+        if ((workingPath.back() != workingPath.front())
+            && isExitTile(workingPath.back())) {
             return;
         }
     }
 }
 
-void MazeGenerationSystem::clearToVisitedOrExit(MazeTopology& maze
-    , const TilePosition& startPosition, int passNumber)
+void MazeGenerationSystem::clearToVisitedOrExit(
+    MazeTopology& maze, const TilePosition& startPosition, int passNumber)
 {
     // Note: Uses a "backtracking generator" maze algorithm.
 
@@ -153,33 +158,38 @@ void MazeGenerationSystem::clearToVisitedOrExit(MazeTopology& maze
     while (true) {
         // Get a valid neighboring tile to move to.
         workingNeighbors.clear();
-        getNeighboringTiles(maze, workingPath, true, passNumber, workingNeighbors);
+        getNeighboringTiles(maze, workingPath, true, passNumber,
+                            workingNeighbors);
 
         // If any of the neighbors were already visited, we're done.
-        if (clearToNeighborIfVisited(maze, workingNeighbors, workingPath, passNumber)) {
+        if (clearToNeighborIfVisited(maze, workingNeighbors, workingPath,
+                                     passNumber)) {
             return;
         }
 
         // If there's a valid neighbor, remove the wall and move to it.
         if (workingNeighbors.size() > 0) {
-            clearAndMoveToRandomNeighbor(maze, workingNeighbors, workingPath, passNumber);
+            clearAndMoveToRandomNeighbor(maze, workingNeighbors, workingPath,
+                                         passNumber);
         }
         else {
             // There were no valid neighbors, backtrack.
             workingPath.pop_back();
         }
 
-        // If the current tile is an exit other than the one we started on, 
+        // If the current tile is an exit other than the one we started on,
         // we're done.
-        if ((workingPath.back() != workingPath.front()) && isExitTile(workingPath.back())) {
+        if ((workingPath.back() != workingPath.front())
+            && isExitTile(workingPath.back())) {
             return;
         }
     }
 }
 
-void MazeGenerationSystem::getNeighboringTiles(const MazeTopology& maze,
-                         const std::vector<TilePosition>& path, bool includeVisited, int passNumber,
-                         std::vector<TilePosition>& outNeighbors)
+void MazeGenerationSystem::getNeighboringTiles(
+    const MazeTopology& maze, const std::vector<TilePosition>& path,
+    bool includeVisited, int passNumber,
+    std::vector<TilePosition>& outNeighbors)
 {
     // Add the coordinates that are directly N,S,E,W of the given position.
     const TilePosition& currentPosition{path.back()};
@@ -199,17 +209,15 @@ void MazeGenerationSystem::getNeighboringTiles(const MazeTopology& maze,
         // Else if we're including visited tiles.
         else if (includeVisited && (path.size() > 1)) {
             // If this tile was already visited on this run, remove it.
-            const MazeCell& cell{
-                maze.cells[linearizeCellIndex(it->x, it->y)]};
+            const MazeCell& cell{maze.cells[linearizeCellIndex(it->x, it->y)]};
             if (cell.lastVisitedPassNumber == passNumber) {
                 removeNeighbor = true;
             }
         }
         else {
-            // If we're ignoring visited cells and this neighbor was visited, 
+            // If we're ignoring visited cells and this neighbor was visited,
             // remove it.
-            const MazeCell& cell{
-                maze.cells[linearizeCellIndex(it->x, it->y)]};
+            const MazeCell& cell{maze.cells[linearizeCellIndex(it->x, it->y)]};
             if (!includeVisited && (cell.lastVisitedPassNumber != -1)) {
                 removeNeighbor = true;
             }
@@ -236,10 +244,9 @@ bool MazeGenerationSystem::isExitTile(const TilePosition& position)
     }
 }
 
-void
-    MazeGenerationSystem::clearAndMoveToRandomNeighbor(MazeTopology& maze,
-                                 const std::vector<TilePosition>& neighbors,
-                                 std::vector<TilePosition>& path, int passNumber)
+void MazeGenerationSystem::clearAndMoveToRandomNeighbor(
+    MazeTopology& maze, const std::vector<TilePosition>& neighbors,
+    std::vector<TilePosition>& path, int passNumber)
 {
     // Choose a random neighbor and prepare the cells we'll be acting on.
     std::uniform_int_distribution<std::size_t> dist{0, (neighbors.size() - 1)};
@@ -275,9 +282,9 @@ void
     path.push_back(chosenNeighbor);
 }
 
-bool MazeGenerationSystem::clearToNeighborIfVisited(MazeTopology& maze,
-                              const std::vector<TilePosition>& neighbors,
-                              std::vector<TilePosition>& path, int passNumber)
+bool MazeGenerationSystem::clearToNeighborIfVisited(
+    MazeTopology& maze, const std::vector<TilePosition>& neighbors,
+    std::vector<TilePosition>& path, int passNumber)
 {
     // Check all the neighbors.
     for (const TilePosition& neighborTile : neighbors) {
@@ -345,8 +352,8 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
             }
 
             // If there's a cell to the east, check if it has a west wall.
-            // Note: If there's no cell to the east, we're on the edge of the 
-            //       maze and know there's an enclosing wall. 
+            // Note: If there's no cell to the east, we're on the edge of the
+            //       maze and know there's an enclosing wall.
             bool hasEastWall{true};
             if ((mazeX + 1) < mazeMaxX) {
                 MazeCell& eastCell{
@@ -355,8 +362,8 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
             }
 
             // If there's a cell to the south, check if it has a north wall.
-            // Note: If there's no cell to the south, we're on the edge of the 
-            //       maze and know there's an enclosing wall. 
+            // Note: If there's no cell to the south, we're on the edge of the
+            //       maze and know there's an enclosing wall.
             bool hasSouthWall{true};
             if ((mazeY + 1) < mazeMaxY) {
                 MazeCell& southCell{
@@ -364,7 +371,7 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
                 hasSouthWall = southCell.northWall;
             }
 
-            // If this cell is fully enclosed by walls, replace it with a 
+            // If this cell is fully enclosed by walls, replace it with a
             // full fill.
             if (hasNorthWall && hasWestWall && hasEastWall && hasSouthWall) {
                 cell.northWall = false;
@@ -397,7 +404,7 @@ void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
 }
 
 void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
-                    const MazeCell& cell)
+                                          const MazeCell& cell)
 {
     // Determine which walls this cell has and apply them to the map.
     if (cell.fullFill) {
@@ -405,7 +412,8 @@ void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
         world.tileMap.setTileSpriteLayer(mapX, mapY, 1, FULL_FILL_ID);
         world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1, FULL_FILL_ID);
         world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1, FULL_FILL_ID);
-        world.tileMap.setTileSpriteLayer((mapX + 1), (mapY + 1), 1, FULL_FILL_ID);
+        world.tileMap.setTileSpriteLayer((mapX + 1), (mapY + 1), 1,
+                                         FULL_FILL_ID);
     }
     else if (cell.northWall && cell.westWall) {
         // Northwest corner, place the 2 west walls, the north wall, and the
@@ -418,31 +426,29 @@ void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
     else if (cell.northWall) {
         // North only, place the 2 north walls.
         world.tileMap.setTileSpriteLayer(mapX, mapY, 1, NORTH_WALL_ID);
-        world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
-                                         NORTH_WALL_ID);
+        world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1, NORTH_WALL_ID);
     }
     else if (cell.westWall) {
         // West only, place the 2 west walls.
         world.tileMap.setTileSpriteLayer(mapX, mapY, 1, WEST_WALL_ID);
-        world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
-                                         WEST_WALL_ID);
+        world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1, WEST_WALL_ID);
     }
     else {
         // No walls. First check if there are tiles to the north and west.
         if ((mapX > 0) && (mapY > 0)) {
-            // There are tiles to the north and west, check if they have walls 
+            // There are tiles to the north and west, check if they have walls
             // that form a gap.
-            const Tile& northTile{
-                world.tileMap.getTile(mapX, (mapY - 1))};
-            const Tile& westTile{
-                world.tileMap.getTile((mapX - 1), mapY)};
+            const Tile& northTile{world.tileMap.getTile(mapX, (mapY - 1))};
+            const Tile& westTile{world.tileMap.getTile((mapX - 1), mapY)};
 
             bool northTileHasWestWall{
                 (northTile.spriteLayers.size() > 1)
-                && (northTile.spriteLayers[1].sprite.numericID == WEST_WALL_ID)};
+                && (northTile.spriteLayers[1].sprite.numericID
+                    == WEST_WALL_ID)};
             bool westTileHasNorthWall{
                 (westTile.spriteLayers.size() > 1)
-                && (westTile.spriteLayers[1].sprite.numericID == NORTH_WALL_ID)};
+                && (westTile.spriteLayers[1].sprite.numericID
+                    == NORTH_WALL_ID)};
 
             // If there's a gap, fill it.
             if (northTileHasWestWall && westTileHasNorthWall) {
@@ -456,7 +462,7 @@ void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
 void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
                                                     const entt::entity entity)
 {
-    // Get the tile extent that this entity is touching, clip it to the 
+    // Get the tile extent that this entity is touching, clip it to the
     // maze bounds, and make it relative to the maze origin.
     const BoundingBox& boundingBox{world.registry.get<BoundingBox>(entity)};
     TileExtent tileExtent{boundingBox.asTileExtent()};
@@ -467,10 +473,10 @@ void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
     // Convert the extent so we can work with the abstract representation.
     const TileExtent abstractTileExtent{
         (tileExtent.x / 2), (tileExtent.y / 2),
-        static_cast<int>(
-            std::ceil(tileExtent.xMax() / 2.f) - (tileExtent.x / 2)),
-        static_cast<int>(
-            std::ceil(tileExtent.yMax() / 2.f) - (tileExtent.y / 2))};
+        static_cast<int>(std::ceil(tileExtent.xMax() / 2.f)
+                         - (tileExtent.x / 2)),
+        static_cast<int>(std::ceil(tileExtent.yMax() / 2.f)
+                         - (tileExtent.y / 2))};
 
     // Clear all walls from any tiles that the entity is touching.
     for (int x = abstractTileExtent.x; x <= abstractTileExtent.xMax(); ++x) {

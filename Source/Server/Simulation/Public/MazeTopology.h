@@ -9,12 +9,11 @@ namespace Server
 
 /**
  * Holds the topology of a maze.
- * 
- * Note: Since we want maze hallways to be 2 cells wide, we typically generate 
+ *
+ * Note: Since we want maze hallways to be 2 cells wide, we typically generate
  *       the maze at half size and double it before applying to the tile map.
  */
-struct MazeTopology
-{
+struct MazeTopology {
     std::vector<MazeCell> cells{};
 };
 
