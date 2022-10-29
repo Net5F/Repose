@@ -11,8 +11,7 @@ class AssetCache;
 namespace Client
 {
 /**
- * The button style used for the confirm/cancel buttons in confirmation
- * dialogs.
+ * The regular-sized, general-purpose button style.
  */
 class MainButton : public AUI::Button
 {

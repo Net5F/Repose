@@ -21,13 +21,32 @@ UserInterfaceExtension::UserInterfaceExtension(UserInterfaceExDependencies deps)
 : worldSinks{deps.worldSignals}
 , auiInitializer{deps.sdlRenderer,
                  {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT}}
+, titleScreen{*this, worldSinks, deps.uiEventDispatcher, deps.assetCache}
 , mainScreen{worldSinks, deps.uiEventDispatcher, deps.assetCache,
              deps.spriteData}
-, currentScreen{&mainScreen}
+, currentScreen{&titleScreen}
 {
     ScreenRect windowSize{UserConfig::get().getWindowSize()};
     AUI::Core::setActualScreenSize({static_cast<int>(windowSize.width),
                                     static_cast<int>(windowSize.height)});
+}
+
+void UserInterfaceExtension::changeScreenTo(ScreenType screenType)
+{
+    switch (screenType) {
+        case ScreenType::TitleScreen: {
+            currentScreen = &titleScreen;
+            break;
+        }
+        case ScreenType::MainScreen: {
+            currentScreen = &mainScreen;
+            break;
+        }
+        default: {
+            currentScreen = &titleScreen;
+            break;
+        }
+    }
 }
 
 bool UserInterfaceExtension::handleOSEvent(SDL_Event& event)

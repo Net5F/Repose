@@ -3,6 +3,7 @@
 #include "IUserInterfaceExtension.h"
 #include "UserInterfaceExDependencies.h"
 #include "WorldSinks.h"
+#include "TitleScreen.h"
 #include "MainScreen.h"
 #include "AUI/Initializer.h"
 
@@ -29,9 +30,19 @@ namespace Client
 class UserInterfaceExtension : public IUserInterfaceExtension
 {
 public:
+    enum class ScreenType {
+        TitleScreen,
+        MainScreen
+    };
+
     // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
     UserInterfaceExtension(UserInterfaceExDependencies deps);
+
+    /**
+     * Changes the currentScreen to the given screenType.
+     */
+    void changeScreenTo(ScreenType screenType);
 
     /**
      * Calls AUI::Screen::tick() on the current screen.
@@ -67,6 +78,9 @@ private:
     /** AmalgamUI initializer, used to init/quit the library at the proper
         times. */
     AUI::Initializer auiInitializer;
+
+    /** The opening title screen, seen on app launch. */
+    TitleScreen titleScreen;
 
     /** The main UI that overlays the world. */
     MainScreen mainScreen;

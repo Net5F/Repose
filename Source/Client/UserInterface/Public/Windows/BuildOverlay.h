@@ -67,6 +67,7 @@ public:
     void onMouseLeave() override;
 
 private:
+    // World signal handlers.
     /**
      * Sets mapTileExtent to the new extent of the tile map.
      */

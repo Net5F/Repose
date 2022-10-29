@@ -1,20 +1,28 @@
 target_sources(Client
     PRIVATE
         Private/MainScreen.cpp
+        Private/TitleScreen.cpp
         Private/UserInterfaceExtension.cpp
         Private/WorldSinks.cpp
         Private/Widgets/MainButton.cpp
         Private/Widgets/MainThumbnail.cpp
+        Private/Widgets/TitleButton.cpp
+        Private/Widgets/TitleTextInput.cpp
         Private/Windows/BuildOverlay.cpp
         Private/Windows/BuildPanel.cpp
+        Private/Windows/TitleWindow.cpp
     PUBLIC
         Public/MainScreen.h
+        Public/TitleScreen.h
         Public/UserInterfaceExtension.h
         Public/WorldSinks.h
         Public/Widgets/MainButton.h
         Public/Widgets/MainThumbnail.h
+        Public/Widgets/TitleButton.h
+        Public/Widgets/TitleTextInput.h
         Public/Windows/BuildOverlay.h
         Public/Windows/BuildPanel.h
+        Public/Windows/TitleWindow.h
 )
 
 target_include_directories(Client

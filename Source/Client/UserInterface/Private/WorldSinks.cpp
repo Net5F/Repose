@@ -6,7 +6,9 @@ namespace AM
 namespace Client
 {
 WorldSinks::WorldSinks(WorldSignals& worldSignals)
-: tileMapExtentChanged{worldSignals.tileMapExtentChanged}
+: simulationStarted{worldSignals.simulationStarted}
+, serverConnectionError{worldSignals.serverConnectionError}
+, tileMapExtentChanged{worldSignals.tileMapExtentChanged}
 {
 }
 
