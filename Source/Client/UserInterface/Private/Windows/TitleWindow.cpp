@@ -21,7 +21,7 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
 , titleText({0, 271, 1920, 75}, "TitleText")
 , userNameLabel({0, 435, 1920, 36}, "UserNameLabel")
 , userNameInput(assetCache, {770, 481, 380, 54}, "UserNameInput")
-, connectButton(assetCache, {760, 571, 400, 70}, "Connect", "ConnectButton")
+, connectButton(assetCache, {760, 571, 404, 70}, "Connect", "ConnectButton")
 , statusText({0, 695, 1920, 48}, "StatusText")
 {
     // Add our children so they're included in rendering, etc.
@@ -43,7 +43,7 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
     userNameLabel.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
     userNameLabel.setText("User Name");
 
-    userNameInput.setTextFont((Paths::FONT_DIR + "B612-Regular.ttf"), 30);
+    userNameInput.setTextFont((Paths::FONT_DIR + "B612-Regular.ttf"), 28);
     userNameInput.setMargins({12, 0, 12, 0});
 
     /* Status text. */
