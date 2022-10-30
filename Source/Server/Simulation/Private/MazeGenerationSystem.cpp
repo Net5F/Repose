@@ -352,30 +352,47 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
             }
 
             // If there's a cell to the east, check if it has a west wall.
-            // Note: If there's no cell to the east, we're on the edge of the
-            //       maze and know there's an enclosing wall.
-            bool hasEastWall{true};
+            // Note: If there's no cell to the east, we're on the eastern
+            //       boundary of the maze and know there's an enclosing wall.
+            bool onEastBoundary{true};
+            bool eastCellHasWestWall{false};
             if ((mazeX + 1) < mazeMaxX) {
+                onEastBoundary = false;
                 MazeCell& eastCell{
                     maze.cells[linearizeCellIndex((mazeX + 1), mazeY)]};
-                hasEastWall = eastCell.westWall;
+                eastCellHasWestWall = eastCell.westWall;
             }
 
             // If there's a cell to the south, check if it has a north wall.
-            // Note: If there's no cell to the south, we're on the edge of the
-            //       maze and know there's an enclosing wall.
-            bool hasSouthWall{true};
+            // Note: If there's no cell to the south, we're on the southern 
+            //       boundary of the maze and know there's an enclosing wall.
+            bool onSouthBoundary{true};
+            bool southCellHasNorthWall{false};
             if ((mazeY + 1) < mazeMaxY) {
+                onSouthBoundary = false;
                 MazeCell& southCell{
                     maze.cells[linearizeCellIndex(mazeX, (mazeY + 1))]};
-                hasSouthWall = southCell.northWall;
+                southCellHasNorthWall = southCell.northWall;
             }
 
-            // If this cell is fully enclosed by walls, replace it with a
-            // full fill.
-            if (hasNorthWall && hasWestWall && hasEastWall && hasSouthWall) {
+            // If this cell is fully enclosed by walls, remove them and place 
+            // a full fill.
+            if (hasNorthWall && hasWestWall
+                && (onEastBoundary || eastCellHasWestWall)
+                && (onSouthBoundary || southCellHasNorthWall)) {
                 cell.northWall = false;
                 cell.westWall = false;
+
+                if (eastCellHasWestWall) {
+                    MazeCell& eastCell{
+                        maze.cells[linearizeCellIndex((mazeX + 1), mazeY)]};
+                    eastCell.westWall = false;
+                }
+                if (southCellHasNorthWall) {
+                    MazeCell& southCell{
+                        maze.cells[linearizeCellIndex(mazeX, (mazeY + 1))]};
+                    southCell.northWall = false;
+                }
 
                 cell.fullFill = true;
             }
