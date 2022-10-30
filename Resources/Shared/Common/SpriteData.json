@@ -7,9 +7,9 @@
                     "displayName": "Wall 0",
                     "hasBoundingBox": true,
                     "modelBounds": {
-                        "maxX": 8.0,
+                        "maxX": 7.0,
                         "maxY": 32.0,
-                        "maxZ": 79.19999694824219,
+                        "maxZ": 78.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -50,8 +50,8 @@
                     "hasBoundingBox": true,
                     "modelBounds": {
                         "maxX": 32.0,
-                        "maxY": 8.0,
-                        "maxZ": 79.19999694824219,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -164,10 +164,10 @@
                     "displayName": "Gap Fill 0",
                     "hasBoundingBox": true,
                     "modelBounds": {
-                        "maxX": 31.5,
-                        "maxY": 8.0,
-                        "maxZ": 79.80000305175781,
-                        "minX": 24.25,
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 7.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
@@ -185,9 +185,9 @@
                     "displayName": "Gap Fill 1",
                     "hasBoundingBox": true,
                     "modelBounds": {
-                        "maxX": 7.75,
-                        "maxY": 7.75,
-                        "maxZ": 78.5999984741211,
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -323,7 +323,7 @@
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 32.0,
-                        "maxZ": 78.5999984741211,
+                        "maxZ": 78.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0

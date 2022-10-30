@@ -25,7 +25,7 @@ public:
         1.0 / static_cast<double>(SIM_TICKS_PER_SECOND)};
 
     /** The max number of entities that we will allow. */
-    static constexpr unsigned int MAX_ENTITIES{1010};
+    static constexpr std::size_t MAX_ENTITIES{1010};
 
     /** The x and y axis width, in world units, of our tiles. */
     static constexpr unsigned int TILE_WORLD_WIDTH{32};
@@ -51,7 +51,7 @@ public:
     static constexpr float AOI_RADIUS_SQUARED{AOI_RADIUS * AOI_RADIUS};
 
     /** The maximum number of sprite layers a tile can have. */
-    static constexpr unsigned int MAX_TILE_LAYERS{5};
+    static constexpr std::size_t MAX_TILE_LAYERS{5};
 
     /** The string ID of our default sprite for character entities. */
     static constexpr const char* DEFAULT_CHARACTER_SPRITE{"roberto_0"};
@@ -71,7 +71,7 @@ public:
 
     /** Message batches larger than this size (in bytes) will be compressed
         before sending. */
-    static constexpr unsigned int BATCH_COMPRESSION_THRESHOLD{50};
+    static constexpr std::size_t BATCH_COMPRESSION_THRESHOLD{50};
 
     /** The "level" value passed to zlib's compression function when
         compressing message batches.
@@ -90,7 +90,7 @@ public:
 
         Note: Each simulated client in LoadTestClient instantiates a buffer,
               so you may need to be conscious of this size in that case. */
-    static constexpr unsigned int MAX_BATCH_SIZE{15'000};
+    static constexpr std::size_t MAX_BATCH_SIZE{20'000};
 
     //-------------------------------------------------------------------------
     // Renderer
