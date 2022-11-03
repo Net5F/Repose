@@ -97,9 +97,6 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
 
         // Clear a path to the existing path or another exit.
         clearToVisitedOrExit(outMaze, abstractTilePosition, passNumber++);
-        TilePosition end{workingPath.back()};
-        end.x = (end.x * 2) + mazeExtent.x;
-        end.y = (end.y * 2) + mazeExtent.y;
 
         // Clear any tiles that the entity is touching.
         clearTilesTouchingEntity(outMaze, entity);
@@ -410,11 +407,11 @@ void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
     int mazeMaxY{abstractMazeExtent.yLength};
     for (int mazeX = 0; mazeX < mazeMaxX; ++mazeX) {
         for (int mazeY = 0; mazeY < mazeMaxY; ++mazeY) {
-            int mapX{mazeExtent.x + (mazeX * 2)};
-            int mapY{mazeExtent.y + (mazeY * 2)};
             const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
 
             // Apply this cell's walls to the corresponding 2x2 map area.
+            int mapX{mazeExtent.x + (mazeX * 2)};
+            int mapY{mazeExtent.y + (mazeY * 2)};
             applyCellToMap(mapX, mapY, cell);
         }
     }
@@ -488,12 +485,19 @@ void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
     tileExtent.y -= mazeExtent.y;
 
     // Convert the extent so we can work with the abstract representation.
-    const TileExtent abstractTileExtent{
-        (tileExtent.x / 2), (tileExtent.y / 2),
-        static_cast<int>(std::ceil(tileExtent.xMax() / 2.f)
-                         - (tileExtent.x / 2)),
-        static_cast<int>(std::ceil(tileExtent.yMax() / 2.f)
-                         - (tileExtent.y / 2))};
+    TilePosition topLeft{};
+    topLeft.x = tileExtent.x / 2;
+    topLeft.y = tileExtent.y / 2;
+
+    TilePosition bottomRight{};
+    bottomRight.x = static_cast<int>(
+        std::ceil((tileExtent.x + tileExtent.xLength) / 2.f));
+    bottomRight.y = static_cast<int>(
+        std::ceil((tileExtent.y + tileExtent.yLength) / 2.f));
+
+    const TileExtent abstractTileExtent{topLeft.x, topLeft.y,
+                                        (bottomRight.x - topLeft.x),
+                                        (bottomRight.y - topLeft.y)};
 
     // Clear all walls from any tiles that the entity is touching.
     for (int x = abstractTileExtent.x; x <= abstractTileExtent.xMax(); ++x) {
