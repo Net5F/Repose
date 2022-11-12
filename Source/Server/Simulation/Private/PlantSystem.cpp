@@ -15,41 +15,29 @@ PlantSystem::PlantSystem(World& inWorld, SpriteData& inSpriteData)
 , plantRegions{}
 , randomDevice()
 , generator(randomDevice())
+, SUNFLOWER_SAPLING_ID{spriteData.get("sunflower_0").numericID}
+, SUNFLOWER_MIDGROWTH_ID{spriteData.get("sunflower_1").numericID}
+, SUNFLOWER_FULLYGROWN_ID{spriteData.get("sunflower_2").numericID}
+, SUNFLOWER_DYING_ID{spriteData.get("sunflower_3").numericID}
 {
     // Add the regions.
     plantRegions.emplace_back();
-    plantRegions.emplace_back();
 
-    PlantRegion& garden{plantRegions[0]};
-    garden.extent = {5, 36, 8, 11};
-    garden.plantTypes = {Plant::Type::Rose, Plant::Type::Hydrangea};
-
-    PlantRegion& jungle{plantRegions[1]};
-    jungle.extent = {55, 17, 7, 12};
-    jungle.plantTypes = {Plant::Type::TreeFern, Plant::Type::BananaLeafPlant};
+    PlantRegion& field{plantRegions[0]};
+    field.extent = {5, 36, 8, 11};
+    field.plantTypes = {Plant::Type::Sunflower};
 
     // Initialize the open tiles for each region.
-    for (int x = garden.extent.x; x <= garden.extent.xMax(); ++x) {
-        for (int y = garden.extent.y; y <= garden.extent.yMax(); ++y) {
-            garden.openTiles.emplace_back(x, y);
-        }
-    }
-
-    for (int x = jungle.extent.x; x <= jungle.extent.xMax(); ++x) {
-        for (int y = jungle.extent.y; y <= jungle.extent.yMax(); ++y) {
-            jungle.openTiles.emplace_back(x, y);
+    for (int x = field.extent.x; x <= field.extent.xMax(); ++x) {
+        for (int y = field.extent.y; y <= field.extent.yMax(); ++y) {
+            field.openTiles.emplace_back(x, y);
         }
     }
 
     // Initialize the plant counts for each region.
-    const int gardenPlantCount{10};
-    for (std::size_t i = 0; i < gardenPlantCount; ++i) {
-        garden.plants.emplace_back();
-    }
-
-    const int junglePlantCount{14};
-    for (std::size_t i = 0; i < junglePlantCount; ++i) {
-        jungle.plants.emplace_back();
+    const int fieldPlantCount{20};
+    for (std::size_t i = 0; i < fieldPlantCount; ++i) {
+        field.plants.emplace_back();
     }
 
     // Initialize all the plants.
@@ -127,7 +115,7 @@ void PlantSystem::replantPlant(PlantRegion& region, Plant& plant)
 
     // Randomize the plant's type.
     std::uniform_int_distribution<std::size_t> typeDist{
-        0, region.plantTypes.size()};
+        0, (region.plantTypes.size() - 1)};
     plant.type = region.plantTypes[typeDist(generator)];
 
     // Randomize the plant's updateTime.
@@ -146,67 +134,30 @@ void PlantSystem::replantPlant(PlantRegion& region, Plant& plant)
 int PlantSystem::getPlantSpriteID(Plant& plant)
 {
     switch (plant.type) {
-        case Plant::Type::Rose: {
+        case Plant::Type::Sunflower: {
             switch (plant.lifeStage) {
-                case Plant::LifeStage::Sapling:
-                    return spriteData.get("gap_fill_0").numericID;
-                case Plant::LifeStage::MidGrowth:
-                    return spriteData.get("gap_fill_1").numericID;
-                case Plant::LifeStage::FullyGrown:
-                    return spriteData.get("gap_fill_2").numericID;
-                case Plant::LifeStage::Dying:
-                    return spriteData.get("gap_fill_3").numericID;
-                default:
+                case Plant::LifeStage::Sapling: {
+                    return SUNFLOWER_SAPLING_ID;
+                }
+                case Plant::LifeStage::MidGrowth: {
+                    return SUNFLOWER_MIDGROWTH_ID;
+                }
+                case Plant::LifeStage::FullyGrown: {
+                    return SUNFLOWER_FULLYGROWN_ID;
+                }
+                case Plant::LifeStage::Dying: {
+                    return SUNFLOWER_DYING_ID;
+                }
+                default: {
+                    LOG_INFO("Empty 1");
                     return spriteData.get("empty").numericID;
-            }
-            break;
-        }
-        case Plant::Type::Hydrangea: {
-            switch (plant.lifeStage) {
-                case Plant::LifeStage::Sapling:
-                    return spriteData.get("gap_fill_0").numericID;
-                case Plant::LifeStage::MidGrowth:
-                    return spriteData.get("gap_fill_1").numericID;
-                case Plant::LifeStage::FullyGrown:
-                    return spriteData.get("gap_fill_2").numericID;
-                case Plant::LifeStage::Dying:
-                    return spriteData.get("gap_fill_3").numericID;
-                default:
-                    return spriteData.get("empty").numericID;
-            }
-            break;
-        }
-        case Plant::Type::TreeFern: {
-            switch (plant.lifeStage) {
-                case Plant::LifeStage::Sapling:
-                    return spriteData.get("gap_fill_0").numericID;
-                case Plant::LifeStage::MidGrowth:
-                    return spriteData.get("gap_fill_1").numericID;
-                case Plant::LifeStage::FullyGrown:
-                    return spriteData.get("gap_fill_2").numericID;
-                case Plant::LifeStage::Dying:
-                    return spriteData.get("gap_fill_3").numericID;
-                default:
-                    return spriteData.get("empty").numericID;
-            }
-            break;
-        }
-        case Plant::Type::BananaLeafPlant: {
-            switch (plant.lifeStage) {
-                case Plant::LifeStage::Sapling:
-                    return spriteData.get("gap_fill_0").numericID;
-                case Plant::LifeStage::MidGrowth:
-                    return spriteData.get("gap_fill_1").numericID;
-                case Plant::LifeStage::FullyGrown:
-                    return spriteData.get("gap_fill_2").numericID;
-                case Plant::LifeStage::Dying:
-                    return spriteData.get("gap_fill_3").numericID;
-                default:
-                    return spriteData.get("empty").numericID;
+                }
             }
             break;
         }
         default: {
+            LOG_INFO("Empty 2: %u, %u", static_cast<unsigned>(plant.type),
+                     static_cast<unsigned>(plant.lifeStage));
             return spriteData.get("empty").numericID;
         }
     }

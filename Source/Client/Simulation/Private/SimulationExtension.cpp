@@ -7,8 +7,8 @@ namespace AM
 namespace Client
 {
 
-SimulationExtension::SimulationExtension(
-    [[maybe_unused]] SimulationExDependencies deps)
+SimulationExtension::SimulationExtension(SimulationExDependencies deps)
+: animationSystem{deps.world, deps.spriteData}
 {
 }
 
@@ -16,7 +16,10 @@ void SimulationExtension::beforeAll() {}
 
 void SimulationExtension::afterMapAndConnectionUpdates() {}
 
-void SimulationExtension::afterMovement() {}
+void SimulationExtension::afterMovement()
+{
+    animationSystem.updateAnimations();
+}
 
 bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
 {

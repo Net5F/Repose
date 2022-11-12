@@ -2,6 +2,7 @@
 
 #include "ISimulationExtension.h"
 #include "SimulationExDependencies.h"
+#include "AnimationSystem.h"
 
 namespace AM
 {
@@ -45,6 +46,7 @@ public:
     bool handleOSEvent(SDL_Event& event) override;
 
 private:
+    AnimationSystem animationSystem;
 };
 
 } // End namespace Client

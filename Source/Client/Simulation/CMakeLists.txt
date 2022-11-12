@@ -1,7 +1,9 @@
 target_sources(Client
     PRIVATE
+        Private/AnimationSystem.cpp
         Private/SimulationExtension.cpp
     PUBLIC
+        Public/AnimationSystem.h
         Public/SimulationExtension.h
 )
 

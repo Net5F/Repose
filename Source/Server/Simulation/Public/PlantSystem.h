@@ -63,6 +63,12 @@ private:
     // For random positions, types, and update times.
     std::random_device randomDevice;
     std::mt19937 generator;
+
+    /** Used for setting plant sprites. */
+    const int SUNFLOWER_SAPLING_ID; 
+    const int SUNFLOWER_MIDGROWTH_ID; 
+    const int SUNFLOWER_FULLYGROWN_ID; 
+    const int SUNFLOWER_DYING_ID; 
 };
 
 } // End namespace Server

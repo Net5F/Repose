@@ -16,10 +16,7 @@ struct Plant {
      * Possible types of plant.
      */
     enum class Type : unsigned int {
-        Rose = 0,
-        Hydrangea,
-        TreeFern,
-        BananaLeafPlant
+        Sunflower = 0,
     };
 
     /**
@@ -37,7 +34,7 @@ struct Plant {
     TilePosition position{-1, -1};
 
     /** The type of plant that this is. */
-    Type type{Type::Rose};
+    Type type{Type::Sunflower};
 
     /** How long it takes for this plant to progress to the next stage, in 
         seconds. */
