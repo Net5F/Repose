@@ -73,7 +73,7 @@ private:
      */
     void onTileMapExtentChanged(TileExtent inTileExtent);
 
-    /** Used to get data for rendering sprites. */
+    /** Used to get data for rendering tile sprites */
     SpriteData& spriteData;
 
     /** Used to send TileUpdateRequest events when a tile is selected. */

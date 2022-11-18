@@ -8,6 +8,7 @@ target_sources(Client
         Private/Widgets/MainThumbnail.cpp
         Private/Widgets/TitleButton.cpp
         Private/Widgets/TitleTextInput.cpp
+        Private/Windows/MainOverlay.cpp
         Private/Windows/BuildOverlay.cpp
         Private/Windows/BuildPanel.cpp
         Private/Windows/TitleWindow.cpp
@@ -20,6 +21,7 @@ target_sources(Client
         Public/Widgets/MainThumbnail.h
         Public/Widgets/TitleButton.h
         Public/Widgets/TitleTextInput.h
+        Public/Windows/MainOverlay.h
         Public/Windows/BuildOverlay.h
         Public/Windows/BuildPanel.h
         Public/Windows/TitleWindow.h

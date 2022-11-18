@@ -1,5 +1,6 @@
 #include "SimulationExtension.h"
-#include "Camera.h"
+#include "TileUpdateRequest.h"
+#include "BuildModeDefs.h"
 #include "Log.h"
 
 namespace AM
@@ -29,6 +30,13 @@ void SimulationExtension::afterMovement() {}
 bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
 {
     return false;
+}
+
+bool SimulationExtension::isTileUpdateValid(const TileUpdateRequest& updateRequest)
+{
+    // Check if the update is within the (hardcoded) build area.
+    TilePosition tilePos{updateRequest.tileX, updateRequest.tileY};
+    return BUILD_AREA_EXTENT.containsPosition(tilePos);
 }
 
 } // End namespace Server

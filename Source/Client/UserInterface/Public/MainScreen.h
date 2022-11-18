@@ -4,12 +4,14 @@
 #include "Camera.h"
 #include "BuildPanel.h"
 #include "BuildOverlay.h"
+#include "MainOverlay.h"
 #include "TileExtent.h"
 
 namespace AM
 {
 class EventDispatcher;
 class AssetCache;
+struct Position;
 
 namespace Client
 {
@@ -38,12 +40,23 @@ public:
     //-------------------------------------------------------------------------
     bool onKeyDown(SDL_Keycode keyCode) override;
 
-    void render() override;
-
 private:
+    /**
+     * If the player enters or exits the build area, performs the necessary UI 
+     * changes.
+     */
+    void onPlayerPositionChanged(Position position);
+
+    /** If true, the player is currently in the build area. */
+    bool playerIsInBuildArea;
+
     //-------------------------------------------------------------------------
     // Windows
     //-------------------------------------------------------------------------
+    /** The main overlay. Currently only shows the "build mode" text, but 
+        will eventually show the chat box, player names, etc. */
+    MainOverlay mainOverlay;
+
     /** The build mode overlay. Allows the user to place tiles. */
     BuildOverlay buildOverlay;
 

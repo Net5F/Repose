@@ -9,6 +9,7 @@ WorldSinks::WorldSinks(WorldSignals& worldSignals)
 : simulationStarted{worldSignals.simulationStarted}
 , serverConnectionError{worldSignals.serverConnectionError}
 , tileMapExtentChanged{worldSignals.tileMapExtentChanged}
+, playerPositionChanged{worldSignals.playerPositionChanged}
 {
 }
 

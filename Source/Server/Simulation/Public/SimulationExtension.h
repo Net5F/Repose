@@ -7,6 +7,8 @@
 
 namespace AM
 {
+struct TileUpdateRequest;
+
 namespace Server
 {
 
@@ -23,6 +25,9 @@ public:
     //       constructs this class. Do not modify it.
     SimulationExtension(SimulationExDependencies deps);
 
+    //-------------------------------------------------------------------------
+    // Simulation Tick Hooks (Call your systems in these)
+    //-------------------------------------------------------------------------
     /**
      * Called before any systems are ran.
      */
@@ -46,6 +51,19 @@ public:
      *       not handled, then Simulation will attempt to handle it.
      */
     bool handleOSEvent(SDL_Event& event) override;
+
+    //-------------------------------------------------------------------------
+    // Simulation System Hooks (Hooks into engine systems)
+    //-------------------------------------------------------------------------
+    /**
+     * Called by TileUpdateSystem when a tile update request is received, 
+     * before applying the update.
+     * Allows the project to place constraints on map modifications, such as 
+     * requiring certain permissions, or only allowing updates to certain areas.
+     *
+     * @return true if the update should be performed, else false.
+     */
+    bool isTileUpdateValid(const TileUpdateRequest& updateRequest);
 
 private:
     MazeGenerationSystem mazeGenerationSystem;
