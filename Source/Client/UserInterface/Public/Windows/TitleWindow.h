@@ -4,6 +4,7 @@
 #include "QueuedEvents.h"
 #include "AUI/Window.h"
 #include "AUI/Text.h"
+#include "AUI/Image.h"
 #include "TitleTextInput.h"
 #include "TitleButton.h"
 
@@ -50,6 +51,8 @@ private:
     //-------------------------------------------------------------------------
     // Private child widgets
     //-------------------------------------------------------------------------
+    AUI::Image backgroundImage;
+
     AUI::Text titleText;
 
     AUI::Text userNameLabel;

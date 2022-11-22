@@ -2,6 +2,7 @@
 
 #include "ISimulationExtension.h"
 #include "SimulationExDependencies.h"
+#include "TeleportSystem.h"
 #include "MazeGenerationSystem.h"
 #include "PlantSystem.h"
 
@@ -67,8 +68,8 @@ public:
 
 private:
     MazeGenerationSystem mazeGenerationSystem;
-
     PlantSystem plantSystem;
+    TeleportSystem teleportSystem;
 };
 
 } // End namespace Server

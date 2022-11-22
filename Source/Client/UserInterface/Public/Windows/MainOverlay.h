@@ -18,7 +18,7 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    MainOverlay(WorldSinks& inWorldSinks);
+    MainOverlay();
 
     /**
      * Sets the visibility of the hint text.

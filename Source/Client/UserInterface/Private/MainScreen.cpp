@@ -16,7 +16,7 @@ MainScreen::MainScreen(WorldSinks& inWorldSinks,
                        AssetCache& inAssetCache, SpriteData& inSpriteData)
 : AUI::Screen("MainScreen")
 , playerIsInBuildArea{false}
-, mainOverlay{inWorldSinks}
+, mainOverlay{}
 , buildOverlay{inSpriteData, inWorldSinks, inUiEventDispatcher}
 , buildPanel{inAssetCache, inSpriteData, buildOverlay}
 {

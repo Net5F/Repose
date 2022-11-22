@@ -11,6 +11,7 @@ namespace Server
 SimulationExtension::SimulationExtension(SimulationExDependencies deps)
 : mazeGenerationSystem{deps.world, deps.spriteData}
 , plantSystem{deps.world, deps.spriteData}
+, teleportSystem{deps.world}
 {
 }
 
@@ -25,7 +26,11 @@ void SimulationExtension::afterMapAndConnectionUpdates()
     plantSystem.updatePlants();
 }
 
-void SimulationExtension::afterMovement() {}
+void SimulationExtension::afterMovement()
+{
+    // Teleport any players that are touching a teleport volume.
+    teleportSystem.teleportPlayers();
+}
 
 bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
 {

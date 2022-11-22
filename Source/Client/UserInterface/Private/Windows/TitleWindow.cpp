@@ -18,6 +18,7 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
 , userInterface{inUserInterface}
 , uiEventDispatcher{inUiEventDispatcher}
 , assetCache{inAssetCache}
+, backgroundImage{{0, 0, 1920, 1080}, "TitleBackground"}
 , titleText({0, 271, 1920, 75}, "TitleText")
 , userNameLabel({0, 435, 1920, 36}, "UserNameLabel")
 , userNameInput(assetCache, {770, 481, 380, 54}, "UserNameInput")
@@ -25,11 +26,26 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
 , statusText({0, 695, 1920, 48}, "StatusText")
 {
     // Add our children so they're included in rendering, etc.
+    children.push_back(backgroundImage);
     children.push_back(titleText);
     children.push_back(userNameLabel);
     children.push_back(userNameInput);
     children.push_back(connectButton);
     children.push_back(statusText);
+
+    /* Background image */
+    backgroundImage.addResolution(
+        {1920, 1080},
+        inAssetCache.loadTexture(Paths::TEXTURE_DIR
+                                 + "TitleBackground/Background_1920.png"));
+    backgroundImage.addResolution(
+        {1600, 900},
+        inAssetCache.loadTexture(Paths::TEXTURE_DIR
+                                 + "TitleBackground/Background_1600.png"));
+    backgroundImage.addResolution(
+        {1280, 720},
+        inAssetCache.loadTexture(Paths::TEXTURE_DIR
+                                 + "TitleBackground/Background_1280.png"));
 
     /* Title text. */
     titleText.setFont((Paths::FONT_DIR + "B612-Regular.ttf"), 54);

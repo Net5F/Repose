@@ -3,6 +3,7 @@ target_sources(Server
         Private/MazeGenerationSystem.cpp
         Private/PlantSystem.cpp
         Private/SimulationExtension.cpp
+        Private/TeleportSystem.cpp
     PUBLIC
         Public/MazeGenerationSystem.h
         Public/Plant.h
@@ -11,6 +12,7 @@ target_sources(Server
         Public/MazeTopology.h
         Public/MazeCell.h
         Public/SimulationExtension.h
+        Public/TeleportSystem.h
 )
 
 target_include_directories(Server

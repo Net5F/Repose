@@ -6,7 +6,7 @@ namespace AM
 {
 namespace Client
 {
-MainOverlay::MainOverlay(WorldSinks& inWorldSinks)
+MainOverlay::MainOverlay()
 : AUI::Window({0, 0, 1920, 1080}, "MainOverlay")
 , buildModeHintText({50, 850, 500, 100}, "BuildModeHintText")
 {
