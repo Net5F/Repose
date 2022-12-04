@@ -1,21 +1,21 @@
 {
     "spriteSheets": [
         {
-            "relPath": "Walls.png",
+            "relPath": "Floors.png",
             "sprites": [
                 {
-                    "displayName": "Wall 0",
-                    "hasBoundingBox": true,
+                    "displayName": "Floor0",
+                    "hasBoundingBox": false,
                     "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "numericID": 0,
-                    "stringID": "wall_0",
+                    "stringID": "floor0",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
@@ -25,18 +25,18 @@
                     "yOffset": 374
                 },
                 {
-                    "displayName": "Wall 1",
-                    "hasBoundingBox": true,
+                    "displayName": "Floor1",
+                    "hasBoundingBox": false,
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.5999984741211,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
-                        "minY": 24.0,
+                        "minY": 0.0,
                         "minZ": 0.0
                     },
                     "numericID": 1,
-                    "stringID": "wall_1",
+                    "stringID": "floor1",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
@@ -46,18 +46,18 @@
                     "yOffset": 374
                 },
                 {
-                    "displayName": "Wall 2",
-                    "hasBoundingBox": true,
+                    "displayName": "Floor2",
+                    "hasBoundingBox": false,
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "numericID": 2,
-                    "stringID": "wall_2",
+                    "stringID": "floor2",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
@@ -67,29 +67,29 @@
                     "yOffset": 374
                 },
                 {
-                    "displayName": "Wall 3",
-                    "hasBoundingBox": true,
+                    "displayName": "Floor3",
+                    "hasBoundingBox": false,
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 79.19999694824219,
-                        "minX": 24.125,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "numericID": 3,
-                    "stringID": "wall_3",
+                    "stringID": "floor3",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 0,
-                        "y": 512
+                        "x": 768,
+                        "y": 0
                     },
                     "yOffset": 374
                 },
                 {
-                    "displayName": "Wall 4",
-                    "hasBoundingBox": true,
+                    "displayName": "Floor4",
+                    "hasBoundingBox": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -99,18 +99,18 @@
                         "minZ": 0.0
                     },
                     "numericID": 4,
-                    "stringID": "wall_4",
+                    "stringID": "floor4",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 256,
+                        "x": 0,
                         "y": 512
                     },
                     "yOffset": 374
                 },
                 {
-                    "displayName": "Wall 5",
-                    "hasBoundingBox": true,
+                    "displayName": "Floor5",
+                    "hasBoundingBox": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -120,22 +120,17 @@
                         "minZ": 0.0
                     },
                     "numericID": 5,
-                    "stringID": "wall_5",
+                    "stringID": "floor5",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 512,
+                        "x": 256,
                         "y": 512
                     },
                     "yOffset": 374
-                }
-            ]
-        },
-        {
-            "relPath": "Floors.png",
-            "sprites": [
+                },
                 {
-                    "displayName": "Floor 0",
+                    "displayName": "Floor6",
                     "hasBoundingBox": false,
                     "modelBounds": {
                         "maxX": 20.0,
@@ -146,33 +141,54 @@
                         "minZ": 0.0
                     },
                     "numericID": 6,
-                    "stringID": "floor_0",
+                    "stringID": "floor6",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 0,
-                        "y": 0
+                        "x": 512,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Floor7",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 7,
+                    "stringID": "floor7",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 512
                     },
                     "yOffset": 374
                 }
             ]
         },
         {
-            "relPath": "GapFills.png",
+            "relPath": "Grass_Sunflower.png",
             "sprites": [
                 {
-                    "displayName": "Gap Fill 0",
-                    "hasBoundingBox": true,
+                    "displayName": "Grass0",
+                    "hasBoundingBox": false,
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 7.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
-                    "numericID": 7,
-                    "stringID": "gap_fill_0",
+                    "numericID": 8,
+                    "stringID": "grass0",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
@@ -182,18 +198,18 @@
                     "yOffset": 374
                 },
                 {
-                    "displayName": "Gap Fill 1",
-                    "hasBoundingBox": true,
+                    "displayName": "Grass1",
+                    "hasBoundingBox": false,
                     "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
-                    "numericID": 8,
-                    "stringID": "gap_fill_1",
+                    "numericID": 9,
+                    "stringID": "grass1",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
@@ -203,18 +219,18 @@
                     "yOffset": 374
                 },
                 {
-                    "displayName": "Gap Fill 2",
-                    "hasBoundingBox": true,
+                    "displayName": "Grass2",
+                    "hasBoundingBox": false,
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 79.80000305175781,
-                        "minX": 24.5,
-                        "minY": 24.875,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
                         "minZ": 0.0
                     },
-                    "numericID": 9,
-                    "stringID": "gap_fill_2",
+                    "numericID": 10,
+                    "stringID": "grass2",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
@@ -224,29 +240,8 @@
                     "yOffset": 374
                 },
                 {
-                    "displayName": "Gap Fill 3",
-                    "hasBoundingBox": true,
-                    "modelBounds": {
-                        "maxX": 7.75,
-                        "maxY": 32.0,
-                        "maxZ": 78.5999984741211,
-                        "minX": 0.0,
-                        "minY": 24.375,
-                        "minZ": 0.0
-                    },
-                    "numericID": 10,
-                    "stringID": "gap_fill_3",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 512
-                    },
-                    "yOffset": 374
-                },
-                {
-                    "displayName": "Gap Fill 4",
-                    "hasBoundingBox": true,
+                    "displayName": "Grass3",
+                    "hasBoundingBox": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -256,18 +251,18 @@
                         "minZ": 0.0
                     },
                     "numericID": 11,
-                    "stringID": "gap_fill_4",
+                    "stringID": "grass3",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 256,
-                        "y": 512
+                        "x": 768,
+                        "y": 0
                     },
                     "yOffset": 374
                 },
                 {
-                    "displayName": "Gap Fill 5",
-                    "hasBoundingBox": true,
+                    "displayName": "Grass4",
+                    "hasBoundingBox": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -277,7 +272,1004 @@
                         "minZ": 0.0
                     },
                     "numericID": 12,
-                    "stringID": "gap_fill_5",
+                    "stringID": "grass4",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Grass_West1",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.099999904632568,
+                        "maxY": 32.0,
+                        "maxZ": 5.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 13,
+                    "stringID": "grass_west1",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1280,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Grass_North1",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.099999904632568,
+                        "maxZ": 5.0,
+                        "minX": 0.0,
+                        "minY": 7.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 14,
+                    "stringID": "grass_north1",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Grass_NW1",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.099999904632568,
+                        "maxY": 7.099999904632568,
+                        "maxZ": 5.0,
+                        "minX": 7.0,
+                        "minY": 7.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 15,
+                    "stringID": "grass_nw1",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Grass_NW2",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.099999904632568,
+                        "maxY": 7.099999904632568,
+                        "maxZ": 5.0,
+                        "minX": 7.0,
+                        "minY": 7.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 16,
+                    "stringID": "grass_nw2",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Grass_North2",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.099999904632568,
+                        "maxZ": 5.0,
+                        "minX": 0.0,
+                        "minY": 7.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 17,
+                    "stringID": "grass_north2",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Grass_West2",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.099999904632568,
+                        "maxY": 32.0,
+                        "maxZ": 5.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 18,
+                    "stringID": "grass_west2",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Sunflower_0",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 18.25,
+                        "maxY": 18.25,
+                        "maxZ": 27.0,
+                        "minX": 16.375,
+                        "minY": 17.125,
+                        "minZ": 0.0
+                    },
+                    "numericID": 19,
+                    "stringID": "sunflower_0",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1280,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Sunflower_1",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 18.25,
+                        "maxY": 18.25,
+                        "maxZ": 47.400001525878906,
+                        "minX": 16.375,
+                        "minY": 17.125,
+                        "minZ": 0.0
+                    },
+                    "numericID": 20,
+                    "stringID": "sunflower_1",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Sunflower_2",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 18.25,
+                        "maxY": 18.25,
+                        "maxZ": 76.19999694824219,
+                        "minX": 16.375,
+                        "minY": 17.125,
+                        "minZ": 0.0
+                    },
+                    "numericID": 21,
+                    "stringID": "sunflower_2",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Sunflower_3",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 18.25,
+                        "maxY": 18.25,
+                        "maxZ": 49.20000076293945,
+                        "minX": 16.375,
+                        "minY": 17.125,
+                        "minZ": 0.0
+                    },
+                    "numericID": 22,
+                    "stringID": "sunflower_3",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Grass15",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 23,
+                    "stringID": "grass15",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Grass16",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 24,
+                    "stringID": "grass16",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Grass17",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 25,
+                    "stringID": "grass17",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1280,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                }
+            ]
+        },
+        {
+            "relPath": "Walls.png",
+            "sprites": [
+                {
+                    "displayName": "FullFill1",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 26,
+                    "stringID": "fullfill1",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "FullFill2",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 27,
+                    "stringID": "fullfill2",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "FullFill3",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 28,
+                    "stringID": "fullfill3",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "NE_Fill1",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 29,
+                    "stringID": "ne_fill1",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "NE_Fill2",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 30,
+                    "stringID": "ne_fill2",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "NE_Fill3",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 31,
+                    "stringID": "ne_fill3",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1280,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "West3",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 32,
+                    "stringID": "west3",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1536,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "NW_Fill1",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 33,
+                    "stringID": "nw_fill1",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "NW_Fill2",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 34,
+                    "stringID": "nw_fill2",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "NW_Fill3",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 35,
+                    "stringID": "nw_fill3",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Column",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 36,
+                    "stringID": "column",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "North1",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 37,
+                    "stringID": "north1",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "North2",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 38,
+                    "stringID": "north2",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1280,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "West4",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 39,
+                    "stringID": "west4",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1536,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "North3",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 40,
+                    "stringID": "north3",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "North4",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 41,
+                    "stringID": "north4",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "North5",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 42,
+                    "stringID": "north5",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "North6",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 43,
+                    "stringID": "north6",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "West1",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 44,
+                    "stringID": "west1",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "West2",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 45,
+                    "stringID": "west2",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1280,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "West5",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 46,
+                    "stringID": "west5",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1536,
+                        "y": 1024
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "West6",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 47,
+                    "stringID": "west6",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 1536
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Wall22",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 48,
+                    "stringID": "wall22",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 1536
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Wall23",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 49,
+                    "stringID": "wall23",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 1536
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Wall24",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 50,
+                    "stringID": "wall24",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 1536
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Wall25",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 51,
+                    "stringID": "wall25",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 1536
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Wall26",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 52,
+                    "stringID": "wall26",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1280,
+                        "y": 1536
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Wall27",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 53,
+                    "stringID": "wall27",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1536,
+                        "y": 1536
+                    },
+                    "yOffset": 374
+                }
+            ]
+        },
+        {
+            "relPath": "Ghost.png",
+            "sprites": [
+                {
+                    "displayName": "Ghost_East",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 16.25,
+                        "maxY": 16.75,
+                        "maxZ": 28.799999237060547,
+                        "minX": 8.25,
+                        "minY": 7.875,
+                        "minZ": 0.0
+                    },
+                    "numericID": 54,
+                    "stringID": "ghost_east",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Ghost_North",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 16.25,
+                        "maxY": 16.75,
+                        "maxZ": 28.799999237060547,
+                        "minX": 8.25,
+                        "minY": 7.875,
+                        "minZ": 0.0
+                    },
+                    "numericID": 55,
+                    "stringID": "ghost_north",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Ghost_South",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 16.25,
+                        "maxY": 16.75,
+                        "maxZ": 28.799999237060547,
+                        "minX": 8.25,
+                        "minY": 7.875,
+                        "minZ": 0.0
+                    },
+                    "numericID": 56,
+                    "stringID": "ghost_south",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Ghost_West",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 16.25,
+                        "maxY": 16.75,
+                        "maxZ": 28.799999237060547,
+                        "minX": 8.25,
+                        "minY": 7.875,
+                        "minZ": 0.0
+                    },
+                    "numericID": 57,
+                    "stringID": "ghost_west",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Ghost4",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 58,
+                    "stringID": "ghost4",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Ghost5",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 59,
+                    "stringID": "ghost5",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
@@ -289,21 +1281,21 @@
             ]
         },
         {
-            "relPath": "Male_4_Idle0.png",
+            "relPath": "Templates.png",
             "sprites": [
                 {
-                    "displayName": "Roberto 0",
-                    "hasBoundingBox": true,
+                    "displayName": "Template_Floor",
+                    "hasBoundingBox": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
-                        "maxZ": 60.0,
-                        "minX": 12.375,
-                        "minY": 14.5,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
                         "minZ": 0.0
                     },
-                    "numericID": 13,
-                    "stringID": "roberto_0",
+                    "numericID": 60,
+                    "stringID": "template_floor",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
@@ -311,14 +1303,9 @@
                         "y": 0
                     },
                     "yOffset": 374
-                }
-            ]
-        },
-        {
-            "relPath": "stoneWallStructure_W.png",
-            "sprites": [
+                },
                 {
-                    "displayName": "Full 0",
+                    "displayName": "Template_FullFill",
                     "hasBoundingBox": true,
                     "modelBounds": {
                         "maxX": 32.0,
@@ -328,8 +1315,160 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
-                    "numericID": 14,
-                    "stringID": "full_0",
+                    "numericID": 61,
+                    "stringID": "template_fullfill",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Template_NE_Fill",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 62,
+                    "stringID": "template_ne_fill",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Template_NW_Fill",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 63,
+                    "stringID": "template_nw_fill",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Template_North",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 64,
+                    "stringID": "template_north",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Template_West",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 65,
+                    "stringID": "template_west",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Template6",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 66,
+                    "stringID": "template6",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "displayName": "Template7",
+                    "hasBoundingBox": false,
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "numericID": 67,
+                    "stringID": "template7",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                }
+            ]
+        },
+        {
+            "relPath": "Roberto.png",
+            "sprites": [
+                {
+                    "displayName": "Roberto",
+                    "hasBoundingBox": true,
+                    "modelBounds": {
+                        "maxX": 19.25,
+                        "maxY": 17.75,
+                        "maxZ": 58.20000076293945,
+                        "minX": 11.25,
+                        "minY": 13.75,
+                        "minZ": 0.0
+                    },
+                    "numericID": 68,
+                    "stringID": "roberto",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,

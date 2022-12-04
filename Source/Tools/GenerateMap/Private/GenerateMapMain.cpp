@@ -1,5 +1,3 @@
-#include <SDL.h>
-
 #include "MapGenerator.h"
 #include "Timer.h"
 #include "Ignore.h"
@@ -12,7 +10,7 @@ using namespace AM::MG;
 void printUsage()
 {
     std::printf(
-        "Usage: MapGenerator.exe <XLength> <YLength> <FillSpriteId>\n"
+        "Usage: GenerateMap.exe <XLength> <YLength> <FillSpriteId>\n"
         "  XLength: The map's x-axis length in chunks.\n"
         "  YLength: The map's y-axis length in chunks.\n"
         "  FillSpriteId: The string ID of the sprite to fill the map with.\n");

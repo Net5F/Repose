@@ -14,10 +14,10 @@ namespace Client
 AnimationSystem::AnimationSystem(World& inWorld, SpriteData& inSpriteData)
 : world{inWorld}
 , spriteData{inSpriteData}
-, GHOST_NORTH_ID{spriteData.get("ghostnorth").numericID}
-, GHOST_EAST_ID{spriteData.get("ghosteast").numericID}
-, GHOST_SOUTH_ID{spriteData.get("ghostsouth").numericID}
-, GHOST_WEST_ID{spriteData.get("ghostwest").numericID}
+, GHOST_NORTH_ID{spriteData.get("ghost_north").numericID}
+, GHOST_EAST_ID{spriteData.get("ghost_east").numericID}
+, GHOST_SOUTH_ID{spriteData.get("ghost_south").numericID}
+, GHOST_WEST_ID{spriteData.get("ghost_west").numericID}
 {
 }
 

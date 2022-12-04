@@ -45,7 +45,11 @@ void MapGenerator::generateAndSave(const std::string& fileName)
     }
 
     // Serialize the map snapshot and write it to the file.
-    Serialize::toFile((Paths::BASE_PATH + fileName), tileMap);
+    bool saveSuccessful{
+        Serialize::toFile((Paths::BASE_PATH + fileName), tileMap)};
+    if (saveSuccessful) {
+        LOG_FATAL("Failed to serialize and save the map.");
+    }
 }
 
 } // End namespace MG

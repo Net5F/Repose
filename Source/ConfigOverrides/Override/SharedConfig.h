@@ -62,7 +62,7 @@ public:
               sprite's box, and will remain even if their sprite changes.
               However, your project may choose to set the Collision component 
               to something else. */
-    static constexpr const char* DEFAULT_CHARACTER_SPRITE{"roberto_0"};
+    static constexpr const char* DEFAULT_CHARACTER_SPRITE{"ghost_south"};
 
     /** The speed that entities will move at. Eventually we'll support
         dynamically setting this based on stats, for now it's a constant. */
@@ -123,6 +123,13 @@ public:
         within the player's view range.
         Used to determine how much of the world should be rendered. */
     static constexpr float VIEW_RADIUS{TILE_WORLD_WIDTH * 8};
+
+    //-------------------------------------------------------------------------
+    // Project
+    //-------------------------------------------------------------------------
+    /** If true, tile changes will only be allowed in the "build area".
+        If false, clients can change any tile in the map. */
+    static constexpr bool RESTRICT_TILE_UPDATES{false};
 };
 
 } // End namespace AM

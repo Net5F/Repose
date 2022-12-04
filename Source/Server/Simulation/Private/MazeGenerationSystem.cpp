@@ -22,11 +22,11 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
 , workingPath{}
 , workingNeighbors{}
 , randGenerator{std::random_device()()}
-, NORTH_WALL_ID{spriteData.get("wall_2").numericID}
-, WEST_WALL_ID{spriteData.get("wall_0").numericID}
-, NORTHEAST_GAP_FILL_ID{spriteData.get("gap_fill_0").numericID}
-, NORTHWEST_GAP_FILL_ID{spriteData.get("gap_fill_1").numericID}
-, FULL_FILL_ID{spriteData.get("full_0").numericID}
+, NORTH_WALL_ID{spriteData.get("north1").numericID}
+, WEST_WALL_ID{spriteData.get("west1").numericID}
+, NORTHEAST_GAP_FILL_ID{spriteData.get("ne_fill1").numericID}
+, NORTHWEST_GAP_FILL_ID{spriteData.get("nw_fill1").numericID}
+, FULL_FILL_ID{spriteData.get("fullfill1").numericID}
 {
     Timer timer;
     timer.updateSavedTime();

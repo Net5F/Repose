@@ -1,2 +1,4 @@
 # Configure tools.
-add_subdirectory(MapGenerator)
+add_subdirectory(GenerateMap)
+
+add_subdirectory(ReplaceMapSpriteID)

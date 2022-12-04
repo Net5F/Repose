@@ -3,6 +3,7 @@
 #include "SpriteData.h"
 #include "Paths.h"
 #include "BuildModeDefs.h"
+#include "SharedConfig.h"
 #include "WorldSinks.h"
 #include "AUI/Core.h"
 #include "Log.h"
@@ -29,9 +30,17 @@ MainScreen::MainScreen(WorldSinks& inWorldSinks,
     buildOverlay.setIsVisible(false);
     buildPanel.setIsVisible(false);
 
-    // We need to know when the player enters or exits the build area.
-    inWorldSinks.playerPositionChanged
-        .connect<&MainScreen::onPlayerPositionChanged>(*this);
+    // If tile updates are restricted, we need to know when the player enters 
+    // or exits the build area.
+    if (SharedConfig::RESTRICT_TILE_UPDATES) {
+        inWorldSinks.playerPositionChanged
+            .connect<&MainScreen::onPlayerPositionChanged>(*this);
+    }
+    else {
+        // Tile updates are unrestricted, so the player is always in the build 
+        // area.
+        playerIsInBuildArea = true;
+    }
 }
 
 void MainScreen::setCamera(const Camera& inCamera)

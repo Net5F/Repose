@@ -1,6 +1,7 @@
 #include "SimulationExtension.h"
 #include "TileUpdateRequest.h"
 #include "BuildModeDefs.h"
+#include "SharedConfig.h"
 #include "Log.h"
 
 namespace AM
@@ -39,9 +40,15 @@ bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
 
 bool SimulationExtension::isTileUpdateValid(const TileUpdateRequest& updateRequest)
 {
-    // Check if the update is within the (hardcoded) build area.
-    TilePosition tilePos{updateRequest.tileX, updateRequest.tileY};
-    return BUILD_AREA_EXTENT.containsPosition(tilePos);
+    if (SharedConfig::RESTRICT_TILE_UPDATES) {
+        // Only return true for updates within the build area.
+        TilePosition tilePos{updateRequest.tileX, updateRequest.tileY};
+        return BUILD_AREA_EXTENT.containsPosition(tilePos);
+    }
+    else {
+        // No restrictions, always return true;
+        return true;
+    }
 }
 
 } // End namespace Server
