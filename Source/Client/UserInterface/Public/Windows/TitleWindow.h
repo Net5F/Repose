@@ -55,9 +55,9 @@ private:
 
     AUI::Text titleText;
 
-    AUI::Text userNameLabel;
-
-    TitleTextInput userNameInput;
+    // Disabled until we add usernames
+    //AUI::Text userNameLabel;
+    //TitleTextInput userNameInput;
 
     TitleButton connectButton;
 
