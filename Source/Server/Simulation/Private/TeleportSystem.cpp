@@ -21,10 +21,10 @@ TeleportSystem::TeleportSystem(World& inWorld)
 {
     // Maze -> dev room.
     teleportVolumes.emplace_back(445.0f, 478.0f, 41.0f, 44.0f, 0.0f, 1.0f);
-    teleportDestinations.emplace_back(244.0f, 1988.0f);
+    teleportDestinations.emplace_back(52.0f, 1973.0f);
 
     // Dev room -> maze.
-    teleportVolumes.emplace_back(236.0f, 249.0f, 2019.0f, 2022.0f, 0.0f, 1.0f);
+    teleportVolumes.emplace_back(40.0f, 62.0f, 1998.0f, 2003.0f, 0.0f, 1.0f);
     teleportDestinations.emplace_back(462.0f, 77.0f);
 }
 

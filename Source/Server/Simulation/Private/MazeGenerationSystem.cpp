@@ -2,6 +2,7 @@
 #include "World.h"
 #include "SpriteData.h"
 #include "MazeTopology.h"
+#include "Collision.h"
 #include "Log.h"
 #include "AMAssert.h"
 #include <algorithm>
@@ -46,6 +47,8 @@ void MazeGenerationSystem::regenerateMazeIfNecessary()
     // If enough time has passed, regenerate the maze.
     if (regenerationTimer.getDeltaSeconds(false)
         >= MAZE_REGENERATION_PERIOD_S) {
+        LOG_INFO("Generating maze...");
+
         Timer timer;
         timer.updateSavedTime();
 
@@ -478,8 +481,8 @@ void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
 {
     // Get the tile extent that this entity is touching, clip it to the
     // maze bounds, and make it relative to the maze origin.
-    const BoundingBox& boundingBox{world.registry.get<BoundingBox>(entity)};
-    TileExtent tileExtent{boundingBox.asTileExtent()};
+    const Collision& collision{world.registry.get<Collision>(entity)};
+    TileExtent tileExtent{collision.worldBounds.asTileExtent()};
     tileExtent.intersectWith(mazeExtent);
     tileExtent.x -= mazeExtent.x;
     tileExtent.y -= mazeExtent.y;

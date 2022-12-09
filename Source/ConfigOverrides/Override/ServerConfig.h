@@ -32,8 +32,8 @@ public:
     // SpawnPoint::Fixed Config
     // Note: Bottom center of a 4x4ch map.
     /** Fixed spawn position. */
-    static constexpr float SPAWN_POINT_FIXED_X{1024};
-    static constexpr float SPAWN_POINT_FIXED_Y{1888};
+    static constexpr float SPAWN_POINT_FIXED_X{1060};
+    static constexpr float SPAWN_POINT_FIXED_Y{1788};
 
     // SpawnPoint::Random Config
     // Note: We offset these positions to keep entities in bounds while moving.
