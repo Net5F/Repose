@@ -329,10 +329,8 @@ bool MazeGenerationSystem::clearToNeighborIfVisited(
 void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
 {
     // Iterate through the maze.
-    int mazeMaxX{abstractMazeExtent.xLength};
-    int mazeMaxY{abstractMazeExtent.yLength};
-    for (int mazeX = 0; mazeX < mazeMaxX; ++mazeX) {
-        for (int mazeY = 0; mazeY < mazeMaxY; ++mazeY) {
+    for (int mazeX = 0; mazeX <= abstractMazeExtent.xMax(); ++mazeX) {
+        for (int mazeY = 0; mazeY <= abstractMazeExtent.yMax(); ++mazeY) {
             MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
 
             // Check if this cell has a north wall or a fill to the north.
@@ -356,7 +354,7 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
             //       boundary of the maze and know there's an enclosing wall.
             bool onEastBoundary{true};
             bool eastCellHasWestWall{false};
-            if ((mazeX + 1) < mazeMaxX) {
+            if (mazeX < abstractMazeExtent.xMax()) {
                 onEastBoundary = false;
                 MazeCell& eastCell{
                     maze.cells[linearizeCellIndex((mazeX + 1), mazeY)]};
@@ -368,7 +366,7 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
             //       boundary of the maze and know there's an enclosing wall.
             bool onSouthBoundary{true};
             bool southCellHasNorthWall{false};
-            if ((mazeY + 1) < mazeMaxY) {
+            if (mazeY < abstractMazeExtent.yMax()) {
                 onSouthBoundary = false;
                 MazeCell& southCell{
                     maze.cells[linearizeCellIndex(mazeX, (mazeY + 1))]};
@@ -403,13 +401,12 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
 void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
 {
     // Clear the maze area in the tile map.
-    world.tileMap.clearExtent(mazeExtent, 1);
+    std::size_t endLayerIndex{SharedConfig::MAX_TILE_LAYERS - 1};
+    world.tileMap.clearExtentSpriteLayers(mazeExtent, 1, endLayerIndex);
 
     // Apply the maze to the tile map.
-    int mazeMaxX{abstractMazeExtent.xLength};
-    int mazeMaxY{abstractMazeExtent.yLength};
-    for (int mazeX = 0; mazeX < mazeMaxX; ++mazeX) {
-        for (int mazeY = 0; mazeY < mazeMaxY; ++mazeY) {
+    for (int mazeX = 0; mazeX <= abstractMazeExtent.xMax(); ++mazeX) {
+        for (int mazeY = 0; mazeY <= abstractMazeExtent.yMax(); ++mazeY) {
             const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
 
             // Apply this cell's walls to the corresponding 2x2 map area.

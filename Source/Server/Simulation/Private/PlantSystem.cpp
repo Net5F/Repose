@@ -43,7 +43,7 @@ PlantSystem::PlantSystem(World& inWorld, SpriteData& inSpriteData)
     // Initialize all the plants.
     for (PlantRegion& region : plantRegions) {
         // Clear any existing plant sprites.
-        world.tileMap.clearExtent(region.extent, 1);
+        world.tileMap.clearExtentSpriteLayers(region.extent, 1, 1);
 
         // Randomize the parameters for every plant and place their sprites.
         for (Plant& plant : region.plants) {

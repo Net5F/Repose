@@ -30,7 +30,6 @@ public:
     static constexpr SpawnStrategy SPAWN_STRATEGY{SpawnStrategy::Fixed};
 
     // SpawnPoint::Fixed Config
-    // Note: Bottom center of a 4x4ch map.
     /** Fixed spawn position. */
     static constexpr float SPAWN_POINT_FIXED_X{1060};
     static constexpr float SPAWN_POINT_FIXED_Y{1788};

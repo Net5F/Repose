@@ -83,7 +83,7 @@ BuildPanel::BuildPanel(AssetCache& inAssetCache, SpriteData& inSpriteData,
     });
 
     layerUpButton.setOnPressed([&]() {
-        if (tileLayerIndex < SharedConfig::MAX_TILE_LAYERS) {
+        if ((tileLayerIndex + 1) < SharedConfig::MAX_TILE_LAYERS) {
             // Update our label.
             tileLayerIndex++;
             layerLabel.setText("Layer " + std::to_string(tileLayerIndex));
