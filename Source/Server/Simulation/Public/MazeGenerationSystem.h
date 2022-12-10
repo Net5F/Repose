@@ -7,6 +7,7 @@
 #include "entt/fwd.hpp"
 #include <SDL_rect.h>
 #include <random>
+#include <array>
 
 namespace AM
 {
@@ -142,6 +143,26 @@ private:
     void clearTilesTouchingEntity(MazeTopology& maze,
                                   const entt::entity entity);
 
+    /**
+     * These functions return a (weighted) random sprite ID from the chosen
+     * category.
+     */
+    int getRandomWestWall();
+    int getRandomNorthWall();
+    int getRandomNEFill();
+    int getRandomNWFill();
+    int getRandomFullFill();
+
+    /**
+     * @return true if the given tile has a west wall sprite.
+     */
+    bool hasWestWall(const Tile& tile);
+
+    /**
+     * @return true if the given tile has a north wall sprite.
+     */
+    bool hasNorthWall(const Tile& tile);
+
     /** Used to get entity positions and modify the tile map. */
     World& world;
 
@@ -177,12 +198,12 @@ private:
     /** Used for randomly choosing tiles. */
     std::mt19937 randGenerator;
 
-    /** Used for identifying walls by numeric ID. */
-    const int NORTH_WALL_ID;
-    const int WEST_WALL_ID;
-    const int NORTHEAST_GAP_FILL_ID;
-    const int NORTHWEST_GAP_FILL_ID;
-    const int FULL_FILL_ID;
+    /** Used for placing randomized sprites in the map. */
+    std::array<int, 6> northWallIDs;
+    std::array<int, 6> westWallIDs;
+    std::array<int, 3> northeastFillIDs;
+    std::array<int, 3> northwestFillIDs;
+    std::array<int, 3> fullFillIDs;
 };
 
 } // End namespace Server
