@@ -33,6 +33,8 @@ void SimulationExtension::afterMovement()
     teleportSystem.teleportPlayers();
 }
 
+void SimulationExtension::afterMovementSync() {}
+
 bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
 {
     return false;

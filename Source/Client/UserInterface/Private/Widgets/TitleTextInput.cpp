@@ -26,7 +26,7 @@ TitleTextInput::TitleTextInput(AssetCache& assetCache,
         assetCache.loadTexture(Paths::TEXTURE_DIR + "TextInput/Disabled.png"));
 
     // Set our text properties.
-    setTextFont((Paths::FONT_DIR + "B612-Regular.ttf"), 25);
+    setTextFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 25);
 
     // Set our input box properties.
     setCursorWidth(2);

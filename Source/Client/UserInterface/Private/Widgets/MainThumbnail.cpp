@@ -29,7 +29,7 @@ MainThumbnail::MainThumbnail(AssetCache& assetCache,
 
     // Set our text properties.
     setTextLogicalExtent({0, 0, 1, 1});
-    setTextFont((Paths::FONT_DIR + "B612-Regular.ttf"), 15);
+    setTextFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 15);
     setTextColor({255, 255, 255, 255});
 }
 

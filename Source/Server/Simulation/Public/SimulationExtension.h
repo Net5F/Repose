@@ -41,9 +41,15 @@ public:
     void afterMapAndConnectionUpdates();
 
     /**
-     * Called after all entity movement has been processed.
+     * Called after all entity movement has been processed, but before the new 
+     * movement state has been sent to the clients.
      */
     void afterMovement();
+
+    /**
+     * Called after all entity movement state has been sent to the clients.
+     */
+    void afterMovementSync();
 
     /**
      * See OSEventHandler for details.

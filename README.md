@@ -25,13 +25,13 @@ For MSYS2/MinGW, we don't have a dependency install script. Here's the list:
 Then, build through the Eclipse project or follow the linux instructions for a command line build.
 
 ### Linux
-Had to update to Ubuntu 21.04 for g++ 10.3.0 (older versions didn't have support for some C++20 features I needed.)
+We had to update to Ubuntu 21.04 for g++ 10.3.0 (older versions didn't have support for some C++20 features I needed.)
 I haven't yet locked down an SDL2 or CMake version, we'll see where it ends up.
 
 1. Run `Scripts/Linux/InstallDependencies.sh`, then build through the Eclipse project, or:
 1. (From the base of the repo) `mkdir -p Build/Linux/Release`
 1. `cd Build/Linux/Release`
-1. `cmake -DCMAKE_BUILD_TYPE=Release -G Ninja ../../../Source/`
+1. `cmake -DCMAKE_BUILD_TYPE=Release -G Ninja ../../../`
    1. (Optional) Add `-DAM_BUILD_SPRITE_EDITOR=ON` to build the sprite editor.
    1. (Optional) Add `-DBUILD_TOOLS` to build our extra tools, such as the Map Generator.
 1. `ninja all`

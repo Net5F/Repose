@@ -14,7 +14,7 @@ MainOverlay::MainOverlay()
     children.push_back(buildModeHintText);
 
     /* Build mode text. */
-    buildModeHintText.setFont((Paths::FONT_DIR + "B612-Regular.ttf"), 30);
+    buildModeHintText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 30);
     buildModeHintText.setColor({255, 255, 255, 255});
     buildModeHintText.setText("Press 'b' to enter Build Mode");
     buildModeHintText.setHorizontalAlignment(
