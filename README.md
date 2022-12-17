@@ -1,15 +1,19 @@
 ## The World of Repose - A calm world of constant change.
 Reference project for [The Amalgam Engine](https://github.com/Net5F/AmalgamEngine).
 
+## Joining the demo world
+To join the demo world and play with other people, you can [download the latest release](https://github.com/Net5F/Repose/releases/latest) and follow the instructions in the README.
+
+Currently, the client application is hardcoded to connect to a server ran by Net_.
+
 ## Building
 ### Windows
 #### Visual Studio (MSVC)
-1. Run `Scripts/Windows/InstallDependencies.bat`, passing it the path you want to install the dependencies to.
+1. Run `Libraries/AmalgamEngine/Scripts/Windows/InstallDependencies.bat` to install our dependencies to a folder of your choice.
 1. Open CMakeLists.txt in Visual Studio (`Open` -> `CMake`).
-1. Update CMakeSettings.json (in this repo) to point at the various SDL folders in your installation path.
-   1. You'll leave this file dirty. Don't try to commit it back upstream with your personal paths.
-   1. You can optionally enable `AM_BUILD_SPRITE_EDITOR` to build the sprite editor.
-   1. You can optionally enable `BUILD_TOOLS` to build our extra tools, such as the Map Generator.
+1. (Optional) Open CMakeSettings.json (in this repo) and enable flags for extra build targets:
+   1. `AM_BUILD_SPRITE_EDITOR` to build the sprite editor.
+   1. `BUILD_TOOLS` to build our extra tools, such as the Map Generator.
 1. `Project` -> `Generate CMake cache` (or just let it run if you have auto-config on).
 1. `Build` -> `Build All`
 
@@ -28,8 +32,8 @@ I haven't yet locked down an SDL2 or CMake version, we'll see where it ends up.
 1. (From the base of the repo) `mkdir -p Build/Linux/Release`
 1. `cd Build/Linux/Release`
 1. `cmake -DCMAKE_BUILD_TYPE=Release -G Ninja ../../../Source/`
-   1. You can optionally add `-DAM_BUILD_SPRITE_EDITOR=ON` to build the sprite editor.
-   1. You can optionally add `-DBUILD_TOOLS` to build our extra tools, such as the Map Generator.
+   1. (Optional) Add `-DAM_BUILD_SPRITE_EDITOR=ON` to build the sprite editor.
+   1. (Optional) Add `-DBUILD_TOOLS` to build our extra tools, such as the Map Generator.
 1. `ninja all`
 
 ## Contributing
