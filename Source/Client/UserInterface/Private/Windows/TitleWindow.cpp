@@ -19,14 +19,17 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
 , uiEventDispatcher{inUiEventDispatcher}
 , assetCache{inAssetCache}
 , backgroundImage{{0, 0, 1920, 1080}, "TitleBackground"}
-, titleText({0, 386, 1920, 75}, "TitleText")
+, leadText({0, 266, 1920, 300}, "LeadText")
+, titleText({0, 248, 1920, 300}, "TitleText")
 //, userNameLabel({0, 435, 1920, 36}, "UserNameLabel")
 //, userNameInput(assetCache, {770, 481, 380, 54}, "UserNameInput")
-, connectButton(assetCache, {760, 500, 404, 70}, "Connect", "ConnectButton")
-, statusText({0, 600, 1920, 48}, "StatusText")
+, connectButton(assetCache, {760, 518, 404, 70}, "Connect", "ConnectButton")
+, statusText({0, 618, 1920, 48}, "StatusText")
+, randGenerator{std::random_device()()}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
+    children.push_back(leadText);
     children.push_back(titleText);
     //children.push_back(userNameLabel);
     //children.push_back(userNameInput);
@@ -47,10 +50,18 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
         inAssetCache.loadTexture(Paths::TEXTURE_DIR
                                  + "TitleBackground/Background_1280.png"));
 
+    /* Lead text. */
+    leadText.setRenderMode(AUI::Text::RenderMode::Blended);
+    leadText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 30);
+    leadText.setColor({255, 255, 255, 255});
+    leadText.setText(getRandomLeadText());
+    leadText.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
+
     /* Title text. */
-    titleText.setFont((Paths::FONT_DIR + "B612-Regular.ttf"), 54);
+    titleText.setRenderMode(AUI::Text::RenderMode::Blended);
+    titleText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 185);
     titleText.setColor({255, 255, 255, 255});
-    titleText.setText("The World of Repose");
+    titleText.setText("Repose");
     titleText.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
 
     /* User name entry. */
@@ -63,7 +74,7 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
     //userNameInput.setMargins({12, 0, 12, 0});
 
     /* Status text. */
-    statusText.setFont((Paths::FONT_DIR + "B612-Regular.ttf"), 30);
+    statusText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 30);
     statusText.setColor({255, 255, 255, 255});
     statusText.setText("");
     statusText.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
@@ -120,6 +131,19 @@ void TitleWindow::onServerConnectionError(ConnectionError connectionError)
     // Change back to the title screen (does nothing if we're already there).
     userInterface.changeScreenTo(
         UserInterfaceExtension::ScreenType::TitleScreen);
+}
+
+std::string TitleWindow::getRandomLeadText()
+{
+    std::vector<std::string> leadTextStrings;
+    leadTextStrings.push_back("Welcome to the world of");
+    leadTextStrings.push_back("The ever-changing world of");
+    leadTextStrings.push_back("The warm sun shines on");
+    leadTextStrings.push_back("The flowers are blooming in");
+
+    std::uniform_int_distribution<std::size_t> dist{
+        0, (leadTextStrings.size() - 1)};
+    return leadTextStrings[dist(randGenerator)];
 }
 
 } // End namespace Client

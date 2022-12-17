@@ -8,7 +8,7 @@ namespace Client
 {
 MainThumbnail::MainThumbnail(AssetCache& assetCache,
                              const std::string& inDebugName)
-: AUI::Thumbnail({0, 0, 150, 150}, inDebugName)
+: AUI::Thumbnail({0, 0, 108, 109}, inDebugName)
 {
     // Add our backgrounds.
     hoveredImage.addResolution(
@@ -25,10 +25,10 @@ MainThumbnail::MainThumbnail(AssetCache& assetCache,
         assetCache.loadTexture(Paths::TEXTURE_DIR + "Thumbnail/Selected.png"));
 
     // Move our thumbnail image to the right position.
-    thumbnailImage.setLogicalExtent({27, 15, 96, 96});
+    thumbnailImage.setLogicalExtent({6, 4, 96, 96});
 
     // Set our text properties.
-    setTextLogicalExtent({13, 120, 123, 20});
+    setTextLogicalExtent({0, 0, 1, 1});
     setTextFont((Paths::FONT_DIR + "B612-Regular.ttf"), 15);
     setTextColor({255, 255, 255, 255});
 }

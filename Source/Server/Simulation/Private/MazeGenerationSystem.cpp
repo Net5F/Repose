@@ -536,10 +536,10 @@ int MazeGenerationSystem::getRandomWestWall()
 {
     std::uniform_int_distribution<int> dist{0, 99};
     int randValue{dist(randGenerator)};
-    if (randValue < 80) {
+    if (randValue < 70) {
         return westWallIDs[4];
     }
-    else if (randValue >= 80 && randValue < 90) {
+    else if (randValue >= 70 && randValue < 90) {
         return westWallIDs[5];
     }
     else if (randValue >= 90 && randValue < 93) {
@@ -560,10 +560,10 @@ int MazeGenerationSystem::getRandomNorthWall()
 {
     std::uniform_int_distribution<int> dist{0, 99};
     int randValue{dist(randGenerator)};
-    if (randValue < 80) {
+    if (randValue < 70) {
         return northWallIDs[4];
     }
-    else if (randValue >= 80 && randValue < 90) {
+    else if (randValue >= 70 && randValue < 90) {
         return northWallIDs[5];
     }
     else if (randValue >= 90 && randValue < 93) {
@@ -614,10 +614,10 @@ int MazeGenerationSystem::getRandomFullFill()
 {
     std::uniform_int_distribution<int> dist{0, 99};
     int randValue{dist(randGenerator)};
-    if (randValue < 80) {
+    if (randValue < 60) {
         return fullFillIDs[0];
     }
-    else if (randValue >= 80 && randValue < 90) {
+    else if (randValue >= 60 && randValue < 80) {
         return fullFillIDs[1];
     }
     else {

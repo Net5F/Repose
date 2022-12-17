@@ -23,7 +23,8 @@ MainButton::MainButton(AssetCache& assetCache, const SDL_Rect& inScreenExtent,
         assetCache.loadTexture(Paths::TEXTURE_DIR + "MainButton/Pressed.png"));
 
     // Set our text properties.
-    text.setFont((Paths::FONT_DIR + "B612-Regular.ttf"), 18);
+    text.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 21);
+    text.setLogicalExtent({0, -1, logicalExtent.w, logicalExtent.h - 1});
     text.setColor({255, 255, 255, 255});
     text.setText(inText);
 }

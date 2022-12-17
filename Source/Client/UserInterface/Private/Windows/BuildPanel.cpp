@@ -17,16 +17,16 @@ namespace Client
 {
 BuildPanel::BuildPanel(AssetCache& inAssetCache, SpriteData& inSpriteData,
                        BuildOverlay& inBuildOverlay)
-: AUI::Window{{0, 734, 1920, 346}, "BuildPanel"}
+: AUI::Window{{0, 761, 1920, 319}, "BuildPanel"}
 , assetCache{inAssetCache}
 , spriteData{inSpriteData}
 , buildOverlay{inBuildOverlay}
 , tileLayerIndex{0}
-, backgroundImage{{0, 0, 1920, 346}, "BuildPanelBackground"}
-, tileContainer{{183, 22, 1554, 324}, "TileContainer"}
-, layerLabel{{1792, 22, 90, 28}, "LayerLabel"}
-, layerDownButton{inAssetCache, {1767, 62, 64, 28}, "<", "LayerDownButton"}
-, layerUpButton{inAssetCache, {1844, 62, 64, 28}, ">", "LayerUpButton"}
+, backgroundImage{{0, 0, 1920, 319}, "BuildPanelBackground"}
+, tileContainer{{366 - 2, 91, 1188, 220}, "TileContainer"}
+, layerLabel{{1630, 97, 138, 36}, "LayerLabel"}
+, layerDownButton{inAssetCache, {1630, 139, 66, 31}, "<", "LayerDownButton"}
+, layerUpButton{inAssetCache, {1704, 139, 66, 31}, ">", "LayerUpButton"}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
@@ -37,15 +37,22 @@ BuildPanel::BuildPanel(AssetCache& inAssetCache, SpriteData& inSpriteData,
 
     /* Background image */
     backgroundImage.addResolution(
+        {1280, 720},
+        inAssetCache.loadTexture(Paths::TEXTURE_DIR
+                                 + "BuildPanel/Background_1280.png"));
+    backgroundImage.addResolution(
         {1600, 900},
         inAssetCache.loadTexture(Paths::TEXTURE_DIR
-                                 + "BuildPanel/Background_1600.png"),
-        {7, 0, 1600, 290});
+                                 + "BuildPanel/Background_1600.png"));
+    backgroundImage.addResolution(
+        {1920, 1080},
+        inAssetCache.loadTexture(Paths::TEXTURE_DIR
+                                 + "BuildPanel/Background_1920.png"));
 
     /* Container */
-    tileContainer.setNumColumns(10);
-    tileContainer.setCellWidth(156);
-    tileContainer.setCellHeight(162);
+    tileContainer.setNumColumns(11);
+    tileContainer.setCellWidth(108);
+    tileContainer.setCellHeight(109 + 1);
 
     // Add the eraser as the first thumbnail.
     addEraser();
@@ -65,9 +72,10 @@ BuildPanel::BuildPanel(AssetCache& inAssetCache, SpriteData& inSpriteData,
     }
 
     /* Layer label */
-    layerLabel.setFont((Paths::FONT_DIR + "B612-Regular.ttf"), 21);
+    layerLabel.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 26);
     layerLabel.setColor({255, 255, 255, 255});
     layerLabel.setVerticalAlignment(AUI::Text::VerticalAlignment::Center);
+    layerLabel.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
     layerLabel.setText("Layer " + std::to_string(tileLayerIndex));
 
     /* Layer buttons */
@@ -100,7 +108,7 @@ void BuildPanel::addEraser()
     std::unique_ptr<AUI::Widget> thumbnailPtr{
         std::make_unique<MainThumbnail>(assetCache, "EraserThumbnail")};
     MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
-    thumbnail.setText("Eraser");
+    thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 
     // Load the eraser's image.
@@ -140,13 +148,22 @@ void BuildPanel::addTile(const Sprite& sprite)
     std::unique_ptr<AUI::Widget> thumbnailPtr{
         std::make_unique<MainThumbnail>(assetCache, "BuildPanelThumbnail")};
     MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
-    thumbnail.setText(spriteData.getDisplayName(sprite.numericID));
+    thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 
-    // Load the sprite's image.
+    // Calc a square texture extent that shows the bottom of the sprite (so we 
+    // don't have to squash it).
     SpriteRenderData renderData{spriteData.getRenderData(sprite.numericID)};
+    SDL_Rect textureExtent{renderData.textureExtent};
+    if (textureExtent.h > textureExtent.w) {
+        int diff{textureExtent.h - textureExtent.w};
+        textureExtent.h -= diff;
+        textureExtent.y += diff;
+    }
+
+    // Load the sprite's image.
     thumbnail.thumbnailImage.addResolution({1280, 720}, renderData.texture,
-                                           renderData.textureExtent);
+                                           textureExtent);
 
     // Add a callback to deactivate all other thumbnails when one is activated.
     thumbnail.setOnSelected([this, &sprite](AUI::Thumbnail* selectedThumb) {

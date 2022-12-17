@@ -7,6 +7,7 @@
 #include "AUI/Image.h"
 #include "TitleTextInput.h"
 #include "TitleButton.h"
+#include <random>
 
 namespace AM
 {
@@ -39,6 +40,9 @@ private:
     /** Updates the statusText and re-enables the interactables.  */
     void onServerConnectionError(ConnectionError connectionError);
 
+    /** Returns a random lead-in text for above the title text. */
+    std::string getRandomLeadText();
+
     /** The user interface manager. Used for switching to the main screen. */
     UserInterfaceExtension& userInterface;
 
@@ -53,6 +57,8 @@ private:
     //-------------------------------------------------------------------------
     AUI::Image backgroundImage;
 
+    AUI::Text leadText;
+
     AUI::Text titleText;
 
     // Disabled until we add usernames
@@ -62,6 +68,9 @@ private:
     TitleButton connectButton;
 
     AUI::Text statusText;
+
+    /** Used for randomly picking a lead-in text. */
+    std::mt19937 randGenerator;
 };
 
 } // End namespace Client
