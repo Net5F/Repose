@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.16)
 
 message(STATUS "Configuring Server")
 
+###############################################################################
+# Configure Step
+###############################################################################
 add_executable(Server "")
 
 target_link_libraries(Server
@@ -33,8 +36,40 @@ file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Server/Common/TileMap.bin
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
+# On Windows, copy the SDL2 DLL into the build folder so we can run our executable.
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    file(COPY ${SDL2_DIR}/lib/x64/SDL2.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+endif()
+
 # Build all of the subdirectories.
 add_subdirectory(Config)
 add_subdirectory(Launch)
 add_subdirectory(Network)
 add_subdirectory(Simulation)
+
+###############################################################################
+# Install Step (Packaging the application)
+###############################################################################
+# Define an install step that copies the executable and all resources.
+install(TARGETS Server RUNTIME DESTINATION ${CMAKE_PROJECT_NAME}/Server)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Server/Common/
+        DESTINATION ${CMAKE_PROJECT_NAME}/Server)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/
+        DESTINATION ${CMAKE_PROJECT_NAME}/Server)
+install(FILES ${PROJECT_SOURCE_DIR}/Resources/Server/Common/UserConfig.json
+        DESTINATION ${CMAKE_PROJECT_NAME}/Server)
+install(FILES ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
+        DESTINATION ${CMAKE_PROJECT_NAME}/Server)
+
+# Add platform-specific files to the install step.
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Server/Windows/
+            DESTINATION ${CMAKE_PROJECT_NAME}/Server)
+
+    # On Windows, we provide the SDL2 DLL.
+    install(FILES ${SDL2_DIR}/lib/x64/SDL2.dll
+            DESTINATION ${CMAKE_PROJECT_NAME}/Server)
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Server/Linux/
+            DESTINATION ${CMAKE_PROJECT_NAME}/Server)
+endif()

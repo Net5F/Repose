@@ -21,7 +21,6 @@
     "framesPerSecond": 60,
     
     // The IP address and port of the simulation server.
-    "serverIP": "66.228.49.117",
-    // "serverIP": "127.0.0.1",
+    "serverIP": "127.0.0.1",
     "serverPort": 41499
 }

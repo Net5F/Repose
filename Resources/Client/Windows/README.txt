@@ -11,8 +11,3 @@ If you have issues, please make sure that you have the latest Visual C++ Redistr
         https://aka.ms/vs/17/release/vc_redist.x64.exe
     Microsoft support page
         https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170
-
-###################
-## Features
-###################
-Hit 'b' to enter build mode.

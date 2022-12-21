@@ -4,6 +4,8 @@ Binaries/
 /out/
 *.tar.gz
 /Output/
+/Package/
+/Packages/
 *.log
 *.swp
 .vs/
