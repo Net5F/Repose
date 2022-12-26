@@ -129,7 +129,7 @@ public:
     //-------------------------------------------------------------------------
     /** If true, tile changes will only be allowed in the "build area".
         If false, clients can change any tile in the map. */
-    static constexpr bool RESTRICT_TILE_UPDATES{false};
+    static constexpr bool RESTRICT_TILE_UPDATES{true};
 };
 
 } // End namespace AM

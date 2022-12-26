@@ -21,7 +21,7 @@ BuildPanel::BuildPanel(AssetCache& inAssetCache, SpriteData& inSpriteData,
 , assetCache{inAssetCache}
 , spriteData{inSpriteData}
 , buildOverlay{inBuildOverlay}
-, tileLayerIndex{0}
+, tileLayerIndex{1}
 , backgroundImage{{0, 0, 1920, 319}, "BuildPanelBackground"}
 , tileContainer{{366 - 2, 91, 1188, 220}, "TileContainer"}
 , layerLabel{{1630, 97, 138, 36}, "LayerLabel"}

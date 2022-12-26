@@ -67,7 +67,7 @@ bool MainScreen::onKeyDown(SDL_Keycode keyCode)
 void MainScreen::onPlayerPositionChanged(Position position)
 {
     // If the new position is within the build area, make the hint text visible.
-    if (BUILD_AREA_EXTENT.containsPosition(position.asTilePosition())) {
+    if (BUILD_MODE_AREA_EXTENT.containsPosition(position.asTilePosition())) {
         if (!playerIsInBuildArea) {
             // The player just entered the build area.
             mainOverlay.setBuildModeHintVisibility(true);

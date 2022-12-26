@@ -45,7 +45,7 @@ bool SimulationExtension::isTileUpdateValid(const TileUpdateRequest& updateReque
     if (SharedConfig::RESTRICT_TILE_UPDATES) {
         // Only return true for updates within the build area.
         TilePosition tilePos{updateRequest.tileX, updateRequest.tileY};
-        return BUILD_AREA_EXTENT.containsPosition(tilePos);
+        return VALID_BUILD_AREA_EXTENT.containsPosition(tilePos);
     }
     else {
         // No restrictions, always return true;
