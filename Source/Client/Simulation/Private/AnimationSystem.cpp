@@ -35,28 +35,28 @@ void AnimationSystem::updateAnimations()
             if (rotation.direction == Rotation::Direction::North
                 || rotation.direction == Rotation::Direction::NorthWest
                 || rotation.direction == Rotation::Direction::NorthEast) {
-                return;
+                continue;
             }
         }
         else if (currentSpriteId == GHOST_EAST_ID) {
             if (rotation.direction == Rotation::Direction::East
                 || rotation.direction == Rotation::Direction::NorthEast
                 || rotation.direction == Rotation::Direction::SouthEast) {
-                return;
+                continue;
             }
         }
         else if (currentSpriteId == GHOST_SOUTH_ID) {
             if (rotation.direction == Rotation::Direction::South
                 || rotation.direction == Rotation::Direction::SouthWest
                 || rotation.direction == Rotation::Direction::SouthEast) {
-                return;
+                continue;
             }
         }
         else if (currentSpriteId == GHOST_WEST_ID) {
             if (rotation.direction == Rotation::Direction::West
                 || rotation.direction == Rotation::Direction::NorthWest
                 || rotation.direction == Rotation::Direction::SouthWest) {
-                return;
+                continue;
             }
         }
 

@@ -3,7 +3,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Note: This file overrides the engine's default SharedConfig.h.
 ///////////////////////////////////////////////////////////////////////////////
-
 namespace AM
 {
 /**
@@ -129,7 +128,7 @@ public:
     //-------------------------------------------------------------------------
     /** If true, tile changes will only be allowed in the "build area".
         If false, clients can change any tile in the map. */
-    static constexpr bool RESTRICT_TILE_UPDATES{true};
+    static constexpr bool RESTRICT_TILE_UPDATES{false};
 };
 
 } // End namespace AM

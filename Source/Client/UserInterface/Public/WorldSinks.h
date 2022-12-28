@@ -24,16 +24,16 @@ public:
 
     /** We've established a connection with the server and the simulation has 
         started running. */
-    entt::sink<void()> simulationStarted;
+    entt::sink<entt::sigh<void()>> simulationStarted;
 
     /** Our connection to the server has encountered an error. */
-    entt::sink<void(ConnectionError)> serverConnectionError;
+    entt::sink<entt::sigh<void(ConnectionError)>> serverConnectionError;
 
     /** The tile map's extent (size) has changed. */
-    entt::sink<void(TileExtent)> tileMapExtentChanged;
+    entt::sink<entt::sigh<void(TileExtent)>> tileMapExtentChanged;
 
     /** The player entity's position has changed. */
-    entt::sink<void(Position)> playerPositionChanged;
+    entt::sink<entt::sigh<void(Position)>> playerPositionChanged;
 };
 
 } // namespace Client
