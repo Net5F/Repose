@@ -246,8 +246,16 @@ void MazeGenerationSystem::getNeighboringTiles(
         }
 
         if (removeNeighbor) {
-            std::swap(*it, outNeighbors.back());
-            outNeighbors.pop_back();
+            // If we're at the end, just pop the back.
+            if (it == outNeighbors.end() - 1) {
+                outNeighbors.pop_back();
+                it = outNeighbors.end();
+            }
+            else {
+                // Not at the end, swap and pop.
+                std::swap(*it, outNeighbors.back());
+                outNeighbors.pop_back();
+            }
         }
         else {
             ++it;

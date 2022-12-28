@@ -110,6 +110,8 @@ void PlantSystem::replantPlant(PlantRegion& region, Plant& plant)
     auto openTileIt{region.openTiles.begin() + openTileDist(generator)};
     plant.position = *openTileIt;
 
+    AM_ASSERT(region.openTiles.size() > 0,
+              "openTiles vector was empty (should never happen).");
     std::swap(*openTileIt, *(region.openTiles.end() - 1));
     region.openTiles.pop_back();
 

@@ -20,7 +20,7 @@ BuildOverlay::BuildOverlay(SpriteData& inSpriteData, WorldSinks& inWorldSinks,
 , spriteData{inSpriteData}
 , uiEventDispatcher{inUiEventDispatcher}
 , selectedTile{nullptr}
-, tileLayerIndex{0}
+, tileLayerIndex{1}
 , showTile{false}
 , camera{}
 , mapTileExtent{}
