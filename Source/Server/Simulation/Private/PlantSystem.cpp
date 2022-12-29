@@ -106,7 +106,7 @@ void PlantSystem::replantPlant(PlantRegion& region, Plant& plant)
     
     // Pull a random position from the pool.
     std::uniform_int_distribution<std::size_t> openTileDist{
-        0, region.openTiles.size()};
+        0, (region.openTiles.size() - 1)};
     auto openTileIt{region.openTiles.begin() + openTileDist(generator)};
     plant.position = *openTileIt;
 

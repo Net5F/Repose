@@ -148,7 +148,8 @@ void MazeGenerationSystem::clearToExit(MazeTopology& maze,
         getNeighboringTiles(maze, workingPath, false, passNumber,
                             workingNeighbors);
 
-        // If there's a valid neighbor, remove the wall and move to it.
+        // If there are valid neighbors: pick a random one, remove the wall, 
+        // and move to it.
         if (workingNeighbors.size() > 0) {
             clearAndMoveToRandomNeighbor(maze, workingNeighbors, workingPath,
                                          passNumber);
@@ -189,7 +190,8 @@ void MazeGenerationSystem::clearToVisitedOrExit(
             return;
         }
 
-        // If there's a valid neighbor, remove the wall and move to it.
+        // If there are valid neighbors: pick a random one, remove the wall, 
+        // and move to it.
         if (workingNeighbors.size() > 0) {
             clearAndMoveToRandomNeighbor(maze, workingNeighbors, workingPath,
                                          passNumber);
@@ -221,46 +223,32 @@ void MazeGenerationSystem::getNeighboringTiles(
     outNeighbors.emplace_back(currentPosition.x, currentPosition.y - 1);
 
     // Remove any invalid neighbors.
-    for (auto it = outNeighbors.begin(); it != outNeighbors.end();) {
-        bool removeNeighbor{false};
-
+    std::erase_if(outNeighbors, [&](const TilePosition& position) {
         // If this neighbor is out of bounds, remove it.
-        if (!(abstractMazeExtent.containsPosition(*it))) {
-            removeNeighbor = true;
+        if (!(abstractMazeExtent.containsPosition(position))) {
+            return true;
         }
         // Else if we're including visited tiles.
         else if (includeVisited && (path.size() > 1)) {
             // If this tile was already visited on this run, remove it.
-            const MazeCell& cell{maze.cells[linearizeCellIndex(it->x, it->y)]};
+            const MazeCell& cell{
+                maze.cells[linearizeCellIndex(position.x, position.y)]};
             if (cell.lastVisitedPassNumber == passNumber) {
-                removeNeighbor = true;
+                return true;
             }
         }
         else {
-            // If we're ignoring visited cells and this neighbor was visited,
-            // remove it.
-            const MazeCell& cell{maze.cells[linearizeCellIndex(it->x, it->y)]};
+            // If we're ignoring visited cells and this neighbor was
+            // visited, remove it.
+            const MazeCell& cell{
+                maze.cells[linearizeCellIndex(position.x, position.y)]};
             if (!includeVisited && (cell.lastVisitedPassNumber != -1)) {
-                removeNeighbor = true;
+                return true;
             }
         }
 
-        if (removeNeighbor) {
-            // If we're at the end, just pop the back.
-            if (it == outNeighbors.end() - 1) {
-                outNeighbors.pop_back();
-                it = outNeighbors.end();
-            }
-            else {
-                // Not at the end, swap and pop.
-                std::swap(*it, outNeighbors.back());
-                outNeighbors.pop_back();
-            }
-        }
-        else {
-            ++it;
-        }
-    }
+        return false;
+    });
 }
 
 bool MazeGenerationSystem::isExitTile(const TilePosition& position)
