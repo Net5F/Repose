@@ -40,7 +40,7 @@ private:
     void updatePlant(PlantRegion& region, Plant& plant);
 
     /**
-     * Replants the given plant, re-randomizing its parameters and setting it 
+     * Replants the given plant, re-randomizing its parameters and setting it
      * back to LifeStage::Sapling.
      */
     void replantPlant(PlantRegion& region, Plant& plant);
@@ -64,10 +64,10 @@ private:
     std::mt19937 generator;
 
     /** Used for setting plant sprites. */
-    const int SUNFLOWER_SAPLING_ID; 
-    const int SUNFLOWER_MIDGROWTH_ID; 
-    const int SUNFLOWER_FULLYGROWN_ID; 
-    const int SUNFLOWER_DYING_ID; 
+    const int SUNFLOWER_SAPLING_ID;
+    const int SUNFLOWER_MIDGROWTH_ID;
+    const int SUNFLOWER_FULLYGROWN_ID;
+    const int SUNFLOWER_DYING_ID;
 };
 
 } // End namespace Server

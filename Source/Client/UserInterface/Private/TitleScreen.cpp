@@ -5,10 +5,12 @@
 
 namespace AM
 {
-namespace Client 
+namespace Client
 {
-TitleScreen::TitleScreen(UserInterfaceExtension& inUserInterface, WorldSinks& inWorldSinks,
-                EventDispatcher& inUiEventDispatcher, AssetCache& inAssetCache)
+TitleScreen::TitleScreen(UserInterfaceExtension& inUserInterface,
+                         WorldSinks& inWorldSinks,
+                         EventDispatcher& inUiEventDispatcher,
+                         AssetCache& inAssetCache)
 : AUI::Screen("TitleScreen")
 , titleWindow{inUserInterface, inWorldSinks, inUiEventDispatcher, inAssetCache}
 {

@@ -22,7 +22,7 @@ public:
 
     /**
      * Sets the visibility of the hint text.
-     * Used by the MainScreen to control the hint text, so we don't have to 
+     * Used by the MainScreen to control the hint text, so we don't have to
      * do "is the player in the build area" checks in two places.
      */
     void setBuildModeHintVisibility(bool isVisible);

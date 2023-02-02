@@ -28,7 +28,7 @@ void AnimationSystem::updateAnimations()
     for (entt::entity entity : view) {
         auto [rotation, sprite] = view.get<Rotation, Sprite>(entity);
 
-        // If the new rotation includes the current-faced direction, don't 
+        // If the new rotation includes the current-faced direction, don't
         // change the sprite.
         int currentSpriteId{sprite.numericID};
         if (currentSpriteId == GHOST_NORTH_ID) {

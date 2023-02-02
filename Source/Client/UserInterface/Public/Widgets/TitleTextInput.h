@@ -16,7 +16,7 @@ class TitleTextInput : public AUI::TextInput
 {
 public:
     TitleTextInput(AssetCache& assetCache, const SDL_Rect& inScreenExtent,
-                  const std::string& inDebugName = "MainTextInput");
+                   const std::string& inDebugName = "MainTextInput");
 };
 
 } // End namespace Client

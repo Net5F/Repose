@@ -22,7 +22,7 @@ class WorldSinks
 public:
     WorldSinks(WorldSignals& worldSignals);
 
-    /** We've established a connection with the server and the simulation has 
+    /** We've established a connection with the server and the simulation has
         started running. */
     entt::sink<entt::sigh<void()>> simulationStarted;
 

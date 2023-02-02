@@ -81,7 +81,7 @@ public:
     // 1. If the client is too far ahead or behind, send an adjustment.
     //    (See TICKDIFF_ACCEPTABLE_* and TICKDIFF_TARGET.)
     //
-    // 2. If a single tickdiff is lower than TICKDIFF_MAX_BOUND_LOWER or 
+    // 2. If a single tickdiff is lower than TICKDIFF_MAX_BOUND_LOWER or
     //    higher than TICKDIFF_MAX_BOUND_UPPER, disconnect them.
     //
     // 3. If we haven't received data from the client within CLIENT_TIMEOUT_S
@@ -111,16 +111,15 @@ public:
         and our current tickNum that we won't send an adjustment for. */
     static constexpr Sint64 TICKDIFF_ACCEPTABLE_BOUND_LOWER{1};
     static constexpr Sint64 TICKDIFF_ACCEPTABLE_BOUND_UPPER{3};
-    /** The value that we'll adjust clients to if they fall outside the 
+    /** The value that we'll adjust clients to if they fall outside the
         acceptable bounds.  */
     static constexpr Sint64 TICKDIFF_TARGET{2};
 
     /** The range of difference (inclusive) between a received message's tickNum
         and our current tickNum that will cause us to disconnect a client. */
     static constexpr Sint64 TICKDIFF_MAX_BOUND_LOWER{SDL_MIN_SINT8};
-    static constexpr Sint64 TICKDIFF_MAX_BOUND_UPPER{
-        ConstexprTools::ceilInt(CLIENT_TIMEOUT_S
-                                / SharedConfig::SIM_TICK_TIMESTEP_S)};
+    static constexpr Sint64 TICKDIFF_MAX_BOUND_UPPER{ConstexprTools::ceilInt(
+        CLIENT_TIMEOUT_S / SharedConfig::SIM_TICK_TIMESTEP_S)};
     static_assert(TICKDIFF_MAX_BOUND_UPPER <= SDL_MAX_SINT8,
                   "Bound is too high (must fit in SINT8).");
 

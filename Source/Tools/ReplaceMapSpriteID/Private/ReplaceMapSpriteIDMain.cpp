@@ -48,10 +48,9 @@ int main(int argc, char* argv[])
     // If we replaced any occurrences, try to save the map.
     if (replaceCount > 0) {
         bool saveSuccessful{Serialize::toFile(filePath, mapSnapshot)};
-        if (saveSuccessful)
-        {
+        if (saveSuccessful) {
             LOG_INFO("Found and replaced the given ID in %d palettes.",
-                        replaceCount);
+                     replaceCount);
         }
         else {
             LOG_INFO("Failed to serialize and save the map.");

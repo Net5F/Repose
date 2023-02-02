@@ -151,7 +151,7 @@ void BuildPanel::addTile(const Sprite& sprite)
     thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 
-    // Calc a square texture extent that shows the bottom of the sprite (so we 
+    // Calc a square texture extent that shows the bottom of the sprite (so we
     // don't have to squash it).
     SpriteRenderData renderData{spriteData.getRenderData(sprite.numericID)};
     SDL_Rect textureExtent{renderData.textureExtent};

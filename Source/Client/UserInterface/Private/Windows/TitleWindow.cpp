@@ -31,8 +31,8 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
     children.push_back(backgroundImage);
     children.push_back(leadText);
     children.push_back(titleText);
-    //children.push_back(userNameLabel);
-    //children.push_back(userNameInput);
+    // children.push_back(userNameLabel);
+    // children.push_back(userNameInput);
     children.push_back(connectButton);
     children.push_back(statusText);
 
@@ -65,13 +65,13 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
     titleText.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
 
     /* User name entry. */
-    //userNameLabel.setFont((Paths::FONT_DIR + "B612-Regular.ttf"), 30);
-    //userNameLabel.setColor({255, 255, 255, 255});
-    //userNameLabel.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
-    //userNameLabel.setText("User Name");
+    // userNameLabel.setFont((Paths::FONT_DIR + "B612-Regular.ttf"), 30);
+    // userNameLabel.setColor({255, 255, 255, 255});
+    // userNameLabel.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
+    // userNameLabel.setText("User Name");
 
-    //userNameInput.setTextFont((Paths::FONT_DIR + "B612-Regular.ttf"), 28);
-    //userNameInput.setMargins({12, 0, 12, 0});
+    // userNameInput.setTextFont((Paths::FONT_DIR + "B612-Regular.ttf"), 28);
+    // userNameInput.setMargins({12, 0, 12, 0});
 
     /* Status text. */
     statusText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 30);
@@ -81,7 +81,8 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
     statusText.setIsVisible(true);
 
     // Register our UI event handlers.
-    connectButton.setOnPressed(std::bind(&TitleWindow::onConnectButtonPressed, this));
+    connectButton.setOnPressed(
+        std::bind(&TitleWindow::onConnectButtonPressed, this));
 
     // Register our world signal handlers.
     inWorldSinks.simulationStarted.connect<&TitleWindow::onSimulationStarted>(
@@ -94,11 +95,11 @@ void TitleWindow::onConnectButtonPressed()
 {
     // Communicate that we're attempting to connect and disable interactables.
     statusText.setText("Connecting...");
-    //userNameInput.disable();
+    // userNameInput.disable();
     connectButton.disable();
 
     // Tell the sim to initiate the connection.
-    //uiEventDispatcher.push<ConnectionRequest>({userNameInput.getText()});
+    // uiEventDispatcher.push<ConnectionRequest>({userNameInput.getText()});
     uiEventDispatcher.push<ConnectionRequest>({""});
 }
 
@@ -125,7 +126,7 @@ void TitleWindow::onServerConnectionError(ConnectionError connectionError)
     statusText.setText(newStatusText);
 
     // Re-enable the interactables.
-    //userNameInput.enable();
+    // userNameInput.enable();
     connectButton.enable();
 
     // Change back to the title screen (does nothing if we're already there).

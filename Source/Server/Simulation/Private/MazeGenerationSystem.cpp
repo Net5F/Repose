@@ -148,7 +148,7 @@ void MazeGenerationSystem::clearToExit(MazeTopology& maze,
         getNeighboringTiles(maze, workingPath, false, passNumber,
                             workingNeighbors);
 
-        // If there are valid neighbors: pick a random one, remove the wall, 
+        // If there are valid neighbors: pick a random one, remove the wall,
         // and move to it.
         if (workingNeighbors.size() > 0) {
             clearAndMoveToRandomNeighbor(maze, workingNeighbors, workingPath,
@@ -190,7 +190,7 @@ void MazeGenerationSystem::clearToVisitedOrExit(
             return;
         }
 
-        // If there are valid neighbors: pick a random one, remove the wall, 
+        // If there are valid neighbors: pick a random one, remove the wall,
         // and move to it.
         if (workingNeighbors.size() > 0) {
             clearAndMoveToRandomNeighbor(maze, workingNeighbors, workingPath,
@@ -380,7 +380,7 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
             }
 
             // If there's a cell to the south, check if it has a north wall.
-            // Note: If there's no cell to the south, we're on the southern 
+            // Note: If there's no cell to the south, we're on the southern
             //       boundary of the maze and know there's an enclosing wall.
             bool onSouthBoundary{true};
             bool southCellHasNorthWall{false};
@@ -391,7 +391,7 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
                 southCellHasNorthWall = southCell.northWall;
             }
 
-            // If this cell is fully enclosed by walls, remove them and place 
+            // If this cell is fully enclosed by walls, remove them and place
             // a full fill.
             if (hasNorthWall && hasWestWall
                 && (onEastBoundary || eastCellHasWestWall)

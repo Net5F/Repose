@@ -36,7 +36,7 @@ struct Plant {
     /** The type of plant that this is. */
     Type type{Type::Sunflower};
 
-    /** How long it takes for this plant to progress to the next stage, in 
+    /** How long it takes for this plant to progress to the next stage, in
         seconds. */
     double updateTimeS{0};
 

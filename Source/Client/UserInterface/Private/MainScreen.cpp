@@ -30,14 +30,14 @@ MainScreen::MainScreen(WorldSinks& inWorldSinks,
     buildOverlay.setIsVisible(false);
     buildPanel.setIsVisible(false);
 
-    // If tile updates are restricted, we need to know when the player enters 
+    // If tile updates are restricted, we need to know when the player enters
     // or exits the build area.
     if (SharedConfig::RESTRICT_TILE_UPDATES) {
         inWorldSinks.playerPositionChanged
             .connect<&MainScreen::onPlayerPositionChanged>(*this);
     }
     else {
-        // Tile updates are unrestricted, so the player is always in the build 
+        // Tile updates are unrestricted, so the player is always in the build
         // area.
         playerIsInBuildArea = true;
     }
@@ -50,7 +50,7 @@ void MainScreen::setCamera(const Camera& inCamera)
 
 bool MainScreen::onKeyDown(SDL_Keycode keyCode)
 {
-    // If the 'b' key is pressed and the player is in the build area, toggle 
+    // If the 'b' key is pressed and the player is in the build area, toggle
     // build mode.
     if ((keyCode == SDLK_b) && playerIsInBuildArea) {
         bool buildModeIsActive{buildOverlay.getIsVisible()};

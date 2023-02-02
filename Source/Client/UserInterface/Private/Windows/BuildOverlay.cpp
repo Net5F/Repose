@@ -72,7 +72,7 @@ AUI::EventResult BuildOverlay::onMouseDown(AUI::MouseButtonType buttonType,
 {
     ignore(cursorPosition);
 
-    // If we don't have a selected tile or the mouse is outside of the world 
+    // If we don't have a selected tile or the mouse is outside of the world
     // bounds, ignore this event.
     if ((selectedTile == nullptr)
         || !(mapTileExtent.containsPosition(mouseTilePosition))) {

@@ -40,7 +40,8 @@ bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
     return false;
 }
 
-bool SimulationExtension::isTileUpdateValid(const TileUpdateRequest& updateRequest)
+bool SimulationExtension::isTileUpdateValid(
+    const TileUpdateRequest& updateRequest)
 {
     if (SharedConfig::RESTRICT_TILE_UPDATES) {
         // Only return true for updates within the build area.

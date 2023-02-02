@@ -73,8 +73,7 @@ void PlantSystem::updatePlant(PlantRegion& region, Plant& plant)
     // If the plant needs to be updated.
     if (plant.timer.getDeltaSeconds(false) > updateTimeS) {
         // Update the plant to the next stage.
-        unsigned int currentStage{
-            static_cast<unsigned int>(plant.lifeStage)};
+        unsigned int currentStage{static_cast<unsigned int>(plant.lifeStage)};
         currentStage++;
         plant.lifeStage = static_cast<Plant::LifeStage>(currentStage);
 
@@ -103,7 +102,7 @@ void PlantSystem::replantPlant(PlantRegion& region, Plant& plant)
         // Return the old position to the pool.
         region.openTiles.push_back(plant.position);
     }
-    
+
     // Pull a random position from the pool.
     std::uniform_int_distribution<std::size_t> openTileDist{
         0, (region.openTiles.size() - 1)};

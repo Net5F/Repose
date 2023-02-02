@@ -19,8 +19,9 @@ class WorldSinks;
 class TitleScreen : public AUI::Screen
 {
 public:
-    TitleScreen(UserInterfaceExtension& inUserInterface, WorldSinks& inWorldSinks,
-                EventDispatcher& inUiEventDispatcher, AssetCache& inAssetCache);
+    TitleScreen(UserInterfaceExtension& inUserInterface,
+                WorldSinks& inWorldSinks, EventDispatcher& inUiEventDispatcher,
+                AssetCache& inAssetCache);
 
     void render() override;
 

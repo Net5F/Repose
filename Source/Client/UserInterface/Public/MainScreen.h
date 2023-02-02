@@ -42,7 +42,7 @@ public:
 
 private:
     /**
-     * If the player enters or exits the build area, performs the necessary UI 
+     * If the player enters or exits the build area, performs the necessary UI
      * changes.
      */
     void onPlayerPositionChanged(Position position);
@@ -53,7 +53,7 @@ private:
     //-------------------------------------------------------------------------
     // Windows
     //-------------------------------------------------------------------------
-    /** The main overlay. Currently only shows the "build mode" text, but 
+    /** The main overlay. Currently only shows the "build mode" text, but
         will eventually show the chat box, player names, etc. */
     MainOverlay mainOverlay;
 

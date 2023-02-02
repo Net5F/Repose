@@ -37,7 +37,7 @@ private:
     std::vector<BoundingBox> teleportVolumes;
 
     /** The destination for each volume in teleportVolumes.
-        Elements are index-matched with teleportVolumes, e.g. a player 
+        Elements are index-matched with teleportVolumes, e.g. a player
         who enters the volume at teleportVolumes[0] should be teleported to the
         position at teleportDestinations[0]. */
     std::vector<Position> teleportDestinations;

@@ -11,8 +11,8 @@ class SpriteData;
 /**
  * Handles updating entity sprites to reflect their current state.
  *
- * TODO: When animation support is added, update this class to handle changing 
- *       entity animations to reflect their current state, and to progress any 
+ * TODO: When animation support is added, update this class to handle changing
+ *       entity animations to reflect their current state, and to progress any
  *       animations that are ready for their next sprite.
  */
 class AnimationSystem

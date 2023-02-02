@@ -30,10 +30,7 @@ namespace Client
 class UserInterfaceExtension : public IUserInterfaceExtension
 {
 public:
-    enum class ScreenType {
-        TitleScreen,
-        MainScreen
-    };
+    enum class ScreenType { TitleScreen, MainScreen };
 
     // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
