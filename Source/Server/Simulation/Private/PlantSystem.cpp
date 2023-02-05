@@ -71,7 +71,7 @@ void PlantSystem::updatePlant(PlantRegion& region, Plant& plant)
     }
 
     // If the plant needs to be updated.
-    if (plant.timer.getDeltaSeconds(false) > updateTimeS) {
+    if (plant.timer.getTime() > updateTimeS) {
         // Update the plant to the next stage.
         unsigned int currentStage{static_cast<unsigned int>(plant.lifeStage)};
         currentStage++;
@@ -87,7 +87,7 @@ void PlantSystem::updatePlant(PlantRegion& region, Plant& plant)
                                              1, getPlantSpriteID(plant));
         }
 
-        plant.timer.updateSavedTime();
+        plant.timer.reset();
     }
 }
 

@@ -18,6 +18,7 @@ namespace Server
 
 TeleportSystem::TeleportSystem(World& inWorld)
 : world{inWorld}
+, updateTimer{}
 {
     // Maze -> dev room.
     teleportVolumes.emplace_back(445.0f, 478.0f, 41.0f, 44.0f, 0.0f, 1.0f);
@@ -30,7 +31,7 @@ TeleportSystem::TeleportSystem(World& inWorld)
 
 void TeleportSystem::teleportPlayers()
 {
-    if (updateTimer.getDeltaSeconds(false) >= UPDATE_TIMESTEP_S) {
+    if (updateTimer.getTime() >= UPDATE_TIMESTEP_S) {
         auto movementGroup
             = world.registry.group<Input, Position, PreviousPosition, Velocity,
                                    Rotation, Collision>();
@@ -59,7 +60,7 @@ void TeleportSystem::teleportPlayers()
             }
         }
 
-        updateTimer.updateSavedTime();
+        updateTimer.reset();
     }
 }
 

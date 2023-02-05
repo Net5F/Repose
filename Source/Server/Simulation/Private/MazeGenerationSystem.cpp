@@ -16,6 +16,7 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
                                            SpriteData& inSpriteData)
 : world{inWorld}
 , spriteData{inSpriteData}
+, regenerationTimer{}
 , mazeExtent{MAZE_ORIGIN_TILE.x, MAZE_ORIGIN_TILE.y, MAZE_WIDTH, MAZE_HEIGHT}
 , abstractMazeExtent{0, 0, (mazeExtent.xLength / 2), (mazeExtent.yLength / 2)}
 , entranceTile{8, 17}
@@ -51,28 +52,25 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
         fullFillIDs[i] = spriteData.get(stringID).numericID;
     }
 
+    // Prime a timer.
     Timer timer;
-    timer.updateSavedTime();
 
     // Generate the initial maze state.
     MazeTopology maze{};
     generateMaze(maze);
     applyMazeToMap(maze);
 
-    regenerationTimer.updateSavedTime();
-
-    LOG_INFO("Maze generated in %.8fs", timer.getDeltaSeconds(false));
+    LOG_INFO("Maze generated in %.8fs", timer.getTime());
 }
 
 void MazeGenerationSystem::regenerateMazeIfNecessary()
 {
     // If enough time has passed, regenerate the maze.
-    if (regenerationTimer.getDeltaSeconds(false)
-        >= MAZE_REGENERATION_PERIOD_S) {
+    if (regenerationTimer.getTime() >= MAZE_REGENERATION_PERIOD_S) {
         LOG_INFO("Generating maze...");
 
+        // Prime a timer.
         Timer timer;
-        timer.updateSavedTime();
 
         // Generate the maze topology.
         MazeTopology maze{};
@@ -81,9 +79,9 @@ void MazeGenerationSystem::regenerateMazeIfNecessary()
         // Apply the generated maze to the map.
         applyMazeToMap(maze);
 
-        regenerationTimer.updateSavedTime();
+        LOG_INFO("Maze generated in %.8fs", timer.getTime());
 
-        LOG_INFO("Maze generated in %.8fs", timer.getDeltaSeconds(false));
+        regenerationTimer.reset();
     }
 }
 

@@ -47,18 +47,14 @@ int main(int argc, char* argv[])
     // Parse fill sprite ID.
     std::string fillSpriteId{argv[3]};
 
-    // Prime a timer.
-    Timer timer;
-    timer.updateSavedTime();
-
     // Generate the map and save it.
-    double startTime{timer.getDeltaSeconds(true)};
+    Timer timer;
     MapGenerator mapGenerator(static_cast<unsigned int>(mapLengthX),
                               static_cast<unsigned int>(mapLengthY),
                               fillSpriteId);
     mapGenerator.generateAndSave("TileMap.bin");
 
-    double timeTaken = timer.getDeltaSeconds(false) - startTime;
+    double timeTaken = timer.getTime();
     std::printf("Map generated and saved in %.6fs.\n", timeTaken);
     std::fflush(stdout);
 

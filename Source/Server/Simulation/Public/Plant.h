@@ -44,7 +44,7 @@ struct Plant {
     LifeStage lifeStage{LifeStage::Sapling};
 
     /** Tracks how much time has passed since this plant's last update. */
-    Timer timer;
+    Timer timer{};
 };
 
 } // End namespace Server
