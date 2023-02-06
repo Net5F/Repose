@@ -5,7 +5,10 @@ message(STATUS "Configuring Client")
 ###############################################################################
 # Configure Step
 ###############################################################################
-add_executable(Client "")
+add_executable(Client
+    WIN32
+    "${PROJECT_SOURCE_DIR}/Resources/Shared/Icons/appicon.rc"
+)
 
 target_link_libraries(Client
     PRIVATE
