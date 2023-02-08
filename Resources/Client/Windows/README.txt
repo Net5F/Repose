@@ -1,6 +1,7 @@
 Hello! Thanks for downloading. I hope you enjoy.
 - Net_
 
+
 ###################
 ## Installation
 ###################
@@ -11,3 +12,12 @@ If you have issues, please make sure that you have the latest Visual C++ Redistr
         https://aka.ms/vs/17/release/vc_redist.x64.exe
     Microsoft support page
         https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170
+
+
+###################
+## Credits
+###################
+Art by Penzilla - https://www.penzilladesign.com/
+Code by Net_
+
+Built using The Amalgam Engine.
