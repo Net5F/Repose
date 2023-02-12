@@ -25,11 +25,11 @@ jobs:
             platformName: Ubuntu
 
     steps:
-      - name: (Ubuntu) SDL2 Download
+      - name: (Ubuntu) Dependency Downloads
         if: ${{matrix.platformName == 'Ubuntu'}}
         uses: awalsh128/cache-apt-pkgs-action@v1.2.4
         with:
-          packages: libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev
+          packages: libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev libgtk-3-dev
           version: 1.0
 
       - name: Checkout
