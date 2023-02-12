@@ -3,7 +3,8 @@
 #       target. The lines for making it a static library are commented out.
 
 target_sources(Shared
-    PUBLIC
+#    PUBLIC
+    INTERFACE
         Public/BuildModeDefs.h
 )
 
