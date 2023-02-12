@@ -27,7 +27,10 @@ jobs:
     steps:
       - name: (Ubuntu) SDL2 Download
         if: ${{matrix.platformName == 'Ubuntu'}}
-        run: apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev
+        uses: awalsh128/cache-apt-pkgs-action@v1.2.4
+        with:
+          packages: libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev
+          version: 1.0
 
       - name: Checkout
         uses: actions/checkout@v3
