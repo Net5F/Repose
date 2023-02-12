@@ -17,8 +17,12 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        platformName: [Windows, Ubuntu]
         os: [windows-2022, ubuntu-22.04]
+        include:
+          - os: windows-2022
+            platformName: Windows
+          - os: ubuntu-22.04
+            platformName: Ubuntu
 
     steps:
       - name: (Ubuntu) SDL2 Download
