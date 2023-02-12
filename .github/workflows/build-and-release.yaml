@@ -1,0 +1,59 @@
+name: Client - Build and Release
+on:
+  workflow_dispatch:
+    inputs:
+      semver_update_type:
+        description: 'Update type: major, minor, or patch'
+        required: true
+        default: 'patch'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build_and_release:
+    name: ${{matrix.platformName}} Client Release
+    runs-on: ${{matrix-os}}
+    strategy:
+      matrix:
+        platformName: [Windows, Ubuntu]
+        os: [windows-2022, ubuntu-22.04]
+
+  steps:
+    - name: (Ubuntu) SDL2 Download
+      if: ${{matrix.platformName == 'Ubuntu'}}
+      run: apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev
+
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    # (the sourcecode zip that comes with a release doesn't contain submodules)
+    - name: Source Code Archive
+      run: 7z a "SourceCode.zip" .
+
+    - name: CMake Setup
+      uses: jwlawson/actions-setup-cmake@v1.13
+      with:
+        cmake-version: '3.16'
+
+    - name: Ninja Setup
+      uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: CMake Configure
+      run: cmake -S "." -B "Build" -DCMAKE_BUILD_TYPE=Release -G Ninja
+
+    - name: Build
+      run: ninja -C "Build" all
+
+    - name: Package
+      run: |
+        cmake --install "Build" --prefix "Client"
+        7z a "Client.zip" "Client"
+
+    - name: Release
+      uses: softprops/action-gh-release@v0.1.15
+      with:
+        files: Client.zip SourceCode.zip
