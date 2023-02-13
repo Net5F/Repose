@@ -47,7 +47,7 @@ jobs:
     env:
       CLIENT_FOLDER_NAME: Repose_${{needs.increment_tag.outputs.newTagVersion}}.zip
       CLIENT_ZIP_NAME: Client_${{matrix.platformName}}.zip
-      SERVER_FOLDER_NAME: Repose_${{needs.increment_tag.outputs.newTagVersion}}.zip
+      SERVER_FOLDER_NAME: Repose_Server_${{needs.increment_tag.outputs.newTagVersion}}.zip
       SERVER_ZIP_NAME: Server_${{matrix.platformName}}.zip
 
     steps:
@@ -57,8 +57,7 @@ jobs:
           submodules: 'recursive'
           lfs: 'true'
 
-      # TODO: Do we want server to also be in release?
-      # In the repo, serverIP is set to localhost. We want the release to point at our server.
+      # In the repo, serverIP is set to localhost. Make the release point at our server.
       - name: Replace Server IP
         run: sed -i 's/127.0.0.1/66.228.49.117/' Resources/Client/Common/UserConfig.json
 
