@@ -110,7 +110,7 @@ jobs:
     needs: increment_tag
     env:
       FOLDER_NAME: Repose_${{needs.increment_tag.outputs.newTagVersion}}
-      ZIP_NAME: FullSourceCode_${{needs.increment_tag.outputs.newTagVersion}}.zip
+      ZIP_NAME: FullSourceCode.zip
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
