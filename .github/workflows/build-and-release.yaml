@@ -43,13 +43,11 @@ jobs:
           - os: ubuntu-22.04
             platformName: Linux
             cmakeFlags: ""
-
     env:
       CLIENT_FOLDER_NAME: Repose_${{needs.increment_tag.outputs.newTagVersion}}.zip
       CLIENT_ZIP_NAME: Client_${{matrix.platformName}}.zip
       SERVER_FOLDER_NAME: Repose_Server_${{needs.increment_tag.outputs.newTagVersion}}.zip
       SERVER_ZIP_NAME: Server_${{matrix.platformName}}.zip
-
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -110,6 +108,9 @@ jobs:
     name: Archive Full Source
     runs-on: ubuntu-22.04
     needs: increment_tag
+    env:
+      FOLDER_NAME: Repose_${{needs.increment_tag.outputs.newTagVersion}}
+      ZIP_NAME: FullSourceCode_${{needs.increment_tag.outputs.newTagVersion}}.zip
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -118,10 +119,13 @@ jobs:
           lfs: 'true'
 
       - name: Create Source Code Archive
-        run: 7z a "FullSourceCode.zip" .
+        run: |
+          mkdir ${{env.FOLDER_NAME}}
+          cp -r ./* ${{env.FOLDER_NAME}}
+          7z a ${{env.ZIP_NAME}} ${{env.FOLDER_NAME}}
 
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          files: FullSourceCode.zip
+          files: ${{env.ZIP_NAME}}
           tag_name: ${{needs.increment_tag.outputs.newTagVersion}}
