@@ -121,7 +121,7 @@ jobs:
       - name: Create Source Code Archive
         run: |
           mkdir ${{env.FOLDER_NAME}}
-          cp -r ./* ${{env.FOLDER_NAME}}
+          rsync -r --exclude ${{env.FOLDER_NAME}} '.' ${{env.FOLDER_NAME}}
           7z a ${{env.ZIP_NAME}} ${{env.FOLDER_NAME}}
 
       - name: Release
