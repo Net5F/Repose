@@ -6,7 +6,6 @@ message(STATUS "Configuring Server")
 # Configure Step
 ###############################################################################
 add_executable(Server
-    WIN32
     "${PROJECT_SOURCE_DIR}/Resources/Shared/Icons/appicon.rc"
 )
 
