@@ -30,11 +30,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          submodules: recursive
+          submodules: 'recursive'
+          lfs: 'true'
 
       # (the sourcecode zip that comes with a release doesn't contain submodules)
       - name: Create Source Code Archive
-        run: 7z a "SourceCode.zip" .
+        run: 7z a "FullSourceCode.zip" .
 
 
       - name: (Ubuntu) Download Dependencies
@@ -65,8 +66,8 @@ jobs:
 
       - name: Package
         run: |
-          cmake --install "Build" --prefix "Client"
-          7z a "Client.zip" "Client"
+          cmake --install "Build" --prefix "Package"
+          7z a "Client.zip" "Package/Repose/Client"
 
 
       - name: Increment Tag Version
@@ -81,5 +82,5 @@ jobs:
         with:
           files: |
             Client.zip
-            SourceCode.zip
+            FullSourceCode.zip
           tag_name: ${{steps.increment_tag.outputs.version}}
