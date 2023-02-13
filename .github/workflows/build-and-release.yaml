@@ -78,7 +78,7 @@ jobs:
 
       - name: Package
         run: |
-          cmake --install "Build" --prefix "Package" --config Release
+          cmake --install "Build" --prefix "Packages" --config Release
           mkdir Repose
           mv Packages/Repose/Client/* Repose
           7z a "Repose_${{matrix.platformName}}.zip" "Repose/"
