@@ -21,10 +21,21 @@ jobs:
         include:
           - os: windows-2022
             platformName: Windows
+            cmakeFlags: -DCMAKE_CXX_COMPILER=cl.exe
           - os: ubuntu-22.04
             platformName: Ubuntu
+            cmakeFlags:
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      # (the sourcecode zip that comes with a release doesn't contain submodules)
+      - name: Create Source Code Archive
+        run: 7z a "SourceCode.zip" .
+
       - name: (Ubuntu) Download Dependencies
         if: ${{matrix.platformName == 'Ubuntu'}}
         uses: awalsh128/cache-apt-pkgs-action@v1.2.4
@@ -32,14 +43,9 @@ jobs:
           packages: libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev libgtk-3-dev
           version: 1.0
 
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
-      # (the sourcecode zip that comes with a release doesn't contain submodules)
-      - name: Archive Source Code
-        run: 7z a "SourceCode.zip" .
+      - name: (Windows) Set up Visual Studio environment
+        if: ${{matrix.platformName == 'Windows'}}
+        uses: seanmiddleditch/gha-setup-vsdevenv@v4
 
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v1.13
@@ -49,12 +55,8 @@ jobs:
       - name: Set up Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
 
-      - name: (Windows) Set up Visual Studio environment
-        if: ${{matrix.platformName == 'Windows'}}
-        uses: seanmiddleditch/gha-setup-vsdevenv@v4
-
       - name: Configure CMake
-        run: cmake -S "." -B "Build" -DCMAKE_BUILD_TYPE=Release -G Ninja
+        run: cmake -S "." -B "Build" -DCMAKE_BUILD_TYPE=Release -G Ninja ${{matrix.cmakeFlags}}
 
       - name: Build
         run: ninja -C "Build" all
@@ -64,7 +66,15 @@ jobs:
           cmake --install "Build" --prefix "Client"
           7z a "Client.zip" "Client"
 
+      - name: Increment Tag Version
+        id: increment_tag
+        uses: zwaldowski/semver-release-action@v3
+        with:
+          bump: ${{github.event.inputs.semver_update_type}}
+          github_token: ${{secrets.GITHUB_TOKEN}}
+
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
         with:
           files: Client.zip SourceCode.zip
+          tag_name: ${{steps.increment_tag.outputs.version}}
