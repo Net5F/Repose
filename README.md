@@ -1,7 +1,9 @@
 ## The World of Repose - A calm world of constant change.
-TODO: Add title screen and in-world screenshots.
+![ReposeMedium](https://user-images.githubusercontent.com/17211746/218555633-37cf85bc-1692-4c42-a33e-559187d43bac.png)
 
 Reference project for [The Amalgam Engine](https://github.com/Net5F/AmalgamEngine).
+
+Visit [worlds.place](https://worlds.place/) for more info.
 
 ## Joining the demo world
 To join the demo world and play with other people, you can [download the latest release](https://github.com/Net5F/Repose/releases/latest) and follow the instructions in the README.
