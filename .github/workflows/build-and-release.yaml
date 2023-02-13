@@ -25,7 +25,7 @@ jobs:
             platformName: Ubuntu
 
     steps:
-      - name: (Ubuntu) Dependency Downloads
+      - name: (Ubuntu) Download Dependencies
         if: ${{matrix.platformName == 'Ubuntu'}}
         uses: awalsh128/cache-apt-pkgs-action@v1.2.4
         with:
@@ -38,18 +38,22 @@ jobs:
           submodules: recursive
 
       # (the sourcecode zip that comes with a release doesn't contain submodules)
-      - name: Source Code Archive
+      - name: Archive Source Code
         run: 7z a "SourceCode.zip" .
 
-      - name: CMake Setup
+      - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v1.13
         with:
           cmake-version: '3.16'
 
-      - name: Ninja Setup
+      - name: Set up Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
 
-      - name: CMake Configure
+      - name: (Windows) Set up Visual Studio environment
+        if: ${{matrix.platformName == 'Windows'}}
+        uses: seanmiddleditch/gha-setup-vsdevenv@v4
+
+      - name: Configure CMake
         run: cmake -S "." -B "Build" -DCMAKE_BUILD_TYPE=Release -G Ninja
 
       - name: Build
