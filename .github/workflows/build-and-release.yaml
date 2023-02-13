@@ -3,17 +3,34 @@ on:
   workflow_dispatch:
     inputs:
       semver_update_type:
-        description: 'Update type: major, minor, or patch'
+        description: 'Semantic Versioning Update type'
         required: true
-        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 defaults:
   run:
     shell: bash
 
 jobs:
+  increment_tag:
+    name: Increment Tag
+    outputs:
+      newTagVersion: ${{steps.increment_tag.outputs.version}}
+    steps:
+      - name: Increment Tag Version
+        id: increment_tag
+        uses: zwaldowski/semver-release-action@v3
+        with:
+          bump: ${{github.event.inputs.semver_update_type}}
+          github_token: ${{secrets.GITHUB_TOKEN}}
+
   build_and_release:
     name: ${{matrix.platformName}} Client Release
+    needs: increment_tag
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
@@ -23,23 +40,18 @@ jobs:
             platformName: Windows
             cmakeFlags: -DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe
           - os: ubuntu-22.04
-            platformName: Ubuntu
+            platformName: Linux
             cmakeFlags: ""
 
     steps:
-      - name: Checkout
+      - name: Checkout Repo
         uses: actions/checkout@v3
         with:
           submodules: 'recursive'
           lfs: 'true'
 
-      # (the sourcecode zip that comes with a release doesn't contain submodules)
-      - name: Create Source Code Archive
-        run: 7z a "FullSourceCode.zip" .
-
-
-      - name: (Ubuntu) Download Dependencies
-        if: ${{matrix.platformName == 'Ubuntu'}}
+      - name: (Linux) Download Dependencies
+        if: ${{matrix.platformName == 'Linux'}}
         uses: awalsh128/cache-apt-pkgs-action@v1.2.4
         with:
           packages: libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev libgtk-3-dev
@@ -57,7 +69,6 @@ jobs:
       - name: Set up Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
 
-
       - name: Configure
         run: cmake -S "." -B "Build" -DCMAKE_BUILD_TYPE=Release -G Ninja ${{matrix.cmakeFlags}}
 
@@ -66,21 +77,34 @@ jobs:
 
       - name: Package
         run: |
-          cmake --install "Build" --prefix "Package"
-          7z a "Client.zip" "Package/Repose/Client"
-
-
-      - name: Increment Tag Version
-        id: increment_tag
-        uses: zwaldowski/semver-release-action@v3
-        with:
-          bump: ${{github.event.inputs.semver_update_type}}
-          github_token: ${{secrets.GITHUB_TOKEN}}
+          cmake --install "Build" --prefix "Package" --config Release
+          mkdir Repose
+          mv Packages/Repose/Client/* Repose
+          7z a "Repose_${{matrix.platformName}}.zip" "Repose/"
 
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          files: |
-            Client.zip
-            FullSourceCode.zip
-          tag_name: ${{steps.increment_tag.outputs.version}}
+          files: Repose_${{matrix.platformName}}.zip
+          tag_name: ${{needs.increment_tag.outputs.newTagVersion}}
+
+  # (the sourcecode zip that comes with a release doesn't contain submodules, 
+  #  so we need to make our own)
+  archive_full_source:
+    name: Archive Full Source
+    needs: increment_tag
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+          lfs: 'true'
+
+      - name: Create Source Code Archive
+        run: 7z a "FullSourceCode.zip" .
+
+      - name: Release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          files: FullSourceCode.zip
+          tag_name: ${{needs.increment_tag.outputs.newTagVersion}}
