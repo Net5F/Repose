@@ -1,9 +1,14 @@
 ## The World of Repose - A calm world of constant change.
+*Template project for [The Amalgam Engine](https://github.com/Net5F/AmalgamEngine). Visit [worlds.place](https://worlds.place/) to learn more.*
+
 ![ReposeMedium](https://user-images.githubusercontent.com/17211746/218555633-37cf85bc-1692-4c42-a33e-559187d43bac.png)
 
-Reference project for [The Amalgam Engine](https://github.com/Net5F/AmalgamEngine).
+Repose is a cozy world, built around a large hedge maze. It serves three purposes:
+1. Acts as a template project that anyone can base their own world off of.
+1. Showcases that, with The Amalgam Engine, users and systems can easily make changes to the world.
+1. Serves as an example of an Amalgam Engine focus: making worlds that are dynamic and alive.
 
-Visit [worlds.place](https://worlds.place/) for more info.
+Modern virtual worlds should inspire curiosity and wonder in players. They should provide truly fulfilling social experiences. They should also be easy and free to create. These are core philosophies behind the development of The Amalgam Engine, and Repose is the first step towards realizing these goals.
 
 ## Joining the demo world
 To join the demo world and play with other people, you can [download the latest release](https://github.com/Net5F/Repose/releases/latest) and follow the instructions in the README.
