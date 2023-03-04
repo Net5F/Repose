@@ -52,10 +52,6 @@ where 'Build/Windows/Release' is your desired build to package, and 'Packages/Wi
 On Windows, you can use Visual Studio's developer terminal (`Tools` -> `Command Line` -> `Developer Command Prompt`) for easy access to CMake.
 
 ## Contributing
-### Bugs
-Bug reports and fixes are always welcome. Feel free to open an issue or submit a PR.
+Contributions are very welcome! Feel free to work on features or bugfixes and submit PRs, they'll all be promptly reviewed.
 
-### Features
-**Unsolicited feature PRs will not be reviewed. Please ask about the feature plan before working on a feature.**
-
-Collaboration is very welcome! That being said, there is a fairly solid vision for this project, so please ask before beginning work.
+There's a fairly solid vision for the near-future of this engine. If you would like to work on a larger feature, please make sure it's on [the roadmap](https://worlds.place/roadmap.html), or [join the discord](https://discord.gg/EA2Sg3ar74) and discuss it before getting started.
