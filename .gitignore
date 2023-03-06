@@ -10,3 +10,6 @@ Binaries/
 *.swp
 .vs/
 SystemPATHBackup.txt
+
+# MacOS junk files
+.DS_Store
