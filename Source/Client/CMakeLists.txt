@@ -15,15 +15,26 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set(CLIENT_ICON "${PROJECT_SOURCE_DIR}/Resources/Shared/Icons/icon.icns")
     set_source_files_properties(${CLIENT_ICON}
                                 PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+
     # Add the PkgInfo file to the app bundle
     set(CLIENT_PKGINFO "${PROJECT_SOURCE_DIR}/Resources/Client/macOS/PkgInfo")
     set_source_files_properties(${CLIENT_PKGINFO}
                                 PROPERTIES MACOSX_PACKAGE_LOCATION .)
+
     add_executable(Client
         MACOSX_BUNDLE
         ${CLIENT_ICON}
         ${CLIENT_PKGINFO}
     )
+
+    # Reduce the amount of libraries bundled by telling the linker
+    # to remove references to libraries which aren't used.
+    target_link_options(
+        Client
+        PRIVATE
+        "LINKER:-dead_strip_dylibs"
+    )
+
     # Configure the Info.plist file
     string(TIMESTAMP CurrentYear "%Y")
     set(MACOSX_BUNDLE_CATEGORY "public.app-category.games")
@@ -139,4 +150,9 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     install(FILES ${PROJECT_SOURCE_DIR}/Resources/Client/macOS/README.TXT
             DESTINATION "${CMAKE_PROJECT_NAME}/Client")
+    # Bundle any libraries needed with fixup_bundle.
+    install(CODE "
+            include(BundleUtilities)
+            fixup_bundle(\"\$\{CMAKE_INSTALL_PREFIX\}/${CMAKE_PROJECT_NAME}/Client/${CMAKE_PROJECT_NAME}.app\"\"\" \"\")
+            ")
 endif()

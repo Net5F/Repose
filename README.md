@@ -63,6 +63,17 @@ where 'Build/Windows/Release' is your desired build to package, and 'Packages/Wi
 
 On Windows, you can use Visual Studio's developer terminal (`Tools` -> `Command Line` -> `Developer Command Prompt`) for easy access to CMake.
 
+macOS has extra steps due to app signing:
+```
+// Assuming you're at the base of the repo.
+// $PWD is used because the directory needs to be absolute.
+cmake --install Build/macOS/Release --prefix "$PWD/Packages/macOS"
+// Re-sign the client app bundle with an add-hoc signature,
+// because CMake invalidates the signatures of bundled libraries.
+// If you have an Apple developer ID, you can use that instead.
+codesign --force --deep -s - ./Packages/macOS/Repose/Client/Repose.app
+```
+
 ## Contributing
 Contributions are very welcome! Feel free to work on features or bugfixes and submit PRs, they'll all be promptly reviewed. If you're looking for ways to contribute, check the [Task Board](https://trello.com/b/8Z8VoAiX/amalgam-engine-tasks).
 
