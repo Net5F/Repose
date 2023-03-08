@@ -32,7 +32,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     target_link_options(
         Client
         PRIVATE
-        "LINKER:-dead_strip_dylibs"
+        "LINKER:-dead_strip,-dead_strip_dylibs"
     )
 
     # Configure the Info.plist file
