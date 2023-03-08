@@ -37,21 +37,24 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 
     # Configure the Info.plist file
     string(TIMESTAMP CurrentYear "%Y")
+    set(PROJECT_CREATOR_NAME "Net5F")
+    set(PROJECT_RDNS "place.worlds")
+    set(PROJECT_RDNS_IDENTIFIER "${PROJECT_RDNS}.${CMAKE_PROJECT_NAME}")
     set(MACOSX_BUNDLE_CATEGORY "public.app-category.games")
-    set(MACOSX_BUNDLE_EXECUTABLE_NAME "Repose")
+    set(MACOSX_BUNDLE_EXECUTABLE_NAME "${CMAKE_PROJECT_NAME}")
     set_target_properties(
       Client
       PROPERTIES OUTPUT_NAME "${CMAKE_PROJECT_NAME}"
                  MACOSX_BUNDLE TRUE
                  MACOSX_BUNDLE_BUNDLE_NAME "${CMAKE_PROJECT_NAME}"
                  MACOSX_BUNDLE_GUI_IDENTIFIER
-                 "com.github.Net5F.${CMAKE_PROJECT_NAME}"
+                 "${PROJECT_RDNS_IDENTIFIER}"
                  MACOSX_BUNDLE_COPYRIGHT
-                 "Copyright © ${CurrentYear} Net5F. All rights reserved."
+                 "Copyright © ${CurrentYear} ${PROJECT_CREATOR_NAME}. All rights reserved."
                  MACOSX_BUNDLE_INFO_STRING
-                 "0.0.0, Copyright © ${CurrentYear} Net5F."
-                 MACOSX_BUNDLE_BUNDLE_VERSION "0.0.0"
-                 MACOSX_BUNDLE_SHORT_VERSION_STRING "0.0.0"
+                 "${CMAKE_PROJECT_VERSION}, Copyright © ${CurrentYear} ${PROJECT_CREATOR_NAME}."
+                 MACOSX_BUNDLE_BUNDLE_VERSION "${CMAKE_PROJECT_VERSION}"
+                 MACOSX_BUNDLE_SHORT_VERSION_STRING "${CMAKE_PROJECT_VERSION}"
                  MACOSX_BUNDLE_ICON_FILE "icon.icns"
                  MACOSX_BUNDLE_INFO_PLIST
                  "${PROJECT_SOURCE_DIR}/CMake/MacOSXBundleInfo.plist.in"
