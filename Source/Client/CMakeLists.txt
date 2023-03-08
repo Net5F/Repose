@@ -80,17 +80,29 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(Client PUBLIC /W3 /permissive-)
 endif()
 
+if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    # Copy assets to the app bundle directory.
+    set(BUILD_RESOURCES_FOLDER "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.app/Contents/Resources")
+else()
+    # Copy assets to the base build directory.
+    set(BUILD_RESOURCES_FOLDER "${CMAKE_CURRENT_BINARY_DIR}")
+endif()
+
 # Copy assets to the build directory.
-file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/Assets/
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Assets/)
+file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/
+     DESTINATION ${BUILD_RESOURCES_FOLDER}/)
+
+# Copy shared assets to the build directory.
+file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/
+     DESTINATION ${BUILD_RESOURCES_FOLDER}/)
 
 # Copy UserConfig.json to the build directory.
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/UserConfig.json
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+     DESTINATION ${BUILD_RESOURCES_FOLDER}/)
 
 # Copy SpriteData.json to the build directory.
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+     DESTINATION ${BUILD_RESOURCES_FOLDER}/)
 
 # On Windows, copy the SDL2 DLLs into the build folder so we can run our executable.
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
@@ -121,38 +133,37 @@ add_subdirectory(UserInterface)
 ###############################################################################
 # Define an install step that copies the executable and all resources.
 if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    # The resources are already in the app bundle, no need to install them.
     install(TARGETS Client BUNDLE DESTINATION ${CMAKE_PROJECT_NAME}/Client)
-    set(CLIENT_RESOURCES_FOLDER "${CMAKE_PROJECT_NAME}/Client/${CMAKE_PROJECT_NAME}.app/Contents/Resources")
 else()
     install(TARGETS Client RUNTIME DESTINATION ${CMAKE_PROJECT_NAME}/Client)
-    set(CLIENT_RESOURCES_FOLDER "${CMAKE_PROJECT_NAME}/Client")
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/
+            DESTINATION ${CMAKE_PROJECT_NAME}/Client)
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/
+            DESTINATION ${CMAKE_PROJECT_NAME}/Client)
+    install(FILES ${PROJECT_SOURCE_DIR}/Resources/Client/Common/UserConfig.json
+            DESTINATION ${CMAKE_PROJECT_NAME}/Client)
+    install(FILES ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
+            DESTINATION ${CMAKE_PROJECT_NAME}/Client)
 endif()
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/
-        DESTINATION ${CLIENT_RESOURCES_FOLDER})
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/
-        DESTINATION ${CLIENT_RESOURCES_FOLDER})
-install(FILES ${PROJECT_SOURCE_DIR}/Resources/Client/Common/UserConfig.json
-        DESTINATION ${CLIENT_RESOURCES_FOLDER})
-install(FILES ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
-        DESTINATION ${CLIENT_RESOURCES_FOLDER})
 
 # Add platform-specific files to the install step.
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Client/Windows/
-            DESTINATION ${CLIENT_RESOURCES_FOLDER})
+            DESTINATION ${CMAKE_PROJECT_NAME}/Client)
 
     # On Windows, we provide the SDL2 DLLs.
     foreach(DLL_PATH ${SDL2_DLL_PATHS})
         install(DIRECTORY ${DLL_PATH}/
-                DESTINATION ${CLIENT_RESOURCES_FOLDER}
+                DESTINATION ${CMAKE_PROJECT_NAME}/Client
                 FILES_MATCHING PATTERN "*.dll")
     endforeach()
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Client/Linux/
-            DESTINATION ${CLIENT_RESOURCES_FOLDER})
+            DESTINATION ${CMAKE_PROJECT_NAME}/Client)
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     install(FILES ${PROJECT_SOURCE_DIR}/Resources/Client/macOS/README.TXT
-            DESTINATION "${CMAKE_PROJECT_NAME}/Client")
+            DESTINATION ${CMAKE_PROJECT_NAME}/Client)
     # Bundle any libraries needed with fixup_bundle.
     install(CODE "
             include(BundleUtilities)
