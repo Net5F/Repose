@@ -14,7 +14,11 @@ ProjectUserConfig::ProjectUserConfig()
 {
     // Open the file.
     std::string fullPath{Paths::BASE_PATH};
+#ifdef __APPLE__
+    fullPath += "../Resources/UserConfig.json";
+#else
     fullPath += "UserConfig.json";
+#endif
     std::ifstream workingFile(fullPath);
     if (!(workingFile.is_open())) {
         LOG_FATAL("Failed to open UserConfig.json");

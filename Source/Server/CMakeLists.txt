@@ -74,4 +74,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Server/Linux/
             DESTINATION ${CMAKE_PROJECT_NAME}/Server)
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Server/macOS/
+            DESTINATION ${CMAKE_PROJECT_NAME}/Server)
 endif()
