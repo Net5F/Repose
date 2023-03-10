@@ -37,7 +37,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 
     # Configure the Info.plist file
     string(TIMESTAMP CurrentYear "%Y")
-    set(PROJECT_CREATOR_NAME "Net5F")
+    set(PROJECT_CREATOR_NAME "Net_")
     set(PROJECT_RDNS "place.worlds")
     set(PROJECT_RDNS_IDENTIFIER "${PROJECT_RDNS}.${CMAKE_PROJECT_NAME}")
     set(MACOSX_BUNDLE_CATEGORY "public.app-category.games")
