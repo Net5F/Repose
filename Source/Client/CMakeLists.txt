@@ -29,8 +29,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 
     # Reduce the amount of libraries bundled by telling the linker
     # to remove references to libraries which aren't used.
-    target_link_options(
-        Client
+    target_link_options(Client
         PRIVATE
         "LINKER:-dead_strip,-dead_strip_dylibs"
     )
@@ -42,8 +41,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set(PROJECT_RDNS_IDENTIFIER "${PROJECT_RDNS}.${CMAKE_PROJECT_NAME}")
     set(MACOSX_BUNDLE_CATEGORY "public.app-category.games")
     set(MACOSX_BUNDLE_EXECUTABLE_NAME "${CMAKE_PROJECT_NAME}")
-    set_target_properties(
-      Client
+    set_target_properties(Client
       PROPERTIES OUTPUT_NAME "${CMAKE_PROJECT_NAME}"
                  MACOSX_BUNDLE TRUE
                  MACOSX_BUNDLE_BUNDLE_NAME "${CMAKE_PROJECT_NAME}"

@@ -13,5 +13,6 @@ No installation is required, just run the application.
 ###################
 Art by Penzilla - https://www.penzilladesign.com/
 Code by Net_
+macOS build originally by NeRd
 
 Built using The Amalgam Engine.
