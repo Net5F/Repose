@@ -14,7 +14,12 @@ ProjectUserConfig::ProjectUserConfig()
 {
     // Open the file.
     std::string fullPath{Paths::BASE_PATH};
+    // TODO: When the engine gets a Paths::USER_PREF_DIR, remove this ifdef and use that.
+#ifdef __APPLE__
+    fullPath += "../Resources/UserConfig.json";
+#else
     fullPath += "UserConfig.json";
+#endif
     std::ifstream workingFile(fullPath);
     if (!(workingFile.is_open())) {
         LOG_FATAL("Failed to open UserConfig.json");

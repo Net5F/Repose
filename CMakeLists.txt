@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(Repose)
+project(Repose VERSION 1.0.2)
 
 # Tell CMake where the CMake folder is.
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")

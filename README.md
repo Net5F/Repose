@@ -41,6 +41,18 @@ Note: This is only tested on Ubuntu 20.04. If you have experience in multi-distr
    1. (Optional) Add `-DBUILD_TOOLS` to build our extra tools, such as the Map Generator.
 1. `ninja all`
 
+### macOS
+
+Note: AmalgamEngine requires GCC to build on macOS. Clang / Apple Clang does not yet support C++ features required by this project (as of Apple Clang 14 / Clang 15).
+
+1. Use the Homebrew package manager to install dependencies: `brew install gcc make cmake ninja sdl2 sdl2_image sdl2_mixer sdl2_ttf sdl2_gfx sdl2_net`
+1. (From the base of the repo) `mkdir -p Build/macOS/Release`
+1. `cd Build/macOS/Release`
+1. `CC=gcc-NN CXX=g++-NN cmake -DCMAKE_BUILD_TYPE=Release -G Ninja ../../../`. Replace the `NN` in `gcc-NN` and `g++-NN` with the version of GCC that you installed with Homebrew. This is important, as using `gcc` without a version number will alias to `clang`.
+   1. ~~(Optional) Add `-DAM_BUILD_SPRITE_EDITOR=ON` to build the sprite editor.~~ Sprite editor doesn't currently build on macOS due to GCC not being able to build with Apple SDK headers which use certain Objective C extensions.
+   1. (Optional) Add `-DBUILD_TOOLS` to build our extra tools, such as the Map Generator.
+1. `ninja all`
+
 ## Packaging
 To package the applications in a way that can be shared, first run the desired build. Then, run:
 ```
@@ -50,6 +62,17 @@ cmake --install Build/Windows/Release --prefix Packages/Windows
 where 'Build/Windows/Release' is your desired build to package, and 'Packages/Windows' is your desired output directory.
 
 On Windows, you can use Visual Studio's developer terminal (`Tools` -> `Command Line` -> `Developer Command Prompt`) for easy access to CMake.
+
+macOS has extra steps due to app signing:
+```
+// Assuming you're at the base of the repo.
+// $PWD is used because the directory needs to be absolute.
+cmake --install Build/macOS/Release --prefix "$PWD/Packages/macOS"
+// Re-sign the client app bundle with an add-hoc signature,
+// because CMake invalidates the signatures of bundled libraries.
+// If you have an Apple developer ID, you can use that instead.
+codesign --force --deep -s - ./Packages/macOS/Repose/Client/Repose.app
+```
 
 ## Contributing
 Contributions are very welcome! Feel free to work on features or bugfixes and submit PRs, they'll all be promptly reviewed. If you're looking for ways to contribute, check the [Task Board](https://trello.com/b/8Z8VoAiX/amalgam-engine-tasks).
