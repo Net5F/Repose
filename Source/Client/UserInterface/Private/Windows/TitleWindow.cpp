@@ -1,6 +1,5 @@
 #include "TitleWindow.h"
 #include "UserInterfaceExtension.h"
-#include "AssetCache.h"
 #include "TitleScreen.h"
 #include "ConnectionRequest.h"
 #include "Paths.h"
@@ -12,18 +11,16 @@ namespace Client
 {
 TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
                          WorldSinks& inWorldSinks,
-                         EventDispatcher& inUiEventDispatcher,
-                         AssetCache& inAssetCache)
+                         EventDispatcher& inUiEventDispatcher)
 : AUI::Window({0, 0, 1920, 1080}, "TitleWindow")
 , userInterface{inUserInterface}
 , uiEventDispatcher{inUiEventDispatcher}
-, assetCache{inAssetCache}
 , backgroundImage{{0, 0, 1920, 1080}, "TitleBackground"}
 , leadText({0, 266, 1920, 300}, "LeadText")
 , titleText({0, 248, 1920, 300}, "TitleText")
 //, userNameLabel({0, 435, 1920, 36}, "UserNameLabel")
 //, userNameInput(assetCache, {770, 481, 380, 54}, "UserNameInput")
-, connectButton(assetCache, {760, 518, 404, 70}, "Connect", "ConnectButton")
+, connectButton({760, 518, 404, 70}, "Connect", "ConnectButton")
 , statusText({0, 618, 1920, 48}, "StatusText")
 , randGenerator{std::random_device()()}
 {
@@ -39,16 +36,13 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
     /* Background image */
     backgroundImage.addResolution(
         {1920, 1080},
-        inAssetCache.loadTexture(Paths::TEXTURE_DIR
-                                 + "TitleBackground/Background_1920.png"));
+        (Paths::TEXTURE_DIR + "TitleBackground/Background_1920.png"));
     backgroundImage.addResolution(
         {1600, 900},
-        inAssetCache.loadTexture(Paths::TEXTURE_DIR
-                                 + "TitleBackground/Background_1600.png"));
+        (Paths::TEXTURE_DIR + "TitleBackground/Background_1600.png"));
     backgroundImage.addResolution(
         {1280, 720},
-        inAssetCache.loadTexture(Paths::TEXTURE_DIR
-                                 + "TitleBackground/Background_1280.png"));
+        (Paths::TEXTURE_DIR + "TitleBackground/Background_1280.png"));
 
     /* Lead text. */
     leadText.setRenderMode(AUI::Text::RenderMode::Blended);

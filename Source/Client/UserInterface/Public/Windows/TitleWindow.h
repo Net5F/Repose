@@ -11,8 +11,6 @@
 
 namespace AM
 {
-class AssetCache;
-
 namespace Client
 {
 class UserInterfaceExtension;
@@ -26,8 +24,7 @@ class TitleWindow : public AUI::Window
 {
 public:
     TitleWindow(UserInterfaceExtension& inUserInterface,
-                WorldSinks& inWorldSinks, EventDispatcher& inUiEventDispatcher,
-                AssetCache& inAssetCache);
+                WorldSinks& inWorldSinks, EventDispatcher& inUiEventDispatcher);
 
 private:
     // UI event handlers.
@@ -48,9 +45,6 @@ private:
 
     /** Event dispatcher. Used for sending connection requests to the sim. */
     EventDispatcher& uiEventDispatcher;
-
-    /** Used to load textures. */
-    AssetCache& assetCache;
 
     //-------------------------------------------------------------------------
     // Private child widgets

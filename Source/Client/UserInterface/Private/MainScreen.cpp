@@ -1,5 +1,4 @@
 #include "MainScreen.h"
-#include "AssetCache.h"
 #include "SpriteData.h"
 #include "Paths.h"
 #include "BuildModeDefs.h"
@@ -14,12 +13,12 @@ namespace Client
 {
 MainScreen::MainScreen(WorldSinks& inWorldSinks,
                        EventDispatcher& inUiEventDispatcher,
-                       AssetCache& inAssetCache, SpriteData& inSpriteData)
+                       SpriteData& inSpriteData)
 : AUI::Screen("MainScreen")
 , playerIsInBuildArea{false}
 , mainOverlay{}
 , buildOverlay{inSpriteData, inWorldSinks, inUiEventDispatcher}
-, buildPanel{inAssetCache, inSpriteData, buildOverlay}
+, buildPanel{inSpriteData, buildOverlay}
 {
     // Add our windows so they're included in rendering, etc.
     windows.push_back(mainOverlay);

@@ -21,9 +21,8 @@ UserInterfaceExtension::UserInterfaceExtension(UserInterfaceExDependencies deps)
 : worldSinks{deps.worldSignals}
 , auiInitializer{deps.sdlRenderer,
                  {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT}}
-, titleScreen{*this, worldSinks, deps.uiEventDispatcher, deps.assetCache}
-, mainScreen{worldSinks, deps.uiEventDispatcher, deps.assetCache,
-             deps.spriteData}
+, titleScreen{*this, worldSinks, deps.uiEventDispatcher}
+, mainScreen{worldSinks, deps.uiEventDispatcher, deps.spriteData}
 , currentScreen{&titleScreen}
 {
     ScreenRect windowSize{UserConfig::get().getWindowSize()};

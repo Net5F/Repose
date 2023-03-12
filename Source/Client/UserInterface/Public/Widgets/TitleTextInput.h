@@ -5,8 +5,6 @@
 
 namespace AM
 {
-class AssetCache;
-
 namespace Client
 {
 /**
@@ -15,7 +13,7 @@ namespace Client
 class TitleTextInput : public AUI::TextInput
 {
 public:
-    TitleTextInput(AssetCache& assetCache, const SDL_Rect& inScreenExtent,
+    TitleTextInput(const SDL_Rect& inScreenExtent,
                    const std::string& inDebugName = "MainTextInput");
 };
 

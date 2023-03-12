@@ -6,8 +6,6 @@
 
 namespace AM
 {
-class AssetCache;
-
 namespace Client
 {
 /**
@@ -16,8 +14,7 @@ namespace Client
 class MainButton : public AUI::Button
 {
 public:
-    MainButton(AssetCache& assetCache, const SDL_Rect& inScreenExtent,
-               const std::string& inText,
+    MainButton(const SDL_Rect& inScreenExtent, const std::string& inText,
                const std::string& inDebugName = "MainButton");
 };
 

@@ -1,6 +1,5 @@
 #include "TitleScreen.h"
 #include "UserInterfaceExtension.h"
-#include "AssetCache.h"
 #include "AUI/Core.h"
 
 namespace AM
@@ -9,10 +8,9 @@ namespace Client
 {
 TitleScreen::TitleScreen(UserInterfaceExtension& inUserInterface,
                          WorldSinks& inWorldSinks,
-                         EventDispatcher& inUiEventDispatcher,
-                         AssetCache& inAssetCache)
+                         EventDispatcher& inUiEventDispatcher)
 : AUI::Screen("TitleScreen")
-, titleWindow{inUserInterface, inWorldSinks, inUiEventDispatcher, inAssetCache}
+, titleWindow{inUserInterface, inWorldSinks, inUiEventDispatcher}
 {
     // Add our windows so they're included in rendering, etc.
     windows.push_back(titleWindow);
