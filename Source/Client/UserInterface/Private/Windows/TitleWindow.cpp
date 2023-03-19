@@ -34,15 +34,13 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
     children.push_back(statusText);
 
     /* Background image */
-    backgroundImage.addResolution(
-        {1920, 1080},
-        (Paths::TEXTURE_DIR + "TitleBackground/Background_1920.png"));
-    backgroundImage.addResolution(
-        {1600, 900},
-        (Paths::TEXTURE_DIR + "TitleBackground/Background_1600.png"));
-    backgroundImage.addResolution(
-        {1280, 720},
-        (Paths::TEXTURE_DIR + "TitleBackground/Background_1280.png"));
+    backgroundImage.setMultiResImage(
+        {{{1920, 1080},
+          (Paths::TEXTURE_DIR + "TitleBackground/Background_1920.png")},
+         {{1600, 900},
+          (Paths::TEXTURE_DIR + "TitleBackground/Background_1600.png")},
+         {{1280, 720},
+          (Paths::TEXTURE_DIR + "TitleBackground/Background_1280.png")}});
 
     /* Lead text. */
     leadText.setRenderMode(AUI::Text::RenderMode::Blended);
