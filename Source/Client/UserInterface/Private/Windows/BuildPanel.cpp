@@ -33,10 +33,10 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
     children.push_back(layerUpButton);
 
     /* Background image */
-    backgroundImage.setMultiResImage({
-        {{1280, 720}, (Paths::TEXTURE_DIR + "BuildPanel/Background_1280.png")},
-        {{1600, 900}, (Paths::TEXTURE_DIR + "BuildPanel/Background_1600.png")},
-        {{1920, 1080},
+    backgroundImage.setMultiResImage(
+        {{{1280, 720}, (Paths::TEXTURE_DIR + "BuildPanel/Background_1280.png")},
+         {{1600, 900}, (Paths::TEXTURE_DIR + "BuildPanel/Background_1600.png")},
+         {{1920, 1080},
           (Paths::TEXTURE_DIR + "BuildPanel/Background_1920.png")}});
 
     /* Container */
@@ -102,10 +102,10 @@ void BuildPanel::addEraser()
     thumbnail.setIsActivateable(false);
 
     // Load the eraser's image.
-    thumbnail.thumbnailImage.setMultiResImage({
-        {{1280, 720}, (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1280.png")},
-        {{1600, 900}, (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1600.png")},
-        {{1920, 1080},
+    thumbnail.thumbnailImage.setMultiResImage(
+        {{{1280, 720}, (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1280.png")},
+         {{1600, 900}, (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1600.png")},
+         {{1920, 1080},
           (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1920.png")}});
 
     // Add a callback to deactivate all other thumbnails when one is activated.
@@ -145,7 +145,8 @@ void BuildPanel::addTile(const Sprite& sprite)
     }
 
     // Load the sprite's image.
-    thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath, textureExtent);
+    thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath,
+                                            textureExtent);
 
     // Add a callback to deactivate all other thumbnails when one is activated.
     thumbnail.setOnSelected([this, &sprite](AUI::Thumbnail* selectedThumb) {

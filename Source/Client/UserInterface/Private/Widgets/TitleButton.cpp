@@ -12,12 +12,10 @@ TitleButton::TitleButton(const SDL_Rect& inScreenExtent,
 {
     // Add our backgrounds.
     normalImage.setSimpleImage(Paths::TEXTURE_DIR + "TitleButton/Normal.png");
-    hoveredImage.setSimpleImage(
-        Paths::TEXTURE_DIR + "TitleButton/Hovered.png");
-    pressedImage.setSimpleImage(
-        Paths::TEXTURE_DIR + "TitleButton/Pressed.png");
-    disabledImage.setSimpleImage(
-        Paths::TEXTURE_DIR + "TitleButton/Disabled.png");
+    hoveredImage.setSimpleImage(Paths::TEXTURE_DIR + "TitleButton/Hovered.png");
+    pressedImage.setSimpleImage(Paths::TEXTURE_DIR + "TitleButton/Pressed.png");
+    disabledImage.setSimpleImage(Paths::TEXTURE_DIR
+                                 + "TitleButton/Disabled.png");
 
     // Set our text properties.
     text.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 33);
