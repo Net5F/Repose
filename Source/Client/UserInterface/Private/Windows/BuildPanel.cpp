@@ -1,6 +1,5 @@
 #include "BuildPanel.h"
 #include "MainScreen.h"
-#include "AssetCache.h"
 #include "SpriteData.h"
 #include "BuildOverlay.h"
 #include "MainThumbnail.h"
@@ -15,18 +14,16 @@ namespace AM
 {
 namespace Client
 {
-BuildPanel::BuildPanel(AssetCache& inAssetCache, SpriteData& inSpriteData,
-                       BuildOverlay& inBuildOverlay)
+BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
 : AUI::Window{{0, 761, 1920, 319}, "BuildPanel"}
-, assetCache{inAssetCache}
 , spriteData{inSpriteData}
 , buildOverlay{inBuildOverlay}
 , tileLayerIndex{1}
 , backgroundImage{{0, 0, 1920, 319}, "BuildPanelBackground"}
 , tileContainer{{366 - 2, 91, 1188, 220}, "TileContainer"}
 , layerLabel{{1630, 97, 138, 36}, "LayerLabel"}
-, layerDownButton{inAssetCache, {1630, 139, 66, 31}, "<", "LayerDownButton"}
-, layerUpButton{inAssetCache, {1704, 139, 66, 31}, ">", "LayerUpButton"}
+, layerDownButton{{1630, 139, 66, 31}, "<", "LayerDownButton"}
+, layerUpButton{{1704, 139, 66, 31}, ">", "LayerUpButton"}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
@@ -36,18 +33,11 @@ BuildPanel::BuildPanel(AssetCache& inAssetCache, SpriteData& inSpriteData,
     children.push_back(layerUpButton);
 
     /* Background image */
-    backgroundImage.addResolution(
-        {1280, 720},
-        inAssetCache.loadTexture(Paths::TEXTURE_DIR
-                                 + "BuildPanel/Background_1280.png"));
-    backgroundImage.addResolution(
-        {1600, 900},
-        inAssetCache.loadTexture(Paths::TEXTURE_DIR
-                                 + "BuildPanel/Background_1600.png"));
-    backgroundImage.addResolution(
-        {1920, 1080},
-        inAssetCache.loadTexture(Paths::TEXTURE_DIR
-                                 + "BuildPanel/Background_1920.png"));
+    backgroundImage.setMultiResImage(
+        {{{1280, 720}, (Paths::TEXTURE_DIR + "BuildPanel/Background_1280.png")},
+         {{1600, 900}, (Paths::TEXTURE_DIR + "BuildPanel/Background_1600.png")},
+         {{1920, 1080},
+          (Paths::TEXTURE_DIR + "BuildPanel/Background_1920.png")}});
 
     /* Container */
     tileContainer.setNumColumns(11);
@@ -106,24 +96,17 @@ void BuildPanel::addEraser()
 {
     // Construct the new eraser thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
-        std::make_unique<MainThumbnail>(assetCache, "EraserThumbnail")};
+        std::make_unique<MainThumbnail>("EraserThumbnail")};
     MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
     thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 
     // Load the eraser's image.
-    thumbnail.thumbnailImage.addResolution(
-        {1280, 720},
-        assetCache.loadTexture(Paths::TEXTURE_DIR
-                               + "BuildPanel/EraserIcon_1280.png"));
-    thumbnail.thumbnailImage.addResolution(
-        {1600, 900},
-        assetCache.loadTexture(Paths::TEXTURE_DIR
-                               + "BuildPanel/EraserIcon_1600.png"));
-    thumbnail.thumbnailImage.addResolution(
-        {1920, 1080},
-        assetCache.loadTexture(Paths::TEXTURE_DIR
-                               + "BuildPanel/EraserIcon_1920.png"));
+    thumbnail.thumbnailImage.setMultiResImage(
+        {{{1280, 720}, (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1280.png")},
+         {{1600, 900}, (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1600.png")},
+         {{1920, 1080},
+          (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1920.png")}});
 
     // Add a callback to deactivate all other thumbnails when one is activated.
     thumbnail.setOnSelected([this](AUI::Thumbnail* selectedThumb) {
@@ -146,7 +129,7 @@ void BuildPanel::addTile(const Sprite& sprite)
 {
     // Construct the new sprite thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
-        std::make_unique<MainThumbnail>(assetCache, "BuildPanelThumbnail")};
+        std::make_unique<MainThumbnail>("BuildPanelThumbnail")};
     MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
     thumbnail.setText("");
     thumbnail.setIsActivateable(false);
@@ -162,8 +145,8 @@ void BuildPanel::addTile(const Sprite& sprite)
     }
 
     // Load the sprite's image.
-    thumbnail.thumbnailImage.addResolution({1280, 720}, renderData.texture,
-                                           textureExtent);
+    thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath,
+                                            textureExtent);
 
     // Add a callback to deactivate all other thumbnails when one is activated.
     thumbnail.setOnSelected([this, &sprite](AUI::Thumbnail* selectedThumb) {

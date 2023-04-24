@@ -6,8 +6,6 @@
 namespace AM
 {
 class EventDispatcher;
-class AssetCache;
-
 namespace Client
 {
 class UserInterfaceExtension;
@@ -20,8 +18,7 @@ class TitleScreen : public AUI::Screen
 {
 public:
     TitleScreen(UserInterfaceExtension& inUserInterface,
-                WorldSinks& inWorldSinks, EventDispatcher& inUiEventDispatcher,
-                AssetCache& inAssetCache);
+                WorldSinks& inWorldSinks, EventDispatcher& inUiEventDispatcher);
 
     void render() override;
 

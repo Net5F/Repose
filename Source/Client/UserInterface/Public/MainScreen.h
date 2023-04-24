@@ -10,7 +10,6 @@
 namespace AM
 {
 class EventDispatcher;
-class AssetCache;
 struct Position;
 
 namespace Client
@@ -25,7 +24,7 @@ class MainScreen : public AUI::Screen
 {
 public:
     MainScreen(WorldSinks& inWorldSinks, EventDispatcher& inUiEventDispatcher,
-               AssetCache& inAssetCache, SpriteData& inSpriteData);
+               SpriteData& inSpriteData);
 
     /**
      * Sets the camera to use when rendering.

@@ -8,7 +8,6 @@
 
 namespace AM
 {
-class AssetCache;
 struct Sprite;
 
 namespace Client
@@ -28,8 +27,7 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    BuildPanel(AssetCache& inAssetCache, SpriteData& inSpriteData,
-               BuildOverlay& inBuildOverlay);
+    BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay);
 
 private:
     /**
@@ -42,9 +40,6 @@ private:
      * Adds a tile thumbnail to the tileContainer.
      */
     void addTile(const Sprite& sprite);
-
-    /** Used to load textures for new thumbnails. */
-    AssetCache& assetCache;
 
     /** Used to get the empty sprite when adding the eraser thumbnail. */
     SpriteData& spriteData;

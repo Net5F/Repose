@@ -1,26 +1,19 @@
 #include "MainButton.h"
-#include "AssetCache.h"
 #include "Paths.h"
 
 namespace AM
 {
 namespace Client
 {
-MainButton::MainButton(AssetCache& assetCache, const SDL_Rect& inScreenExtent,
+MainButton::MainButton(const SDL_Rect& inScreenExtent,
                        const std::string& inText,
                        const std::string& inDebugName)
 : AUI::Button(inScreenExtent, inDebugName)
 {
     // Add our backgrounds.
-    normalImage.addResolution(
-        {1600, 900},
-        assetCache.loadTexture(Paths::TEXTURE_DIR + "MainButton/Normal.png"));
-    hoveredImage.addResolution(
-        {1600, 900},
-        assetCache.loadTexture(Paths::TEXTURE_DIR + "MainButton/Hovered.png"));
-    pressedImage.addResolution(
-        {1600, 900},
-        assetCache.loadTexture(Paths::TEXTURE_DIR + "MainButton/Pressed.png"));
+    normalImage.setSimpleImage(Paths::TEXTURE_DIR + "MainButton/Normal.png");
+    hoveredImage.setSimpleImage(Paths::TEXTURE_DIR + "MainButton/Hovered.png");
+    pressedImage.setSimpleImage(Paths::TEXTURE_DIR + "MainButton/Pressed.png");
 
     // Set our text properties.
     text.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 21);

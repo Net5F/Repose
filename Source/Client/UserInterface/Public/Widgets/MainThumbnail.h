@@ -6,8 +6,6 @@
 
 namespace AM
 {
-class AssetCache;
-
 namespace Client
 {
 /**
@@ -16,8 +14,7 @@ namespace Client
 class MainThumbnail : public AUI::Thumbnail
 {
 public:
-    MainThumbnail(AssetCache& assetCache,
-                  const std::string& inDebugName = "MainThumbnail");
+    MainThumbnail(const std::string& inDebugName = "MainThumbnail");
 };
 
 } // End namespace Client
