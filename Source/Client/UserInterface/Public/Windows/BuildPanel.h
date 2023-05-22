@@ -58,10 +58,6 @@ private:
     AUI::VerticalGridContainer tileContainer;
 
     AUI::Text layerLabel;
-
-    MainButton layerDownButton;
-
-    MainButton layerUpButton;
 };
 
 } // End namespace Client

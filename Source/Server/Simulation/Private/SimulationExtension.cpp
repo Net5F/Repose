@@ -1,5 +1,5 @@
 #include "SimulationExtension.h"
-#include "TileUpdateRequest.h"
+#include "TileExtent.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
 #include "Log.h"
@@ -40,13 +40,11 @@ bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
     return false;
 }
 
-bool SimulationExtension::isTileUpdateValid(
-    const TileUpdateRequest& updateRequest)
+bool SimulationExtension::isExtentEditable(const TileExtent& tileExtent)
 {
     if (SharedConfig::RESTRICT_TILE_UPDATES) {
         // Only return true for updates within the build area.
-        TilePosition tilePos{updateRequest.tileX, updateRequest.tileY};
-        return VALID_BUILD_AREA_EXTENT.containsPosition(tilePos);
+        return VALID_BUILD_AREA_EXTENT.containsExtent(tileExtent);
     }
     else {
         // No restrictions, always return true;

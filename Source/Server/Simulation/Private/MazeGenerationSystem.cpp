@@ -29,27 +29,27 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
     for (std::size_t i = 0; i < northWallIDs.size(); ++i) {
         std::string stringID{"north"};
         stringID += std::to_string(i + 1);
-        northWallIDs[i] = spriteData.get(stringID).numericID;
+        northWallIDs[i] = spriteData.getSprite(stringID).numericID;
     }
     for (std::size_t i = 0; i < westWallIDs.size(); ++i) {
         std::string stringID{"west"};
         stringID += std::to_string(i + 1);
-        westWallIDs[i] = spriteData.get(stringID).numericID;
+        westWallIDs[i] = spriteData.getSprite(stringID).numericID;
     }
     for (std::size_t i = 0; i < northeastFillIDs.size(); ++i) {
         std::string stringID{"ne_fill"};
         stringID += std::to_string(i + 1);
-        northeastFillIDs[i] = spriteData.get(stringID).numericID;
+        northeastFillIDs[i] = spriteData.getSprite(stringID).numericID;
     }
     for (std::size_t i = 0; i < northwestFillIDs.size(); ++i) {
         std::string stringID{"nw_fill"};
         stringID += std::to_string(i + 1);
-        northwestFillIDs[i] = spriteData.get(stringID).numericID;
+        northwestFillIDs[i] = spriteData.getSprite(stringID).numericID;
     }
     for (std::size_t i = 0; i < fullFillIDs.size(); ++i) {
         std::string stringID{"fullfill"};
         stringID += std::to_string(i + 1);
-        fullFillIDs[i] = spriteData.get(stringID).numericID;
+        fullFillIDs[i] = spriteData.getSprite(stringID).numericID;
     }
 
     // Prime a timer.
@@ -417,71 +417,73 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
 void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
 {
     // Clear the maze area in the tile map.
-    std::size_t endLayerIndex{SharedConfig::MAX_TILE_LAYERS - 1};
-    world.tileMap.clearExtentSpriteLayers(mazeExtent, 1, endLayerIndex);
+    //std::size_t endLayerIndex{SharedConfig::MAX_TILE_LAYERS - 1};
+    //world.tileMap.clearExtentSpriteLayers(mazeExtent, 1, endLayerIndex);
+    //// world.tileMap.clearExtentLayers<FloorCoveringTileLayer, WallTileLayer,
+    ////                                 ObjectTileLayer>(mazeExtent);
 
-    // Apply the maze to the tile map.
-    for (int mazeX = 0; mazeX <= abstractMazeExtent.xMax(); ++mazeX) {
-        for (int mazeY = 0; mazeY <= abstractMazeExtent.yMax(); ++mazeY) {
-            const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
+    //// Apply the maze to the tile map.
+    //for (int mazeX = 0; mazeX <= abstractMazeExtent.xMax(); ++mazeX) {
+    //    for (int mazeY = 0; mazeY <= abstractMazeExtent.yMax(); ++mazeY) {
+    //        const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
 
-            // Apply this cell's walls to the corresponding 2x2 map area.
-            int mapX{mazeExtent.x + (mazeX * 2)};
-            int mapY{mazeExtent.y + (mazeY * 2)};
-            applyCellToMap(mapX, mapY, cell);
-        }
-    }
+    //        // Apply this cell's walls to the corresponding 2x2 map area.
+    //        int mapX{mazeExtent.x + (mazeX * 2)};
+    //        int mapY{mazeExtent.y + (mazeY * 2)};
+    //        applyCellToMap(mapX, mapY, cell);
+    //    }
+    //}
 }
 
 void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
                                           const MazeCell& cell)
 {
     // Determine which walls this cell has and apply them to the map.
-    if (cell.fullFill) {
-        // Fully-filled cell. Place the 4 fills.
-        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomFullFill());
-        world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
-                                         getRandomFullFill());
-        world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
-                                         getRandomFullFill());
-        world.tileMap.setTileSpriteLayer((mapX + 1), (mapY + 1), 1,
-                                         getRandomFullFill());
-    }
-    else if (cell.northWall && cell.westWall) {
-        // Northwest corner, place the 2 west walls, the north wall, and the
-        // northeast gap fill.
-        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomWestWall());
-        world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
-                                         getRandomWestWall());
-        world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
-                                         getRandomNorthWall());
-        world.tileMap.setTileSpriteLayer(mapX, mapY, 2, getRandomNEFill());
-    }
-    else if (cell.northWall) {
-        // North only, place the 2 north walls.
-        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomNorthWall());
-        world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
-                                         getRandomNorthWall());
-    }
-    else if (cell.westWall) {
-        // West only, place the 2 west walls.
-        world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomWestWall());
-        world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
-                                         getRandomWestWall());
-    }
-    else {
-        // No walls. First check if there are tiles to the north and west.
-        if ((mapX > 0) && (mapY > 0)) {
-            // There are tiles to the north and west. If they have walls
-            // that form a gap, fill it.
-            const Tile& northTile{world.tileMap.getTile(mapX, (mapY - 1))};
-            const Tile& westTile{world.tileMap.getTile((mapX - 1), mapY)};
-            if (hasWestWall(northTile) && hasNorthWall(westTile)) {
-                world.tileMap.setTileSpriteLayer(mapX, mapY, 1,
-                                                 getRandomNWFill());
-            }
-        }
-    }
+    //if (cell.fullFill) {
+    //    // Fully-filled cell. Place the 4 fills.
+    //    world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomFullFill());
+    //    world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
+    //                                     getRandomFullFill());
+    //    world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
+    //                                     getRandomFullFill());
+    //    world.tileMap.setTileSpriteLayer((mapX + 1), (mapY + 1), 1,
+    //                                     getRandomFullFill());
+    //}
+    //else if (cell.northWall && cell.westWall) {
+    //    // Northwest corner, place the 2 west walls, the north wall, and the
+    //    // northeast gap fill.
+    //    world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomWestWall());
+    //    world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
+    //                                     getRandomWestWall());
+    //    world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
+    //                                     getRandomNorthWall());
+    //    world.tileMap.setTileSpriteLayer(mapX, mapY, 2, getRandomNEFill());
+    //}
+    //else if (cell.northWall) {
+    //    // North only, place the 2 north walls.
+    //    world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomNorthWall());
+    //    world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
+    //                                     getRandomNorthWall());
+    //}
+    //else if (cell.westWall) {
+    //    // West only, place the 2 west walls.
+    //    world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomWestWall());
+    //    world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
+    //                                     getRandomWestWall());
+    //}
+    //else {
+    //    // No walls. First check if there are tiles to the north and west.
+    //    if ((mapX > 0) && (mapY > 0)) {
+    //        // There are tiles to the north and west. If they have walls
+    //        // that form a gap, fill it.
+    //        const Tile& northTile{world.tileMap.getTile(mapX, (mapY - 1))};
+    //        const Tile& westTile{world.tileMap.getTile((mapX - 1), mapY)};
+    //        if (northTile.hasWestWall() && westTile.hasNorthWall()) {
+    //            world.tileMap.setTileSpriteLayer(mapX, mapY, 1,
+    //                                             getRandomNWFill());
+    //        }
+    //    }
+    //}
 }
 
 void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
@@ -617,32 +619,6 @@ int MazeGenerationSystem::getRandomFullFill()
     else {
         return fullFillIDs[2];
     }
-}
-
-bool MazeGenerationSystem::hasWestWall(const Tile& tile)
-{
-    if (tile.spriteLayers.size() > 1) {
-        for (int spriteID : westWallIDs) {
-            if (tile.spriteLayers[1].sprite.numericID == spriteID) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
-bool MazeGenerationSystem::hasNorthWall(const Tile& tile)
-{
-    if (tile.spriteLayers.size() > 1) {
-        for (int spriteID : northWallIDs) {
-            if (tile.spriteLayers[1].sprite.numericID == spriteID) {
-                return true;
-            }
-        }
-    }
-
-    return false;
 }
 
 } // End namespace Server

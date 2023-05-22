@@ -153,16 +153,6 @@ private:
     int getRandomNWFill();
     int getRandomFullFill();
 
-    /**
-     * @return true if the given tile has a west wall sprite.
-     */
-    bool hasWestWall(const Tile& tile);
-
-    /**
-     * @return true if the given tile has a north wall sprite.
-     */
-    bool hasNorthWall(const Tile& tile);
-
     /** Used to get entity positions and modify the tile map. */
     World& world;
 

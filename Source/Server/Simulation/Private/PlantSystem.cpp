@@ -15,10 +15,10 @@ PlantSystem::PlantSystem(World& inWorld, SpriteData& inSpriteData)
 , plantRegions{}
 , randomDevice()
 , generator(randomDevice())
-, SUNFLOWER_SAPLING_ID{spriteData.get("sunflower_0").numericID}
-, SUNFLOWER_MIDGROWTH_ID{spriteData.get("sunflower_1").numericID}
-, SUNFLOWER_FULLYGROWN_ID{spriteData.get("sunflower_2").numericID}
-, SUNFLOWER_DYING_ID{spriteData.get("sunflower_3").numericID}
+, SUNFLOWER_SAPLING_ID{spriteData.getSprite("sunflower_0").numericID}
+, SUNFLOWER_MIDGROWTH_ID{spriteData.getSprite("sunflower_1").numericID}
+, SUNFLOWER_FULLYGROWN_ID{spriteData.getSprite("sunflower_2").numericID}
+, SUNFLOWER_DYING_ID{spriteData.getSprite("sunflower_3").numericID}
 {
     // Add the regions.
     plantRegions.emplace_back();
@@ -43,7 +43,7 @@ PlantSystem::PlantSystem(World& inWorld, SpriteData& inSpriteData)
     // Initialize all the plants.
     for (PlantRegion& region : plantRegions) {
         // Clear any existing plant sprites.
-        world.tileMap.clearExtentSpriteLayers(region.extent, 1, 1);
+        world.tileMap.clearExtentLayers<ObjectTileLayer>(region.extent);
 
         // Randomize the parameters for every plant and place their sprites.
         for (Plant& plant : region.plants) {
@@ -83,8 +83,8 @@ void PlantSystem::updatePlant(PlantRegion& region, Plant& plant)
         }
         else {
             // Else, update the plant's sprite to reflect the new life stage.
-            world.tileMap.setTileSpriteLayer(plant.position.x, plant.position.y,
-                                             1, getPlantSpriteID(plant));
+            //world.tileMap.setTileSpriteLayer(plant.position.x, plant.position.y,
+            //                                 1, getPlantSpriteID(plant));
         }
 
         plant.timer.reset();
@@ -96,8 +96,8 @@ void PlantSystem::replantPlant(PlantRegion& region, Plant& plant)
     // If the plant was previously initialized.
     if ((plant.position.x != -1) && (plant.position.y != -1)) {
         // Remove the sprite from the old position.
-        world.tileMap.setTileSpriteLayer(plant.position.x, plant.position.y, 1,
-                                         spriteData.get("empty"));
+        //world.tileMap.setTileSpriteLayer(plant.position.x, plant.position.y, 1,
+        //                                 spriteData.get("empty"));
 
         // Return the old position to the pool.
         region.openTiles.push_back(plant.position);
@@ -128,8 +128,8 @@ void PlantSystem::replantPlant(PlantRegion& region, Plant& plant)
     plant.lifeStage = Plant::LifeStage::Sapling;
 
     // Set the plant's new sprite.
-    world.tileMap.setTileSpriteLayer(plant.position.x, plant.position.y, 1,
-                                     getPlantSpriteID(plant));
+    //world.tileMap.setTileSpriteLayer(plant.position.x, plant.position.y, 1,
+    //                                 getPlantSpriteID(plant));
 }
 
 int PlantSystem::getPlantSpriteID(Plant& plant)
@@ -151,7 +151,7 @@ int PlantSystem::getPlantSpriteID(Plant& plant)
                 }
                 default: {
                     LOG_INFO("Empty 1");
-                    return spriteData.get("empty").numericID;
+                    return spriteData.getSprite("empty").numericID;
                 }
             }
             break;
@@ -159,7 +159,7 @@ int PlantSystem::getPlantSpriteID(Plant& plant)
         default: {
             LOG_INFO("Empty 2: %u, %u", static_cast<unsigned>(plant.type),
                      static_cast<unsigned>(plant.lifeStage));
-            return spriteData.get("empty").numericID;
+            return spriteData.getSprite("empty").numericID;
         }
     }
 }

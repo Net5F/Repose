@@ -1479,5 +1479,37 @@
                 }
             ]
         }
+    ],
+    "floors": [
+        {
+            "displayName": "Grass0"
+            "stringID": "grass0"
+            "numericID": 0
+            "spritesIDs": [0]
+        }
+    ],
+    "floorCoverings": [
+        {
+            "displayName": "Flowers0"
+            "stringID": "flowers0"
+            "numericID": 0
+            "spritesIDs": [11, -1, -1, -1, -1, -1, -1, -1]
+        }
+    ],
+    "walls": [
+        {
+            "displayName": "HedgeWall"
+            "stringID": "hedgewall"
+            "numericID": 0
+            "spritesIDs": [32, 40, 35, 31]
+        }
+    ],
+    "objects": [
+        {
+            "displayName": "Sunflower"
+            "stringID": "sunflower"
+            "numericID": 0
+            "spritesIDs": [19, -1, -1, -1, -1, -1, -1, -1]
+        }
     ]
 }

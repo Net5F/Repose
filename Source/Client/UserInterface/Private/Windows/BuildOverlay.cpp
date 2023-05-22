@@ -6,7 +6,6 @@
 #include "ClientTransforms.h"
 #include "WorldSinks.h"
 #include "QueuedEvents.h"
-#include "TileUpdateRequest.h"
 #include "Ignore.h"
 #include "AUI/Core.h"
 
@@ -82,9 +81,9 @@ AUI::EventResult BuildOverlay::onMouseDown(AUI::MouseButtonType buttonType,
     // Only respond to the left mouse button.
     if (buttonType == AUI::MouseButtonType::Left) {
         // Send a request to update the clicked tile to the selected sprite.
-        uiEventDispatcher.emplace<TileUpdateRequest>(
-            mouseTilePosition.x, mouseTilePosition.y, tileLayerIndex,
-            selectedTile->numericID);
+        //uiEventDispatcher.emplace<TileUpdateRequest>(
+        //    mouseTilePosition.x, mouseTilePosition.y, tileLayerIndex,
+        //    selectedTile->numericID);
     }
 
     return AUI::EventResult{.wasHandled{false}};

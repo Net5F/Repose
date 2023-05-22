@@ -29,18 +29,18 @@ public:
     static constexpr std::size_t MAX_ENTITIES{200};
 
     /** The x and y axis width, in world units, of our tiles. */
-    static constexpr unsigned int TILE_WORLD_WIDTH{32};
+    static constexpr std::size_t TILE_WORLD_WIDTH{32};
 
     /** The x and y axis width, in tiles, of our chunks. */
-    static constexpr unsigned int CHUNK_WIDTH{16};
+    static constexpr std::size_t CHUNK_WIDTH{16};
 
     /** The number of tiles in a chunk. */
-    static constexpr unsigned int CHUNK_TILE_COUNT{CHUNK_WIDTH * CHUNK_WIDTH};
+    static constexpr std::size_t CHUNK_TILE_COUNT{CHUNK_WIDTH * CHUNK_WIDTH};
 
     /** The x and y axis width, in tiles, of a cell in our spatial
         partitioning grid.
         Note: The map's size must be evenly divisible by this number. */
-    static constexpr unsigned int CELL_WIDTH{4};
+    static constexpr std::size_t CELL_WIDTH{4};
 
     /** The number of world units around an entity that are considered to be
         within the entity's "Area of Interest".
@@ -50,9 +50,6 @@ public:
     /** The squared AOI radius. Useful for checking if things are in range
         of an entity without doing a square root. */
     static constexpr float AOI_RADIUS_SQUARED{AOI_RADIUS * AOI_RADIUS};
-
-    /** The maximum number of sprite layers a tile can have. */
-    static constexpr std::size_t MAX_TILE_LAYERS{5};
 
     /** The string ID of the default sprite for character entities.
         This is the sprite that players and NPCs get assigned before the

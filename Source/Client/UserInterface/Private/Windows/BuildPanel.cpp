@@ -22,15 +22,11 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
 , backgroundImage{{0, 0, 1920, 319}, "BuildPanelBackground"}
 , tileContainer{{366 - 2, 91, 1188, 220}, "TileContainer"}
 , layerLabel{{1630, 97, 138, 36}, "LayerLabel"}
-, layerDownButton{{1630, 139, 66, 31}, "<", "LayerDownButton"}
-, layerUpButton{{1704, 139, 66, 31}, ">", "LayerUpButton"}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
     children.push_back(tileContainer);
     children.push_back(layerLabel);
-    children.push_back(layerDownButton);
-    children.push_back(layerUpButton);
 
     /* Background image */
     backgroundImage.setMultiResImage(
@@ -50,46 +46,16 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
     // TODO: We need some tags on our sprites to tell us which ones can be
     //       used as tiles.
     // Fill the container with the available tiles.
-    for (const Sprite& sprite : spriteData.getAllSprites()) {
-        // Skip the empty sprite.
-        // TODO: Once tags are added, we can remove this check since the
-        //       empty sprite will be naturally filtered out.
-        if (sprite.numericID == -1) {
-            continue;
-        }
+    //for (const Sprite& sprite : spriteData.getAllSprites()) {
+    //    // Skip the empty sprite.
+    //    // TODO: Once tags are added, we can remove this check since the
+    //    //       empty sprite will be naturally filtered out.
+    //    if (sprite.numericID == -1) {
+    //        continue;
+    //    }
 
-        addTile(sprite);
-    }
-
-    /* Layer label */
-    layerLabel.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 26);
-    layerLabel.setColor({255, 255, 255, 255});
-    layerLabel.setVerticalAlignment(AUI::Text::VerticalAlignment::Center);
-    layerLabel.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
-    layerLabel.setText("Layer " + std::to_string(tileLayerIndex));
-
-    /* Layer buttons */
-    layerDownButton.setOnPressed([&]() {
-        if (tileLayerIndex > 0) {
-            // Update our label.
-            tileLayerIndex--;
-            layerLabel.setText("Layer " + std::to_string(tileLayerIndex));
-
-            // Update BuildOverlay.
-            buildOverlay.setSelectedLayer(tileLayerIndex);
-        }
-    });
-
-    layerUpButton.setOnPressed([&]() {
-        if ((tileLayerIndex + 1) < SharedConfig::MAX_TILE_LAYERS) {
-            // Update our label.
-            tileLayerIndex++;
-            layerLabel.setText("Layer " + std::to_string(tileLayerIndex));
-
-            // Update BuildOverlay.
-            buildOverlay.setSelectedLayer(tileLayerIndex);
-        }
-    });
+    //    addTile(sprite);
+    //}
 }
 
 void BuildPanel::addEraser()
@@ -119,7 +85,7 @@ void BuildPanel::addEraser()
         }
 
         // Tell BuildOverlay that the active tile changed to the empty tile.
-        buildOverlay.setSelectedTile(spriteData.get(EMPTY_SPRITE_ID));
+        buildOverlay.setSelectedTile(spriteData.getSprite(EMPTY_SPRITE_ID));
     });
 
     tileContainer.push_back(std::move(thumbnailPtr));

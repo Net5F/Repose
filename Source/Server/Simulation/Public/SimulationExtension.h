@@ -63,14 +63,14 @@ public:
     // Simulation System Hooks (Hooks into engine systems)
     //-------------------------------------------------------------------------
     /**
-     * Called by TileUpdateSystem when a tile update request is received,
-     * before applying the update.
+     * Called by the engine's TileUpdateSystem when a tile update request is 
+     * received, before applying the update.
      * Allows the project to place constraints on map modifications, such as
      * requiring certain permissions, or only allowing updates to certain areas.
      *
-     * @return true if the update should be performed, else false.
+     * @return true if the extent is editable, else false.
      */
-    bool isTileUpdateValid(const TileUpdateRequest& updateRequest);
+    bool isExtentEditable(const TileExtent& tileExtent) override;
 
 private:
     MazeGenerationSystem mazeGenerationSystem;
