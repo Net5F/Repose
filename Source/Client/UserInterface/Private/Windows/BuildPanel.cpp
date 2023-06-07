@@ -8,7 +8,6 @@
 #include "Paths.h"
 #include "Ignore.h"
 #include "AMAssert.h"
-#include <memory>
 
 namespace AM
 {
@@ -18,15 +17,35 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
 : AUI::Window{{0, 761, 1920, 319}, "BuildPanel"}
 , spriteData{inSpriteData}
 , buildOverlay{inBuildOverlay}
-, tileLayerIndex{1}
+, selectedThumbnail{nullptr}
 , backgroundImage{{0, 0, 1920, 319}, "BuildPanelBackground"}
-, tileContainer{{366 - 2, 91, 1188, 220}, "TileContainer"}
-, layerLabel{{1630, 97, 138, 36}, "LayerLabel"}
+, tileSpriteSetContainers{AUI::VerticalGridContainer{{366 - 2, 91, 1188, 220},
+                                                     "FloorContainer"},
+                          AUI::VerticalGridContainer{{366 - 2, 91, 1188, 220},
+                                                     "FloorCoveringContainer"},
+                          AUI::VerticalGridContainer{{366 - 2, 91, 1188, 220},
+                                                     "WallContainer"},
+                          AUI::VerticalGridContainer{{366 - 2, 91, 1188, 220},
+                                                     "ObjectContainer"}}
+, toolsLabel{{152, 92, 138, 36}, "ToolsLabel"}
+, buildToolButtons{MainButton{{164, 132, 114, 28}, "Floor", "FloorToolButton"},
+                   MainButton{{164, 168, 114, 28}, "Floor Cover", "FloorCoveringToolButton"},
+                   MainButton{{164, 204, 114, 28}, "Wall", "WallToolButton"},
+                   MainButton{{164, 240, 114, 28}, "Object", "ObjectToolButton"},
+                   MainButton{{164, 276, 114, 28}, "Remove", "RemoveToolButton"}}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
-    children.push_back(tileContainer);
-    children.push_back(layerLabel);
+    children.push_back(tileSpriteSetContainers[TileLayer::Type::Floor]);
+    children.push_back(tileSpriteSetContainers[TileLayer::Type::FloorCovering]);
+    children.push_back(tileSpriteSetContainers[TileLayer::Type::Wall]);
+    children.push_back(tileSpriteSetContainers[TileLayer::Type::Object]);
+    children.push_back(toolsLabel);
+    children.push_back(buildToolButtons[BuildTool::Type::Floor]);
+    children.push_back(buildToolButtons[BuildTool::Type::FloorCovering]);
+    children.push_back(buildToolButtons[BuildTool::Type::Wall]);
+    children.push_back(buildToolButtons[BuildTool::Type::Object]);
+    children.push_back(buildToolButtons[BuildTool::Type::Remove]);
 
     /* Background image */
     backgroundImage.setMultiResImage(
@@ -36,62 +55,56 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
           (Paths::TEXTURE_DIR + "BuildPanel/Background_1920.png")}});
 
     /* Container */
-    tileContainer.setNumColumns(11);
-    tileContainer.setCellWidth(108);
-    tileContainer.setCellHeight(109 + 1);
+    for (AUI::VerticalGridContainer& container : tileSpriteSetContainers) {
+        container.setNumColumns(11);
+        container.setCellWidth(108);
+        container.setCellHeight(109 + 1);
+        container.setIsVisible(false);
+    }
 
-    // Add the eraser as the first thumbnail.
-    addEraser();
+    /* Tools label */
+    toolsLabel.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 26);
+    toolsLabel.setColor({255, 255, 255, 255});
+    toolsLabel.setVerticalAlignment(AUI::Text::VerticalAlignment::Center);
+    toolsLabel.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
+    toolsLabel.setText("Tools");
 
-    // TODO: We need some tags on our sprites to tell us which ones can be
-    //       used as tiles.
-    // Fill the container with the available tiles.
-    //for (const Sprite& sprite : spriteData.getAllSprites()) {
-    //    // Skip the empty sprite.
-    //    // TODO: Once tags are added, we can remove this check since the
-    //    //       empty sprite will be naturally filtered out.
-    //    if (sprite.numericID == -1) {
-    //        continue;
-    //    }
-
-    //    addTile(sprite);
-    //}
-}
-
-void BuildPanel::addEraser()
-{
-    // Construct the new eraser thumbnail.
-    std::unique_ptr<AUI::Widget> thumbnailPtr{
-        std::make_unique<MainThumbnail>("EraserThumbnail")};
-    MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
-    thumbnail.setText("");
-    thumbnail.setIsActivateable(false);
-
-    // Load the eraser's image.
-    thumbnail.thumbnailImage.setMultiResImage(
-        {{{1280, 720}, (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1280.png")},
-         {{1600, 900}, (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1600.png")},
-         {{1920, 1080},
-          (Paths::TEXTURE_DIR + "BuildPanel/EraserIcon_1920.png")}});
-
-    // Add a callback to deactivate all other thumbnails when one is activated.
-    thumbnail.setOnSelected([this](AUI::Thumbnail* selectedThumb) {
-        // Deactivate all other thumbnails.
-        for (auto& widgetPtr : tileContainer) {
-            MainThumbnail& otherThumb{static_cast<MainThumbnail&>(*widgetPtr)};
-            if (otherThumb.getIsSelected() && (&otherThumb != selectedThumb)) {
-                otherThumb.deselect();
-            }
-        }
-
-        // Tell BuildOverlay that the active tile changed to the empty tile.
-        buildOverlay.setSelectedTile(spriteData.getSprite(EMPTY_SPRITE_ID));
+    /* Build tool buttons. */
+    buildToolButtons[BuildTool::Type::Floor].setOnPressed([this]() {
+        setBuildTool(BuildTool::Type::Floor);
     });
+    buildToolButtons[BuildTool::Type::FloorCovering].setOnPressed([this]() {
+        setBuildTool(BuildTool::Type::FloorCovering);
+    });
+    buildToolButtons[BuildTool::Type::Wall].setOnPressed([this]() {
+        setBuildTool(BuildTool::Type::Wall);
+    });
+    buildToolButtons[BuildTool::Type::Object].setOnPressed([this]() {
+        setBuildTool(BuildTool::Type::Object);
+    });
+    // TODO: Add remove tool
 
-    tileContainer.push_back(std::move(thumbnailPtr));
+    // Fill the containers with the available sprite sets.
+    for (const FloorSpriteSet& spriteSet : spriteData.getAllFloorSpriteSets()) {
+        addSpriteSet(TileLayer::Type::Floor, spriteSet, spriteSet.sprite);
+    }
+    for (const FloorCoveringSpriteSet& spriteSet :
+         spriteData.getAllFloorCoveringSpriteSets()) {
+        addSpriteSet(TileLayer::Type::FloorCovering, spriteSet,
+                     *getFirstSprite(spriteSet));
+    }
+    for (const WallSpriteSet& spriteSet : spriteData.getAllWallSpriteSets()) {
+        addSpriteSet(TileLayer::Type::Wall, spriteSet, spriteSet.sprites[0]);
+    }
+    for (const ObjectSpriteSet& spriteSet :
+         spriteData.getAllObjectSpriteSets()) {
+        addSpriteSet(TileLayer::Type::Object, spriteSet,
+                     *getFirstSprite(spriteSet));
+    }
 }
 
-void BuildPanel::addTile(const Sprite& sprite)
+void BuildPanel::addSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,
+    const Sprite& sprite)
 {
     // Construct the new sprite thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
@@ -115,20 +128,38 @@ void BuildPanel::addTile(const Sprite& sprite)
                                             textureExtent);
 
     // Add a callback to deactivate all other thumbnails when one is activated.
-    thumbnail.setOnSelected([this, &sprite](AUI::Thumbnail* selectedThumb) {
-        // Deactivate all other thumbnails.
-        for (auto& widgetPtr : tileContainer) {
-            MainThumbnail& otherThumb{static_cast<MainThumbnail&>(*widgetPtr)};
-            if (otherThumb.getIsSelected() && (&otherThumb != selectedThumb)) {
-                otherThumb.deselect();
-            }
+    thumbnail.setOnSelected([this, &spriteSet](AUI::Thumbnail* selectedThumb) {
+        // If there's an old selection, deselect it.
+        if (selectedThumbnail != nullptr) {
+            selectedThumbnail->deselect();
         }
 
-        // Tell BuildOverlay that the active tile changed.
-        buildOverlay.setSelectedTile(sprite);
+        // Set this thumbnail as the new selection.
+        selectedThumbnail = selectedThumb;
+
+        // Tell the overlay that the selected sprite changed.
+        buildOverlay.setSelectedSpriteSet(spriteSet);
     });
 
-    tileContainer.push_back(std::move(thumbnailPtr));
+    tileSpriteSetContainers[type].push_back(std::move(thumbnailPtr));
+}
+
+void BuildPanel::setBuildTool(BuildTool::Type toolType)
+{
+    // When we switch build tools, we deselect any selected thumbnails.
+    if (selectedThumbnail != nullptr) {
+        selectedThumbnail->deselect();
+        selectedThumbnail = nullptr;
+    }
+
+    // Set the overlay's build tool.
+    buildOverlay.setBuildTool(toolType);
+
+    // Make all the containers invisible, then show the correct container.
+    for (AUI::VerticalGridContainer& container : tileSpriteSetContainers) {
+        container.setIsVisible(false);
+    }
+    tileSpriteSetContainers[toolType].setIsVisible(true);
 }
 
 } // End namespace Client

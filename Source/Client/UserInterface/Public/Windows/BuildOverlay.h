@@ -2,7 +2,14 @@
 
 #include "Camera.h"
 #include "TileExtent.h"
+#include "TileLayers.h"
+#include "SpriteSets.h"
+#include "BuildTool.h"
+#include "PhantomTileSpriteInfo.h"
+#include "TileSpriteColorModInfo.h"
 #include "AUI/Window.h"
+#include <span>
+#include <memory>
 
 namespace AM
 {
@@ -19,6 +26,10 @@ class WorldSinks;
  * in the world.
  *
  * This overlay is opened alongside BuildPanel when we enter build mode.
+ *
+ * Note: This overlay blocks all inputs that it receives. If this becomes 
+ *       undesirable, we can change the build tool to say whether it handled 
+ *       the event or not.
  */
 class BuildOverlay : public AUI::Window
 {
@@ -29,30 +40,40 @@ public:
     BuildOverlay(SpriteData& inSpriteData, WorldSinks& inWorldSinks,
                  EventDispatcher& inUiEventDispatcher);
 
-    /**
-     * Used by the BuildPanel to tell us which sprite is selected.
-     *
-     * The currently selected tile will follow the mouse cursor while it moves
-     * within this overlay. When the mouse is clicked, the sim will be notified
-     * that it needs to place the selected tile at the selected layer.
-     */
-    void setSelectedTile(const Sprite& inSelectedTile);
+    virtual ~BuildOverlay() = default;
 
     /**
-     * Used by the BuildPanel to tell us which sprite layer is selected.
-     *
-     * When the mouse is clicked, the sim will be notified that it needs to
-     * place the selected tile at the selected layer.
+     * Used by the BuildPanel to tell us when a sprite set is selected.
      */
-    void setSelectedLayer(unsigned int inTileLayerIndex);
+    void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet);
+
+    /**
+     * Used by the BuildPanel to tell us which build tool is currently selected.
+     *
+     * User interactions will be passed to the current tool, which will notify 
+     * the sim if the tile map needs to change.
+     */
+    void setBuildTool(BuildTool::Type toolType);
 
     /**
      * Sets the camera to use when rendering.
      *
-     * Called by the renderer to give us the lerped camera for the current
-     * frame.
+     * Called during the render pass to give us the lerped camera for the 
+     * current frame.
      */
     void setCamera(const Camera& inCamera);
+
+    /**
+     * Returns any phantom tile sprites that the current build tool wants to 
+     * render.
+     */
+    std::span<const PhantomTileSpriteInfo> getPhantomTileSprites() const;
+
+    /**
+     * Returns any tile sprite color mods that the current build tool wants to 
+     * render.
+     */
+    std::span<const TileSpriteColorModInfo> getTileSpriteColorMods() const;
 
     //-------------------------------------------------------------------------
     // Widget class overrides
@@ -61,6 +82,15 @@ public:
 
     AUI::EventResult onMouseDown(AUI::MouseButtonType buttonType,
                                  const SDL_Point& cursorPosition) override;
+
+    AUI::EventResult onMouseUp(AUI::MouseButtonType buttonType,
+                               const SDL_Point& cursorPosition) override;
+
+    AUI::EventResult
+        onMouseDoubleClick(AUI::MouseButtonType buttonType,
+                           const SDL_Point& cursorPosition) override;
+
+    AUI::EventResult onMouseWheel(int amountScrolled) override;
 
     AUI::EventResult onMouseMove(const SDL_Point& cursorPosition) override;
 
@@ -76,19 +106,14 @@ private:
     /** Used to get data for rendering tile sprites */
     SpriteData& spriteData;
 
-    /** Used to send TileUpdateRequest events when a tile is selected. */
+    /** We hold onto this so we can pass it to the current tool. */
     EventDispatcher& uiEventDispatcher;
 
-    /** The currently selected tile. */
-    const Sprite* selectedTile;
+    /** The currently selected sprite set. */
+    const SpriteSet* selectedSpriteSet;
 
-    /** The layer to place the selected tile at. */
-    unsigned int tileLayerIndex;
-
-    /** If true, show the selected tile. Else, don't render it.
-        Used to get rid of the tile rendering when the mouse is outside of
-        the overlay.*/
-    bool showTile;
+    /** The current build tool. */
+    std::unique_ptr<BuildTool> currentBuildTool;
 
     /** The camera to use when rendering or doing screen -> world calcs. */
     Camera camera;
@@ -97,10 +122,8 @@ private:
         requesting changes to tiles that are out of bounds. */
     TileExtent mapTileExtent;
 
-    /** The position of the tile that the mouse is hovering over.
-        The currently selected tile will be rendered semi-transparently at
-        this position. */
-    TilePosition mouseTilePosition;
+    /** The the tile that the mouse cursor is currently hovering over. */
+    TilePosition cursorTilePosition;
 };
 
 } // End namespace Client

@@ -41,25 +41,25 @@ PlantSystem::PlantSystem(World& inWorld, SpriteData& inSpriteData)
     }
 
     // Initialize all the plants.
-    for (PlantRegion& region : plantRegions) {
-        // Clear any existing plant sprites.
-        world.tileMap.clearExtentLayers<ObjectTileLayer>(region.extent);
+    //for (PlantRegion& region : plantRegions) {
+    //    // Clear any existing plant sprites.
+    //    world.tileMap.clearExtentLayers<ObjectTileLayer>(region.extent);
 
-        // Randomize the parameters for every plant and place their sprites.
-        for (Plant& plant : region.plants) {
-            replantPlant(region, plant);
-        }
-    }
+    //    // Randomize the parameters for every plant and place their sprites.
+    //    for (Plant& plant : region.plants) {
+    //        replantPlant(region, plant);
+    //    }
+    //}
 }
 
 void PlantSystem::updatePlants()
 {
-    // Update all the plants.
-    for (PlantRegion& region : plantRegions) {
-        for (Plant& plant : region.plants) {
-            updatePlant(region, plant);
-        }
-    }
+    //// Update all the plants.
+    //for (PlantRegion& region : plantRegions) {
+    //    for (Plant& plant : region.plants) {
+    //        updatePlant(region, plant);
+    //    }
+    //}
 }
 
 void PlantSystem::updatePlant(PlantRegion& region, Plant& plant)

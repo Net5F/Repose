@@ -48,6 +48,28 @@ void UserInterfaceExtension::changeScreenTo(ScreenType screenType)
     }
 }
 
+std::vector<PhantomTileSpriteInfo>
+    UserInterfaceExtension::getPhantomTileSprites() const
+{
+    if (currentScreen == &mainScreen) {
+        return mainScreen.getPhantomTileSprites();
+    }
+    else {
+        return {};
+    }
+}
+
+std::vector<TileSpriteColorModInfo>
+UserInterfaceExtension::getTileSpriteColorMods() const
+{
+    if (currentScreen == &mainScreen) {
+        return mainScreen.getTileSpriteColorMods();
+    }
+    else {
+        return {};
+    }
+}
+
 bool UserInterfaceExtension::handleOSEvent(SDL_Event& event)
 {
     return currentScreen->handleOSEvent(event);

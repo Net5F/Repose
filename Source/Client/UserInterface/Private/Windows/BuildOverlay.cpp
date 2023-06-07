@@ -1,6 +1,10 @@
 #include "BuildOverlay.h"
 #include "SpriteData.h"
 #include "Sprite.h"
+#include "FloorTool.h"
+#include "FloorCoveringTool.h"
+#include "WallTool.h"
+#include "ObjectTool.h"
 #include "Paths.h"
 #include "Transforms.h"
 #include "ClientTransforms.h"
@@ -18,12 +22,11 @@ BuildOverlay::BuildOverlay(SpriteData& inSpriteData, WorldSinks& inWorldSinks,
 : AUI::Window({0, 0, 1920, 744}, "BuildOverlay")
 , spriteData{inSpriteData}
 , uiEventDispatcher{inUiEventDispatcher}
-, selectedTile{nullptr}
-, tileLayerIndex{1}
-, showTile{false}
+, selectedSpriteSet{nullptr}
+, currentBuildTool{nullptr}
 , camera{}
 , mapTileExtent{}
-, mouseTilePosition{}
+, cursorTilePosition{}
 {
     // We need to know when the map size changes so we can bound the cursor
     // appropriately.
@@ -31,91 +34,167 @@ BuildOverlay::BuildOverlay(SpriteData& inSpriteData, WorldSinks& inWorldSinks,
         .connect<&BuildOverlay::onTileMapExtentChanged>(*this);
 }
 
-void BuildOverlay::setSelectedTile(const Sprite& inSelectedTile)
+void BuildOverlay::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
 {
-    selectedTile = &inSelectedTile;
+    selectedSpriteSet = &inSelectedSpriteSet;
+
+    if (currentBuildTool != nullptr) {
+        currentBuildTool->setSelectedSpriteSet(*selectedSpriteSet);
+    }
 }
 
-void BuildOverlay::setSelectedLayer(unsigned int inTileLayerIndex)
+void BuildOverlay::setBuildTool(BuildTool::Type toolType)
 {
-    tileLayerIndex = inTileLayerIndex;
+    switch (toolType) {
+        case BuildTool::Type::Floor: {
+            currentBuildTool = std::make_unique<FloorTool>(uiEventDispatcher);
+            break;
+        }
+        case BuildTool::Type::FloorCovering: {
+            currentBuildTool
+                = std::make_unique<FloorCoveringTool>(uiEventDispatcher);
+            break;
+        }
+        case BuildTool::Type::Wall: {
+            currentBuildTool = std::make_unique<WallTool>(uiEventDispatcher);
+            break;
+        }
+        case BuildTool::Type::Object: {
+            currentBuildTool = std::make_unique<ObjectTool>(uiEventDispatcher);
+            break;
+        }
+        default: {
+            LOG_FATAL("Invalid tool type.");
+            break;
+        }
+    }
+
+    currentBuildTool->setCamera(camera);
+    currentBuildTool->setTileMapExtent(mapTileExtent);
 }
 
 void BuildOverlay::setCamera(const Camera& inCamera)
 {
     camera = inCamera;
+
+    if (currentBuildTool != nullptr) {
+        currentBuildTool->setCamera(camera);
+    }
+}
+
+std::span<const PhantomTileSpriteInfo> BuildOverlay::getPhantomTileSprites() const
+{
+    if (!isVisible) {
+        // If we're not visible, don't show any phantoms.
+        return {};
+    }
+    else if (currentBuildTool != nullptr) {
+        // If we're visible and have a build tool selected, show its phantoms.
+        return currentBuildTool->getPhantomTileSprites();
+    }
+    else {
+        return {};
+    }
+}
+
+std::span<const TileSpriteColorModInfo> BuildOverlay::getTileSpriteColorMods() const
+{
+    if (!isVisible) {
+        // If we're not visible, don't show any phantoms.
+        return {};
+    }
+    else if (currentBuildTool != nullptr) {
+        // If we're visible and have a build tool selected, show its color mods.
+        return currentBuildTool->getTileSpriteColorMods();
+    }
+    else {
+        return {};
+    }
 }
 
 void BuildOverlay::render()
 {
-    if (showTile && (selectedTile != nullptr)) {
-        SpriteRenderData renderData{
-            spriteData.getRenderData(selectedTile->numericID)};
-        SDL_Rect screenExtent{ClientTransforms::tileToScreenExtent(
-            mouseTilePosition, renderData, camera)};
+    //if (showTool && (selectedTile != nullptr)) {
+    //    SpriteRenderData renderData{
+    //        spriteData.getRenderData(selectedTile->numericID)};
+    //    SDL_Rect screenExtent{ClientTransforms::tileToScreenExtent(
+    //        cursorTilePosition, renderData, camera)};
 
-        // Set the texture's alpha to make the tile semi-transparent.
-        SDL_SetTextureAlphaMod(renderData.texture.get(), 150);
+    //    // Set the texture's alpha to make the tile semi-transparent.
+    //    SDL_SetTextureAlphaMod(renderData.texture.get(), 150);
 
-        // Draw the semi-transparent tile.
-        SDL_RenderCopy(AUI::Core::getRenderer(), renderData.texture.get(),
-                       &(renderData.textureExtent), &screenExtent);
+    //    // Draw the semi-transparent tile.
+    //    SDL_RenderCopy(AUI::Core::getRenderer(), renderData.texture.get(),
+    //                   &(renderData.textureExtent), &screenExtent);
 
-        // Set the texture's alpha back.
-        SDL_SetTextureAlphaMod(renderData.texture.get(), 255);
-    }
+    //    // Set the texture's alpha back.
+    //    SDL_SetTextureAlphaMod(renderData.texture.get(), 255);
+    //}
 }
 
 AUI::EventResult BuildOverlay::onMouseDown(AUI::MouseButtonType buttonType,
                                            const SDL_Point& cursorPosition)
 {
-    ignore(cursorPosition);
-
-    // If we don't have a selected tile or the mouse is outside of the world
-    // bounds, ignore this event.
-    if ((selectedTile == nullptr)
-        || !(mapTileExtent.containsPosition(mouseTilePosition))) {
-        return AUI::EventResult{.wasHandled{false}};
+    if (currentBuildTool != nullptr) {
+        currentBuildTool->onMouseDown(buttonType, cursorPosition);
     }
 
-    // Only respond to the left mouse button.
-    if (buttonType == AUI::MouseButtonType::Left) {
-        // Send a request to update the clicked tile to the selected sprite.
-        //uiEventDispatcher.emplace<TileUpdateRequest>(
-        //    mouseTilePosition.x, mouseTilePosition.y, tileLayerIndex,
-        //    selectedTile->numericID);
+    return AUI::EventResult{.wasHandled{true}};
+}
+
+AUI::EventResult BuildOverlay::onMouseUp(AUI::MouseButtonType buttonType,
+                                         const SDL_Point& cursorPosition)
+{
+    if (currentBuildTool != nullptr) {
+        currentBuildTool->onMouseUp(buttonType, cursorPosition);
     }
 
-    return AUI::EventResult{.wasHandled{false}};
+    return AUI::EventResult{.wasHandled{true}};
+}
+
+AUI::EventResult
+    BuildOverlay::onMouseDoubleClick(AUI::MouseButtonType buttonType,
+                                     const SDL_Point& cursorPosition)
+{
+    if (currentBuildTool != nullptr) {
+        currentBuildTool->onMouseDoubleClick(buttonType, cursorPosition);
+    }
+
+    return AUI::EventResult{.wasHandled{true}};
+}
+
+AUI::EventResult BuildOverlay::onMouseWheel(int amountScrolled)
+{
+    if (currentBuildTool != nullptr) {
+        currentBuildTool->onMouseWheel(amountScrolled);
+    }
+
+    return AUI::EventResult{.wasHandled{true}};
 }
 
 AUI::EventResult BuildOverlay::onMouseMove(const SDL_Point& cursorPosition)
 {
-    // Get the tile coordinate that the mouse is hovering over.
-    ScreenPoint screenPoint{static_cast<float>(cursorPosition.x),
-                            static_cast<float>(cursorPosition.y)};
-    TilePosition newTilePosition{Transforms::screenToTile(screenPoint, camera)};
+    if (currentBuildTool != nullptr) {
+        currentBuildTool->onMouseMove(cursorPosition);
+    }
 
-    // If the mouse is outside of the world bounds, ignore this event.
-    if (!(mapTileExtent.containsPosition(newTilePosition))) {
-        return AUI::EventResult{.wasHandled{false}};
-    }
-    else {
-        // The mouse is in bounds, save the new tile position.
-        mouseTilePosition = newTilePosition;
-        showTile = true;
-        return AUI::EventResult{.wasHandled{true}};
-    }
+    return AUI::EventResult{.wasHandled{true}};
 }
 
 void BuildOverlay::onMouseLeave()
 {
-    showTile = false;
+    if (currentBuildTool != nullptr) {
+        currentBuildTool->onMouseLeave();
+    }
 }
 
 void BuildOverlay::onTileMapExtentChanged(TileExtent inTileExtent)
 {
     mapTileExtent = inTileExtent;
+
+    if (currentBuildTool != nullptr) {
+        currentBuildTool->setTileMapExtent(mapTileExtent);
+    }
 }
 
 } // End namespace Client

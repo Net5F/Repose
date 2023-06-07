@@ -12,20 +12,16 @@ namespace AM
 {
 namespace MG
 {
-MapGenerator::MapGenerator(unsigned int inMapLengthX, unsigned int inMapLengthY,
-                           const std::string& inFillSpriteId)
+MapGenerator::MapGenerator(uint32_t inMapLengthX, uint32_t inMapLengthY,
+                           const std::string& inFillSpriteSetID)
 : mapXLength{inMapLengthX}
 , mapYLength{inMapLengthY}
-, fillSpriteId{inFillSpriteId}
-, dataSize{0}
+, fillSpriteSetID{inFillSpriteSetID}
 {
 }
 
 void MapGenerator::generateAndSave(const std::string& fileName)
 {
-    // Clear the map before starting.
-    mapData.clear();
-
     // Fill the map's version and size.
     TileMapSnapshot tileMap;
     tileMap.version = MAP_FORMAT_VERSION;
@@ -35,19 +31,20 @@ void MapGenerator::generateAndSave(const std::string& fileName)
     // Fill the chunks.
     tileMap.chunks.resize(mapXLength * mapYLength);
     for (ChunkSnapshot& chunk : tileMap.chunks) {
-        // Push the sprite ID that we're filling the map with into the palette.
-        chunk.palette.push_back(fillSpriteId);
+        // Push the sprite set ID that we're filling the map with into the 
+        // palette.
+        chunk.getPaletteIndex(TileLayer::Type::Floor, fillSpriteSetID, 0);
 
         // Push the palette index of the sprite into each tile.
-        for (unsigned int i = 0; i < SharedConfig::CHUNK_TILE_COUNT; ++i) {
-            chunk.tiles[i].spriteLayers.push_back(0);
+        for (std::size_t i = 0; i < SharedConfig::CHUNK_TILE_COUNT; ++i) {
+            chunk.tiles[i].layers.push_back(0);
         }
     }
 
     // Serialize the map snapshot and write it to the file.
     bool saveSuccessful{
         Serialize::toFile((Paths::BASE_PATH + fileName), tileMap)};
-    if (saveSuccessful) {
+    if (!saveSuccessful) {
         LOG_FATAL("Failed to serialize and save the map.");
     }
 }

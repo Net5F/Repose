@@ -1482,34 +1482,40 @@
     ],
     "floors": [
         {
-            "displayName": "Grass0"
-            "stringID": "grass0"
-            "numericID": 0
-            "spritesIDs": [0]
+            "displayName": "Grass0",
+            "stringID": "grass0",
+            "numericID": 0,
+            "spriteIDs": [0]
+        },
+        {
+            "displayName": "Grass1",
+            "stringID": "grass1",
+            "numericID": 1,
+            "spriteIDs": [1]
         }
     ],
     "floorCoverings": [
         {
-            "displayName": "Flowers0"
-            "stringID": "flowers0"
-            "numericID": 0
-            "spritesIDs": [11, -1, -1, -1, -1, -1, -1, -1]
+            "displayName": "Flowers0",
+            "stringID": "flowers0",
+            "numericID": 0,
+            "spriteIDs": [11, -1, -1, -1, -1, -1, -1, -1]
         }
     ],
     "walls": [
         {
-            "displayName": "HedgeWall"
-            "stringID": "hedgewall"
-            "numericID": 0
-            "spritesIDs": [32, 40, 35, 31]
+            "displayName": "HedgeWall",
+            "stringID": "hedgewall",
+            "numericID": 0,
+            "spriteIDs": [32, 40, 35, 31]
         }
     ],
     "objects": [
         {
-            "displayName": "Sunflower"
-            "stringID": "sunflower"
-            "numericID": 0
-            "spritesIDs": [19, -1, -1, -1, -1, -1, -1, -1]
+            "displayName": "Sunflower",
+            "stringID": "sunflower",
+            "numericID": 0,
+            "spriteIDs": [19, -1, -1, -1, -1, -1, -1, -1]
         }
     ]
 }

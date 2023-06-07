@@ -15,8 +15,8 @@ namespace MG
 class MapGenerator
 {
 public:
-    MapGenerator(unsigned int inMapLengthX, unsigned int inMapLengthY,
-                 const std::string& inFillSpriteId);
+    MapGenerator(uint32_t inMapLengthX, uint32_t inMapLengthY,
+                 const std::string& inFillSpriteSetId);
 
     /**
      * Generates the map and saves it to a file with the given name, placed in
@@ -27,23 +27,16 @@ public:
 private:
     /** The version of the map format. Kept as just a 16-bit int for now, we
         can see later if we care to make it more complicated. */
-    static constexpr uint16_t MAP_FORMAT_VERSION = 0;
+    static constexpr uint16_t MAP_FORMAT_VERSION{1};
 
     /** The length, in chunks, of the map's X axis. */
-    unsigned int mapXLength;
+    uint32_t mapXLength;
 
     /** The length, in chunks, of the map's Y axis. */
-    unsigned int mapYLength;
+    uint32_t mapYLength;
 
     /** The ID of the sprite to fill the map with. */
-    std::string fillSpriteId;
-
-    /** The string that we store the generated map data in. */
-    BinaryBuffer mapData;
-
-    /** Used to store the size of the serialized data, once mapData is
-        filled. */
-    unsigned long int dataSize;
+    std::string fillSpriteSetID;
 };
 
 } // End namespace MG

@@ -36,10 +36,26 @@ public:
     //       constructs this class. Do not modify it.
     UserInterfaceExtension(UserInterfaceExDependencies deps);
 
+    virtual ~UserInterfaceExtension() = default;
+
     /**
      * Changes the currentScreen to the given screenType.
      */
     void changeScreenTo(ScreenType screenType);
+
+    /**
+     * Returns all of the UI's phantom tile sprites.
+     * Phantom tile sprites are added by build mode when the user is trying to 
+     * add or replace a tile layer.
+     */
+    std::vector<PhantomTileSpriteInfo> getPhantomTileSprites() const override;
+
+    /**
+     * Returns all of the UI's tile sprite color modifications.
+     * Color mods are used for things like highlighting what tile layer the 
+     * user's mouse is hovering, or what they have selected.
+     */
+    std::vector<TileSpriteColorModInfo> getTileSpriteColorMods() const override;
 
     /**
      * Calls AUI::Screen::tick() on the current screen.

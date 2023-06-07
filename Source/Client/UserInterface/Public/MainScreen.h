@@ -2,10 +2,13 @@
 
 #include "AUI/Screen.h"
 #include "Camera.h"
+#include "PhantomTileSpriteInfo.h"
+#include "TileSpriteColorModInfo.h"
 #include "BuildPanel.h"
 #include "BuildOverlay.h"
 #include "MainOverlay.h"
 #include "TileExtent.h"
+#include <span>
 
 namespace AM
 {
@@ -26,13 +29,25 @@ public:
     MainScreen(WorldSinks& inWorldSinks, EventDispatcher& inUiEventDispatcher,
                SpriteData& inSpriteData);
 
+    virtual ~MainScreen() = default;
+
     /**
      * Sets the camera to use when rendering.
      *
-     * Called by the renderer to give us the lerped camera for the current
-     * frame.
+     * Called during the render pass to give us the lerped camera for the 
+     * current frame.
      */
     void setCamera(const Camera& inCamera);
+
+    /**
+     * See UserInterfaceExtension.h
+     */
+    std::vector<PhantomTileSpriteInfo> getPhantomTileSprites() const;
+
+    /**
+     * See UserInterfaceExtension.h
+     */
+    std::vector<TileSpriteColorModInfo> getTileSpriteColorMods() const;
 
     //-------------------------------------------------------------------------
     // Screen class overrides

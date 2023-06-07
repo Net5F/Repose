@@ -4,6 +4,11 @@ target_sources(Client
         Private/TitleScreen.cpp
         Private/UserInterfaceExtension.cpp
         Private/WorldSinks.cpp
+        Private/BuildTools/BuildTool.cpp
+        Private/BuildTools/FloorCoveringTool.cpp
+        Private/BuildTools/FloorTool.cpp
+        Private/BuildTools/ObjectTool.cpp
+        Private/BuildTools/WallTool.cpp
         Private/Widgets/MainButton.cpp
         Private/Widgets/MainThumbnail.cpp
         Private/Widgets/TitleButton.cpp
@@ -17,6 +22,11 @@ target_sources(Client
         Public/TitleScreen.h
         Public/UserInterfaceExtension.h
         Public/WorldSinks.h
+        Public/BuildTools/BuildTool.h
+        Public/BuildTools/FloorCoveringTool.h
+        Public/BuildTools/FloorTool.h
+        Public/BuildTools/ObjectTool.h
+        Public/BuildTools/WallTool.h
         Public/Widgets/MainButton.h
         Public/Widgets/MainThumbnail.h
         Public/Widgets/TitleButton.h
@@ -32,6 +42,7 @@ target_include_directories(Client
         ${CMAKE_CURRENT_SOURCE_DIR}/Private
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Public
+        ${CMAKE_CURRENT_SOURCE_DIR}/Public/BuildTools
         ${CMAKE_CURRENT_SOURCE_DIR}/Public/Widgets
         ${CMAKE_CURRENT_SOURCE_DIR}/Public/Windows
 )

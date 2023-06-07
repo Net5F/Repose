@@ -47,6 +47,30 @@ void MainScreen::setCamera(const Camera& inCamera)
     buildOverlay.setCamera(inCamera);
 }
 
+std::vector<PhantomTileSpriteInfo> MainScreen::getPhantomTileSprites() const
+{
+    // Fill a vector with the phantoms from each relevent UI object.
+    std::vector<PhantomTileSpriteInfo> phantoms{};
+
+    std::span<const PhantomTileSpriteInfo> overlayPhantoms{
+        buildOverlay.getPhantomTileSprites()};
+    phantoms.assign(overlayPhantoms.begin(), overlayPhantoms.end());
+
+    return phantoms;
+}
+
+std::vector<TileSpriteColorModInfo> MainScreen::getTileSpriteColorMods() const
+{
+    // Fill a vector with the color mods from each relevent UI object.
+    std::vector<TileSpriteColorModInfo> colorMods{};
+
+    std::span<const TileSpriteColorModInfo> overlayColorMods{
+        buildOverlay.getTileSpriteColorMods()};
+    colorMods.assign(overlayColorMods.begin(), overlayColorMods.end());
+
+    return colorMods;
+}
+
 bool MainScreen::onKeyDown(SDL_Keycode keyCode)
 {
     // If the 'b' key is pressed and the player is in the build area, toggle
