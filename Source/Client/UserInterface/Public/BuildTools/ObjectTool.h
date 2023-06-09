@@ -21,17 +21,20 @@ public:
 
     void onMouseDown(AUI::MouseButtonType buttonType,
                      const SDL_Point& cursorPosition) override;
-    void onMouseUp(AUI::MouseButtonType buttonType,
-                   const SDL_Point& cursorPosition) override;
     void onMouseDoubleClick(AUI::MouseButtonType buttonType,
                             const SDL_Point& cursorPosition) override;
     void onMouseWheel(int amountScrolled) override;
     void onMouseMove(const SDL_Point& cursorPosition) override;
-    void onMouseLeave() override;
 
 private:
     /** The currently selected sprite set. */
     const ObjectSpriteSet* selectedSpriteSet;
+
+    /** The indices within selectedSpriteSet->sprites that contain a sprite. */
+    std::vector<std::size_t> validSpriteIndices;
+
+    /** The index within validSpriteIndices that is currently selected. */
+    std::size_t selectedSpriteIndex;
 };
 
 } // End namespace Client

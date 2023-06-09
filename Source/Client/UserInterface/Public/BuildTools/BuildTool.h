@@ -75,19 +75,15 @@ public:
     //       these functions. We do it this way because it wouldn't make sense 
     //       for a build tool to be a widget that gets clicked.
     virtual void onMouseDown(AUI::MouseButtonType buttonType,
-                             const SDL_Point& cursorPosition)
-        = 0;
+                             const SDL_Point& cursorPosition);
     virtual void onMouseUp(AUI::MouseButtonType buttonType,
-                           const SDL_Point& cursorPosition)
-        = 0;
+                           const SDL_Point& cursorPosition);
     virtual void onMouseDoubleClick(AUI::MouseButtonType buttonType,
-                                    const SDL_Point& cursorPosition)
-        = 0;
-    virtual void onMouseWheel(int amountScrolled) = 0;
-    virtual void onMouseMove(const SDL_Point& cursorPosition)
-        = 0;
+                                    const SDL_Point& cursorPosition);
+    virtual void onMouseWheel(int amountScrolled);
+    virtual void onMouseMove(const SDL_Point& cursorPosition);
     // Note: This is called when the cursor leaves the BuildOverlay.
-    virtual void onMouseLeave() = 0;
+    virtual void onMouseLeave();
 
 protected:
     /** Used for sending tile update requests to the sim, which forwards them 
@@ -100,6 +96,14 @@ protected:
     /** The world tile map's extent. Used to make sure we aren't rendering or
         requesting changes to tiles that are out of bounds. */
     TileExtent mapTileExtent;
+
+    /** The tile that the mouse is hovering over. */
+    TilePosition mouseTilePosition;
+
+    /** If true, the mouse is inside the world and this tool should be active. 
+        If false, this tool should not render anything (including phantoms and 
+        color mods) or respond to inputs. */
+    bool isActive;
 
     /** Holds any phantom tile sprites that this build tool wants to render.
         These sprites get passed down to the Renderer, which then correctly 

@@ -1,6 +1,7 @@
 #include "FloorTool.h"
-#include "ScreenPoint.h"
-#include "Transforms.h"
+#include "TileAddLayer.h"
+#include "QueuedEvents.h"
+#include "Ignore.h"
 
 namespace AM
 {
@@ -22,11 +23,24 @@ void FloorTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
 void FloorTool::onMouseDown(AUI::MouseButtonType buttonType,
                             const SDL_Point& cursorPosition)
 {
+    // Note: mouseTilePosition is set in onMouseMove().
+    ignore(cursorPosition);
+
+    // If this tool is active, the user left clicked, and we have a selected 
+    // sprite.
+    if (isActive && (buttonType == AUI::MouseButtonType::Left)
+        && (selectedSpriteSet != nullptr)) {
+        uiEventDispatcher.emplace<TileAddLayer>(
+            mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Floor,
+            selectedSpriteSet->numericID, 0);
+    }
 }
 
 void FloorTool::onMouseUp(AUI::MouseButtonType buttonType,
                           const SDL_Point& cursorPosition)
 {
+    // TODO: Add support for click-and-drag to set an extent instead of a 
+    //       single tile.
 }
 
 void FloorTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
@@ -36,31 +50,21 @@ void FloorTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
     onMouseDown(buttonType, cursorPosition);
 }
 
-void FloorTool::onMouseWheel(int amountScrolled)
-{
-}
-
-// TODO: Commit
 void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
 {
-    // Get the tile coordinate that the mouse is hovering over.
-    ScreenPoint screenPoint{static_cast<float>(cursorPosition.x),
-                            static_cast<float>(cursorPosition.y)};
-    TilePosition tilePosition{Transforms::screenToTile(screenPoint, camera)};
+    // Call the parent function to update mouseTilePosition and isActive.
+    BuildTool::onMouseMove(cursorPosition);
 
-    // If we have a selected sprite and the mouse is inside the world bounds.
-    if ((selectedSpriteSet != nullptr)
-        && mapTileExtent.containsPosition(tilePosition)) {
+    // Clear any old phantoms.
+    phantomTileSprites.clear();
+
+    // If this tool is active and we have a selected sprite.
+    if (isActive && (selectedSpriteSet != nullptr)) {
         // Set the selected sprite as a phantom at the new location.
-        phantomTileSprites.clear();
         phantomTileSprites.emplace_back(
-            tilePosition.x, tilePosition.y, TileLayer::Type::Floor,
+            mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Floor,
             Wall::Type::None, &(selectedSpriteSet->sprite));
     }
-}
-
-void FloorTool::onMouseLeave()
-{
 }
 
 } // End namespace Client

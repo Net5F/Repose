@@ -25,9 +25,7 @@ public:
                    const SDL_Point& cursorPosition) override;
     void onMouseDoubleClick(AUI::MouseButtonType buttonType,
                             const SDL_Point& cursorPosition) override;
-    void onMouseWheel(int amountScrolled) override;
     void onMouseMove(const SDL_Point& cursorPosition) override;
-    void onMouseLeave() override;
 
 private:
     /** The currently selected sprite set. */

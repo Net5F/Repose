@@ -1499,7 +1499,7 @@
             "displayName": "Flowers0",
             "stringID": "flowers0",
             "numericID": 0,
-            "spriteIDs": [11, -1, -1, -1, -1, -1, -1, -1]
+            "spriteIDs": [11, -1, 10, 9, -1, -1, 8, -1]
         }
     ],
     "walls": [
