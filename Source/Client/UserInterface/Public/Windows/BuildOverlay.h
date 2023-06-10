@@ -18,8 +18,9 @@ struct Sprite;
 
 namespace Client
 {
-class SpriteData;
+class World;
 class WorldSinks;
+class SpriteData;
 
 /**
  * The build mode overlay on the main screen. Allows the user to place tiles
@@ -37,7 +38,7 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    BuildOverlay(SpriteData& inSpriteData, WorldSinks& inWorldSinks,
+    BuildOverlay(const World& inWorld, WorldSinks& inWorldSinks,
                  EventDispatcher& inUiEventDispatcher);
 
     virtual ~BuildOverlay() = default;
@@ -103,8 +104,8 @@ private:
      */
     void onTileMapExtentChanged(TileExtent inTileExtent);
 
-    /** Used to get data for rendering tile sprites */
-    SpriteData& spriteData;
+    /** We hold onto this so we can pass it to the current tool. */
+    const World& world;
 
     /** We hold onto this so we can pass it to the current tool. */
     EventDispatcher& uiEventDispatcher;

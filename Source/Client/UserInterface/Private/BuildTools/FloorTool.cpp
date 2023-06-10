@@ -7,8 +7,8 @@ namespace AM
 {
 namespace Client 
 {
-FloorTool::FloorTool(EventDispatcher& inUiEventDispatcher)
-: BuildTool(inUiEventDispatcher)
+FloorTool::FloorTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
+: BuildTool(inWorld, inUiEventDispatcher)
 , selectedSpriteSet{nullptr}
 {
 }
@@ -30,6 +30,7 @@ void FloorTool::onMouseDown(AUI::MouseButtonType buttonType,
     // sprite.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
+        // Tell the sim to add the layer.
         uiEventDispatcher.emplace<TileAddLayer>(
             mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Floor,
             selectedSpriteSet->numericID, 0);

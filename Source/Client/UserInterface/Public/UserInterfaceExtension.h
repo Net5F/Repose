@@ -79,12 +79,6 @@ public:
     bool handleOSEvent(SDL_Event& event) override;
 
 private:
-    /**
-     * Cycles the tile under the given mouse position to the next sprite in
-     * terrainSprites.
-     */
-    void cycleTile(int mouseX, int mouseY);
-
     /** Signals World state changes from the Simulation to this UI. */
     WorldSinks worldSinks;
 

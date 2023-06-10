@@ -18,6 +18,7 @@ struct SpriteSet;
 
 namespace Client
 {
+class World;
 
 /**
  * Base class for build mode tools that the user can use to modify the world.
@@ -40,7 +41,7 @@ public:
     //       something like a DisplayInfo struct with a getter that lets the 
     //       tool tell the overlay to render things.
 
-    BuildTool(EventDispatcher& inUiEventDispatcher);
+    BuildTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
 
     /**
      * Returns any phantom tile sprites that this build tool wants to render.
@@ -86,6 +87,10 @@ public:
     virtual void onMouseLeave();
 
 protected:
+    /** Used for getting the world's tile map state so this tool can make 
+        decisions about what sprites need to be used. */
+    const World& world;
+
     /** Used for sending tile update requests to the sim, which forwards them 
         to the server. */
     EventDispatcher& uiEventDispatcher;

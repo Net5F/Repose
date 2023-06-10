@@ -11,13 +11,13 @@ namespace Client
 {
 
 /**
- * The build mode tool used for setting and clearing floor covering tile 
+ * The build mode tool used for adding and removing floor covering tile 
  * layers.
  */
 class FloorCoveringTool : public BuildTool
 {
 public:
-    FloorCoveringTool(EventDispatcher& inUiEventDispatcher);
+    FloorCoveringTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
 
     void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
 

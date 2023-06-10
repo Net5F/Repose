@@ -17,6 +17,7 @@ struct Position;
 
 namespace Client
 {
+class World;
 class WorldSinks;
 class SpriteData;
 
@@ -26,8 +27,8 @@ class SpriteData;
 class MainScreen : public AUI::Screen
 {
 public:
-    MainScreen(WorldSinks& inWorldSinks, EventDispatcher& inUiEventDispatcher,
-               SpriteData& inSpriteData);
+    MainScreen(const World& inWorld, WorldSinks& inWorldSinks, 
+               EventDispatcher& inUiEventDispatcher, SpriteData& inSpriteData);
 
     virtual ~MainScreen() = default;
 

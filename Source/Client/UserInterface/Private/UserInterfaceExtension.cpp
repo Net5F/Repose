@@ -1,5 +1,6 @@
 #include "UserInterfaceExtension.h"
 #include "Config.h"
+#include "World.h"
 #include "WorldSinks.h"
 #include "AssetCache.h"
 #include "SpriteData.h"
@@ -22,7 +23,7 @@ UserInterfaceExtension::UserInterfaceExtension(UserInterfaceExDependencies deps)
 , auiInitializer{deps.sdlRenderer,
                  {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT}}
 , titleScreen{*this, worldSinks, deps.uiEventDispatcher}
-, mainScreen{worldSinks, deps.uiEventDispatcher, deps.spriteData}
+, mainScreen{deps.world, worldSinks, deps.uiEventDispatcher, deps.spriteData}
 , currentScreen{&titleScreen}
 {
     ScreenRect windowSize{UserConfig::get().getWindowSize()};

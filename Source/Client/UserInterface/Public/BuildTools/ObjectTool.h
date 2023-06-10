@@ -10,12 +10,12 @@ namespace Client
 {
 
 /**
- *
+ * The build mode tool used for adding and removing object tile layers.
  */
 class ObjectTool : public BuildTool
 {
 public:
-    ObjectTool(EventDispatcher& inUiEventDispatcher);
+    ObjectTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
 
     void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
 

@@ -1,4 +1,5 @@
 #include "BuildTool.h"
+#include "World.h"
 #include "ScreenPoint.h"
 #include "Transforms.h"
 #include "Ignore.h"
@@ -8,8 +9,9 @@ namespace AM
 namespace Client
 {
 
-BuildTool::BuildTool(EventDispatcher& inUiEventDispatcher)
-: uiEventDispatcher{inUiEventDispatcher}
+BuildTool::BuildTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
+: world{inWorld}
+, uiEventDispatcher{inUiEventDispatcher}
 , camera{}
 , mapTileExtent{}
 , mouseTilePosition{}

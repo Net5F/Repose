@@ -1,9 +1,10 @@
 #include "MainScreen.h"
+#include "World.h"
+#include "WorldSinks.h"
 #include "SpriteData.h"
 #include "Paths.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
-#include "WorldSinks.h"
 #include "AUI/Core.h"
 #include "Log.h"
 
@@ -11,13 +12,13 @@ namespace AM
 {
 namespace Client
 {
-MainScreen::MainScreen(WorldSinks& inWorldSinks,
+MainScreen::MainScreen(const World& inWorld, WorldSinks& inWorldSinks,
                        EventDispatcher& inUiEventDispatcher,
                        SpriteData& inSpriteData)
 : AUI::Screen("MainScreen")
 , playerIsInBuildArea{false}
 , mainOverlay{}
-, buildOverlay{inSpriteData, inWorldSinks, inUiEventDispatcher}
+, buildOverlay{inWorld, inWorldSinks, inUiEventDispatcher}
 , buildPanel{inSpriteData, buildOverlay}
 {
     // Add our windows so they're included in rendering, etc.

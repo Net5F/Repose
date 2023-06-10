@@ -17,10 +17,10 @@ namespace AM
 {
 namespace Client
 {
-BuildOverlay::BuildOverlay(SpriteData& inSpriteData, WorldSinks& inWorldSinks,
+BuildOverlay::BuildOverlay(const World& inWorld, WorldSinks& inWorldSinks,
                            EventDispatcher& inUiEventDispatcher)
 : AUI::Window({0, 0, 1920, 744}, "BuildOverlay")
-, spriteData{inSpriteData}
+, world{inWorld}
 , uiEventDispatcher{inUiEventDispatcher}
 , selectedSpriteSet{nullptr}
 , currentBuildTool{nullptr}
@@ -47,20 +47,23 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
 {
     switch (toolType) {
         case BuildTool::Type::Floor: {
-            currentBuildTool = std::make_unique<FloorTool>(uiEventDispatcher);
+            currentBuildTool
+                = std::make_unique<FloorTool>(world, uiEventDispatcher);
             break;
         }
         case BuildTool::Type::FloorCovering: {
             currentBuildTool
-                = std::make_unique<FloorCoveringTool>(uiEventDispatcher);
+                = std::make_unique<FloorCoveringTool>(world, uiEventDispatcher);
             break;
         }
         case BuildTool::Type::Wall: {
-            currentBuildTool = std::make_unique<WallTool>(uiEventDispatcher);
+            currentBuildTool
+                = std::make_unique<WallTool>(world, uiEventDispatcher);
             break;
         }
         case BuildTool::Type::Object: {
-            currentBuildTool = std::make_unique<ObjectTool>(uiEventDispatcher);
+            currentBuildTool
+                = std::make_unique<ObjectTool>(world, uiEventDispatcher);
             break;
         }
         default: {
@@ -114,22 +117,8 @@ std::span<const TileSpriteColorModInfo> BuildOverlay::getTileSpriteColorMods() c
 
 void BuildOverlay::render()
 {
-    //if (showTool && (selectedTile != nullptr)) {
-    //    SpriteRenderData renderData{
-    //        spriteData.getRenderData(selectedTile->numericID)};
-    //    SDL_Rect screenExtent{ClientTransforms::tileToScreenExtent(
-    //        cursorTilePosition, renderData, camera)};
-
-    //    // Set the texture's alpha to make the tile semi-transparent.
-    //    SDL_SetTextureAlphaMod(renderData.texture.get(), 150);
-
-    //    // Draw the semi-transparent tile.
-    //    SDL_RenderCopy(AUI::Core::getRenderer(), renderData.texture.get(),
-    //                   &(renderData.textureExtent), &screenExtent);
-
-    //    // Set the texture's alpha back.
-    //    SDL_SetTextureAlphaMod(renderData.texture.get(), 255);
-    //}
+    // TODO: This will be used to render highlight rectangles from the build 
+    //       tool.
 }
 
 AUI::EventResult BuildOverlay::onMouseDown(AUI::MouseButtonType buttonType,

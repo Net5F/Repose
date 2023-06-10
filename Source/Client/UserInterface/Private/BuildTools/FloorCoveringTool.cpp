@@ -9,8 +9,8 @@ namespace AM
 namespace Client
 {
 
-FloorCoveringTool::FloorCoveringTool(EventDispatcher& inUiEventDispatcher)
-: BuildTool(inUiEventDispatcher)
+FloorCoveringTool::FloorCoveringTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
+: BuildTool(inWorld, inUiEventDispatcher)
 , selectedSpriteSet{nullptr}
 , selectedSpriteIndex{0}
 {
@@ -46,6 +46,7 @@ void FloorCoveringTool::onMouseDown(AUI::MouseButtonType buttonType,
     // sprite.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
+        // Tell the sim to add the layer.
         uiEventDispatcher.emplace<TileAddLayer>(
             mouseTilePosition.x, mouseTilePosition.y,
             TileLayer::Type::FloorCovering, selectedSpriteSet->numericID,

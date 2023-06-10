@@ -15,7 +15,7 @@ namespace Client
 class FloorTool : public BuildTool
 {
 public:
-    FloorTool(EventDispatcher& inUiEventDispatcher);
+    FloorTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
 
     void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
 

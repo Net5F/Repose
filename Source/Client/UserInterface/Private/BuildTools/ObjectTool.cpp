@@ -9,8 +9,8 @@ namespace AM
 namespace Client 
 {
 
-ObjectTool::ObjectTool(EventDispatcher& inUiEventDispatcher)
-: BuildTool(inUiEventDispatcher)
+ObjectTool::ObjectTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
+: BuildTool(inWorld, inUiEventDispatcher)
 , selectedSpriteSet{nullptr}
 , selectedSpriteIndex{0}
 {
@@ -46,6 +46,7 @@ void ObjectTool::onMouseDown(AUI::MouseButtonType buttonType,
     // sprite.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
+        // Tell the sim to add the layer.
         uiEventDispatcher.emplace<TileAddLayer>(
             mouseTilePosition.x, mouseTilePosition.y,
             TileLayer::Type::Object, selectedSpriteSet->numericID,
