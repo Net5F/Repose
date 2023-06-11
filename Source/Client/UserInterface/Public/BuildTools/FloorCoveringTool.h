@@ -11,8 +11,7 @@ namespace Client
 {
 
 /**
- * The build mode tool used for adding and removing floor covering tile 
- * layers.
+ * The build mode tool used for adding floor covering tile layers.
  */
 class FloorCoveringTool : public BuildTool
 {

@@ -9,6 +9,7 @@ target_sources(Client
         Private/BuildTools/FloorTool.cpp
         Private/BuildTools/ObjectTool.cpp
         Private/BuildTools/WallTool.cpp
+        Private/BuildTools/RemoveTool.cpp
         Private/Widgets/MainButton.cpp
         Private/Widgets/MainThumbnail.cpp
         Private/Widgets/TitleButton.cpp
@@ -27,6 +28,7 @@ target_sources(Client
         Public/BuildTools/FloorTool.h
         Public/BuildTools/ObjectTool.h
         Public/BuildTools/WallTool.h
+        Public/BuildTools/RemoveTool.h
         Public/Widgets/MainButton.h
         Public/Widgets/MainThumbnail.h
         Public/Widgets/TitleButton.h

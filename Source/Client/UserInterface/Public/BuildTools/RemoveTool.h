@@ -4,20 +4,16 @@
 
 namespace AM
 {
-struct FloorSpriteSet;
-
 namespace Client 
 {
 
 /**
- * The build mode tool used for setting floor tile layers.
+ * The build mode tool used for removing tile layers.
  */
-class FloorTool : public BuildTool
+class RemoveTool : public BuildTool
 {
 public:
-    FloorTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
-
-    void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
+    RemoveTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
 
     void onMouseDown(AUI::MouseButtonType buttonType,
                      const SDL_Point& cursorPosition) override;
@@ -28,8 +24,6 @@ public:
     void onMouseMove(const SDL_Point& cursorPosition) override;
 
 private:
-    /** The currently selected sprite set. */
-    const FloorSpriteSet* selectedSpriteSet;
 };
 
 } // End namespace Client

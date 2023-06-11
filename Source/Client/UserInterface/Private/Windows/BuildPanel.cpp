@@ -70,6 +70,9 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
     toolsLabel.setText("Tools");
 
     /* Build tool buttons. */
+    buildToolButtons[BuildTool::Type::FloorCovering].text.setFont(
+        (Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 18);
+
     buildToolButtons[BuildTool::Type::Floor].setOnPressed([this]() {
         setBuildTool(BuildTool::Type::Floor);
     });
@@ -82,7 +85,9 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
     buildToolButtons[BuildTool::Type::Object].setOnPressed([this]() {
         setBuildTool(BuildTool::Type::Object);
     });
-    // TODO: Add remove tool
+    buildToolButtons[BuildTool::Type::Remove].setOnPressed([this]() {
+        setBuildTool(BuildTool::Type::Remove);
+    });
 
     // Fill the containers with the available sprite sets.
     for (const FloorSpriteSet& spriteSet : spriteData.getAllFloorSpriteSets()) {

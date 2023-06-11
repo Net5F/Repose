@@ -10,7 +10,7 @@ namespace Client
 {
 
 /**
- * The build mode tool used for adding and removing object tile layers.
+ * The build mode tool used for adding object tile layers.
  */
 class ObjectTool : public BuildTool
 {

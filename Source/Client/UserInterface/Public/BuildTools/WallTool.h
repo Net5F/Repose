@@ -10,7 +10,7 @@ namespace Client
 {
 
 /**
- * The build mode tool used for setting and clearing wall tile layers.
+ * The build mode tool used for setting wall tile layers.
  */
 class WallTool : public BuildTool
 {

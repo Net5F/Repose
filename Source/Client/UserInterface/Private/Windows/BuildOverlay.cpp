@@ -5,6 +5,7 @@
 #include "FloorCoveringTool.h"
 #include "WallTool.h"
 #include "ObjectTool.h"
+#include "RemoveTool.h"
 #include "Paths.h"
 #include "Transforms.h"
 #include "ClientTransforms.h"
@@ -64,6 +65,11 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
         case BuildTool::Type::Object: {
             currentBuildTool
                 = std::make_unique<ObjectTool>(world, uiEventDispatcher);
+            break;
+        }
+        case BuildTool::Type::Remove: {
+            currentBuildTool
+                = std::make_unique<RemoveTool>(world, uiEventDispatcher);
             break;
         }
         default: {
