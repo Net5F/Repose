@@ -1,4 +1,6 @@
 #include "BuildOverlay.h"
+#include "WorldSinks.h"
+#include "WorldObjectLocator.h"
 #include "SpriteData.h"
 #include "Sprite.h"
 #include "FloorTool.h"
@@ -9,7 +11,6 @@
 #include "Paths.h"
 #include "Transforms.h"
 #include "ClientTransforms.h"
-#include "WorldSinks.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
 #include "AUI/Core.h"
@@ -19,9 +20,11 @@ namespace AM
 namespace Client
 {
 BuildOverlay::BuildOverlay(const World& inWorld, WorldSinks& inWorldSinks,
+                           const WorldObjectLocator& inWorldObjectLocator,
                            EventDispatcher& inUiEventDispatcher)
 : AUI::Window({0, 0, 1920, 744}, "BuildOverlay")
 , world{inWorld}
+, worldObjectLocator{inWorldObjectLocator}
 , uiEventDispatcher{inUiEventDispatcher}
 , selectedSpriteSet{nullptr}
 , currentBuildTool{nullptr}
@@ -68,8 +71,8 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
             break;
         }
         case BuildTool::Type::Remove: {
-            currentBuildTool
-                = std::make_unique<RemoveTool>(world, uiEventDispatcher);
+            currentBuildTool = std::make_unique<RemoveTool>(
+                world, worldObjectLocator, uiEventDispatcher);
             break;
         }
         default: {
@@ -91,7 +94,7 @@ void BuildOverlay::setCamera(const Camera& inCamera)
     }
 }
 
-std::span<const PhantomTileSpriteInfo> BuildOverlay::getPhantomTileSprites() const
+std::span<const PhantomSpriteInfo> BuildOverlay::getPhantomSprites() const
 {
     if (!isVisible) {
         // If we're not visible, don't show any phantoms.
@@ -99,14 +102,14 @@ std::span<const PhantomTileSpriteInfo> BuildOverlay::getPhantomTileSprites() con
     }
     else if (currentBuildTool != nullptr) {
         // If we're visible and have a build tool selected, show its phantoms.
-        return currentBuildTool->getPhantomTileSprites();
+        return currentBuildTool->getPhantomSprites();
     }
     else {
         return {};
     }
 }
 
-std::span<const TileSpriteColorModInfo> BuildOverlay::getTileSpriteColorMods() const
+std::span<const SpriteColorModInfo> BuildOverlay::getSpriteColorMods() const
 {
     if (!isVisible) {
         // If we're not visible, don't show any phantoms.
@@ -114,7 +117,7 @@ std::span<const TileSpriteColorModInfo> BuildOverlay::getTileSpriteColorMods() c
     }
     else if (currentBuildTool != nullptr) {
         // If we're visible and have a build tool selected, show its color mods.
-        return currentBuildTool->getTileSpriteColorMods();
+        return currentBuildTool->getSpriteColorMods();
     }
     else {
         return {};

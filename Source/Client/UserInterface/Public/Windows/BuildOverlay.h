@@ -5,8 +5,8 @@
 #include "TileLayers.h"
 #include "SpriteSets.h"
 #include "BuildTool.h"
-#include "PhantomTileSpriteInfo.h"
-#include "TileSpriteColorModInfo.h"
+#include "PhantomSpriteInfo.h"
+#include "SpriteColorModInfo.h"
 #include "AUI/Window.h"
 #include <span>
 #include <memory>
@@ -20,6 +20,7 @@ namespace Client
 {
 class World;
 class WorldSinks;
+class WorldObjectLocator;
 class SpriteData;
 
 /**
@@ -39,6 +40,7 @@ public:
     // Public interface
     //-------------------------------------------------------------------------
     BuildOverlay(const World& inWorld, WorldSinks& inWorldSinks,
+                 const WorldObjectLocator& inWorldObjectLocator,
                  EventDispatcher& inUiEventDispatcher);
 
     virtual ~BuildOverlay() = default;
@@ -68,13 +70,13 @@ public:
      * Returns any phantom tile sprites that the current build tool wants to 
      * render.
      */
-    std::span<const PhantomTileSpriteInfo> getPhantomTileSprites() const;
+    std::span<const PhantomSpriteInfo> getPhantomSprites() const;
 
     /**
      * Returns any tile sprite color mods that the current build tool wants to 
      * render.
      */
-    std::span<const TileSpriteColorModInfo> getTileSpriteColorMods() const;
+    std::span<const SpriteColorModInfo> getSpriteColorMods() const;
 
     //-------------------------------------------------------------------------
     // Widget class overrides
@@ -106,6 +108,9 @@ private:
 
     /** We hold onto this so we can pass it to the current tool. */
     const World& world;
+
+    /** We hold onto this so we can pass it to the current tool. */
+    const WorldObjectLocator& worldObjectLocator;
 
     /** We hold onto this so we can pass it to the current tool. */
     EventDispatcher& uiEventDispatcher;

@@ -2,8 +2,8 @@
 
 #include "EmptySpriteID.h"
 #include "TileExtent.h"
-#include "PhantomTileSpriteInfo.h"
-#include "TileSpriteColorModInfo.h"
+#include "PhantomSpriteInfo.h"
+#include "SpriteColorModInfo.h"
 #include "Camera.h"
 #include "AUI/MouseButtonType.h"
 #include <SDL_stdinc.h>
@@ -44,20 +44,20 @@ public:
     BuildTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
 
     /**
-     * Returns any phantom tile sprites that this build tool wants to render.
+     * Returns any phantom sprites that this build tool wants to render.
      */
-    std::span<const PhantomTileSpriteInfo> getPhantomTileSprites() const;
+    std::span<const PhantomSpriteInfo> getPhantomSprites() const;
 
     /**
-     * Returns any tile sprite color modifications that this build tool wants 
-     * to render.
+     * Returns any sprite color modifications that this build tool wants to
+     * render.
      */
-    std::span<const TileSpriteColorModInfo> getTileSpriteColorMods() const;
+    std::span<const SpriteColorModInfo> getSpriteColorMods() const;
 
     /**
      * Used by the BuildPanel to tell us when a new sprite set is selected.
      */
-    virtual void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) = 0;
+    virtual void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet);
 
     /**
      * Sets the camera to use when doing screen -> world calcs.
@@ -110,14 +110,14 @@ protected:
         color mods) or respond to inputs. */
     bool isActive;
 
-    /** Holds any phantom tile sprites that this build tool wants to render.
+    /** Holds any phantom sprites that this build tool wants to render.
         These sprites get passed down to the Renderer, which then correctly 
         sorts and renders them while rendering the sim's world data. */
-    std::vector<PhantomTileSpriteInfo> phantomTileSprites;
+    std::vector<PhantomSpriteInfo> phantomSprites;
 
-    /** Holds any of the simulation's tile layer sprites that this build tool 
-        wants to modify the color or transparency of. */
-    std::vector<TileSpriteColorModInfo> tileSpriteColorMods;
+    /** Holds any of the simulation's sprites that this build tool wants to 
+        modify the color or transparency of. */
+    std::vector<SpriteColorModInfo> spriteColorMods;
 };
 
 } // End namespace Client

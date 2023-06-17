@@ -44,18 +44,18 @@ public:
     void changeScreenTo(ScreenType screenType);
 
     /**
-     * Returns all of the UI's phantom tile sprites.
-     * Phantom tile sprites are added by build mode when the user is trying to 
-     * add or replace a tile layer.
+     * Returns all of the UI's phantom sprites.
+     * Phantom sprites are added by build mode when the user is trying to add 
+     * or replace a tile layer or entity.
      */
-    std::vector<PhantomTileSpriteInfo> getPhantomTileSprites() const override;
+    std::vector<PhantomSpriteInfo> getPhantomSprites() const override;
 
     /**
-     * Returns all of the UI's tile sprite color modifications.
-     * Color mods are used for things like highlighting what tile layer the 
-     * user's mouse is hovering, or what they have selected.
+     * Returns all of the UI's sprite color modifications.
+     * Color mods are used for things like highlighting what tile layer or 
+     * entity the user's mouse is hovering, or what they have selected.
      */
-    std::vector<TileSpriteColorModInfo> getTileSpriteColorMods() const override;
+    std::vector<SpriteColorModInfo> getSpriteColorMods() const override;
 
     /**
      * Calls AUI::Screen::tick() on the current screen.

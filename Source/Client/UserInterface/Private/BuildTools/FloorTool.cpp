@@ -57,14 +57,14 @@ void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
     BuildTool::onMouseMove(cursorPosition);
 
     // Clear any old phantoms.
-    phantomTileSprites.clear();
+    phantomSprites.clear();
 
     // If this tool is active and we have a selected sprite.
     if (isActive && (selectedSpriteSet != nullptr)) {
         // Set the selected sprite as a phantom at the new location.
-        phantomTileSprites.emplace_back(
+        phantomSprites.emplace_back(
             mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Floor,
-            Wall::Type::None, &(selectedSpriteSet->sprite));
+            Wall::Type::None, Position{}, &(selectedSpriteSet->sprite));
     }
 }
 

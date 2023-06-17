@@ -6,6 +6,7 @@ namespace AM
 {
 namespace Client 
 {
+class WorldObjectLocator;
 
 /**
  * The build mode tool used for removing tile layers.
@@ -13,7 +14,9 @@ namespace Client
 class RemoveTool : public BuildTool
 {
 public:
-    RemoveTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
+    RemoveTool(const World& inWorld,
+               const WorldObjectLocator& inWorldObjectLocator,
+               EventDispatcher& inUiEventDispatcher);
 
     void onMouseDown(AUI::MouseButtonType buttonType,
                      const SDL_Point& cursorPosition) override;
@@ -24,6 +27,9 @@ public:
     void onMouseMove(const SDL_Point& cursorPosition) override;
 
 private:
+    /** Used for finding tile layers or entities that the mouse is 
+        hovering over or clicking. */
+    const WorldObjectLocator& worldObjectLocator;
 };
 
 } // End namespace Client

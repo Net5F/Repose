@@ -164,7 +164,9 @@ void BuildPanel::setBuildTool(BuildTool::Type toolType)
     for (AUI::VerticalGridContainer& container : tileSpriteSetContainers) {
         container.setIsVisible(false);
     }
-    tileSpriteSetContainers[toolType].setIsVisible(true);
+    if (toolType != BuildTool::Type::Remove) {
+        tileSpriteSetContainers[toolType].setIsVisible(true);
+    }
 }
 
 } // End namespace Client

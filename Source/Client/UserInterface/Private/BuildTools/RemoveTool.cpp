@@ -1,4 +1,5 @@
 #include "RemoveTool.h"
+#include "WorldObjectLocator.h"
 #include "TileAddLayer.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
@@ -7,8 +8,26 @@ namespace AM
 {
 namespace Client 
 {
-RemoveTool::RemoveTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
+struct WorldObjectVisitor
+{
+    void operator()(std::monostate) const { LOG_INFO("Monostate"); }
+
+    void operator()(const TileLayerID& layerID) const
+    {
+        LOG_INFO("Layer type: %u", layerID.type);
+    }
+
+    void operator()(entt::entity entity) const
+    {
+        LOG_INFO("Entity ID: %u", entity);
+    }
+};
+
+RemoveTool::RemoveTool(const World& inWorld,
+                       const WorldObjectLocator& inWorldObjectLocator,
+                       EventDispatcher& inUiEventDispatcher)
 : BuildTool(inWorld, inUiEventDispatcher)
+, worldObjectLocator{inWorldObjectLocator}
 {
 }
 
@@ -18,9 +37,11 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
     // Note: mouseTilePosition is set in onMouseMove().
     ignore(cursorPosition);
 
-    // If this tool is active, the user left clicked, and we have a selected 
-    // sprite.
+    // If this tool is active and the user left clicked.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)) {
+        WorldObjectIDVariant objectID{
+            worldObjectLocator.getObjectUnderPoint(cursorPosition)};
+        std::visit(WorldObjectVisitor{}, objectID);
     }
 }
 
@@ -45,6 +66,15 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
 
     // If this tool is active.
     if (isActive) {
+        // Check if the mouse is over an object.
+        SDL_Point offsetScreenPosition{cursorPosition};
+        offsetScreenPosition.x += static_cast<int>(camera.extent.x);
+        offsetScreenPosition.y += static_cast<int>(camera.extent.y);
+
+        WorldObjectIDVariant hitObject{
+            worldObjectLocator.getObjectUnderPoint(offsetScreenPosition)};
+
+
     }
 }
 

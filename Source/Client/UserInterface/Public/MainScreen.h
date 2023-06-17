@@ -2,8 +2,8 @@
 
 #include "AUI/Screen.h"
 #include "Camera.h"
-#include "PhantomTileSpriteInfo.h"
-#include "TileSpriteColorModInfo.h"
+#include "PhantomSpriteInfo.h"
+#include "SpriteColorModInfo.h"
 #include "BuildPanel.h"
 #include "BuildOverlay.h"
 #include "MainOverlay.h"
@@ -19,6 +19,7 @@ namespace Client
 {
 class World;
 class WorldSinks;
+class WorldObjectLocator;
 class SpriteData;
 
 /**
@@ -27,7 +28,8 @@ class SpriteData;
 class MainScreen : public AUI::Screen
 {
 public:
-    MainScreen(const World& inWorld, WorldSinks& inWorldSinks, 
+    MainScreen(const World& inWorld, WorldSinks& inWorldSinks,
+               const WorldObjectLocator& inWorldObjectLocator,
                EventDispatcher& inUiEventDispatcher, SpriteData& inSpriteData);
 
     virtual ~MainScreen() = default;
@@ -43,12 +45,12 @@ public:
     /**
      * See UserInterfaceExtension.h
      */
-    std::vector<PhantomTileSpriteInfo> getPhantomTileSprites() const;
+    std::vector<PhantomSpriteInfo> getPhantomSprites() const;
 
     /**
      * See UserInterfaceExtension.h
      */
-    std::vector<TileSpriteColorModInfo> getTileSpriteColorMods() const;
+    std::vector<SpriteColorModInfo> getSpriteColorMods() const;
 
     //-------------------------------------------------------------------------
     // Screen class overrides

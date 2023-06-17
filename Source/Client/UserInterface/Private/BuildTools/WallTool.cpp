@@ -1,7 +1,6 @@
 #include "WallTool.h"
 #include "World.h"
 #include "TileAddLayer.h"
-#include "ScreenPoint.h"
 #include "Transforms.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
@@ -37,7 +36,7 @@ void WallTool::onMouseDown(AUI::MouseButtonType buttonType,
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
         // Iterate the phantom tiles and tell the sim to add them for real.
-        for (const auto& phantomInfo : phantomTileSprites) {
+        for (const auto& phantomInfo : phantomSprites) {
             // Skip NorthWest gap fills since the tile map will auto-add them.
             if (phantomInfo.wallType == Wall::Type::NorthWestGapFill) {
                 continue;
@@ -76,7 +75,7 @@ void WallTool::onMouseMove(const SDL_Point& cursorPosition)
     BuildTool::onMouseMove(cursorPosition);
 
     // Clear any old phantoms.
-    phantomTileSprites.clear();
+    phantomSprites.clear();
 
     // If this tool is active and we have a selected sprite.
     if (isActive && (selectedSpriteSet != nullptr)) {
@@ -89,8 +88,8 @@ void WallTool::addPhantomWalls(const SDL_Point& cursorPosition)
 {
     // Calculate the mouse's position, relative to the top left of the tile 
     // that it's on.
-    ScreenPoint screenPoint{static_cast<float>(cursorPosition.x),
-                            static_cast<float>(cursorPosition.y)};
+    SDL_FPoint screenPoint{static_cast<float>(cursorPosition.x),
+                           static_cast<float>(cursorPosition.y)};
     TilePosition tilePosition{Transforms::screenToTile(screenPoint, camera)};
     Position tileTopLeft{
         static_cast<float>(tilePosition.x * SharedConfig::TILE_WORLD_WIDTH),
@@ -185,9 +184,9 @@ void WallTool::addWestWallPhantom(int tileX, int tileY)
 
 void WallTool::pushPhantomWall(int tileX, int tileY, Wall::Type wallType)
 {
-    phantomTileSprites.emplace_back(
-        tileX, tileY, TileLayer::Type::Wall, wallType,
-        &(selectedSpriteSet->sprites[wallType].get()));
+    phantomSprites.emplace_back(tileX, tileY, TileLayer::Type::Wall, wallType,
+                                Position{},
+                                &(selectedSpriteSet->sprites[wallType].get()));
 }
 
 } // End namespace Client

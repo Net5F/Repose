@@ -1,6 +1,5 @@
 #include "BuildTool.h"
 #include "World.h"
-#include "ScreenPoint.h"
 #include "Transforms.h"
 #include "Ignore.h"
 
@@ -16,19 +15,24 @@ BuildTool::BuildTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
 , mapTileExtent{}
 , mouseTilePosition{}
 , isActive{false}
-, phantomTileSprites{}
-, tileSpriteColorMods{}
+, phantomSprites{}
+, spriteColorMods{}
 {
 }
 
-std::span<const PhantomTileSpriteInfo> BuildTool::getPhantomTileSprites() const
+std::span<const PhantomSpriteInfo> BuildTool::getPhantomSprites() const
 {
-    return phantomTileSprites;
+    return phantomSprites;
 }
 
-std::span<const TileSpriteColorModInfo> BuildTool::getTileSpriteColorMods() const
+std::span<const SpriteColorModInfo> BuildTool::getSpriteColorMods() const
 {
-    return tileSpriteColorMods;
+    return spriteColorMods;
+}
+
+void BuildTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
+{
+    ignore(inSelectedSpriteSet);
 }
 
 void BuildTool::setCamera(const Camera& inCamera)
@@ -70,8 +74,8 @@ void BuildTool::onMouseWheel(int amountScrolled)
 void BuildTool::onMouseMove(const SDL_Point& cursorPosition)
 {
     // Get the tile coordinate that the mouse is hovering over.
-    ScreenPoint screenPoint{static_cast<float>(cursorPosition.x),
-                            static_cast<float>(cursorPosition.y)};
+    SDL_FPoint screenPoint{static_cast<float>(cursorPosition.x),
+                           static_cast<float>(cursorPosition.y)};
     TilePosition newPosition{Transforms::screenToTile(screenPoint, camera)};
 
     // If the mouse is within the world bounds, save the new tile position.
@@ -88,7 +92,8 @@ void BuildTool::onMouseMove(const SDL_Point& cursorPosition)
 void BuildTool::onMouseLeave()
 {
     isActive = false;
-    phantomTileSprites.clear();
+    phantomSprites.clear();
+    spriteColorMods.clear();
 }
 
 } // End namespace Client

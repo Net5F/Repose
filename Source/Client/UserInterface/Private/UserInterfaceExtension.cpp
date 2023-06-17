@@ -23,12 +23,12 @@ UserInterfaceExtension::UserInterfaceExtension(UserInterfaceExDependencies deps)
 , auiInitializer{deps.sdlRenderer,
                  {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT}}
 , titleScreen{*this, worldSinks, deps.uiEventDispatcher}
-, mainScreen{deps.world, worldSinks, deps.uiEventDispatcher, deps.spriteData}
+, mainScreen{deps.world, worldSinks, deps.worldObjectLocator,
+             deps.uiEventDispatcher, deps.spriteData}
 , currentScreen{&titleScreen}
 {
-    ScreenRect windowSize{UserConfig::get().getWindowSize()};
-    AUI::Core::setActualScreenSize({static_cast<int>(windowSize.width),
-                                    static_cast<int>(windowSize.height)});
+    SDL_Rect windowSize{UserConfig::get().getWindowSize()};
+    AUI::Core::setActualScreenSize({windowSize.w, windowSize.h});
 }
 
 void UserInterfaceExtension::changeScreenTo(ScreenType screenType)
@@ -49,22 +49,21 @@ void UserInterfaceExtension::changeScreenTo(ScreenType screenType)
     }
 }
 
-std::vector<PhantomTileSpriteInfo>
-    UserInterfaceExtension::getPhantomTileSprites() const
+std::vector<PhantomSpriteInfo> UserInterfaceExtension::getPhantomSprites() const
 {
     if (currentScreen == &mainScreen) {
-        return mainScreen.getPhantomTileSprites();
+        return mainScreen.getPhantomSprites();
     }
     else {
         return {};
     }
 }
 
-std::vector<TileSpriteColorModInfo>
-UserInterfaceExtension::getTileSpriteColorMods() const
+std::vector<SpriteColorModInfo>
+    UserInterfaceExtension::getSpriteColorMods() const
 {
     if (currentScreen == &mainScreen) {
-        return mainScreen.getTileSpriteColorMods();
+        return mainScreen.getSpriteColorMods();
     }
     else {
         return {};

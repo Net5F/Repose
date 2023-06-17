@@ -73,10 +73,10 @@ void ObjectTool::onMouseWheel(int amountScrolled)
         = (selectedSpriteIndex + amountScrolled) % validSpriteIndices.size();
 
     // Set the newly selected sprite as a phantom at the current location.
-    phantomTileSprites.clear();
-    phantomTileSprites.emplace_back(
-        mouseTilePosition.x, mouseTilePosition.y,
-        TileLayer::Type::Object, Wall::Type::None,
+    phantomSprites.clear();
+    phantomSprites.emplace_back(
+        mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Object,
+        Wall::Type::None, Position{},
         selectedSpriteSet->sprites[validSpriteIndices[selectedSpriteIndex]]);
 }
 
@@ -86,14 +86,14 @@ void ObjectTool::onMouseMove(const SDL_Point& cursorPosition)
     BuildTool::onMouseMove(cursorPosition);
 
     // Clear any old phantoms.
-    phantomTileSprites.clear();
+    phantomSprites.clear();
 
     // If this tool is active and we have a selected sprite.
     if (isActive && (selectedSpriteSet != nullptr)) {
         // Set the selected sprite as a phantom at the new location.
-        phantomTileSprites.emplace_back(
-            mouseTilePosition.x, mouseTilePosition.y,
-            TileLayer::Type::Object, Wall::Type::None,
+        phantomSprites.emplace_back(
+            mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Object,
+            Wall::Type::None, Position{},
             selectedSpriteSet
                 ->sprites[validSpriteIndices[selectedSpriteIndex]]);
     }

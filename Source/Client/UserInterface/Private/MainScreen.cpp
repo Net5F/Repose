@@ -1,6 +1,7 @@
 #include "MainScreen.h"
 #include "World.h"
 #include "WorldSinks.h"
+#include "WorldObjectLocator.h"
 #include "SpriteData.h"
 #include "Paths.h"
 #include "BuildModeDefs.h"
@@ -13,12 +14,13 @@ namespace AM
 namespace Client
 {
 MainScreen::MainScreen(const World& inWorld, WorldSinks& inWorldSinks,
+                       const WorldObjectLocator& inWorldObjectLocator,
                        EventDispatcher& inUiEventDispatcher,
                        SpriteData& inSpriteData)
 : AUI::Screen("MainScreen")
 , playerIsInBuildArea{false}
 , mainOverlay{}
-, buildOverlay{inWorld, inWorldSinks, inUiEventDispatcher}
+, buildOverlay{inWorld, inWorldSinks, inWorldObjectLocator, inUiEventDispatcher}
 , buildPanel{inSpriteData, buildOverlay}
 {
     // Add our windows so they're included in rendering, etc.
@@ -48,25 +50,25 @@ void MainScreen::setCamera(const Camera& inCamera)
     buildOverlay.setCamera(inCamera);
 }
 
-std::vector<PhantomTileSpriteInfo> MainScreen::getPhantomTileSprites() const
+std::vector<PhantomSpriteInfo> MainScreen::getPhantomSprites() const
 {
     // Fill a vector with the phantoms from each relevent UI object.
-    std::vector<PhantomTileSpriteInfo> phantoms{};
+    std::vector<PhantomSpriteInfo> phantoms{};
 
-    std::span<const PhantomTileSpriteInfo> overlayPhantoms{
-        buildOverlay.getPhantomTileSprites()};
+    std::span<const PhantomSpriteInfo> overlayPhantoms{
+        buildOverlay.getPhantomSprites()};
     phantoms.assign(overlayPhantoms.begin(), overlayPhantoms.end());
 
     return phantoms;
 }
 
-std::vector<TileSpriteColorModInfo> MainScreen::getTileSpriteColorMods() const
+std::vector<SpriteColorModInfo> MainScreen::getSpriteColorMods() const
 {
     // Fill a vector with the color mods from each relevent UI object.
-    std::vector<TileSpriteColorModInfo> colorMods{};
+    std::vector<SpriteColorModInfo> colorMods{};
 
-    std::span<const TileSpriteColorModInfo> overlayColorMods{
-        buildOverlay.getTileSpriteColorMods()};
+    std::span<const SpriteColorModInfo> overlayColorMods{
+        buildOverlay.getSpriteColorMods()};
     colorMods.assign(overlayColorMods.begin(), overlayColorMods.end());
 
     return colorMods;
