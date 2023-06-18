@@ -5,7 +5,7 @@
             "sprites": [
                 {
                     "displayName": "Floor0",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -26,7 +26,7 @@
                 },
                 {
                     "displayName": "Floor1",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -47,7 +47,7 @@
                 },
                 {
                     "displayName": "Floor2",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -68,7 +68,7 @@
                 },
                 {
                     "displayName": "Floor3",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -89,7 +89,7 @@
                 },
                 {
                     "displayName": "Floor4",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -110,7 +110,7 @@
                 },
                 {
                     "displayName": "Floor5",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -131,7 +131,7 @@
                 },
                 {
                     "displayName": "Floor6",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -152,7 +152,7 @@
                 },
                 {
                     "displayName": "Floor7",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -178,7 +178,7 @@
             "sprites": [
                 {
                     "displayName": "Grass0",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -199,7 +199,7 @@
                 },
                 {
                     "displayName": "Grass1",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -220,7 +220,7 @@
                 },
                 {
                     "displayName": "Grass2",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -241,7 +241,7 @@
                 },
                 {
                     "displayName": "Grass3",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -262,7 +262,7 @@
                 },
                 {
                     "displayName": "Grass4",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -283,7 +283,7 @@
                 },
                 {
                     "displayName": "Grass_West1",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.099999904632568,
                         "maxY": 32.0,
@@ -304,7 +304,7 @@
                 },
                 {
                     "displayName": "Grass_North1",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.099999904632568,
@@ -325,7 +325,7 @@
                 },
                 {
                     "displayName": "Grass_NW1",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.099999904632568,
                         "maxY": 7.099999904632568,
@@ -346,7 +346,7 @@
                 },
                 {
                     "displayName": "Grass_NW2",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.099999904632568,
                         "maxY": 7.099999904632568,
@@ -367,7 +367,7 @@
                 },
                 {
                     "displayName": "Grass_North2",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.099999904632568,
@@ -388,7 +388,7 @@
                 },
                 {
                     "displayName": "Grass_West2",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.099999904632568,
                         "maxY": 32.0,
@@ -409,7 +409,7 @@
                 },
                 {
                     "displayName": "Sunflower_0",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 18.25,
                         "maxY": 18.25,
@@ -430,7 +430,7 @@
                 },
                 {
                     "displayName": "Sunflower_1",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 18.25,
                         "maxY": 18.25,
@@ -451,7 +451,7 @@
                 },
                 {
                     "displayName": "Sunflower_2",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 18.25,
                         "maxY": 18.25,
@@ -472,7 +472,7 @@
                 },
                 {
                     "displayName": "Sunflower_3",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 18.25,
                         "maxY": 18.25,
@@ -493,7 +493,7 @@
                 },
                 {
                     "displayName": "Grass15",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -514,7 +514,7 @@
                 },
                 {
                     "displayName": "Grass16",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -535,7 +535,7 @@
                 },
                 {
                     "displayName": "Grass17",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -561,7 +561,7 @@
             "sprites": [
                 {
                     "displayName": "FullFill1",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 32.0,
@@ -582,7 +582,7 @@
                 },
                 {
                     "displayName": "FullFill2",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 32.0,
@@ -603,7 +603,7 @@
                 },
                 {
                     "displayName": "FullFill3",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 32.0,
@@ -624,7 +624,7 @@
                 },
                 {
                     "displayName": "NE_Fill1",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -645,7 +645,7 @@
                 },
                 {
                     "displayName": "NE_Fill2",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -666,7 +666,7 @@
                 },
                 {
                     "displayName": "NE_Fill3",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -687,7 +687,7 @@
                 },
                 {
                     "displayName": "West3",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 32.0,
@@ -708,7 +708,7 @@
                 },
                 {
                     "displayName": "NW_Fill1",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 7.0,
@@ -729,7 +729,7 @@
                 },
                 {
                     "displayName": "NW_Fill2",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 7.0,
@@ -750,7 +750,7 @@
                 },
                 {
                     "displayName": "NW_Fill3",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 7.0,
@@ -771,7 +771,7 @@
                 },
                 {
                     "displayName": "Column",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 7.0,
@@ -792,7 +792,7 @@
                 },
                 {
                     "displayName": "North1",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -813,7 +813,7 @@
                 },
                 {
                     "displayName": "North2",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -834,7 +834,7 @@
                 },
                 {
                     "displayName": "West4",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 32.0,
@@ -855,7 +855,7 @@
                 },
                 {
                     "displayName": "North3",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -876,7 +876,7 @@
                 },
                 {
                     "displayName": "North4",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -897,7 +897,7 @@
                 },
                 {
                     "displayName": "North5",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -918,7 +918,7 @@
                 },
                 {
                     "displayName": "North6",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -939,7 +939,7 @@
                 },
                 {
                     "displayName": "West1",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 32.0,
@@ -960,7 +960,7 @@
                 },
                 {
                     "displayName": "West2",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 32.0,
@@ -981,7 +981,7 @@
                 },
                 {
                     "displayName": "West5",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 32.0,
@@ -1002,7 +1002,7 @@
                 },
                 {
                     "displayName": "West6",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 32.0,
@@ -1023,7 +1023,7 @@
                 },
                 {
                     "displayName": "Wall22",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1044,7 +1044,7 @@
                 },
                 {
                     "displayName": "Wall23",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1065,7 +1065,7 @@
                 },
                 {
                     "displayName": "Wall24",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1086,7 +1086,7 @@
                 },
                 {
                     "displayName": "Wall25",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1107,7 +1107,7 @@
                 },
                 {
                     "displayName": "Wall26",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1128,7 +1128,7 @@
                 },
                 {
                     "displayName": "Wall27",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1154,7 +1154,7 @@
             "sprites": [
                 {
                     "displayName": "Ghost_East",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 16.25,
                         "maxY": 16.75,
@@ -1175,7 +1175,7 @@
                 },
                 {
                     "displayName": "Ghost_North",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 16.25,
                         "maxY": 16.75,
@@ -1196,7 +1196,7 @@
                 },
                 {
                     "displayName": "Ghost_South",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 16.25,
                         "maxY": 16.75,
@@ -1217,7 +1217,7 @@
                 },
                 {
                     "displayName": "Ghost_West",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 16.25,
                         "maxY": 16.75,
@@ -1238,7 +1238,7 @@
                 },
                 {
                     "displayName": "Ghost4",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1259,7 +1259,7 @@
                 },
                 {
                     "displayName": "Ghost5",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1285,7 +1285,7 @@
             "sprites": [
                 {
                     "displayName": "Template_Floor",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1306,7 +1306,7 @@
                 },
                 {
                     "displayName": "Template_FullFill",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 32.0,
@@ -1327,7 +1327,7 @@
                 },
                 {
                     "displayName": "Template_NE_Fill",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -1348,7 +1348,7 @@
                 },
                 {
                     "displayName": "Template_NW_Fill",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 7.0,
@@ -1369,7 +1369,7 @@
                 },
                 {
                     "displayName": "Template_North",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 32.0,
                         "maxY": 7.0,
@@ -1390,7 +1390,7 @@
                 },
                 {
                     "displayName": "Template_West",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 7.0,
                         "maxY": 32.0,
@@ -1411,7 +1411,7 @@
                 },
                 {
                     "displayName": "Template6",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1432,7 +1432,7 @@
                 },
                 {
                     "displayName": "Template7",
-                    "hasBoundingBox": false,
+                    "collisionEnabled": false,
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -1458,7 +1458,7 @@
             "sprites": [
                 {
                     "displayName": "Roberto",
-                    "hasBoundingBox": true,
+                    "collisionEnabled": true,
                     "modelBounds": {
                         "maxX": 19.25,
                         "maxY": 17.75,
