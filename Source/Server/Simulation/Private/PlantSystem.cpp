@@ -1,6 +1,7 @@
 #include "PlantSystem.h"
 #include "World.h"
 #include "SpriteData.h"
+#include "EmptySpriteID.h"
 #include "Log.h"
 #include "AMAssert.h"
 
@@ -151,7 +152,7 @@ int PlantSystem::getPlantSpriteID(Plant& plant)
                 }
                 default: {
                     LOG_INFO("Empty 1");
-                    return spriteData.getSprite("empty").numericID;
+                    return EMPTY_SPRITE_ID;
                 }
             }
             break;
@@ -159,7 +160,7 @@ int PlantSystem::getPlantSpriteID(Plant& plant)
         default: {
             LOG_INFO("Empty 2: %u, %u", static_cast<unsigned>(plant.type),
                      static_cast<unsigned>(plant.lifeStage));
-            return spriteData.getSprite("empty").numericID;
+            return EMPTY_SPRITE_ID;
         }
     }
 }

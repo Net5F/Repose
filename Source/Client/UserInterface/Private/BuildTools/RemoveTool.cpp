@@ -39,7 +39,7 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
 
     // If this tool is active and the user left clicked.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)) {
-        WorldObjectIDVariant objectID{
+        WorldObjectID objectID{
             worldObjectLocator.getObjectUnderPoint(cursorPosition)};
         std::visit(WorldObjectVisitor{}, objectID);
     }
@@ -71,7 +71,7 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
         offsetScreenPosition.x += static_cast<int>(camera.extent.x);
         offsetScreenPosition.y += static_cast<int>(camera.extent.y);
 
-        WorldObjectIDVariant hitObject{
+        WorldObjectID hitObject{
             worldObjectLocator.getObjectUnderPoint(offsetScreenPosition)};
 
 
