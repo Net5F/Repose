@@ -48,10 +48,11 @@ private:
     void addWestWallPhantom(int tileX, int tileY);
 
     /**
-     * Pushes the given wall sprite type from selectedSpriteSet into the 
-     * phantomTileSprites vector.
+     * Pushes the given sprite into the phantomTileSprites vector as a phantom 
+     * of the given wall type
      */
-    void pushPhantomWall(int tileX, int tileY, Wall::Type wallType);
+    void pushPhantomWall(int tileX, int tileY, Wall::Type wallType,
+                         const WallSpriteSet& wallSpriteSet);
 
     /** The currently selected sprite set. */
     const WallSpriteSet* selectedSpriteSet;

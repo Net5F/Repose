@@ -38,14 +38,29 @@ void WallTool::onMouseDown(AUI::MouseButtonType buttonType,
         // Iterate the phantom tiles and tell the sim to add them for real.
         for (const auto& phantomInfo : phantomSprites) {
             // Skip NorthWest gap fills since the tile map will auto-add them.
-            if (phantomInfo.wallType == Wall::Type::NorthWestGapFill) {
+            if ((phantomInfo.wallType == Wall::Type::NorthWestGapFill)) {
                 continue;
             }
 
-            // Replace NE gap fills with North since the map will handle fills.
+            // We don't want to push NE fills when adding West walls (the map 
+            // will auto-add them). But we do want to push them when adding 
+            // North walls (to tiles with a West wall).
             Wall::Type wallType{phantomInfo.wallType};
-            if (wallType == Wall::Type::NorthEastGapFill) {
-                wallType = Wall::Type::North;
+            if (phantomInfo.wallType == Wall::Type::NorthEastGapFill) {
+                // Check if there's a phantom West wall.
+                auto it = std::find_if(phantomSprites.begin(), phantomSprites.end(),
+                    [](const auto& phantomInfo) {
+                        return phantomInfo.wallType == Wall::Type::West;
+                    });
+                if (it != phantomSprites.end()) {
+                    // Found a West wall, skip this NorthEast phantom.
+                    continue;
+                }
+                else {
+                    // No West wall, push a North (the map will handle turnin 
+                    // it into a NorthEast fill).
+                    wallType = Wall::Type::North;
+                }
             }
 
             uiEventDispatcher.emplace<TileAddLayer>(
@@ -113,15 +128,16 @@ void WallTool::addNorthWallPhantom(int tileX, int tileY)
 {
     const Tile& tile{world.tileMap.getTile(tileX, tileY)};
     const std::array<WallTileLayer, 2>& walls{tile.getWalls()};
-
+            
     // If the tile has a West wall, add a NE gap fill.
     if (walls[0].wallType == Wall::Type::West) {
-        pushPhantomWall(tileX, tileY, Wall::Type::NorthEastGapFill);
+        pushPhantomWall(tileX, tileY, Wall::Type::NorthEastGapFill,
+                        *selectedSpriteSet);
     }
     else {
         // No West wall, add the North wall.
         // Note: If there's a NorthWestGapFill, this will replace it.
-        pushPhantomWall(tileX, tileY, Wall::Type::North);
+        pushPhantomWall(tileX, tileY, Wall::Type::North, *selectedSpriteSet);
     }
 
     // If there's a tile to the NE that we might've formed a corner with.
@@ -139,7 +155,20 @@ void WallTool::addNorthWallPhantom(int tileX, int tileY)
             if ((eastWalls[0].wallType == Wall::Type::None)
                 && (eastWalls[1].wallType == Wall::Type::None)) {
                 // The tile has no walls. Add a NorthWestGapFill.
-                pushPhantomWall(tileX + 1, tileY, Wall::Type::NorthWestGapFill);
+                pushPhantomWall(tileX + 1, tileY, Wall::Type::NorthWestGapFill,
+                                *selectedSpriteSet);
+            }
+            else if (eastWalls[1].wallType == Wall::Type::NorthWestGapFill) {
+                // The East tile has a NW gap fill. If its sprite set no longer 
+                // matches either surrounding wall, make it match the new wall.
+                int gapFillID{eastWalls[1].spriteSet->numericID};
+                int newNorthID{selectedSpriteSet->numericID};
+                int westID{northeastWalls[0].spriteSet->numericID};
+                if ((gapFillID != newNorthID) && (gapFillID != westID)) {
+                    pushPhantomWall(tileX + 1, tileY,
+                                    Wall::Type::NorthWestGapFill,
+                                    *selectedSpriteSet);
+                }
             }
         }
     }
@@ -153,11 +182,12 @@ void WallTool::addWestWallPhantom(int tileX, int tileY)
     // Add the West wall.
     // Note: If this tile already has a West wall or NW gap fill, this will 
     //       replace it.
-    pushPhantomWall(tileX, tileY, Wall::Type::West);
+    pushPhantomWall(tileX, tileY, Wall::Type::West, *selectedSpriteSet);
 
     // If the tile has a North wall, switch it to a NorthEast gap fill.
     if (walls[1].wallType == Wall::Type::North) {
-        pushPhantomWall(tileX, tileY, Wall::Type::NorthEastGapFill);
+        pushPhantomWall(tileX, tileY, Wall::Type::NorthEastGapFill,
+                        *(walls[1].spriteSet));
     }
 
     // If there's a tile to the SW that we might've formed a corner with.
@@ -169,24 +199,38 @@ void WallTool::addWestWallPhantom(int tileX, int tileY)
         // If the SouthWest tile has a North wall or a NE gap fill.
         if ((southwestWalls[1].wallType == Wall::Type::North) ||
             (southwestWalls[1].wallType == Wall::Type::NorthEastGapFill)) {
-            // We formed a corner. Check if the tile to the south has a wall.
+            // We formed a corner. Check if the tile to the South has a wall.
             // Note: We know this tile is valid cause there's a SouthWest tile.
             const Tile& southTile{world.tileMap.getTile(tileX, tileY + 1)};
             const std::array<WallTileLayer, 2>& southWalls{southTile.getWalls()};
             if ((southWalls[0].wallType == Wall::Type::None)
                 && (southWalls[1].wallType == Wall::Type::None)) {
                 // The tile has no walls. Add a NorthWestGapFill.
-                pushPhantomWall(tileX, tileY + 1, Wall::Type::NorthWestGapFill);
+                pushPhantomWall(tileX, tileY + 1, Wall::Type::NorthWestGapFill,
+                                *selectedSpriteSet);
+            }
+            else if (southWalls[1].wallType == Wall::Type::NorthWestGapFill) {
+                // The South tile has a NW gap fill. If its sprite set no longer 
+                // matches either surrounding wall, make it match the new wall.
+                int gapFillID{southWalls[1].spriteSet->numericID};
+                int newWestID{selectedSpriteSet->numericID};
+                int northID{southwestWalls[1].spriteSet->numericID};
+                if ((gapFillID != newWestID) && (gapFillID != northID)) {
+                    pushPhantomWall(tileX, tileY + 1,
+                                    Wall::Type::NorthWestGapFill,
+                                    *selectedSpriteSet);
+                }
             }
         }
     }
 }
 
-void WallTool::pushPhantomWall(int tileX, int tileY, Wall::Type wallType)
+void WallTool::pushPhantomWall(int tileX, int tileY, Wall::Type wallType,
+                               const WallSpriteSet& wallSpriteSet)
 {
     phantomSprites.emplace_back(tileX, tileY, TileLayer::Type::Wall, wallType,
                                 Position{},
-                                &(selectedSpriteSet->sprites[wallType].get()));
+                                &(wallSpriteSet.sprites[wallType].get()));
 }
 
 } // End namespace Client
