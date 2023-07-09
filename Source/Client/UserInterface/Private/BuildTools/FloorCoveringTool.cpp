@@ -68,9 +68,10 @@ void FloorCoveringTool::onMouseWheel(int amountScrolled)
         return;
     }
 
-    // Select the next sprite within the set.
+    // Select the next sprite within the set, accounting for negative values.
     selectedSpriteIndex
-        = (selectedSpriteIndex + amountScrolled) % validSpriteIndices.size();
+        = (selectedSpriteIndex + amountScrolled + validSpriteIndices.size())
+          % validSpriteIndices.size();
 
     // Set the newly selected sprite as a phantom at the current location.
     phantomSprites.clear();

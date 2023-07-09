@@ -27,9 +27,18 @@ public:
     void onMouseMove(const SDL_Point& cursorPosition) override;
 
 private:
+    /**
+     * Tells the sim to remove the given tile layer.
+     */
+    void requestRemoveTileLayer(int tileX, int tileY, TileLayer::Type layerType,
+                                Uint16 spriteSetID, Uint8 spriteIndex);
+
     /** Used for finding tile layers or entities that the mouse is 
         hovering over or clicking. */
     const WorldObjectLocator& worldObjectLocator;
+
+    /** The color used to highlight the hovered object. */
+    const SDL_Color highlightColor;
 };
 
 } // End namespace Client
