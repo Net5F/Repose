@@ -16,7 +16,7 @@ RemoveTool::RemoveTool(const World& inWorld,
                        EventDispatcher& inUiEventDispatcher)
 : BuildTool(inWorld, inUiEventDispatcher)
 , worldObjectLocator{inWorldObjectLocator}
-, highlightColor{255, 200, 0, 255}
+, highlightColor{255, 220, 0, 255}
 {
 }
 
