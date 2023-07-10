@@ -25,32 +25,14 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
 , workingNeighbors{}
 , randGenerator{std::random_device()()}
 {
-    // Fill the sprite ID arrays.
-    for (std::size_t i = 0; i < northWallIDs.size(); ++i) {
-        std::string stringID{"north"};
-        stringID += std::to_string(i + 1);
-        northWallIDs[i] = spriteData.getSprite(stringID).numericID;
-    }
-    for (std::size_t i = 0; i < westWallIDs.size(); ++i) {
-        std::string stringID{"west"};
-        stringID += std::to_string(i + 1);
-        westWallIDs[i] = spriteData.getSprite(stringID).numericID;
-    }
-    for (std::size_t i = 0; i < northeastFillIDs.size(); ++i) {
-        std::string stringID{"ne_fill"};
-        stringID += std::to_string(i + 1);
-        northeastFillIDs[i] = spriteData.getSprite(stringID).numericID;
-    }
-    for (std::size_t i = 0; i < northwestFillIDs.size(); ++i) {
-        std::string stringID{"nw_fill"};
-        stringID += std::to_string(i + 1);
-        northwestFillIDs[i] = spriteData.getSprite(stringID).numericID;
-    }
-    for (std::size_t i = 0; i < fullFillIDs.size(); ++i) {
-        std::string stringID{"fullfill"};
-        stringID += std::to_string(i + 1);
-        fullFillIDs[i] = spriteData.getSprite(stringID).numericID;
-    }
+    // Fill in the sprite set ID's.
+    wallIDs[0] = spriteData.getWallSpriteSet("hedge").numericID;
+    wallIDs[1] = spriteData.getWallSpriteSet("hedgeflower").numericID;
+    wallIDs[2] = spriteData.getWallSpriteSet("roundedhedge").numericID;
+    wallIDs[3] = spriteData.getWallSpriteSet("roundedhedgeflower").numericID;
+    wallIDs[4] = spriteData.getWallSpriteSet("squaredhedge").numericID;
+    wallIDs[5] = spriteData.getWallSpriteSet("squaredhedgeflower").numericID;
+    fullFillID = spriteData.getObjectSpriteSet("hedgefullfill").numericID;
 
     // Prime a timer.
     Timer timer;
@@ -417,73 +399,57 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
 void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
 {
     // Clear the maze area in the tile map.
-    //std::size_t endLayerIndex{SharedConfig::MAX_TILE_LAYERS - 1};
-    //world.tileMap.clearExtentSpriteLayers(mazeExtent, 1, endLayerIndex);
-    //// world.tileMap.clearExtentLayers<FloorCoveringTileLayer, WallTileLayer,
-    ////                                 ObjectTileLayer>(mazeExtent);
+    world.tileMap.clearExtentLayers<FloorCoveringTileLayer, WallTileLayer,
+                                    ObjectTileLayer>(mazeExtent);
 
-    //// Apply the maze to the tile map.
-    //for (int mazeX = 0; mazeX <= abstractMazeExtent.xMax(); ++mazeX) {
-    //    for (int mazeY = 0; mazeY <= abstractMazeExtent.yMax(); ++mazeY) {
-    //        const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
+    // Apply the maze to the tile map.
+    for (int mazeX = 0; mazeX <= abstractMazeExtent.xMax(); ++mazeX) {
+        for (int mazeY = 0; mazeY <= abstractMazeExtent.yMax(); ++mazeY) {
+            const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
 
-    //        // Apply this cell's walls to the corresponding 2x2 map area.
-    //        int mapX{mazeExtent.x + (mazeX * 2)};
-    //        int mapY{mazeExtent.y + (mazeY * 2)};
-    //        applyCellToMap(mapX, mapY, cell);
-    //    }
-    //}
+            // Apply this cell's walls to the corresponding 2x2 map area.
+            int mapX{mazeExtent.x + (mazeX * 2)};
+            int mapY{mazeExtent.y + (mazeY * 2)};
+            applyCellToMap(mapX, mapY, cell);
+        }
+    }
 }
 
 void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
                                           const MazeCell& cell)
 {
     // Determine which walls this cell has and apply them to the map.
-    //if (cell.fullFill) {
-    //    // Fully-filled cell. Place the 4 fills.
-    //    world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomFullFill());
-    //    world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
-    //                                     getRandomFullFill());
-    //    world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
-    //                                     getRandomFullFill());
-    //    world.tileMap.setTileSpriteLayer((mapX + 1), (mapY + 1), 1,
-    //                                     getRandomFullFill());
-    //}
-    //else if (cell.northWall && cell.westWall) {
-    //    // Northwest corner, place the 2 west walls, the north wall, and the
-    //    // northeast gap fill.
-    //    world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomWestWall());
-    //    world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
-    //                                     getRandomWestWall());
-    //    world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
-    //                                     getRandomNorthWall());
-    //    world.tileMap.setTileSpriteLayer(mapX, mapY, 2, getRandomNEFill());
-    //}
-    //else if (cell.northWall) {
-    //    // North only, place the 2 north walls.
-    //    world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomNorthWall());
-    //    world.tileMap.setTileSpriteLayer((mapX + 1), mapY, 1,
-    //                                     getRandomNorthWall());
-    //}
-    //else if (cell.westWall) {
-    //    // West only, place the 2 west walls.
-    //    world.tileMap.setTileSpriteLayer(mapX, mapY, 1, getRandomWestWall());
-    //    world.tileMap.setTileSpriteLayer(mapX, (mapY + 1), 1,
-    //                                     getRandomWestWall());
-    //}
-    //else {
-    //    // No walls. First check if there are tiles to the north and west.
-    //    if ((mapX > 0) && (mapY > 0)) {
-    //        // There are tiles to the north and west. If they have walls
-    //        // that form a gap, fill it.
-    //        const Tile& northTile{world.tileMap.getTile(mapX, (mapY - 1))};
-    //        const Tile& westTile{world.tileMap.getTile((mapX - 1), mapY)};
-    //        if (northTile.hasWestWall() && westTile.hasNorthWall()) {
-    //            world.tileMap.setTileSpriteLayer(mapX, mapY, 1,
-    //                                             getRandomNWFill());
-    //        }
-    //    }
-    //}
+    if (cell.fullFill) {
+        // Fully-filled cell. Place the 4 fills.
+        world.tileMap.addObject(mapX, mapY, fullFillID, getRandomFullFill());
+        world.tileMap.addObject((mapX + 1), mapY, fullFillID,
+                                getRandomFullFill());
+        world.tileMap.addObject(mapX, (mapY + 1), fullFillID,
+                                getRandomFullFill());
+        world.tileMap.addObject((mapX + 1), (mapY + 1), fullFillID,
+                                getRandomFullFill());
+    }
+    else if (cell.northWall && cell.westWall) {
+        // Northwest corner, place the 2 west walls and 2 north walls.
+        world.tileMap.addWall(mapX, mapY, getRandomWall(), Wall::Type::West);
+        world.tileMap.addWall(mapX, (mapY + 1), getRandomWall(),
+                              Wall::Type::West);
+        world.tileMap.addWall(mapX, mapY, getRandomWall(), Wall::Type::North);
+        world.tileMap.addWall((mapX + 1), mapY, getRandomWall(),
+                              Wall::Type::North);
+    }
+    else if (cell.northWall) {
+        // North only, place the 2 north walls.
+        world.tileMap.addWall(mapX, mapY, getRandomWall(), Wall::Type::North);
+        world.tileMap.addWall((mapX + 1), mapY, getRandomWall(),
+                              Wall::Type::North);
+    }
+    else if (cell.westWall) {
+        // West only, place the 2 west walls.
+        world.tileMap.addWall(mapX, mapY, getRandomWall(), Wall::Type::West);
+        world.tileMap.addWall(mapX, (mapY + 1), getRandomWall(),
+                              Wall::Type::West);
+    }
 }
 
 void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
@@ -528,96 +494,42 @@ void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
     }
 }
 
-int MazeGenerationSystem::getRandomWestWall()
+Uint16 MazeGenerationSystem::getRandomWall()
 {
     std::uniform_int_distribution<int> dist{0, 99};
     int randValue{dist(randGenerator)};
     if (randValue < 70) {
-        return westWallIDs[4];
+        return wallIDs[4];
     }
     else if (randValue >= 70 && randValue < 90) {
-        return westWallIDs[5];
+        return wallIDs[5];
     }
     else if (randValue >= 90 && randValue < 93) {
-        return westWallIDs[2];
+        return wallIDs[2];
     }
     else if (randValue >= 93 && randValue < 96) {
-        return westWallIDs[3];
+        return wallIDs[3];
     }
     else if (randValue >= 96 && randValue < 98) {
-        return westWallIDs[0];
+        return wallIDs[0];
     }
     else {
-        return westWallIDs[1];
+        return wallIDs[1];
     }
 }
 
-int MazeGenerationSystem::getRandomNorthWall()
-{
-    std::uniform_int_distribution<int> dist{0, 99};
-    int randValue{dist(randGenerator)};
-    if (randValue < 70) {
-        return northWallIDs[4];
-    }
-    else if (randValue >= 70 && randValue < 90) {
-        return northWallIDs[5];
-    }
-    else if (randValue >= 90 && randValue < 93) {
-        return northWallIDs[2];
-    }
-    else if (randValue >= 93 && randValue < 96) {
-        return northWallIDs[3];
-    }
-    else if (randValue >= 96 && randValue < 98) {
-        return northWallIDs[0];
-    }
-    else {
-        return northWallIDs[1];
-    }
-}
-
-int MazeGenerationSystem::getRandomNEFill()
-{
-    std::uniform_int_distribution<int> dist{0, 99};
-    int randValue{dist(randGenerator)};
-    if (randValue < 80) {
-        return northeastFillIDs[0];
-    }
-    else if (randValue >= 80 && randValue < 90) {
-        return northeastFillIDs[1];
-    }
-    else {
-        return northeastFillIDs[2];
-    }
-}
-
-int MazeGenerationSystem::getRandomNWFill()
-{
-    std::uniform_int_distribution<int> dist{0, 99};
-    int randValue{dist(randGenerator)};
-    if (randValue < 80) {
-        return northwestFillIDs[0];
-    }
-    else if (randValue >= 80 && randValue < 90) {
-        return northwestFillIDs[1];
-    }
-    else {
-        return northwestFillIDs[2];
-    }
-}
-
-int MazeGenerationSystem::getRandomFullFill()
+Rotation::Direction MazeGenerationSystem::getRandomFullFill()
 {
     std::uniform_int_distribution<int> dist{0, 99};
     int randValue{dist(randGenerator)};
     if (randValue < 60) {
-        return fullFillIDs[0];
+        return static_cast<Rotation::Direction>(0);
     }
     else if (randValue >= 60 && randValue < 80) {
-        return fullFillIDs[1];
+        return static_cast<Rotation::Direction>(1);
     }
     else {
-        return fullFillIDs[2];
+        return static_cast<Rotation::Direction>(2);
     }
 }
 

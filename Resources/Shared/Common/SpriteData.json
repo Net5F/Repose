@@ -134,6 +134,51 @@
                 -1
             ],
             "stringID": "hedgefullfill"
+        },
+        {
+            "displayName": "Roberto",
+            "numericID": 4,
+            "spriteIDs": [
+                68,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "stringID": "roberto"
+        },
+        {
+            "displayName": "Ghost",
+            "numericID": 5,
+            "spriteIDs": [
+                56,
+                -1,
+                57,
+                -1,
+                55,
+                -1,
+                54,
+                -1
+            ],
+            "stringID": "ghost"
+        },
+        {
+            "displayName": "Column",
+            "numericID": 6,
+            "spriteIDs": [
+                36,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+            ],
+            "stringID": "column"
         }
     ],
     "spriteSheets": [
@@ -1619,19 +1664,8 @@
     ],
     "walls": [
         {
-            "displayName": "HedgeWall",
-            "numericID": 0,
-            "spriteIDs": [
-                32,
-                40,
-                35,
-                31
-            ],
-            "stringID": "hedgewall"
-        },
-        {
             "displayName": "Template",
-            "numericID": 1,
+            "numericID": 0,
             "spriteIDs": [
                 65,
                 64,
@@ -1642,7 +1676,7 @@
         },
         {
             "displayName": "Hedge",
-            "numericID": 2,
+            "numericID": 1,
             "spriteIDs": [
                 32,
                 40,
@@ -1653,7 +1687,7 @@
         },
         {
             "displayName": "HedgeFlower",
-            "numericID": 3,
+            "numericID": 2,
             "spriteIDs": [
                 39,
                 41,
@@ -1664,7 +1698,7 @@
         },
         {
             "displayName": "RoundedHedge",
-            "numericID": 4,
+            "numericID": 3,
             "spriteIDs": [
                 44,
                 37,
@@ -1675,7 +1709,7 @@
         },
         {
             "displayName": "RoundedHedgeFlower",
-            "numericID": 5,
+            "numericID": 4,
             "spriteIDs": [
                 45,
                 38,
@@ -1686,10 +1720,10 @@
         },
         {
             "displayName": "SquaredHedge",
-            "numericID": 6,
+            "numericID": 5,
             "spriteIDs": [
                 46,
-                46,
+                42,
                 33,
                 29
             ],
@@ -1697,7 +1731,7 @@
         },
         {
             "displayName": "SquaredHedgeFlower",
-            "numericID": 7,
+            "numericID": 6,
             "spriteIDs": [
                 47,
                 43,

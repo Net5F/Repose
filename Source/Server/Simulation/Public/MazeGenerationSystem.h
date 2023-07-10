@@ -144,14 +144,14 @@ private:
                                   const entt::entity entity);
 
     /**
-     * These functions return a (weighted) random sprite ID from the chosen
-     * category.
+     * Returns a (weighted) random sprite set ID for a wall.
      */
-    int getRandomWestWall();
-    int getRandomNorthWall();
-    int getRandomNEFill();
-    int getRandomNWFill();
-    int getRandomFullFill();
+    Uint16 getRandomWall();
+
+    /**
+     * Returns a (weighted) random sprite index for a full fill object.
+     */
+    Rotation::Direction getRandomFullFill();
 
     /** Used to get entity positions and modify the tile map. */
     World& world;
@@ -189,11 +189,8 @@ private:
     std::mt19937 randGenerator;
 
     /** Used for placing randomized sprites in the map. */
-    std::array<int, 6> northWallIDs;
-    std::array<int, 6> westWallIDs;
-    std::array<int, 3> northeastFillIDs;
-    std::array<int, 3> northwestFillIDs;
-    std::array<int, 3> fullFillIDs;
+    std::array<Uint16, 6> wallIDs;
+    Uint16 fullFillID;
 };
 
 } // End namespace Server

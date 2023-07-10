@@ -16,14 +16,16 @@ struct Plant {
      * Possible types of plant.
      */
     enum class Type : unsigned int {
-        Sunflower = 0,
+        Sunflower,
     };
 
     /**
      * The stages of life that a plant goes through.
+     * The values of stages 0 - 3 line up with their sprite's index within the 
+     * sunflower sprite set.
      */
     enum class LifeStage : unsigned int {
-        Sapling = 0,
+        Sapling,
         MidGrowth,
         FullyGrown,
         Dying,

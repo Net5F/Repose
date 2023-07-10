@@ -45,11 +45,6 @@ private:
      */
     void replantPlant(PlantRegion& region, Plant& plant);
 
-    /**
-     * Returns the sprite ID to display for the given plant's type and stage.
-     */
-    int getPlantSpriteID(Plant& plant);
-
     /** Used to modify the tile map. */
     World& world;
 
@@ -64,10 +59,11 @@ private:
     std::mt19937 generator;
 
     /** Used for setting plant sprites. */
-    const int SUNFLOWER_SAPLING_ID;
-    const int SUNFLOWER_MIDGROWTH_ID;
-    const int SUNFLOWER_FULLYGROWN_ID;
-    const int SUNFLOWER_DYING_ID;
+    const Uint16 SUNFLOWER_SPRITE_SET_ID;
+    const Uint8 SUNFLOWER_SAPLING_INDEX;
+    const Uint8 SUNFLOWER_MIDGROWTH_INDEX;
+    const Uint8 SUNFLOWER_FULLYGROWN_INDEX;
+    const Uint8 SUNFLOWER_DYING_INDEX;
 };
 
 } // End namespace Server
