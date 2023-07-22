@@ -1,8 +1,6 @@
 #pragma once
 
-#include "AUI/Screen.h"
 #include "AUI/Thumbnail.h"
-#include <string>
 
 namespace AM
 {

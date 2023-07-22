@@ -30,7 +30,8 @@ public:
         Floor,
         FloorCovering,
         Wall,
-        Object,
+        StaticObject,
+        DynamicObject,
         Remove,
         Count,
         None

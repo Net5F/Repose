@@ -6,7 +6,7 @@
 #include "FloorTool.h"
 #include "FloorCoveringTool.h"
 #include "WallTool.h"
-#include "ObjectTool.h"
+#include "StaticObjectTool.h"
 #include "RemoveTool.h"
 #include "Paths.h"
 #include "Transforms.h"
@@ -56,8 +56,8 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
             break;
         }
         case BuildTool::Type::FloorCovering: {
-            currentBuildTool
-                = std::make_unique<FloorCoveringTool>(world, uiEventDispatcher);
+            currentBuildTool = std::make_unique<FloorCoveringTool>(
+                world, uiEventDispatcher);
             break;
         }
         case BuildTool::Type::Wall: {
@@ -65,9 +65,14 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
                 = std::make_unique<WallTool>(world, uiEventDispatcher);
             break;
         }
-        case BuildTool::Type::Object: {
+        case BuildTool::Type::StaticObject: {
             currentBuildTool
-                = std::make_unique<ObjectTool>(world, uiEventDispatcher);
+                = std::make_unique<StaticObjectTool>(world, uiEventDispatcher);
+            break;
+        }
+        case BuildTool::Type::DynamicObject: {
+            //currentBuildTool
+            //    = std::make_unique<DynamicObjectTool>(world, uiEventDispatcher);
             break;
         }
         case BuildTool::Type::Remove: {

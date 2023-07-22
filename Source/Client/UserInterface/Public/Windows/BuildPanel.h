@@ -73,15 +73,27 @@ private:
     //-------------------------------------------------------------------------
     AUI::Image backgroundImage;
 
-    /** The containers that hold the sprite sets that the user can select.
-        Only one of these containers is visible at a time, based on which mode 
-        the user has selected.
-        Note: We use TileLayer::Count instead of SpriteSet::Count because 
-              tiles don't support every type of sprite set. */
-    std::array<AUI::VerticalGridContainer, TileLayer::Type::Count>
-        tileSpriteSetContainers;
+    // Floor tile layer tool content.
+    AUI::VerticalGridContainer floorContainer;
 
-    AUI::Text toolsLabel;
+    // Floor covering tile layer tool content.
+    AUI::VerticalGridContainer floorCoveringContainer;
+
+    // Wall tile layer tool content.
+    AUI::VerticalGridContainer wallContainer;
+
+    // Object tile layer tool content.
+    AUI::VerticalGridContainer objectContainer;
+
+    // Object entity tool content.
+    // TODO: Make widget that has a container, and a openEditView(entt::entity) or something like that
+
+    // Remove tool content.
+    AUI::Text removeHintText;
+
+    AUI::Text tileLayersLabel;
+    AUI::Text entitiesLabel;
+    AUI::Text generalLabel;
 
     std::array<MainButton, BuildTool::Type::Count> buildToolButtons;
 };

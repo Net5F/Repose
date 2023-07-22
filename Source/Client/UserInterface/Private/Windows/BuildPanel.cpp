@@ -19,32 +19,37 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
 , buildOverlay{inBuildOverlay}
 , selectedThumbnail{nullptr}
 , backgroundImage{{0, 0, 1920, 319}, "BuildPanelBackground"}
-, tileSpriteSetContainers{AUI::VerticalGridContainer{{366 - 2, 91, 1188, 220},
-                                                     "FloorContainer"},
-                          AUI::VerticalGridContainer{{366 - 2, 91, 1188, 220},
-                                                     "FloorCoveringContainer"},
-                          AUI::VerticalGridContainer{{366 - 2, 91, 1188, 220},
-                                                     "WallContainer"},
-                          AUI::VerticalGridContainer{{366 - 2, 91, 1188, 220},
-                                                     "ObjectContainer"}}
-, toolsLabel{{152, 92, 138, 36}, "ToolsLabel"}
-, buildToolButtons{MainButton{{164, 132, 114, 28}, "Floor", "FloorToolButton"},
-                   MainButton{{164, 168, 114, 28}, "Floor Cover", "FloorCoveringToolButton"},
-                   MainButton{{164, 204, 114, 28}, "Wall", "WallToolButton"},
-                   MainButton{{164, 240, 114, 28}, "Object", "ObjectToolButton"},
-                   MainButton{{164, 276, 114, 28}, "Remove", "RemoveToolButton"}}
+, floorContainer{{366 - 2, 91, 1188, 220}, "FloorContainer"}
+, floorCoveringContainer{{366 - 2, 91, 1188, 220}, "FloorCoveringContainer"}
+, wallContainer{{366 - 2, 91, 1188, 220}, "WallContainer"}
+, objectContainer{{366 - 2, 91, 1188, 220}, "ObjectContainer"}
+, removeHintText{{679, 171, 562, 36}, "RemoveHintText"}
+, tileLayersLabel{{152, 92, 138, 36}, "TileLayersLabel"}
+, entitiesLabel{{1630, 92, 138, 36}, "EntitiesLabel"}
+, generalLabel{{1630, 180, 138, 36}, "GeneralLabel"}
+, buildToolButtons{MainButton{{164, 132, 114, 32}, "Floor", "FloorToolButton"},
+                   MainButton{{164, 168, 114, 32}, "Floor Cover", "FloorCoveringToolButton"},
+                   MainButton{{164, 204, 114, 32}, "Wall", "WallToolButton"},
+                   MainButton{{164, 240, 114, 32}, "Object", "ObjectTileLayerToolButton"},
+                   MainButton{{1642, 132, 114, 32}, "Object", "ObjectEntityToolButton"},
+                   MainButton{{1642, 220, 114, 32}, "Remove", "RemoveToolButton"}}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
-    children.push_back(tileSpriteSetContainers[TileLayer::Type::Floor]);
-    children.push_back(tileSpriteSetContainers[TileLayer::Type::FloorCovering]);
-    children.push_back(tileSpriteSetContainers[TileLayer::Type::Wall]);
-    children.push_back(tileSpriteSetContainers[TileLayer::Type::Object]);
-    children.push_back(toolsLabel);
+    children.push_back(floorContainer);
+    children.push_back(floorCoveringContainer);
+    children.push_back(wallContainer);
+    children.push_back(objectContainer);
+    children.push_back(removeHintText);
+    children.push_back(tileLayersLabel);
+    children.push_back(entitiesLabel);
+    children.push_back(generalLabel);
     children.push_back(buildToolButtons[BuildTool::Type::Floor]);
-    children.push_back(buildToolButtons[BuildTool::Type::FloorCovering]);
+    children.push_back(
+        buildToolButtons[BuildTool::Type::FloorCovering]);
     children.push_back(buildToolButtons[BuildTool::Type::Wall]);
-    children.push_back(buildToolButtons[BuildTool::Type::Object]);
+    children.push_back(buildToolButtons[BuildTool::Type::StaticObject]);
+    children.push_back(buildToolButtons[BuildTool::Type::DynamicObject]);
     children.push_back(buildToolButtons[BuildTool::Type::Remove]);
 
     /* Background image */
@@ -54,40 +59,56 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
          {{1920, 1080},
           (Paths::TEXTURE_DIR + "BuildPanel/Background_1920.png")}});
 
-    /* Container */
-    for (AUI::VerticalGridContainer& container : tileSpriteSetContainers) {
+    /* Containers */
+    auto setContainerStyle = [](AUI::VerticalGridContainer& container) {
         container.setNumColumns(11);
         container.setCellWidth(108);
         container.setCellHeight(109 + 1);
         container.setIsVisible(false);
-    }
+    };
+    setContainerStyle(floorContainer);
+    setContainerStyle(floorCoveringContainer);
+    setContainerStyle(wallContainer);
+    setContainerStyle(objectContainer);
 
-    /* Tools label */
-    toolsLabel.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 26);
-    toolsLabel.setColor({255, 255, 255, 255});
-    toolsLabel.setVerticalAlignment(AUI::Text::VerticalAlignment::Center);
-    toolsLabel.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
-    toolsLabel.setText("Tools");
+    /* Labels */
+    auto setTextStyle = [](AUI::Text& text) {
+        text.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 26);
+        text.setColor({255, 255, 255, 255});
+        text.setVerticalAlignment(AUI::Text::VerticalAlignment::Center);
+        text.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
+    };
+    setTextStyle(tileLayersLabel);
+    tileLayersLabel.setText("Static");
+
+    setTextStyle(entitiesLabel);
+    entitiesLabel.setText("Dynamic");
+
+    setTextStyle(generalLabel);
+    generalLabel.setText("General");
+
+    setTextStyle(removeHintText);
+    removeHintText.setText("Click on a Tile Layer or Entity to remove it.");
+    removeHintText.setIsVisible(false);
 
     /* Build tool buttons. */
     buildToolButtons[BuildTool::Type::FloorCovering].text.setFont(
         (Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 18);
 
-    buildToolButtons[BuildTool::Type::Floor].setOnPressed([this]() {
-        setBuildTool(BuildTool::Type::Floor);
-    });
-    buildToolButtons[BuildTool::Type::FloorCovering].setOnPressed([this]() {
-        setBuildTool(BuildTool::Type::FloorCovering);
-    });
-    buildToolButtons[BuildTool::Type::Wall].setOnPressed([this]() {
-        setBuildTool(BuildTool::Type::Wall);
-    });
-    buildToolButtons[BuildTool::Type::Object].setOnPressed([this]() {
-        setBuildTool(BuildTool::Type::Object);
-    });
-    buildToolButtons[BuildTool::Type::Remove].setOnPressed([this]() {
-        setBuildTool(BuildTool::Type::Remove);
-    });
+    buildToolButtons[BuildTool::Type::Floor].setOnPressed(
+        [this]() { setBuildTool(BuildTool::Type::Floor); });
+    buildToolButtons[BuildTool::Type::FloorCovering].setOnPressed(
+        [this]() {
+            setBuildTool(BuildTool::Type::FloorCovering);
+        });
+    buildToolButtons[BuildTool::Type::Wall].setOnPressed(
+        [this]() { setBuildTool(BuildTool::Type::Wall); });
+    buildToolButtons[BuildTool::Type::StaticObject].setOnPressed(
+        [this]() { setBuildTool(BuildTool::Type::StaticObject); });
+    buildToolButtons[BuildTool::Type::DynamicObject].setOnPressed(
+        [this]() { setBuildTool(BuildTool::Type::DynamicObject); });
+    buildToolButtons[BuildTool::Type::Remove].setOnPressed(
+        [this]() { setBuildTool(BuildTool::Type::Remove); });
 
     // Fill the containers with the available sprite sets.
     for (const FloorSpriteSet& spriteSet : spriteData.getAllFloorSpriteSets()) {
@@ -146,7 +167,18 @@ void BuildPanel::addSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,
         buildOverlay.setSelectedSpriteSet(spriteSet);
     });
 
-    tileSpriteSetContainers[type].push_back(std::move(thumbnailPtr));
+    if (type == TileLayer::Type::Floor) {
+        floorContainer.push_back(std::move(thumbnailPtr));
+    }
+    else if (type == TileLayer::Type::FloorCovering) {
+        floorCoveringContainer.push_back(std::move(thumbnailPtr));
+    }
+    else if (type == TileLayer::Type::Wall) {
+        wallContainer.push_back(std::move(thumbnailPtr));
+    }
+    else if (type == TileLayer::Type::Object) {
+        objectContainer.push_back(std::move(thumbnailPtr));
+    }
 }
 
 void BuildPanel::setBuildTool(BuildTool::Type toolType)
@@ -160,12 +192,27 @@ void BuildPanel::setBuildTool(BuildTool::Type toolType)
     // Set the overlay's build tool.
     buildOverlay.setBuildTool(toolType);
 
-    // Make all the containers invisible, then show the correct container.
-    for (AUI::VerticalGridContainer& container : tileSpriteSetContainers) {
-        container.setIsVisible(false);
+    // Make all the content invisible, then show the correct content.
+    floorContainer.setIsVisible(false);
+    floorCoveringContainer.setIsVisible(false);
+    wallContainer.setIsVisible(false);
+    objectContainer.setIsVisible(false);
+    removeHintText.setIsVisible(false);
+
+    if (toolType == BuildTool::Type::Floor) {
+        floorContainer.setIsVisible(true);
     }
-    if (toolType != BuildTool::Type::Remove) {
-        tileSpriteSetContainers[toolType].setIsVisible(true);
+    else if (toolType == BuildTool::Type::FloorCovering) {
+        floorCoveringContainer.setIsVisible(true);
+    }
+    else if (toolType == BuildTool::Type::Wall) {
+        wallContainer.setIsVisible(true);
+    }
+    else if (toolType == BuildTool::Type::StaticObject) {
+        objectContainer.setIsVisible(true);
+    }
+    else if (toolType == BuildTool::Type::Remove) {
+        removeHintText.setIsVisible(true);
     }
 }
 

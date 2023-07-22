@@ -7,11 +7,12 @@ target_sources(Client
         Private/BuildTools/BuildTool.cpp
         Private/BuildTools/FloorCoveringTool.cpp
         Private/BuildTools/FloorTool.cpp
-        Private/BuildTools/ObjectTool.cpp
+        Private/BuildTools/StaticObjectTool.cpp
         Private/BuildTools/WallTool.cpp
         Private/BuildTools/RemoveTool.cpp
         Private/Widgets/MainButton.cpp
         Private/Widgets/MainThumbnail.cpp
+        Private/Widgets/DynamicObjectPanelContent.cpp
         Private/Widgets/TitleButton.cpp
         Private/Widgets/TitleTextInput.cpp
         Private/Windows/MainOverlay.cpp
@@ -26,11 +27,12 @@ target_sources(Client
         Public/BuildTools/BuildTool.h
         Public/BuildTools/FloorCoveringTool.h
         Public/BuildTools/FloorTool.h
-        Public/BuildTools/ObjectTool.h
+        Public/BuildTools/StaticObjectTool.h
         Public/BuildTools/WallTool.h
         Public/BuildTools/RemoveTool.h
         Public/Widgets/MainButton.h
         Public/Widgets/MainThumbnail.h
+        Public/Widgets/DynamicObjectPanelContent.h
         Public/Widgets/TitleButton.h
         Public/Widgets/TitleTextInput.h
         Public/Windows/MainOverlay.h
