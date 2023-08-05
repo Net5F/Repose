@@ -6,7 +6,8 @@
 #include "FloorTool.h"
 #include "FloorCoveringTool.h"
 #include "WallTool.h"
-#include "StaticObjectTool.h"
+#include "ObjectTool.h"
+#include "EntityTool.h"
 #include "RemoveTool.h"
 #include "Paths.h"
 #include "Transforms.h"
@@ -65,14 +66,14 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
                 = std::make_unique<WallTool>(world, uiEventDispatcher);
             break;
         }
-        case BuildTool::Type::StaticObject: {
+        case BuildTool::Type::Object: {
             currentBuildTool
-                = std::make_unique<StaticObjectTool>(world, uiEventDispatcher);
+                = std::make_unique<ObjectTool>(world, uiEventDispatcher);
             break;
         }
-        case BuildTool::Type::DynamicObject: {
-            //currentBuildTool
-            //    = std::make_unique<DynamicObjectTool>(world, uiEventDispatcher);
+        case BuildTool::Type::Entity: {
+            currentBuildTool = std::make_unique<EntityTool>(
+                world, worldObjectLocator, uiEventDispatcher);
             break;
         }
         case BuildTool::Type::Remove: {
@@ -88,6 +89,11 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
 
     currentBuildTool->setCamera(camera);
     currentBuildTool->setTileMapExtent(mapTileExtent);
+}
+
+BuildTool* BuildOverlay::getCurrentBuildTool()
+{
+    return currentBuildTool.get();
 }
 
 void BuildOverlay::setCamera(const Camera& inCamera)

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SDL_stdinc.h>
 #include <cstddef>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,6 +62,11 @@ public:
               However, your project may choose to set the Collision component
               to something else. */
     static constexpr const char* DEFAULT_CHARACTER_SPRITE{"ghost_south"};
+
+    /** The string ID of the default sprite set for entities. */
+    static constexpr const char* DEFAULT_ENTITY_SPRITE_SET{"ghost"};
+    /** The index of the default sprite for entities. */
+    static constexpr Uint8 DEFAULT_ENTITY_SPRITE_INDEX{0};
 
     /** The speed that entities will move at. Eventually we'll support
         dynamically setting this based on stats, for now it's a constant. */
@@ -127,7 +133,7 @@ public:
     //-------------------------------------------------------------------------
     /** If true, tile changes will only be allowed in the "build area".
         If false, clients can change any tile in the map. */
-    static constexpr bool RESTRICT_TILE_UPDATES{true};
+    static constexpr bool RESTRICT_TILE_UPDATES{false};
 };
 
 } // End namespace AM

@@ -2,6 +2,7 @@
 
 #include "IMessageProcessorExtension.h"
 #include "MessageProcessorExDependencies.h"
+#include <SDL_stdinc.h>
 
 namespace AM
 {
@@ -9,7 +10,7 @@ namespace Server
 {
 
 /**
- * PLACEHOLDER - Currently not rendering anything at the project level.
+ * Processes project messages (i.e. any message that the engine doesn't handle).
  */
 class MessageProcessorExtension : public IMessageProcessorExtension
 {
@@ -22,11 +23,25 @@ public:
      * Called when a message is received that the engine doesn't have a handler
      * for.
      */
-    Sint64 processReceivedMessage(NetworkID netID, MessageType messageType,
+    void processReceivedMessage(NetworkID netID, Uint8 messageType,
                                   Uint8* messageBuffer,
-                                  unsigned int messageSize) override;
+                                  std::size_t messageSize) override;
 
 private:
+    //-------------------------------------------------------------------------
+    // Handlers for messages relevant to the network layer.
+    //-------------------------------------------------------------------------
+    /**
+     * Pushes EntityTemplatesRequest event.
+     */
+    void handleEntityTemplatesRequest(NetworkID netID,
+                                      Uint8* messageBuffer,
+                                      std::size_t messageSize);
+    //-------------------------------------------------------------------------
+
+    /** The dispatcher for network events. Used to send events to the
+        subscribed queues. */
+    EventDispatcher& networkEventDispatcher;
 };
 
 } // End namespace Server

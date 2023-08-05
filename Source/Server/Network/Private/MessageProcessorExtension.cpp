@@ -1,5 +1,7 @@
 #include "MessageProcessorExtension.h"
 #include "DispatchMessage.h"
+#include "ProjectMessageType.h"
+#include "EntityTemplatesRequest.h"
 #include "Log.h"
 
 namespace AM
@@ -8,20 +10,46 @@ namespace Server
 {
 
 MessageProcessorExtension::MessageProcessorExtension(
-    [[maybe_unused]] MessageProcessorExDependencies deps)
+    MessageProcessorExDependencies deps)
+: networkEventDispatcher{deps.networkEventDispatcher}
 {
 }
 
-Sint64 MessageProcessorExtension::processReceivedMessage(
-    [[maybe_unused]] NetworkID netID, [[maybe_unused]] MessageType messageType,
-    [[maybe_unused]] Uint8* messageBuffer,
-    [[maybe_unused]] unsigned int messageSize)
+void MessageProcessorExtension::processReceivedMessage(
+    NetworkID netID, Uint8 messageType, Uint8* messageBuffer,
+    std::size_t messageSize)
 {
-    // The tick that the received message corresponds to.
-    // Will be -1 if the message doesn't correspond to any tick.
-    Sint64 messageTick{-1};
+    // Match the enum values to their event types.
+    ProjectMessageType projectMessageType{
+        static_cast<ProjectMessageType>(messageType)};
+    switch (projectMessageType) {
+        case ProjectMessageType::EntityTemplatesRequest: {
+            handleEntityTemplatesRequest(netID, messageBuffer,
+                                                messageSize);
+            dispatchMessage<EntityTemplatesRequest>(
+                messageBuffer, messageSize, networkEventDispatcher);
+            break;
+        }
+        default: {
+            LOG_FATAL("Received unexpected message type: %u", messageType);
+        }
+    }
+}
 
-    return messageTick;
+void MessageProcessorExtension::handleEntityTemplatesRequest(
+    NetworkID netID, Uint8* messageBuffer, std::size_t messageSize)
+{
+    // Deserialize the message.
+    EntityTemplatesRequest entityTemplatesRequest{};
+    Deserialize::fromBuffer(messageBuffer, messageSize,
+                            entityTemplatesRequest);
+
+    // Fill in the network ID that we assigned to this client.
+    entityTemplatesRequest.netID = netID;
+
+    // Push the message into any subscribed queues.
+    networkEventDispatcher.push<EntityTemplatesRequest>(
+        entityTemplatesRequest);
 }
 
 } // End namespace Server

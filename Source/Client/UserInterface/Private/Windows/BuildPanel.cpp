@@ -1,8 +1,11 @@
 #include "BuildPanel.h"
 #include "MainScreen.h"
+#include "Network.h"
 #include "SpriteData.h"
 #include "BuildOverlay.h"
 #include "MainThumbnail.h"
+#include "EntityTool.h"
+#include "EntityTemplatesRequest.h"
 #include "SharedConfig.h"
 #include "EmptySpriteID.h"
 #include "Paths.h"
@@ -13,8 +16,10 @@ namespace AM
 {
 namespace Client
 {
-BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
+BuildPanel::BuildPanel(Network& inNetwork, SpriteData& inSpriteData,
+                       BuildOverlay& inBuildOverlay)
 : AUI::Window{{0, 761, 1920, 319}, "BuildPanel"}
+, network{inNetwork}
 , spriteData{inSpriteData}
 , buildOverlay{inBuildOverlay}
 , selectedThumbnail{nullptr}
@@ -23,6 +28,8 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
 , floorCoveringContainer{{366 - 2, 91, 1188, 220}, "FloorCoveringContainer"}
 , wallContainer{{366 - 2, 91, 1188, 220}, "WallContainer"}
 , objectContainer{{366 - 2, 91, 1188, 220}, "ObjectContainer"}
+, entityPanelContent{network.getEventDispatcher(), spriteData, *this,
+                       {366 - 2, 91, 1188, 220}, "EntityPanelContent"}
 , removeHintText{{679, 171, 562, 36}, "RemoveHintText"}
 , tileLayersLabel{{152, 92, 138, 36}, "TileLayersLabel"}
 , entitiesLabel{{1630, 92, 138, 36}, "EntitiesLabel"}
@@ -40,6 +47,7 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
     children.push_back(floorCoveringContainer);
     children.push_back(wallContainer);
     children.push_back(objectContainer);
+    children.push_back(entityPanelContent);
     children.push_back(removeHintText);
     children.push_back(tileLayersLabel);
     children.push_back(entitiesLabel);
@@ -48,8 +56,8 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
     children.push_back(
         buildToolButtons[BuildTool::Type::FloorCovering]);
     children.push_back(buildToolButtons[BuildTool::Type::Wall]);
-    children.push_back(buildToolButtons[BuildTool::Type::StaticObject]);
-    children.push_back(buildToolButtons[BuildTool::Type::DynamicObject]);
+    children.push_back(buildToolButtons[BuildTool::Type::Object]);
+    children.push_back(buildToolButtons[BuildTool::Type::Entity]);
     children.push_back(buildToolButtons[BuildTool::Type::Remove]);
 
     /* Background image */
@@ -70,6 +78,7 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
     setContainerStyle(floorCoveringContainer);
     setContainerStyle(wallContainer);
     setContainerStyle(objectContainer);
+    entityPanelContent.setIsVisible(false);
 
     /* Labels */
     auto setTextStyle = [](AUI::Text& text) {
@@ -103,33 +112,44 @@ BuildPanel::BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay)
         });
     buildToolButtons[BuildTool::Type::Wall].setOnPressed(
         [this]() { setBuildTool(BuildTool::Type::Wall); });
-    buildToolButtons[BuildTool::Type::StaticObject].setOnPressed(
-        [this]() { setBuildTool(BuildTool::Type::StaticObject); });
-    buildToolButtons[BuildTool::Type::DynamicObject].setOnPressed(
-        [this]() { setBuildTool(BuildTool::Type::DynamicObject); });
+    buildToolButtons[BuildTool::Type::Object].setOnPressed(
+        [this]() { setBuildTool(BuildTool::Type::Object); });
+    buildToolButtons[BuildTool::Type::Entity].setOnPressed(
+        [this]() { setBuildTool(BuildTool::Type::Entity); });
     buildToolButtons[BuildTool::Type::Remove].setOnPressed(
         [this]() { setBuildTool(BuildTool::Type::Remove); });
 
     // Fill the containers with the available sprite sets.
     for (const FloorSpriteSet& spriteSet : spriteData.getAllFloorSpriteSets()) {
-        addSpriteSet(TileLayer::Type::Floor, spriteSet, spriteSet.sprite);
+        addTileSpriteSet(TileLayer::Type::Floor, spriteSet, spriteSet.sprite);
     }
     for (const FloorCoveringSpriteSet& spriteSet :
          spriteData.getAllFloorCoveringSpriteSets()) {
-        addSpriteSet(TileLayer::Type::FloorCovering, spriteSet,
+        addTileSpriteSet(TileLayer::Type::FloorCovering, spriteSet,
                      *getFirstSprite(spriteSet));
     }
     for (const WallSpriteSet& spriteSet : spriteData.getAllWallSpriteSets()) {
-        addSpriteSet(TileLayer::Type::Wall, spriteSet, spriteSet.sprites[0]);
+        addTileSpriteSet(TileLayer::Type::Wall, spriteSet, spriteSet.sprites[0]);
     }
     for (const ObjectSpriteSet& spriteSet :
          spriteData.getAllObjectSpriteSets()) {
-        addSpriteSet(TileLayer::Type::Object, spriteSet,
+        addTileSpriteSet(TileLayer::Type::Object, spriteSet,
                      *getFirstSprite(spriteSet));
     }
 }
 
-void BuildPanel::addSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,
+void BuildPanel::setSelectedThumbnail(AUI::Thumbnail& newSelectedThumbnail)
+{
+    // If there's an old selection, deselect it.
+    if (selectedThumbnail != nullptr) {
+        selectedThumbnail->deselect();
+    }
+
+    // Set this thumbnail as the new selection.
+    selectedThumbnail = &newSelectedThumbnail;
+}
+
+void BuildPanel::addTileSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,
     const Sprite& sprite)
 {
     // Construct the new sprite thumbnail.
@@ -155,13 +175,8 @@ void BuildPanel::addSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,
 
     // Add a callback to deactivate all other thumbnails when one is activated.
     thumbnail.setOnSelected([this, &spriteSet](AUI::Thumbnail* selectedThumb) {
-        // If there's an old selection, deselect it.
-        if (selectedThumbnail != nullptr) {
-            selectedThumbnail->deselect();
-        }
-
         // Set this thumbnail as the new selection.
-        selectedThumbnail = selectedThumb;
+        setSelectedThumbnail(*selectedThumb);
 
         // Tell the overlay that the selected sprite changed.
         buildOverlay.setSelectedSpriteSet(spriteSet);
@@ -197,6 +212,7 @@ void BuildPanel::setBuildTool(BuildTool::Type toolType)
     floorCoveringContainer.setIsVisible(false);
     wallContainer.setIsVisible(false);
     objectContainer.setIsVisible(false);
+    entityPanelContent.setIsVisible(false);
     removeHintText.setIsVisible(false);
 
     if (toolType == BuildTool::Type::Floor) {
@@ -208,8 +224,16 @@ void BuildPanel::setBuildTool(BuildTool::Type toolType)
     else if (toolType == BuildTool::Type::Wall) {
         wallContainer.setIsVisible(true);
     }
-    else if (toolType == BuildTool::Type::StaticObject) {
+    else if (toolType == BuildTool::Type::Object) {
         objectContainer.setIsVisible(true);
+    }
+    else if (toolType == BuildTool::Type::Entity) {
+        entityPanelContent.setBuildTool(static_cast<EntityTool*>(
+            buildOverlay.getCurrentBuildTool()));
+        entityPanelContent.setIsVisible(true);
+
+        // Request the latest entity templates from the server.
+        network.serializeAndSend<EntityTemplatesRequest>({});
     }
     else if (toolType == BuildTool::Type::Remove) {
         removeHintText.setIsVisible(true);

@@ -20,6 +20,7 @@ namespace Client
 class World;
 class WorldSinks;
 class WorldObjectLocator;
+class Network;
 class SpriteData;
 
 /**
@@ -30,7 +31,9 @@ class MainScreen : public AUI::Screen
 public:
     MainScreen(const World& inWorld, WorldSinks& inWorldSinks,
                const WorldObjectLocator& inWorldObjectLocator,
-               EventDispatcher& inUiEventDispatcher, SpriteData& inSpriteData);
+               EventDispatcher& inUiEventDispatcher,
+               Network& inNetwork,
+               SpriteData& inSpriteData);
 
     virtual ~MainScreen() = default;
 

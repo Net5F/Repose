@@ -13,6 +13,7 @@ BuildTool::BuildTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
 , uiEventDispatcher{inUiEventDispatcher}
 , camera{}
 , mapTileExtent{}
+, mouseWorldPosition{}
 , mouseTilePosition{}
 , isActive{false}
 , phantomSprites{}
@@ -76,11 +77,13 @@ void BuildTool::onMouseMove(const SDL_Point& cursorPosition)
     // Get the tile coordinate that the mouse is hovering over.
     SDL_FPoint screenPoint{static_cast<float>(cursorPosition.x),
                            static_cast<float>(cursorPosition.y)};
-    TilePosition newPosition{Transforms::screenToTile(screenPoint, camera)};
+    Position newWorldPosition{Transforms::screenToWorld(screenPoint, camera)};
+    TilePosition newTilePosition{newWorldPosition.asTilePosition()};
 
     // If the mouse is within the world bounds, save the new tile position.
-    if (mapTileExtent.containsPosition(newPosition)) {
-        mouseTilePosition = newPosition;
+    if (mapTileExtent.containsPosition(newTilePosition)) {
+        mouseWorldPosition = newWorldPosition;
+        mouseTilePosition = newTilePosition;
         isActive = true;
     }
     else {

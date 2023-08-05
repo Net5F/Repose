@@ -2,6 +2,7 @@
 
 #include "IMessageProcessorExtension.h"
 #include "MessageProcessorExDependencies.h"
+#include <SDL_stdinc.h>
 
 namespace AM
 {
@@ -9,7 +10,7 @@ namespace Client
 {
 
 /**
- * PLACEHOLDER - Currently not rendering anything at the project level.
+ * Processes project messages (i.e. any message that the engine doesn't handle).
  */
 class MessageProcessorExtension : public IMessageProcessorExtension
 {
@@ -22,10 +23,13 @@ public:
      * Called when a message is received that the engine doesn't have a handler
      * for.
      */
-    void processReceivedMessage(MessageType messageType, Uint8* messageBuffer,
-                                unsigned int messageSize) override;
+    void processReceivedMessage(Uint8 messageType, Uint8* messageBuffer,
+                                std::size_t messageSize) override;
 
 private:
+    /** The dispatcher for network events. Used to send events to the
+        subscribed queues. */
+    EventDispatcher& networkEventDispatcher;
 };
 
 } // End namespace Client

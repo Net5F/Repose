@@ -27,4 +27,5 @@ add_library(Shared INTERFACE)
 #endif()
 
 # Build all of the subdirectories.
+add_subdirectory(Messages)
 add_subdirectory(Simulation)

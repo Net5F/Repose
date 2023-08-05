@@ -24,7 +24,7 @@ UserInterfaceExtension::UserInterfaceExtension(UserInterfaceExDependencies deps)
                  {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT}}
 , titleScreen{*this, worldSinks, deps.uiEventDispatcher}
 , mainScreen{deps.world, worldSinks, deps.worldObjectLocator,
-             deps.uiEventDispatcher, deps.spriteData}
+             deps.uiEventDispatcher, deps.network, deps.spriteData}
 , currentScreen{&titleScreen}
 {
     SDL_Rect windowSize{UserConfig::get().getWindowSize()};

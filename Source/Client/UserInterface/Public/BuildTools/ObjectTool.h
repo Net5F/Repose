@@ -12,10 +12,10 @@ namespace Client
 /**
  * The build mode tool used for adding object tile layers.
  */
-class StaticObjectTool : public BuildTool
+class ObjectTool : public BuildTool
 {
 public:
-    StaticObjectTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
+    ObjectTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
 
     void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
 

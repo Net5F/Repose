@@ -2,6 +2,7 @@
 #include "World.h"
 #include "WorldSinks.h"
 #include "WorldObjectLocator.h"
+#include "Network.h"
 #include "SpriteData.h"
 #include "Paths.h"
 #include "BuildModeDefs.h"
@@ -16,12 +17,13 @@ namespace Client
 MainScreen::MainScreen(const World& inWorld, WorldSinks& inWorldSinks,
                        const WorldObjectLocator& inWorldObjectLocator,
                        EventDispatcher& inUiEventDispatcher,
+                       Network& inNetwork,
                        SpriteData& inSpriteData)
 : AUI::Screen("MainScreen")
 , playerIsInBuildArea{false}
 , mainOverlay{}
 , buildOverlay{inWorld, inWorldSinks, inWorldObjectLocator, inUiEventDispatcher}
-, buildPanel{inSpriteData, buildOverlay}
+, buildPanel{inNetwork, inSpriteData, buildOverlay}
 {
     // Add our windows so they're included in rendering, etc.
     windows.push_back(mainOverlay);

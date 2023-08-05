@@ -30,8 +30,8 @@ public:
         Floor,
         FloorCovering,
         Wall,
-        StaticObject,
-        DynamicObject,
+        Object,
+        Entity,
         Remove,
         Count,
         None
@@ -102,6 +102,9 @@ protected:
     /** The world tile map's extent. Used to make sure we aren't rendering or
         requesting changes to tiles that are out of bounds. */
     TileExtent mapTileExtent;
+
+    /** The world position that the mouse is hovering over. */
+    Position mouseWorldPosition;
 
     /** The tile that the mouse is hovering over. */
     TilePosition mouseTilePosition;

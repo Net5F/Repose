@@ -59,6 +59,11 @@ public:
     void setBuildTool(BuildTool::Type toolType);
 
     /**
+     * Returns the current build tool.
+     */
+    BuildTool* getCurrentBuildTool();
+
+    /**
      * Sets the camera to use when rendering.
      *
      * Called during the render pass to give us the lerped camera for the 

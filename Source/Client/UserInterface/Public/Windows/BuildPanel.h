@@ -3,6 +3,7 @@
 #include "MainButton.h"
 #include "TileLayers.h"
 #include "BuildTool.h"
+#include "EntityPanelContent.h"
 #include "Log.h"
 #include "AUI/Window.h"
 #include "AUI/Image.h"
@@ -22,6 +23,7 @@ struct Sprite;
 namespace Client
 {
 class SpriteData;
+class Network;
 class BuildOverlay;
 
 /**
@@ -36,15 +38,24 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    BuildPanel(SpriteData& inSpriteData, BuildOverlay& inBuildOverlay);
+    BuildPanel(Network& inNetwork, SpriteData& inSpriteData,
+               BuildOverlay& inBuildOverlay);
 
     ~BuildPanel() = default;
+
+    /**
+     * Deselects the currently selected thumbnail (if there is one) and saves 
+     * the given thumbnail as the new selection.
+     * Used by content classes to make sure the old selection gets deselected 
+     * when we change tools.
+     */
+    void setSelectedThumbnail(AUI::Thumbnail& newSelectedThumbnail);
 
 private:
     /**
      * Adds a sprite set thumbnail to the appropriate tileSpriteSetContainer.
      */
-    void addSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,
+    void addTileSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,
                       const Sprite& sprite);
 
     /**
@@ -58,6 +69,9 @@ private:
      * Sets the current build tool to the given tool type.
      */
     void setBuildTool(BuildTool::Type toolType);
+
+    /** Used to send and receive content-related build mode messages. */
+    Network& network;
 
     /** Used to get the sprite sets that we fill the panel with. */
     SpriteData& spriteData;
@@ -73,6 +87,8 @@ private:
     //-------------------------------------------------------------------------
     AUI::Image backgroundImage;
 
+    // Note: Since all of the tile layer tools have the same UI, we handle their 
+    //       content in this class. Other tools get their own content widgets.
     // Floor tile layer tool content.
     AUI::VerticalGridContainer floorContainer;
 
@@ -85,8 +101,8 @@ private:
     // Object tile layer tool content.
     AUI::VerticalGridContainer objectContainer;
 
-    // Object entity tool content.
-    // TODO: Make widget that has a container, and a openEditView(entt::entity) or something like that
+    // Enttiy tool content panel.
+    EntityPanelContent entityPanelContent;
 
     // Remove tool content.
     AUI::Text removeHintText;
