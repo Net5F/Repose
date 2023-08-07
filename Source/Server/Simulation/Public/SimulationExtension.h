@@ -2,9 +2,10 @@
 
 #include "ISimulationExtension.h"
 #include "SimulationExDependencies.h"
-#include "TeleportSystem.h"
+#include "BuildModeEntityToolSystem.h"
 #include "MazeGenerationSystem.h"
 #include "PlantSystem.h"
+#include "TeleportSystem.h"
 
 namespace AM
 {
@@ -73,6 +74,7 @@ public:
     bool isExtentEditable(const TileExtent& tileExtent) override;
 
 private:
+    BuildModeEntityToolSystem buildModeEntityToolSystem;
     MazeGenerationSystem mazeGenerationSystem;
     PlantSystem plantSystem;
     TeleportSystem teleportSystem;

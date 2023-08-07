@@ -16,7 +16,7 @@ class RemoveTool : public BuildTool
 public:
     RemoveTool(const World& inWorld,
                const WorldObjectLocator& inWorldObjectLocator,
-               EventDispatcher& inUiEventDispatcher);
+               Network& inNetwork);
 
     void onMouseDown(AUI::MouseButtonType buttonType,
                      const SDL_Point& cursorPosition) override;

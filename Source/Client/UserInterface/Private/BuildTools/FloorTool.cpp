@@ -1,4 +1,6 @@
 #include "FloorTool.h"
+#include "World.h"
+#include "Network.h"
 #include "TileAddLayer.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
@@ -7,8 +9,8 @@ namespace AM
 {
 namespace Client 
 {
-FloorTool::FloorTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
-: BuildTool(inWorld, inUiEventDispatcher)
+FloorTool::FloorTool(const World& inWorld, Network& inNetwork)
+: BuildTool(inWorld, inNetwork)
 , selectedSpriteSet{nullptr}
 {
 }
@@ -30,10 +32,10 @@ void FloorTool::onMouseDown(AUI::MouseButtonType buttonType,
     // sprite.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
-        // Tell the sim to add the layer.
-        uiEventDispatcher.emplace<TileAddLayer>(
+        // Tell the server to add the layer.
+        network.serializeAndSend(TileAddLayer{
             mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Floor,
-            selectedSpriteSet->numericID, 0);
+            selectedSpriteSet->numericID, 0});
     }
 }
 

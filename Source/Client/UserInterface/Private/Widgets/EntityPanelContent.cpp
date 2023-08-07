@@ -99,6 +99,8 @@ void EntityPanelContent::setBuildTool(
 
     // Register our callbacks.
     if (entityTool != nullptr) {
+        entityTool->setOnSelectionCleared(
+            [this]() { buildPanel.clearSelectedThumbnail(); });
     }
 }
 

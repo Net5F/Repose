@@ -1,5 +1,6 @@
 #include "WallTool.h"
 #include "World.h"
+#include "Network.h"
 #include "TileAddLayer.h"
 #include "Transforms.h"
 #include "QueuedEvents.h"
@@ -11,8 +12,8 @@ namespace AM
 namespace Client 
 {
 
-WallTool::WallTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
-: BuildTool(inWorld, inUiEventDispatcher)
+WallTool::WallTool(const World& inWorld, Network& inNetwork)
+: BuildTool(inWorld, inNetwork)
 , selectedSpriteSet{nullptr}
 {
 }
@@ -63,9 +64,9 @@ void WallTool::onMouseDown(AUI::MouseButtonType buttonType,
                 }
             }
 
-            uiEventDispatcher.emplace<TileAddLayer>(
+            network.serializeAndSend(TileAddLayer{
                 phantomInfo.tileX, phantomInfo.tileY, TileLayer::Type::Wall,
-                selectedSpriteSet->numericID, wallType);
+                selectedSpriteSet->numericID, wallType});
         }
     }
 }

@@ -38,7 +38,7 @@ BuildPanel::BuildPanel(Network& inNetwork, SpriteData& inSpriteData,
                    MainButton{{164, 168, 114, 32}, "Floor Cover", "FloorCoveringToolButton"},
                    MainButton{{164, 204, 114, 32}, "Wall", "WallToolButton"},
                    MainButton{{164, 240, 114, 32}, "Object", "ObjectTileLayerToolButton"},
-                   MainButton{{1642, 132, 114, 32}, "Object", "ObjectEntityToolButton"},
+                   MainButton{{1642, 132, 114, 32}, "Entity", "EntityToolButton"},
                    MainButton{{1642, 220, 114, 32}, "Remove", "RemoveToolButton"}}
 {
     // Add our children so they're included in rendering, etc.
@@ -141,12 +141,19 @@ BuildPanel::BuildPanel(Network& inNetwork, SpriteData& inSpriteData,
 void BuildPanel::setSelectedThumbnail(AUI::Thumbnail& newSelectedThumbnail)
 {
     // If there's an old selection, deselect it.
-    if (selectedThumbnail != nullptr) {
-        selectedThumbnail->deselect();
-    }
+    clearSelectedThumbnail();
 
     // Set this thumbnail as the new selection.
     selectedThumbnail = &newSelectedThumbnail;
+}
+
+void BuildPanel::clearSelectedThumbnail()
+{
+    // If there's an old selection, deselect it.
+    if (selectedThumbnail != nullptr) {
+        selectedThumbnail->deselect();
+        selectedThumbnail = nullptr;
+    }
 }
 
 void BuildPanel::addTileSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,

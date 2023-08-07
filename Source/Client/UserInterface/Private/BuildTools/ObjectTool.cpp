@@ -1,4 +1,6 @@
 #include "ObjectTool.h"
+#include "World.h"
+#include "Network.h"
 #include "TileAddLayer.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
@@ -9,8 +11,8 @@ namespace AM
 namespace Client 
 {
 
-ObjectTool::ObjectTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
-: BuildTool(inWorld, inUiEventDispatcher)
+ObjectTool::ObjectTool(const World& inWorld, Network& inNetwork)
+: BuildTool(inWorld, inNetwork)
 , selectedSpriteSet{nullptr}
 , selectedSpriteIndex{0}
 {
@@ -47,10 +49,10 @@ void ObjectTool::onMouseDown(AUI::MouseButtonType buttonType,
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
         // Tell the sim to add the layer.
-        uiEventDispatcher.emplace<TileAddLayer>(
-            mouseTilePosition.x, mouseTilePosition.y,
-            TileLayer::Type::Object, selectedSpriteSet->numericID,
-            static_cast<Uint8>(validSpriteIndices[selectedSpriteIndex]));
+        network.serializeAndSend(TileAddLayer{
+            mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Object,
+            selectedSpriteSet->numericID,
+            static_cast<Uint8>(validSpriteIndices[selectedSpriteIndex])});
     }
 }
 

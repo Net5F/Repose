@@ -1,4 +1,6 @@
 #include "RemoveTool.h"
+#include "World.h"
+#include "Network.h"
 #include "WorldObjectLocator.h"
 #include "TileRemoveLayer.h"
 #include "World.h"
@@ -13,8 +15,8 @@ namespace Client
 
 RemoveTool::RemoveTool(const World& inWorld,
                        const WorldObjectLocator& inWorldObjectLocator,
-                       EventDispatcher& inUiEventDispatcher)
-: BuildTool(inWorld, inUiEventDispatcher)
+                       Network& inNetwork)
+: BuildTool(inWorld, inNetwork)
 , worldObjectLocator{inWorldObjectLocator}
 , highlightColor{255, 220, 0, 255}
 {
@@ -43,9 +45,9 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
         }
         else {
             // Didn't hit a removable object. Tell the sim to remove the floor.
-            uiEventDispatcher.emplace<TileRemoveLayer>(
-                mouseTilePosition.x, mouseTilePosition.y,
-                TileLayer::Type::Floor, 0, 0);
+            network.serializeAndSend(
+                TileRemoveLayer{mouseTilePosition.x, mouseTilePosition.y,
+                                TileLayer::Type::Floor, 0, 0});
         }
     }
 }
@@ -125,12 +127,12 @@ void RemoveTool::requestRemoveTileLayer(int tileX, int tileY, TileLayer::Type la
             wallType = Wall::Type::North;
         }
 
-        uiEventDispatcher.emplace<TileRemoveLayer>(tileX, tileY, layerType,
-                                                   spriteSetID, wallType);
+        network.serializeAndSend(
+            TileRemoveLayer{tileX, tileY, layerType, spriteSetID, wallType});
     }
     else {
-        uiEventDispatcher.emplace<TileRemoveLayer>(tileX, tileY, layerType,
-                                                   spriteSetID, spriteIndex);
+        network.serializeAndSend(
+            TileRemoveLayer{tileX, tileY, layerType, spriteSetID, spriteIndex});
     }
 }
 

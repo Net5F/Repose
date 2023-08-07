@@ -13,7 +13,6 @@
 
 namespace AM
 {
-class EventDispatcher;
 struct Sprite;
 
 namespace Client
@@ -41,7 +40,7 @@ public:
     //-------------------------------------------------------------------------
     BuildOverlay(const World& inWorld, WorldSinks& inWorldSinks,
                  const WorldObjectLocator& inWorldObjectLocator,
-                 EventDispatcher& inUiEventDispatcher);
+                 Network& inNetwork);
 
     virtual ~BuildOverlay() = default;
 
@@ -118,7 +117,7 @@ private:
     const WorldObjectLocator& worldObjectLocator;
 
     /** We hold onto this so we can pass it to the current tool. */
-    EventDispatcher& uiEventDispatcher;
+    Network& network;
 
     /** The currently selected sprite set. */
     const SpriteSet* selectedSpriteSet;

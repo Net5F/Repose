@@ -1,17 +1,16 @@
-#include "EntityBuildModeSystem.h"
+#include "BuildModeEntityToolSystem.h"
 #include "World.h"
 #include "Network.h"
 #include "SpriteData.h"
 #include "EntityTemplates.h"
 #include "Log.h"
-#include "AMAssert.h"
 
 namespace AM
 {
 namespace Server
 {
 
-EntityBuildModeSystem::EntityBuildModeSystem(
+BuildModeEntityToolSystem::BuildModeEntityToolSystem(
     World& inWorld, EventDispatcher& inNetworkEventDispatcher,
     Network& inNetwork, SpriteData& inSpriteData)
 : world{inWorld}
@@ -21,7 +20,7 @@ EntityBuildModeSystem::EntityBuildModeSystem(
 {
 }
 
-void EntityBuildModeSystem::processEntityBuildModeMessages()
+void BuildModeEntityToolSystem::processMessages()
 {
     // TODO: Add any waiting templates
 

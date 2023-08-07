@@ -1,4 +1,6 @@
 #include "FloorCoveringTool.h"
+#include "World.h"
+#include "Network.h"
 #include "TileAddLayer.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
@@ -9,8 +11,8 @@ namespace AM
 namespace Client
 {
 
-FloorCoveringTool::FloorCoveringTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
-: BuildTool(inWorld, inUiEventDispatcher)
+FloorCoveringTool::FloorCoveringTool(const World& inWorld, Network& inNetwork)
+: BuildTool(inWorld, inNetwork)
 , selectedSpriteSet{nullptr}
 , selectedSpriteIndex{0}
 {
@@ -47,10 +49,10 @@ void FloorCoveringTool::onMouseDown(AUI::MouseButtonType buttonType,
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
         // Tell the sim to add the layer.
-        uiEventDispatcher.emplace<TileAddLayer>(
+        network.serializeAndSend(TileAddLayer{
             mouseTilePosition.x, mouseTilePosition.y,
             TileLayer::Type::FloorCovering, selectedSpriteSet->numericID,
-            static_cast<Uint8>(validSpriteIndices[selectedSpriteIndex]));
+            static_cast<Uint8>(validSpriteIndices[selectedSpriteIndex])});
     }
 }
 

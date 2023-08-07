@@ -1,6 +1,9 @@
 #include "EntityTool.h"
+#include "World.h"
+#include "Network.h"
 #include "WorldObjectLocator.h"
-#include "TileAddLayer.h"
+#include "EntityCreateRequest.h"
+#include "IsClientEntity.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
 #include "AMAssert.h"
@@ -12,10 +15,11 @@ namespace Client
 
 EntityTool::EntityTool(const World& inWorld,
                        const WorldObjectLocator& inWorldObjectLocator,
-                       EventDispatcher& inUiEventDispatcher)
-: BuildTool(inWorld, inUiEventDispatcher)
+                       Network& inNetwork)
+: BuildTool(inWorld, inNetwork)
 , worldObjectLocator{inWorldObjectLocator}
-, selectedObjectName{""}
+, highlightColor{200, 200, 200, 255}
+, selectedEntityName{""}
 , selectedSpriteSet{nullptr}
 , selectedSpriteIndex{0}
 {
@@ -29,7 +33,7 @@ void EntityTool::setSelectedEntity(
               "Tried to set invalid sprite.");
 
     // Save the name and sprite set.
-    selectedObjectName = name;
+    selectedEntityName = name;
     selectedSpriteSet = &spriteSet;
 
     // Iterate the set and track which indices contain a sprite.
@@ -47,6 +51,12 @@ void EntityTool::setSelectedEntity(
     AM_ASSERT(validSpriteIndices.size() > 0, "Set didn't contain any sprites.");
 }
 
+void EntityTool::setOnSelectionCleared(
+    std::function<void(void)> inOnSelectionCleared)
+{
+    onSelectionCleared = inOnSelectionCleared;
+}
+
 void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
                             const SDL_Point& cursorPosition)
 {
@@ -57,11 +67,21 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
     // sprite.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
-        // Tell the sim to add the layer.
-        uiEventDispatcher.emplace<TileAddLayer>(
-            mouseTilePosition.x, mouseTilePosition.y,
-            TileLayer::Type::Object, selectedSpriteSet->numericID,
-            static_cast<Uint8>(validSpriteIndices[selectedSpriteIndex]));
+        // Tell the sim to add the entity.
+        const Sprite* sprite{selectedSpriteSet->sprites[static_cast<Uint8>(
+            validSpriteIndices[selectedSpriteIndex])]};
+        network.serializeAndSend(
+            EntityCreateRequest{mouseWorldPosition, sprite->numericID});
+
+        // To deter users from placing a million entities, we deselect after 
+        // placement. This also makes it faster if the user's next goal is 
+        // to select the entity and modify it.
+        clearCurrentSelection();
+    }
+    else if (isActive && (buttonType == AUI::MouseButtonType::Right)
+             && (selectedSpriteSet != nullptr)) {
+        // The user right clicked. Deselect the current selection.
+        clearCurrentSelection();
     }
 }
 
@@ -86,12 +106,14 @@ void EntityTool::onMouseWheel(int amountScrolled)
 
     // Set the newly selected sprite as a phantom at the current location.
     phantomSprites.clear();
-    phantomSprites.emplace_back(
-        mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Object,
-        Wall::Type::None, Position{},
-        selectedSpriteSet->sprites[validSpriteIndices[selectedSpriteIndex]]);
+    PhantomSpriteInfo phantomInfo{};
+    phantomInfo.position = mouseWorldPosition;
+    phantomInfo.sprite
+        = selectedSpriteSet->sprites[validSpriteIndices[selectedSpriteIndex]];
+    phantomSprites.push_back(phantomInfo);
 }
 
+// TODO: This highlight behavior is acting weird, fix it.
 void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
 {
     // Call the parent function to update mouse position and isActive.
@@ -100,6 +122,7 @@ void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
     // Clear any old phantoms.
     phantomSprites.clear();
 
+    // TODO: Phantom isn't keeping up with cursor
     // If this tool is active.
     if (isActive) {
         // If we don't have a selection, check if we're hovering an object.
@@ -108,23 +131,37 @@ void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
             WorldObjectID objectID{
                 worldObjectLocator.getObjectUnderPoint(cursorPosition)};
 
-            // If we hit an entity, check if it's a dynamic object.
+            // If we hit an entity, check if it's a non-client entity.
             if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
-                // TODO: On this side, it won't have an OnUseScript. Need to 
-                //       check its SupportedInteractions for Use
-                //if (world.registry.all_of<OnUseScript>(*entity)) {
-                //}
+                if (!(world.registry.all_of<IsClientEntity>(*entity))) {
+                    // We hit a non-client entity. Highlight it.
+                    spriteColorMods.emplace_back(*entity, highlightColor);
+                }
             }
         }
         else {
             // We have a selection. Set the selected sprite as a phantom at 
             // the new location.
-            phantomSprites.emplace_back(
-                0, 0, TileLayer::Type::None, Wall::Type::None,
-                mouseWorldPosition,
-                selectedSpriteSet
-                    ->sprites[validSpriteIndices[selectedSpriteIndex]]);
+            PhantomSpriteInfo phantomInfo{};
+            phantomInfo.position = mouseWorldPosition;
+            phantomInfo.sprite
+                = selectedSpriteSet
+                      ->sprites[validSpriteIndices[selectedSpriteIndex]];
+            phantomSprites.push_back(phantomInfo);
         }
+    }
+}
+
+void EntityTool::clearCurrentSelection()
+{
+    selectedEntityName = "";
+    selectedSpriteSet = nullptr;
+    validSpriteIndices.clear();
+    selectedSpriteIndex = 0;
+    phantomSprites.clear();
+    spriteColorMods.clear();
+    if (onSelectionCleared != nullptr) {
+        onSelectionCleared();
     }
 }
 

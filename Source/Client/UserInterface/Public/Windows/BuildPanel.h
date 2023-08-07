@@ -51,6 +51,12 @@ public:
      */
     void setSelectedThumbnail(AUI::Thumbnail& newSelectedThumbnail);
 
+    /**
+     * Deselects the currently selected thumbnail (if there is one) without 
+     * setting a new selection.
+     */
+    void clearSelectedThumbnail();
+
 private:
     /**
      * Adds a sprite set thumbnail to the appropriate tileSpriteSetContainer.

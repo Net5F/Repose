@@ -1,5 +1,6 @@
 #include "BuildTool.h"
 #include "World.h"
+#include "Network.h"
 #include "Transforms.h"
 #include "Ignore.h"
 
@@ -8,9 +9,9 @@ namespace AM
 namespace Client
 {
 
-BuildTool::BuildTool(const World& inWorld, EventDispatcher& inUiEventDispatcher)
+BuildTool::BuildTool(const World& inWorld, Network& inNetwork)
 : world{inWorld}
-, uiEventDispatcher{inUiEventDispatcher}
+, network{inNetwork}
 , camera{}
 , mapTileExtent{}
 , mouseWorldPosition{}

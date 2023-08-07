@@ -1,4 +1,7 @@
 #include "SimulationExtension.h"
+#include "World.h"
+#include "Network.h"
+#include "SpriteData.h"
 #include "TileExtent.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
@@ -10,7 +13,9 @@ namespace Server
 {
 
 SimulationExtension::SimulationExtension(SimulationExDependencies deps)
-: mazeGenerationSystem{deps.world, deps.spriteData}
+: buildModeEntityToolSystem{deps.world, deps.network.getEventDispatcher(),
+                        deps.network, deps.spriteData}
+, mazeGenerationSystem{deps.world, deps.spriteData}
 , plantSystem{deps.world, deps.spriteData}
 , teleportSystem{deps.world}
 {
@@ -20,6 +25,10 @@ void SimulationExtension::beforeAll() {}
 
 void SimulationExtension::afterMapAndConnectionUpdates()
 {
+    // Respond to any build mode entity tool messages that aren't handled 
+    // by the engine.
+    buildModeEntityToolSystem.processMessages();
+
     // Regenerate the maze, if enough time has passed.
     mazeGenerationSystem.regenerateMazeIfNecessary();
 

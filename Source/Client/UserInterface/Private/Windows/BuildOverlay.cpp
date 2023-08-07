@@ -22,11 +22,11 @@ namespace Client
 {
 BuildOverlay::BuildOverlay(const World& inWorld, WorldSinks& inWorldSinks,
                            const WorldObjectLocator& inWorldObjectLocator,
-                           EventDispatcher& inUiEventDispatcher)
+                           Network& inNetwork)
 : AUI::Window({0, 0, 1920, 744}, "BuildOverlay")
 , world{inWorld}
 , worldObjectLocator{inWorldObjectLocator}
-, uiEventDispatcher{inUiEventDispatcher}
+, network{inNetwork}
 , selectedSpriteSet{nullptr}
 , currentBuildTool{nullptr}
 , camera{}
@@ -53,32 +53,32 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
     switch (toolType) {
         case BuildTool::Type::Floor: {
             currentBuildTool
-                = std::make_unique<FloorTool>(world, uiEventDispatcher);
+                = std::make_unique<FloorTool>(world, network);
             break;
         }
         case BuildTool::Type::FloorCovering: {
             currentBuildTool = std::make_unique<FloorCoveringTool>(
-                world, uiEventDispatcher);
+                world, network);
             break;
         }
         case BuildTool::Type::Wall: {
             currentBuildTool
-                = std::make_unique<WallTool>(world, uiEventDispatcher);
+                = std::make_unique<WallTool>(world, network);
             break;
         }
         case BuildTool::Type::Object: {
             currentBuildTool
-                = std::make_unique<ObjectTool>(world, uiEventDispatcher);
+                = std::make_unique<ObjectTool>(world, network);
             break;
         }
         case BuildTool::Type::Entity: {
             currentBuildTool = std::make_unique<EntityTool>(
-                world, worldObjectLocator, uiEventDispatcher);
+                world, worldObjectLocator, network);
             break;
         }
         case BuildTool::Type::Remove: {
             currentBuildTool = std::make_unique<RemoveTool>(
-                world, worldObjectLocator, uiEventDispatcher);
+                world, worldObjectLocator, network);
             break;
         }
         default: {
@@ -146,6 +146,7 @@ AUI::EventResult BuildOverlay::onMouseDown(AUI::MouseButtonType buttonType,
 {
     if (currentBuildTool != nullptr) {
         currentBuildTool->onMouseDown(buttonType, cursorPosition);
+        return AUI::EventResult{.wasHandled{true}};
     }
 
     return AUI::EventResult{.wasHandled{true}};

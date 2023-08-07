@@ -22,7 +22,7 @@ MainScreen::MainScreen(const World& inWorld, WorldSinks& inWorldSinks,
 : AUI::Screen("MainScreen")
 , playerIsInBuildArea{false}
 , mainOverlay{}
-, buildOverlay{inWorld, inWorldSinks, inWorldObjectLocator, inUiEventDispatcher}
+, buildOverlay{inWorld, inWorldSinks, inWorldObjectLocator, inNetwork}
 , buildPanel{inNetwork, inSpriteData, buildOverlay}
 {
     // Add our windows so they're included in rendering, etc.

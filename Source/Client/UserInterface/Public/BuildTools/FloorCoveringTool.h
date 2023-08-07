@@ -16,7 +16,7 @@ namespace Client
 class FloorCoveringTool : public BuildTool
 {
 public:
-    FloorCoveringTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
+    FloorCoveringTool(const World& inWorld, Network& inNetwork);
 
     void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
 

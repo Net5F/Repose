@@ -13,12 +13,12 @@
 
 namespace AM
 {
-class EventDispatcher;
 struct SpriteSet;
 
 namespace Client
 {
 class World;
+class Network;
 
 /**
  * Base class for build mode tools that the user can use to modify the world.
@@ -42,7 +42,7 @@ public:
     //       something like a DisplayInfo struct with a getter that lets the 
     //       tool tell the overlay to render things.
 
-    BuildTool(const World& inWorld, EventDispatcher& inUiEventDispatcher);
+    BuildTool(const World& inWorld, Network& inNetwork);
 
     /**
      * Returns any phantom sprites that this build tool wants to render.
@@ -92,9 +92,8 @@ protected:
         decisions about what sprites need to be used. */
     const World& world;
 
-    /** Used for sending tile update requests to the sim, which forwards them 
-        to the server. */
-    EventDispatcher& uiEventDispatcher;
+    /** Used for sending tile update requests to the server. */
+    Network& network;
 
     /** The camera to use when doing screen -> world calcs. */
     Camera camera;

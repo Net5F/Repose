@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ProjectMessageType.h"
-#include "EntityInit.h"
+#include "ClientEntityInit.h"
 #include <SDL_stdinc.h>
 #include <string>
 #include <vector>
@@ -28,7 +28,8 @@ struct EntityTemplates {
     struct Data {
         std::string name{""};
 
-        // TODO: Figure out if we're sending object sprite sets or something else
+        // TODO: When we add character sprite sets, figure out what we're 
+        //       using/sending.
         Uint16 spriteSetID{0};
 
         Uint8 spriteIndex{0};
@@ -40,7 +41,7 @@ struct EntityTemplates {
 template<typename S>
 void serialize(S& serializer, EntityTemplates::Data& data)
 {
-    serializer.text1b(data.name, EntityInit::NAME_LENGTH);
+    serializer.text1b(data.name, ClientEntityInit::NAME_LENGTH);
     serializer.value2b(data.spriteSetID);
     serializer.value1b(data.spriteIndex);
 }
