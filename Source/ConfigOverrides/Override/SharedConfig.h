@@ -63,10 +63,10 @@ public:
               to something else. */
     static constexpr const char* DEFAULT_CHARACTER_SPRITE{"ghost_south"};
 
-    /** The string ID of the default sprite set for entities. */
-    static constexpr const char* DEFAULT_ENTITY_SPRITE_SET{"ghost"};
-    /** The index of the default sprite for entities. */
-    static constexpr Uint8 DEFAULT_ENTITY_SPRITE_INDEX{0};
+    /** The string ID of the default sprite set for dynamic objects. */
+    static constexpr const char* DEFAULT_DYNAMIC_OBJECT_SPRITE_SET{"sunflower"};
+    /** The index of the default sprite for dynamic objects. */
+    static constexpr Uint8 DEFAULT_DYNAMIC_OBJECT_SPRITE_INDEX{2};
 
     /** The speed that entities will move at. Eventually we'll support
         dynamically setting this based on stats, for now it's a constant. */

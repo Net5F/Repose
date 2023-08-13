@@ -6,8 +6,8 @@
 #include "FloorTool.h"
 #include "FloorCoveringTool.h"
 #include "WallTool.h"
-#include "ObjectTool.h"
-#include "EntityTool.h"
+#include "StaticObjectTool.h"
+#include "DynamicObjectTool.h"
 #include "RemoveTool.h"
 #include "Paths.h"
 #include "Transforms.h"
@@ -66,13 +66,13 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
                 = std::make_unique<WallTool>(world, network);
             break;
         }
-        case BuildTool::Type::Object: {
+        case BuildTool::Type::StaticObject: {
             currentBuildTool
-                = std::make_unique<ObjectTool>(world, network);
+                = std::make_unique<StaticObjectTool>(world, network);
             break;
         }
-        case BuildTool::Type::Entity: {
-            currentBuildTool = std::make_unique<EntityTool>(
+        case BuildTool::Type::DynamicObject: {
+            currentBuildTool = std::make_unique<DynamicObjectTool>(
                 world, worldObjectLocator, network);
             break;
         }

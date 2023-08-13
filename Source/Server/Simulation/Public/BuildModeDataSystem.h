@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EntityTemplatesRequest.h"
+#include "DynamicObjectTemplatesRequest.h"
 #include "QueuedEvents.h"
 
 namespace AM
@@ -13,13 +13,13 @@ class Network;
 class SpriteData;
 
 /**
- * Supports the build mode Entity tool by managing entity templates, 
- * providing script data, and creating entities.
+ * Responds to requests for template and script data, for use in a client's 
+ * build mode.
  */
-class BuildModeEntityToolSystem
+class BuildModeDataSystem
 {
 public:
-    BuildModeEntityToolSystem(World& inWorld,
+    BuildModeDataSystem(World& inWorld,
                               EventDispatcher& inNetworkEventDispatcher,
                               Network& inNetwork, SpriteData& inSpriteData);
 
@@ -39,7 +39,7 @@ private:
     // TODO: Remove when we remove the placeholder data?
     SpriteData& spriteData;
 
-    EventQueue<EntityTemplatesRequest> templatesRequestQueue;
+    EventQueue<DynamicObjectTemplatesRequest> objectTemplatesRequestQueue;
 };
 
 } // End namespace Server

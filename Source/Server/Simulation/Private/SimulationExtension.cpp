@@ -13,7 +13,7 @@ namespace Server
 {
 
 SimulationExtension::SimulationExtension(SimulationExDependencies deps)
-: buildModeEntityToolSystem{deps.world, deps.network.getEventDispatcher(),
+: buildModeDataSystem{deps.world, deps.network.getEventDispatcher(),
                         deps.network, deps.spriteData}
 , mazeGenerationSystem{deps.world, deps.spriteData}
 , plantSystem{deps.world, deps.spriteData}
@@ -25,9 +25,9 @@ void SimulationExtension::beforeAll() {}
 
 void SimulationExtension::afterMapAndConnectionUpdates()
 {
-    // Respond to any build mode entity tool messages that aren't handled 
+    // Respond to any build mode data messages that aren't handled 
     // by the engine.
-    buildModeEntityToolSystem.processMessages();
+    buildModeDataSystem.processMessages();
 
     // Regenerate the maze, if enough time has passed.
     mazeGenerationSystem.regenerateMazeIfNecessary();

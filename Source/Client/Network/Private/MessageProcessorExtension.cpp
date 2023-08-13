@@ -1,7 +1,7 @@
 #include "MessageProcessorExtension.h"
 #include "DispatchMessage.h"
 #include "ProjectMessageType.h"
-#include "EntityTemplates.h"
+#include "DynamicObjectTemplates.h"
 #include "Log.h"
 
 namespace AM
@@ -23,8 +23,8 @@ void MessageProcessorExtension::processReceivedMessage(Uint8 messageType,
     ProjectMessageType projectMessageType{
         static_cast<ProjectMessageType>(messageType)};
     switch (projectMessageType) {
-        case ProjectMessageType::EntityTemplates: {
-            dispatchMessage<EntityTemplates>(
+        case ProjectMessageType::DynamicObjectTemplates: {
+            dispatchMessage<DynamicObjectTemplates>(
                 messageBuffer, messageSize, networkEventDispatcher);
             break;
         }

@@ -1,8 +1,8 @@
-#include "EntityPanelContent.h"
+#include "DynamicObjectPanelContent.h"
 #include "SpriteData.h"
 #include "BuildPanel.h"
 #include "MainThumbnail.h"
-#include "EntityTool.h"
+#include "DynamicObjectTool.h"
 #include "Paths.h"
 #include "entt/entity/entity.hpp"
 
@@ -10,20 +10,22 @@ namespace AM
 {
 namespace Client
 {
-EntityPanelContent::EntityPanelContent(
+DynamicObjectPanelContent::DynamicObjectPanelContent(
     EventDispatcher& inNetworkEventDispatcher, SpriteData& inSpriteData,
     BuildPanel& inBuildPanel, const SDL_Rect& inScreenExtent,
     const std::string& inDebugName)
 : AUI::Widget(inScreenExtent, inDebugName)
 , spriteData{inSpriteData}
 , buildPanel{inBuildPanel}
-, entityTool{nullptr}
-, editingEntityID{entt::null}
+, dynamicObjectTool{nullptr}
+, editingObjectID{entt::null}
 , selectedSpriteThumbnail{nullptr}
-, entityTemplatesQueue{inNetworkEventDispatcher}
+, objectTemplatesQueue{inNetworkEventDispatcher}
 // Note: These dimensions are based on the top left that BuildPanel gives us.
 , templateContainer{{0, 0, logicalExtent.w, logicalExtent.h},
                     "TemplateContainer"}
+, spriteSetContainer{{0, 0, logicalExtent.w, logicalExtent.h},
+                    "SpriteSetContainer"}
 , nameLabel{{526, 1, 138, 36}, "NameLabel"}
 , nameInput{{468, 38, 255, 42}, "NameInput"}
 , changeScriptButton{{518, 113, 156, 36}, "Change Script", "ChangeScriptButton"}
@@ -33,6 +35,7 @@ EntityPanelContent::EntityPanelContent(
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(templateContainer);
+    children.push_back(spriteSetContainer);
     children.push_back(nameLabel);
     children.push_back(nameInput);
     children.push_back(changeScriptButton);
@@ -62,7 +65,7 @@ EntityPanelContent::EntityPanelContent(
     nameInput.setCursorColor({255, 255, 255, 255});
 
     nameInput.setOnTextCommitted([this]() {
-        // TODO: Send a "change name" or "update entity" or whatever
+        // TODO: Send a "change name" or "update object" or whatever
     });
 
     /* Containers */
@@ -72,6 +75,7 @@ EntityPanelContent::EntityPanelContent(
         container.setCellHeight(109 + 1);
     };
     setContainerStyle(templateContainer);
+    setContainerStyle(spriteSetContainer);
 
     // Hide the edit view widgets.
     nameLabel.setIsVisible(false);
@@ -85,31 +89,33 @@ EntityPanelContent::EntityPanelContent(
     });
 
     saveTemplateButton.setOnPressed([this]() {
-        // TODO: Send a save entity template message
+        // TODO: Send a save object template message
     });
 
     // Add the thumbnails that we can (we get some later from the server).
     addAddThumbnail();
+
+    // TODO: Add sprite set thumbnails
 }
 
-void EntityPanelContent::setBuildTool(
-    EntityTool* inEntityTool)
+void DynamicObjectPanelContent::setBuildTool(
+    DynamicObjectTool* inDynamicObjectTool)
 {
-    entityTool = inEntityTool;
+    dynamicObjectTool = inDynamicObjectTool;
 
     // Register our callbacks.
-    if (entityTool != nullptr) {
-        entityTool->setOnSelectionCleared(
+    if (dynamicObjectTool != nullptr) {
+        dynamicObjectTool->setOnSelectionCleared(
             [this]() { buildPanel.clearSelectedThumbnail(); });
     }
 }
 
-void EntityPanelContent::onTick(double timestepS)
+void DynamicObjectPanelContent::onTick(double timestepS)
 {
     // Process any waiting messages.
-    EntityTemplates entityTemplates{};
-    while (entityTemplatesQueue.pop(entityTemplates)) {
-        // Clear any existing entity templates (skipping the "add entity" 
+    DynamicObjectTemplates entityTemplates{};
+    while (objectTemplatesQueue.pop(entityTemplates)) {
+        // Clear any existing object templates (skipping the "add object" 
         // thumbnail).
         if (templateContainer.size() > 1) {
             templateContainer.erase(templateContainer.begin() + 1,
@@ -120,20 +126,20 @@ void EntityPanelContent::onTick(double timestepS)
     }
 }
 
-void EntityPanelContent::setObjectToEdit(
+void DynamicObjectPanelContent::setObjectToEdit(
     entt::entity ID, std::string name, const ObjectSpriteSet& spriteSet,
     Uint8 spriteIndex)
 {
-    editingEntityID = ID;
-    editingEntityName = name;
-    editingEntitySpriteSet = &spriteSet;
-    editingEntitySpriteIndex = spriteIndex;
+    editingObjectID = ID;
+    editingObjectName = name;
+    editingObjectSpriteSet = &spriteSet;
+    editingObjectSpriteIndex = spriteIndex;
 
     // Set the name input's text to match the new object.
     nameInput.setText(name);
 }
 
-void EntityPanelContent::openEditView()
+void DynamicObjectPanelContent::openEditView()
 {
     // Make all the normal view components invisible.
     templateContainer.setIsVisible(false);
@@ -145,7 +151,7 @@ void EntityPanelContent::openEditView()
     saveTemplateButton.setIsVisible(true);
 }
 
-void EntityPanelContent::closeEditView()
+void DynamicObjectPanelContent::closeEditView()
 {
     // Make all the edit view components invisible.
     nameLabel.setIsVisible(false);
@@ -157,7 +163,7 @@ void EntityPanelContent::closeEditView()
     templateContainer.setIsVisible(true);
 }
 
-void EntityPanelContent::addAddThumbnail()
+void DynamicObjectPanelContent::addAddThumbnail()
 {
     // Construct the new thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
@@ -166,7 +172,7 @@ void EntityPanelContent::addAddThumbnail()
     thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 
-    // Load the "add new entity" image.
+    // Load the "add new dynamic object" image.
     thumbnail.thumbnailImage.setSimpleImage(Paths::TEXTURE_DIR
                                             + "BuildPanel/EraserIcon_1600.png");
 
@@ -176,32 +182,33 @@ void EntityPanelContent::addAddThumbnail()
         buildPanel.setSelectedThumbnail(*selectedThumb);
 
         // Tell the tool that the selection changed.
-        entityTool->setSelectedEntity(
-            "NewEntity",
+        Rotation rotation{static_cast<Rotation::Direction>(
+            SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_INDEX)};
+        dynamicObjectTool->setSelectedObject(
+            "NewDynamicObject", rotation,
             spriteData.getObjectSpriteSet(
-                SharedConfig::DEFAULT_ENTITY_SPRITE_SET),
-            SharedConfig::DEFAULT_ENTITY_SPRITE_INDEX);
+                SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_SET));
     });
 
     templateContainer.push_back(std::move(thumbnailPtr));
 }
 
-void EntityPanelContent::addTemplateThumbnails(
-    const EntityTemplates& entityTemplates)
+void DynamicObjectPanelContent::addTemplateThumbnails(
+    const DynamicObjectTemplates& objectTemplates)
 {
-    // Add thumbnails for all of the given entity templates.
-    for (const auto& entityData : entityTemplates.templates) {
+    // Add thumbnails for all of the given dynamic object templates.
+    for (const auto& objectData : objectTemplates.templates) {
         // Construct the new thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
-            std::make_unique<MainThumbnail>("EntityThumbnail")};
+            std::make_unique<MainThumbnail>("DynamicObjectThumbnail")};
         MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 
         // Get the object's default sprite.
         const ObjectSpriteSet& spriteSet{
-            spriteData.getObjectSpriteSet(entityData.spriteSetID)};
-        const Sprite* sprite{spriteSet.sprites[entityData.spriteIndex]};
+            spriteData.getObjectSpriteSet(objectData.spriteSetID)};
+        const Sprite* sprite{spriteSet.sprites[objectData.rotation.direction]};
 
         // Calc a square texture extent that shows the bottom of the sprite 
         // (so we don't have to squash it).
@@ -220,13 +227,13 @@ void EntityPanelContent::addTemplateThumbnails(
 
         // Add the callback.
         thumbnail.setOnSelected([this, &spriteSet,
-                                 entityData](AUI::Thumbnail* selectedThumb) {
+                                 objectData](AUI::Thumbnail* selectedThumb) {
             // Set this thumbnail as the new selection.
             buildPanel.setSelectedThumbnail(*selectedThumb);
 
             // Tell the tool that the selection changed.
-            entityTool->setSelectedEntity(
-                entityData.name, spriteSet, entityData.spriteIndex);
+            dynamicObjectTool->setSelectedObject(
+                objectData.name, objectData.rotation, spriteSet);
         });
 
         templateContainer.push_back(std::move(thumbnailPtr));

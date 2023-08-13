@@ -1,9 +1,9 @@
-#include "EntityTool.h"
+#include "DynamicObjectTool.h"
 #include "World.h"
 #include "Network.h"
 #include "WorldObjectLocator.h"
-#include "EntityCreateRequest.h"
-#include "IsClientEntity.h"
+#include "DynamicObjectCreateRequest.h"
+#include "EntityType.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
 #include "AMAssert.h"
@@ -13,27 +13,27 @@ namespace AM
 namespace Client 
 {
 
-EntityTool::EntityTool(const World& inWorld,
+DynamicObjectTool::DynamicObjectTool(const World& inWorld,
                        const WorldObjectLocator& inWorldObjectLocator,
                        Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , worldObjectLocator{inWorldObjectLocator}
-, highlightColor{200, 200, 200, 255}
-, selectedEntityName{""}
+, highlightColor{255, 255, 255, 255}
+, selectedObjectName{""}
 , selectedSpriteSet{nullptr}
 , selectedSpriteIndex{0}
 {
 }
 
-void EntityTool::setSelectedEntity(
-    const std::string& name, const ObjectSpriteSet& spriteSet,
-    Uint8 defaultSpriteIndex)
+void DynamicObjectTool::setSelectedObject(const std::string& name,
+                                          const Rotation& rotation,
+                                          const ObjectSpriteSet& spriteSet)
 {
-    AM_ASSERT(spriteSet.sprites[defaultSpriteIndex] != nullptr,
+    AM_ASSERT(spriteSet.sprites[rotation.direction] != nullptr,
               "Tried to set invalid sprite.");
 
     // Save the name and sprite set.
-    selectedEntityName = name;
+    selectedObjectName = name;
     selectedSpriteSet = &spriteSet;
 
     // Iterate the set and track which indices contain a sprite.
@@ -42,8 +42,8 @@ void EntityTool::setSelectedEntity(
         if (spriteSet.sprites[i] != nullptr) {
             validSpriteIndices.emplace_back(i);
 
-            // Save the index of defaultSpriteIndex within validSpriteIndices.
-            if (i == defaultSpriteIndex) {
+            // Save the selected rotation's index within validSpriteIndices.
+            if (i == static_cast<std::size_t>(rotation.direction)) {
                 selectedSpriteIndex = (validSpriteIndices.size() - 1);
             }
         }
@@ -51,13 +51,13 @@ void EntityTool::setSelectedEntity(
     AM_ASSERT(validSpriteIndices.size() > 0, "Set didn't contain any sprites.");
 }
 
-void EntityTool::setOnSelectionCleared(
+void DynamicObjectTool::setOnSelectionCleared(
     std::function<void(void)> inOnSelectionCleared)
 {
     onSelectionCleared = inOnSelectionCleared;
 }
 
-void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
+void DynamicObjectTool::onMouseDown(AUI::MouseButtonType buttonType,
                             const SDL_Point& cursorPosition)
 {
     // Note: mouseTilePosition is set in onMouseMove().
@@ -67,15 +67,16 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
     // sprite.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
-        // Tell the sim to add the entity.
-        const Sprite* sprite{selectedSpriteSet->sprites[static_cast<Uint8>(
-            validSpriteIndices[selectedSpriteIndex])]};
-        network.serializeAndSend(
-            EntityCreateRequest{mouseWorldPosition, sprite->numericID});
+        // Tell the sim to add the object.
+        Rotation rotation{static_cast<Rotation::Direction>(
+            validSpriteIndices[selectedSpriteIndex])};
+        network.serializeAndSend(DynamicObjectCreateRequest{
+            selectedObjectName, mouseWorldPosition, rotation,
+            selectedSpriteSet->numericID});
 
         // To deter users from placing a million entities, we deselect after 
         // placement. This also makes it faster if the user's next goal is 
-        // to select the entity and modify it.
+        // to select the object and modify it.
         clearCurrentSelection();
     }
     else if (isActive && (buttonType == AUI::MouseButtonType::Right)
@@ -85,14 +86,14 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
     }
 }
 
-void EntityTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
+void DynamicObjectTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
                                    const SDL_Point& cursorPosition)
 {
     // We treat additional clicks as regular MouseDown events.
     onMouseDown(buttonType, cursorPosition);
 }
 
-void EntityTool::onMouseWheel(int amountScrolled)
+void DynamicObjectTool::onMouseWheel(int amountScrolled)
 {
     // If this tool isn't active, do nothing.
     if (!isActive) {
@@ -113,14 +114,14 @@ void EntityTool::onMouseWheel(int amountScrolled)
     phantomSprites.push_back(phantomInfo);
 }
 
-// TODO: This highlight behavior is acting weird, fix it.
-void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
+void DynamicObjectTool::onMouseMove(const SDL_Point& cursorPosition)
 {
     // Call the parent function to update mouse position and isActive.
     BuildTool::onMouseMove(cursorPosition);
 
-    // Clear any old phantoms.
+    // Clear any old phantoms and color mods.
     phantomSprites.clear();
+    spriteColorMods.clear();
 
     // TODO: Phantom isn't keeping up with cursor
     // If this tool is active.
@@ -131,10 +132,10 @@ void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
             WorldObjectID objectID{
                 worldObjectLocator.getObjectUnderPoint(cursorPosition)};
 
-            // If we hit an entity, check if it's a non-client entity.
+            // If we hit a dynamic object, highlight it.
             if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
-                if (!(world.registry.all_of<IsClientEntity>(*entity))) {
-                    // We hit a non-client entity. Highlight it.
+                EntityType entityType{world.registry.get<EntityType>(*entity)};
+                if (entityType == EntityType::DynamicObject) {
                     spriteColorMods.emplace_back(*entity, highlightColor);
                 }
             }
@@ -152,9 +153,9 @@ void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
     }
 }
 
-void EntityTool::clearCurrentSelection()
+void DynamicObjectTool::clearCurrentSelection()
 {
-    selectedEntityName = "";
+    selectedObjectName = "";
     selectedSpriteSet = nullptr;
     validSpriteIndices.clear();
     selectedSpriteIndex = 0;

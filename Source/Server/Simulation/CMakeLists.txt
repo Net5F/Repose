@@ -1,12 +1,12 @@
 target_sources(Server
     PRIVATE
-        Private/BuildModeEntityToolSystem.cpp
+        Private/BuildModeDataSystem.cpp
         Private/MazeGenerationSystem.cpp
         Private/PlantSystem.cpp
         Private/SimulationExtension.cpp
         Private/TeleportSystem.cpp
     PUBLIC
-        Public/BuildModeEntityToolSystem.h
+        Public/BuildModeDataSystem.h
         Public/MazeGenerationSystem.h
         Public/Plant.h
         Public/PlantRegion.h

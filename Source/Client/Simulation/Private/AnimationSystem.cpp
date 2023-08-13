@@ -1,6 +1,7 @@
 #include "AnimationSystem.h"
 #include "World.h"
 #include "SpriteData.h"
+#include "EntityType.h"
 #include "Rotation.h"
 #include "Sprite.h"
 #include "Log.h"
@@ -23,10 +24,17 @@ AnimationSystem::AnimationSystem(World& inWorld, SpriteData& inSpriteData)
 
 void AnimationSystem::updateAnimations()
 {
-    // Update all entity sprites to match current rotation.
-    auto view{world.registry.view<Rotation, Sprite>()};
+    // Update all client entity sprites to match current rotation.
+    auto view{world.registry.view<EntityType, Rotation, Sprite>()};
     for (entt::entity entity : view) {
-        auto [rotation, sprite] = view.get<Rotation, Sprite>(entity);
+        auto [entityType, rotation, sprite]
+            = view.get<EntityType, Rotation, Sprite>(entity);
+
+        // TODO: Remove ghost-specific logic and add support for NPCs.
+        // If this isn't a client entity, skip it.
+        if (entityType != EntityType::ClientEntity) {
+            continue;
+        }
 
         // If the new rotation includes the current-faced direction, don't
         // change the sprite.

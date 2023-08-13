@@ -2,6 +2,7 @@
 
 #include "ProjectMessageType.h"
 #include "ClientEntityInit.h"
+#include "Rotation.h"
 #include <SDL_stdinc.h>
 #include <string>
 #include <vector>
@@ -10,47 +11,45 @@ namespace AM
 {
 
 /**
- * Used to send the latest list of entity templates to a client.
+ * Used to send the latest list of dynamic object templates to a client.
  */
-struct EntityTemplates {
+struct DynamicObjectTemplates {
     // The MessageType enum value that this message corresponds to.
     // Declares this struct as a message that the Network can send and receive.
     static constexpr ProjectMessageType MESSAGE_TYPE{
-        ProjectMessageType::EntityTemplates};
+        ProjectMessageType::DynamicObjectTemplates};
 
     /** Used as a "we should never hit this" cap on the number of templates that
         we send at once. Only checked in debug builds. */
     static constexpr std::size_t MAX_TEMPLATES{1000};
 
     /**
-     * The data for a single entity.
+     * The data for a single dynamic object.
      */
     struct Data {
         std::string name{""};
 
-        // TODO: When we add character sprite sets, figure out what we're 
-        //       using/sending.
-        Uint16 spriteSetID{0};
+        Rotation rotation{};
 
-        Uint8 spriteIndex{0};
+        Uint16 spriteSetID{0};
     };
 
     std::vector<Data> templates;
 };
 
 template<typename S>
-void serialize(S& serializer, EntityTemplates::Data& data)
+void serialize(S& serializer, DynamicObjectTemplates::Data& data)
 {
     serializer.text1b(data.name, ClientEntityInit::NAME_LENGTH);
+    serializer.object(data.rotation);
     serializer.value2b(data.spriteSetID);
-    serializer.value1b(data.spriteIndex);
 }
 
 template<typename S>
-void serialize(S& serializer, EntityTemplates& entityTemplates)
+void serialize(S& serializer, DynamicObjectTemplates& dynamicObjectTemplates)
 {
-    serializer.container(entityTemplates.templates,
-                         EntityTemplates::MAX_TEMPLATES);
+    serializer.container(dynamicObjectTemplates.templates,
+                         DynamicObjectTemplates::MAX_TEMPLATES);
 }
 
 } // End namespace AM

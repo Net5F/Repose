@@ -3,7 +3,7 @@
 #include "MainButton.h"
 #include "TileLayers.h"
 #include "BuildTool.h"
-#include "EntityPanelContent.h"
+#include "DynamicObjectPanelContent.h"
 #include "Log.h"
 #include "AUI/Window.h"
 #include "AUI/Image.h"
@@ -104,11 +104,11 @@ private:
     // Wall tile layer tool content.
     AUI::VerticalGridContainer wallContainer;
 
-    // Object tile layer tool content.
-    AUI::VerticalGridContainer objectContainer;
+    // Static object tile layer tool content.
+    AUI::VerticalGridContainer staticObjectContainer;
 
-    // Enttiy tool content panel.
-    EntityPanelContent entityPanelContent;
+    // Dynamic object tool content panel.
+    DynamicObjectPanelContent dynamicObjectPanelContent;
 
     // Remove tool content.
     AUI::Text removeHintText;

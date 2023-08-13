@@ -11,25 +11,24 @@ namespace Client
 class WorldObjectLocator;
 
 /**
- * The build mode tool used for adding entities.
+ * The build mode tool used for adding object entities (dynamic objects).
  */
-class EntityTool : public BuildTool
+class DynamicObjectTool : public BuildTool
 {
 public:
-    EntityTool(const World& inWorld,
+    DynamicObjectTool(const World& inWorld,
                const WorldObjectLocator& inWorldObjectLocator,
                Network& inNetwork);
 
     /**
-     * Sets the currently selected entity. This selection will follow the 
-     * user's mouse, and will be placed if the user left clicks.
+     * Sets the currently selected dynamic object. This selection will follow 
+     * the user's mouse, and will be placed if the user left clicks.
      * 
      * Note: This tool has no concept of "templates". The content panel just 
      *       gives us the appropriate data to display and send.
      */
-    void setSelectedEntity(const std::string& name,
-                           const ObjectSpriteSet& spriteSet,
-                           Uint8 defaultSpriteIndex);
+    void setSelectedObject(const std::string& name, const Rotation& rotation,
+                           const ObjectSpriteSet& spriteSet);
 
     /**
      * @param inOnSelectionCleared  A callback for when the user right clicks 
@@ -50,18 +49,18 @@ private:
      */
     void clearCurrentSelection();
 
-    /** Used for finding entities that the mouse is hovering over or 
+    /** Used for finding objects that the mouse is hovering over or 
         clicking. */
     const WorldObjectLocator& worldObjectLocator;
 
-    /** The color used to highlight the hovered entity. */
+    /** The color used to highlight the hovered object. */
     const SDL_Color highlightColor;
 
-    /** The name of the currently selected entity. If empty, there's no 
+    /** The name of the currently selected object. If empty, there's no 
         current selection. */
-    std::string selectedEntityName;
+    std::string selectedObjectName;
 
-    /** The selected entity's sprite set. If nullptr, there's no current 
+    /** The selected object's sprite set. If nullptr, there's no current 
         selection. */
     const ObjectSpriteSet* selectedSpriteSet;
 

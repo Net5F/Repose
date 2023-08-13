@@ -15,11 +15,11 @@ enum class ProjectMessageType : Uint8 {
     // Note: The engine reserves values 0 - 124. 125 - 255 are free for our use.
 
     // Client -> Server Messages
-    EntityTemplatesRequest
+    DynamicObjectTemplatesRequest
       = static_cast<Uint8>(EngineMessageType::PROJECT_START),
 
     // Server -> Client Messages
-    EntityTemplates
+    DynamicObjectTemplates
 
     // Bidirectional Messages
 };

@@ -1,7 +1,7 @@
 #include "MessageProcessorExtension.h"
 #include "DispatchMessage.h"
 #include "ProjectMessageType.h"
-#include "EntityTemplatesRequest.h"
+#include "DynamicObjectTemplatesRequest.h"
 #include "Log.h"
 
 namespace AM
@@ -23,10 +23,10 @@ void MessageProcessorExtension::processReceivedMessage(
     ProjectMessageType projectMessageType{
         static_cast<ProjectMessageType>(messageType)};
     switch (projectMessageType) {
-        case ProjectMessageType::EntityTemplatesRequest: {
+        case ProjectMessageType::DynamicObjectTemplatesRequest: {
             handleEntityTemplatesRequest(netID, messageBuffer,
                                                 messageSize);
-            dispatchMessage<EntityTemplatesRequest>(
+            dispatchMessage<DynamicObjectTemplatesRequest>(
                 messageBuffer, messageSize, networkEventDispatcher);
             break;
         }
@@ -40,16 +40,16 @@ void MessageProcessorExtension::handleEntityTemplatesRequest(
     NetworkID netID, Uint8* messageBuffer, std::size_t messageSize)
 {
     // Deserialize the message.
-    EntityTemplatesRequest entityTemplatesRequest{};
+    DynamicObjectTemplatesRequest objectTemplatesRequest{};
     Deserialize::fromBuffer(messageBuffer, messageSize,
-                            entityTemplatesRequest);
+                            objectTemplatesRequest);
 
     // Fill in the network ID that we assigned to this client.
-    entityTemplatesRequest.netID = netID;
+    objectTemplatesRequest.netID = netID;
 
     // Push the message into any subscribed queues.
-    networkEventDispatcher.push<EntityTemplatesRequest>(
-        entityTemplatesRequest);
+    networkEventDispatcher.push<DynamicObjectTemplatesRequest>(
+        objectTemplatesRequest);
 }
 
 } // End namespace Server
