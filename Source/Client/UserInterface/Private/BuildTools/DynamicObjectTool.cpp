@@ -123,7 +123,6 @@ void DynamicObjectTool::onMouseMove(const SDL_Point& cursorPosition)
     phantomSprites.clear();
     spriteColorMods.clear();
 
-    // TODO: Phantom isn't keeping up with cursor
     // If this tool is active.
     if (isActive) {
         // If we don't have a selection, check if we're hovering an object.
