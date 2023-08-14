@@ -63,15 +63,16 @@ public:
     //-------------------------------------------------------------------------
     // Simulation System Hooks (Hooks into engine systems)
     //-------------------------------------------------------------------------
+    // TODO: Replace this with a permissions system.
     /**
-     * Called by the engine's TileUpdateSystem when a tile update request is 
+     * Called by the engine when a "add tile layer" or "create entity" message is 
      * received, before applying the update.
-     * Allows the project to place constraints on map modifications, such as
+     * Allows the project to place constraints on world modifications, such as
      * requiring certain permissions, or only allowing updates to certain areas.
      *
      * @return true if the extent is editable, else false.
      */
-    bool isExtentEditable(const TileExtent& tileExtent) override;
+    bool isExtentEditable(const TileExtent& tileExtent) const override;
 
 private:
     BuildModeDataSystem buildModeDataSystem;
