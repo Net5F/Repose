@@ -4,9 +4,13 @@
 #include "WorldObjectLocator.h"
 #include "DynamicObjectCreateRequest.h"
 #include "EntityType.h"
+#include "Name.h"
+#include "Rotation.h"
+#include "SpriteSets.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
 #include "AMAssert.h"
+#include "entt/entity/entity.hpp"
 
 namespace AM
 {
@@ -19,13 +23,15 @@ DynamicObjectTool::DynamicObjectTool(const World& inWorld,
 : BuildTool(inWorld, inNetwork)
 , worldObjectLocator{inWorldObjectLocator}
 , highlightColor{255, 255, 255, 255}
-, selectedObjectName{""}
-, selectedSpriteSet{nullptr}
-, selectedSpriteIndex{0}
+, selectedObject{entt::null}
+, selectedTemplateName{""}
+, selectedTemplateSpriteSet{nullptr}
+, selectedTemplateValidSpriteIndices{}
+, selectedTemplateSpriteIndex{0}
 {
 }
 
-void DynamicObjectTool::setSelectedObject(const std::string& name,
+void DynamicObjectTool::setSelectedTemplate(const std::string& name,
                                           const Rotation& rotation,
                                           const ObjectSpriteSet& spriteSet)
 {
@@ -33,22 +39,34 @@ void DynamicObjectTool::setSelectedObject(const std::string& name,
               "Tried to set invalid sprite.");
 
     // Save the name and sprite set.
-    selectedObjectName = name;
-    selectedSpriteSet = &spriteSet;
+    selectedTemplateName = name;
+    selectedTemplateSpriteSet = &spriteSet;
 
     // Iterate the set and track which indices contain a sprite.
-    validSpriteIndices.clear();
+    selectedTemplateValidSpriteIndices.clear();
     for (std::size_t i = 0; i < spriteSet.sprites.size(); ++i) {
         if (spriteSet.sprites[i] != nullptr) {
-            validSpriteIndices.emplace_back(i);
+            selectedTemplateValidSpriteIndices.emplace_back(
+                static_cast<Uint8>(i));
 
             // Save the selected rotation's index within validSpriteIndices.
             if (i == static_cast<std::size_t>(rotation.direction)) {
-                selectedSpriteIndex = (validSpriteIndices.size() - 1);
+                selectedTemplateSpriteIndex
+                    = (selectedTemplateValidSpriteIndices.size() - 1);
             }
         }
     }
-    AM_ASSERT(validSpriteIndices.size() > 0, "Set didn't contain any sprites.");
+    AM_ASSERT(selectedTemplateValidSpriteIndices.size() > 0,
+              "Set didn't contain any sprites.");
+}
+
+void DynamicObjectTool::setOnObjectSelected(
+    std::function<void(entt::entity objectEntityID, const std::string& name,
+                       const Rotation& rotation,
+                       const ObjectSpriteSet& spriteSet)>
+        inOnObjectSelected)
+{
+    onObjectSelected = inOnObjectSelected;
 }
 
 void DynamicObjectTool::setOnSelectionCleared(
@@ -63,24 +81,38 @@ void DynamicObjectTool::onMouseDown(AUI::MouseButtonType buttonType,
     // Note: mouseTilePosition is set in onMouseMove().
     ignore(cursorPosition);
 
-    // If this tool is active, the user left clicked, and we have a selected 
-    // sprite.
-    if (isActive && (buttonType == AUI::MouseButtonType::Left)
-        && (selectedSpriteSet != nullptr)) {
-        // Tell the sim to add the object.
-        Rotation rotation{static_cast<Rotation::Direction>(
-            validSpriteIndices[selectedSpriteIndex])};
-        network.serializeAndSend(DynamicObjectCreateRequest{
-            selectedObjectName, mouseWorldPosition, rotation,
-            selectedSpriteSet->numericID});
+    // If this tool is active and the user left clicked.
+    if (isActive && (buttonType == AUI::MouseButtonType::Left)) {
+        // If a template is selected in the content panel.
+        if (selectedTemplateSpriteSet != nullptr) {
+            // Tell the sim to create an object based on the template.
+            Rotation rotation{static_cast<Rotation::Direction>(
+                selectedTemplateValidSpriteIndices
+                    [selectedTemplateSpriteIndex])};
+            network.serializeAndSend(DynamicObjectCreateRequest{
+                selectedTemplateName, mouseWorldPosition, rotation,
+                selectedTemplateSpriteSet->numericID});
 
-        // To deter users from placing a million entities, we deselect after 
-        // placement. This also makes it faster if the user's next goal is 
-        // to select the object and modify it.
-        clearCurrentSelection();
+            // To deter users from placing a million entities, we deselect after
+            // placement. This also makes it faster if the user's next goal is
+            // to select the object and modify it.
+            clearCurrentSelection();
+        }
+        else {
+            // We don't have a template selected. Check if we're clicking a new
+            // object in the world.
+
+            // Get the first world object under the mouse.
+            WorldObjectID objectID{
+                worldObjectLocator.getObjectUnderPoint(cursorPosition)};
+
+            // If we hit a dynamic object try to select it.
+            if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
+                trySelectObject(*entity);
+            }
+        }
     }
-    else if (isActive && (buttonType == AUI::MouseButtonType::Right)
-             && (selectedSpriteSet != nullptr)) {
+    else if (isActive && (buttonType == AUI::MouseButtonType::Right)) {
         // The user right clicked. Deselect the current selection.
         clearCurrentSelection();
     }
@@ -95,22 +127,21 @@ void DynamicObjectTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
 
 void DynamicObjectTool::onMouseWheel(int amountScrolled)
 {
-    // If this tool isn't active, do nothing.
-    if (!isActive) {
+    // If this tool isn't active or there isn't a template selected, do nothing.
+    if (!isActive || (selectedTemplateSpriteSet == nullptr)) {
         return;
     }
 
     // Select the next sprite within the set, accounting for negative values.
-    selectedSpriteIndex
-        = (selectedSpriteIndex + amountScrolled + validSpriteIndices.size())
-          % validSpriteIndices.size();
+    selectedTemplateSpriteIndex = (selectedTemplateSpriteIndex + amountScrolled
+                                   + selectedTemplateValidSpriteIndices.size())
+                                  % selectedTemplateValidSpriteIndices.size();
 
     // Set the newly selected sprite as a phantom at the current location.
     phantomSprites.clear();
     PhantomSpriteInfo phantomInfo{};
     phantomInfo.position = mouseWorldPosition;
-    phantomInfo.sprite
-        = selectedSpriteSet->sprites[validSpriteIndices[selectedSpriteIndex]];
+    phantomInfo.sprite = getSelectedTemplateSprite();
     phantomSprites.push_back(phantomInfo);
 }
 
@@ -123,46 +154,99 @@ void DynamicObjectTool::onMouseMove(const SDL_Point& cursorPosition)
     phantomSprites.clear();
     spriteColorMods.clear();
 
+    // If we have a selected object, highlight it.
+    if (selectedObject != entt::null) {
+        spriteColorMods.emplace_back(selectedObject, highlightColor);
+    }
+
     // If this tool is active.
     if (isActive) {
-        // If we don't have a selection, check if we're hovering an object.
-        if (selectedSpriteSet == nullptr) {
+        // If we have a selection. Set the selected sprite as a phantom at 
+        // the new location.
+        if (selectedTemplateSpriteSet != nullptr) {
+            PhantomSpriteInfo phantomInfo{};
+            phantomInfo.position = mouseWorldPosition;
+            phantomInfo.sprite = getSelectedTemplateSprite();
+            phantomSprites.push_back(phantomInfo);
+        }
+        // Else we don't have a selection. Check if we're hovering an object.
+        else {
             // Get the first world object under the mouse.
             WorldObjectID objectID{
                 worldObjectLocator.getObjectUnderPoint(cursorPosition)};
 
-            // If we hit a dynamic object, highlight it.
+            // If we hit a dynamic object that isn't selected, highlight it.
             if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
                 EntityType entityType{world.registry.get<EntityType>(*entity)};
-                if (entityType == EntityType::DynamicObject) {
+                if ((entityType == EntityType::DynamicObject)
+                    && (*entity != selectedObject)) {
                     spriteColorMods.emplace_back(*entity, highlightColor);
                 }
             }
         }
-        else {
-            // We have a selection. Set the selected sprite as a phantom at 
-            // the new location.
-            PhantomSpriteInfo phantomInfo{};
-            phantomInfo.position = mouseWorldPosition;
-            phantomInfo.sprite
-                = selectedSpriteSet
-                      ->sprites[validSpriteIndices[selectedSpriteIndex]];
-            phantomSprites.push_back(phantomInfo);
+    }
+}
+
+void DynamicObjectTool::onMouseLeave()
+{
+    isActive = false;
+    phantomSprites.clear();
+    spriteColorMods.clear();
+
+    // If we have a selected widget, keep it highlighted.
+    if (selectedObject != entt::null) {
+        spriteColorMods.emplace_back(selectedObject, highlightColor);
+    }
+}
+
+void DynamicObjectTool::trySelectObject(entt::entity entity)
+{
+    // If the entity is a dynamic object and isn't already selected, select it.
+    EntityType entityType{world.registry.get<EntityType>(entity)};
+    if ((entityType == EntityType::DynamicObject)
+        && (entity != selectedObject)) {
+        clearCurrentSelection();
+
+        const Name& name{world.registry.get<Name>(entity)};
+        const Rotation& rotation{world.registry.get<Rotation>(entity)};
+        const ObjectSpriteSet& spriteSet{
+            world.registry.get<ObjectSpriteSet>(entity)};
+
+        selectedObject = entity;
+
+        if (onObjectSelected != nullptr) {
+            onObjectSelected(selectedObject, name.name, rotation, spriteSet);
         }
     }
 }
 
 void DynamicObjectTool::clearCurrentSelection()
 {
-    selectedObjectName = "";
-    selectedSpriteSet = nullptr;
-    validSpriteIndices.clear();
-    selectedSpriteIndex = 0;
-    phantomSprites.clear();
-    spriteColorMods.clear();
-    if (onSelectionCleared != nullptr) {
-        onSelectionCleared();
+    // If we have an object or template selected, clear everything.
+    if ((selectedObject != entt::null)
+        || (selectedTemplateSpriteSet != nullptr)) {
+        selectedObject = entt::null;
+        selectedTemplateName = "";
+        selectedTemplateSpriteSet = nullptr;
+        selectedTemplateValidSpriteIndices.clear();
+        selectedTemplateSpriteIndex = 0;
+        phantomSprites.clear();
+        spriteColorMods.clear();
+
+        if (onSelectionCleared != nullptr) {
+            onSelectionCleared();
+        }
     }
+}
+
+const Sprite* DynamicObjectTool::getSelectedTemplateSprite()
+{
+    if (selectedTemplateSpriteSet == nullptr) {
+        return nullptr;
+    }
+
+    return selectedTemplateSpriteSet->sprites
+        [selectedTemplateValidSpriteIndices[selectedTemplateSpriteIndex]];
 }
 
 } // End namespace Client

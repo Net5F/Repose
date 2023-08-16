@@ -28,6 +28,7 @@ DynamicObjectPanelContent::DynamicObjectPanelContent(
                     "SpriteSetContainer"}
 , nameLabel{{526, 1, 138, 36}, "NameLabel"}
 , nameInput{{468, 38, 255, 42}, "NameInput"}
+, changeSpriteButton{{308, 113, 160, 36}, "Change Sprite", "ChangeSpriteButton"}
 , changeScriptButton{{518, 113, 156, 36}, "Change Script", "ChangeScriptButton"}
 , saveTemplateButton{{724, 113, 188, 36},
                      "Save as Template",
@@ -38,6 +39,7 @@ DynamicObjectPanelContent::DynamicObjectPanelContent(
     children.push_back(spriteSetContainer);
     children.push_back(nameLabel);
     children.push_back(nameInput);
+    children.push_back(changeSpriteButton);
     children.push_back(changeScriptButton);
     children.push_back(saveTemplateButton);
 
@@ -60,7 +62,7 @@ DynamicObjectPanelContent::DynamicObjectPanelContent(
         (Paths::TEXTURE_DIR + "TextInput/Focused.png"), {8, 8, 8, 8});
     nameInput.setTextFont(((Paths::FONT_DIR + "Cagliostro-Regular.ttf")), 20);
     nameInput.setTextColor({255, 255, 255, 255});
-    nameInput.setPadding({0, 8, 0, 8});
+    nameInput.setPadding({0, 14, 0, 14});
     nameInput.setCursorWidth(2);
     nameInput.setCursorColor({255, 255, 255, 255});
 
@@ -80,6 +82,7 @@ DynamicObjectPanelContent::DynamicObjectPanelContent(
     // Hide the edit view widgets.
     nameLabel.setIsVisible(false);
     nameInput.setIsVisible(false);
+    changeSpriteButton.setIsVisible(false);
     changeScriptButton.setIsVisible(false);
     saveTemplateButton.setIsVisible(false);
 
@@ -105,8 +108,22 @@ void DynamicObjectPanelContent::setBuildTool(
 
     // Register our callbacks.
     if (dynamicObjectTool != nullptr) {
-        dynamicObjectTool->setOnSelectionCleared(
-            [this]() { buildPanel.clearSelectedThumbnail(); });
+        dynamicObjectTool->setOnObjectSelected(
+            [this](entt::entity objectEntityID, const std::string& name,
+                   const Rotation& rotation, const ObjectSpriteSet& spriteSet) {
+                // Save the object's data and switch to the edit view.
+                editingObjectID = objectEntityID;
+                editingObjectName = name;
+                editingObjectSpriteSet = &spriteSet;
+                editingObjectSpriteIndex
+                    = static_cast<Uint8>(rotation.direction);
+                openEditView();
+            });
+
+        dynamicObjectTool->setOnSelectionCleared([this]() {
+            buildPanel.clearSelectedThumbnail();
+            closeEditView();
+        });
     }
 }
 
@@ -141,12 +158,16 @@ void DynamicObjectPanelContent::setObjectToEdit(
 
 void DynamicObjectPanelContent::openEditView()
 {
+    // Update the component's data.
+    nameInput.setText(editingObjectName);
+
     // Make all the normal view components invisible.
     templateContainer.setIsVisible(false);
 
     // Make all the edit view components visible.
     nameLabel.setIsVisible(true);
     nameInput.setIsVisible(true);
+    changeSpriteButton.setIsVisible(true);
     changeScriptButton.setIsVisible(true);
     saveTemplateButton.setIsVisible(true);
 }
@@ -156,6 +177,7 @@ void DynamicObjectPanelContent::closeEditView()
     // Make all the edit view components invisible.
     nameLabel.setIsVisible(false);
     nameInput.setIsVisible(false);
+    changeSpriteButton.setIsVisible(false);
     changeScriptButton.setIsVisible(false);
     saveTemplateButton.setIsVisible(false);
 
@@ -184,7 +206,7 @@ void DynamicObjectPanelContent::addAddThumbnail()
         // Tell the tool that the selection changed.
         Rotation rotation{static_cast<Rotation::Direction>(
             SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_INDEX)};
-        dynamicObjectTool->setSelectedObject(
+        dynamicObjectTool->setSelectedTemplate(
             "NewDynamicObject", rotation,
             spriteData.getObjectSpriteSet(
                 SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_SET));
@@ -232,7 +254,7 @@ void DynamicObjectPanelContent::addTemplateThumbnails(
             buildPanel.setSelectedThumbnail(*selectedThumb);
 
             // Tell the tool that the selection changed.
-            dynamicObjectTool->setSelectedObject(
+            dynamicObjectTool->setSelectedTemplate(
                 objectData.name, objectData.rotation, spriteSet);
         });
 

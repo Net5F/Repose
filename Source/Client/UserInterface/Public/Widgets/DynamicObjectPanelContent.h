@@ -126,6 +126,8 @@ private:
 
     AUI::TextInput nameInput;
 
+    MainButton changeSpriteButton;
+
     MainButton changeScriptButton;
 
     MainButton saveTemplateButton;

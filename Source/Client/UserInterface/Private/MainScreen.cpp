@@ -34,14 +34,14 @@ MainScreen::MainScreen(const World& inWorld, WorldSinks& inWorldSinks,
     buildOverlay.setIsVisible(false);
     buildPanel.setIsVisible(false);
 
-    // If tile updates are restricted, we need to know when the player enters
+    // If world changes are restricted, we need to know when the player enters
     // or exits the build area.
-    if (SharedConfig::RESTRICT_TILE_UPDATES) {
+    if (SharedConfig::RESTRICT_WORLD_CHANGES) {
         inWorldSinks.playerPositionChanged
             .connect<&MainScreen::onPlayerPositionChanged>(*this);
     }
     else {
-        // Tile updates are unrestricted, so the player is always in the build
+        // World changes are unrestricted, so the player is always in the build
         // area.
         playerIsInBuildArea = true;
     }

@@ -51,7 +51,7 @@ bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
 
 bool SimulationExtension::isExtentEditable(const TileExtent& tileExtent) const
 {
-    if (SharedConfig::RESTRICT_TILE_UPDATES) {
+    if (SharedConfig::RESTRICT_WORLD_CHANGES) {
         // Only return true for updates within the build area.
         return VALID_BUILD_AREA_EXTENT.containsExtent(tileExtent);
     }
