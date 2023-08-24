@@ -42,7 +42,7 @@ public:
     //       something like a DisplayInfo struct with a getter that lets the 
     //       tool tell the overlay to render things.
 
-    BuildTool(const World& inWorld, Network& inNetwork);
+    BuildTool(World& inWorld, Network& inNetwork);
 
     /**
      * Returns any phantom sprites that this build tool wants to render.
@@ -88,9 +88,9 @@ public:
     virtual void onMouseLeave();
 
 protected:
-    /** Used for getting the world's tile map state so this tool can make 
-        decisions about what sprites need to be used. */
-    const World& world;
+    /** Used for getting the world state so our tools can make decisions and 
+        send messages. */
+    World& world;
 
     /** Used for sending tile update requests to the server. */
     Network& network;

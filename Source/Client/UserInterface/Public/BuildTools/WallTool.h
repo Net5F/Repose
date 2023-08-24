@@ -15,7 +15,7 @@ namespace Client
 class WallTool : public BuildTool
 {
 public:
-    WallTool(const World& inWorld, Network& inNetwork);
+    WallTool(World& inWorld, Network& inNetwork);
 
     void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
 

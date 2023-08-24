@@ -2,10 +2,8 @@
 #include "World.h"
 #include "Network.h"
 #include "WorldObjectLocator.h"
-#include "DynamicObjectCreateRequest.h"
+#include "DynamicObjectInitRequest.h"
 #include "EntityType.h"
-#include "Name.h"
-#include "Rotation.h"
 #include "SpriteSets.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
@@ -17,18 +15,21 @@ namespace AM
 namespace Client 
 {
 
-DynamicObjectTool::DynamicObjectTool(const World& inWorld,
+DynamicObjectTool::DynamicObjectTool(World& inWorld,
                        const WorldObjectLocator& inWorldObjectLocator,
                        Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , worldObjectLocator{inWorldObjectLocator}
 , highlightColor{255, 255, 255, 255}
-, selectedObject{entt::null}
+, selectedObjectID{entt::null}
 , selectedTemplateName{""}
 , selectedTemplateSpriteSet{nullptr}
 , selectedTemplateValidSpriteIndices{}
 , selectedTemplateSpriteIndex{0}
 {
+    // Listen for destruction events for the current selected object.
+    world.registry.on_destroy<entt::entity>()
+        .connect<&DynamicObjectTool::onEntityDestroyed>(this);
 }
 
 void DynamicObjectTool::setSelectedTemplate(const std::string& name,
@@ -61,10 +62,7 @@ void DynamicObjectTool::setSelectedTemplate(const std::string& name,
 }
 
 void DynamicObjectTool::setOnObjectSelected(
-    std::function<void(entt::entity objectEntityID, const std::string& name,
-                       const Rotation& rotation,
-                       const ObjectSpriteSet& spriteSet)>
-        inOnObjectSelected)
+    std::function<void(entt::entity objectEntityID)> inOnObjectSelected)
 {
     onObjectSelected = inOnObjectSelected;
 }
@@ -89,9 +87,9 @@ void DynamicObjectTool::onMouseDown(AUI::MouseButtonType buttonType,
             Rotation rotation{static_cast<Rotation::Direction>(
                 selectedTemplateValidSpriteIndices
                     [selectedTemplateSpriteIndex])};
-            network.serializeAndSend(DynamicObjectCreateRequest{
+            network.serializeAndSend(DynamicObjectInitRequest{entt::null,
                 selectedTemplateName, mouseWorldPosition, rotation,
-                selectedTemplateSpriteSet->numericID});
+                selectedTemplateSpriteSet->numericID, ""});
 
             // To deter users from placing a million entities, we deselect after
             // placement. This also makes it faster if the user's next goal is
@@ -155,8 +153,8 @@ void DynamicObjectTool::onMouseMove(const SDL_Point& cursorPosition)
     spriteColorMods.clear();
 
     // If we have a selected object, highlight it.
-    if (selectedObject != entt::null) {
-        spriteColorMods.emplace_back(selectedObject, highlightColor);
+    if (selectedObjectID != entt::null) {
+        spriteColorMods.emplace_back(selectedObjectID, highlightColor);
     }
 
     // If this tool is active.
@@ -179,7 +177,7 @@ void DynamicObjectTool::onMouseMove(const SDL_Point& cursorPosition)
             if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
                 EntityType entityType{world.registry.get<EntityType>(*entity)};
                 if ((entityType == EntityType::DynamicObject)
-                    && (*entity != selectedObject)) {
+                    && (*entity != selectedObjectID)) {
                     spriteColorMods.emplace_back(*entity, highlightColor);
                 }
             }
@@ -194,8 +192,8 @@ void DynamicObjectTool::onMouseLeave()
     spriteColorMods.clear();
 
     // If we have a selected widget, keep it highlighted.
-    if (selectedObject != entt::null) {
-        spriteColorMods.emplace_back(selectedObject, highlightColor);
+    if (selectedObjectID != entt::null) {
+        spriteColorMods.emplace_back(selectedObjectID, highlightColor);
     }
 }
 
@@ -204,28 +202,32 @@ void DynamicObjectTool::trySelectObject(entt::entity entity)
     // If the entity is a dynamic object and isn't already selected, select it.
     EntityType entityType{world.registry.get<EntityType>(entity)};
     if ((entityType == EntityType::DynamicObject)
-        && (entity != selectedObject)) {
+        && (entity != selectedObjectID)) {
         clearCurrentSelection();
 
-        const Name& name{world.registry.get<Name>(entity)};
-        const Rotation& rotation{world.registry.get<Rotation>(entity)};
-        const ObjectSpriteSet& spriteSet{
-            world.registry.get<ObjectSpriteSet>(entity)};
-
-        selectedObject = entity;
+        selectedObjectID = entity;
 
         if (onObjectSelected != nullptr) {
-            onObjectSelected(selectedObject, name.name, rotation, spriteSet);
+            onObjectSelected(selectedObjectID);
         }
+    }
+}
+
+void DynamicObjectTool::onEntityDestroyed(entt::registry& registry,
+                                                  entt::entity entity)
+{
+    // If the selected object was destroyed, clear our selection.
+    if (entity == selectedObjectID) {
+        clearCurrentSelection();
     }
 }
 
 void DynamicObjectTool::clearCurrentSelection()
 {
     // If we have an object or template selected, clear everything.
-    if ((selectedObject != entt::null)
+    if ((selectedObjectID != entt::null)
         || (selectedTemplateSpriteSet != nullptr)) {
-        selectedObject = entt::null;
+        selectedObjectID = entt::null;
         selectedTemplateName = "";
         selectedTemplateSpriteSet = nullptr;
         selectedTemplateValidSpriteIndices.clear();

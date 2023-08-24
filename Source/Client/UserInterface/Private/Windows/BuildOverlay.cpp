@@ -20,7 +20,7 @@ namespace AM
 {
 namespace Client
 {
-BuildOverlay::BuildOverlay(const World& inWorld, WorldSinks& inWorldSinks,
+BuildOverlay::BuildOverlay(World& inWorld, WorldSinks& inWorldSinks,
                            const WorldObjectLocator& inWorldObjectLocator,
                            Network& inNetwork)
 : AUI::Window({0, 0, 1920, 744}, "BuildOverlay")

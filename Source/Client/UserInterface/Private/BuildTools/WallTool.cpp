@@ -12,7 +12,7 @@ namespace AM
 namespace Client 
 {
 
-WallTool::WallTool(const World& inWorld, Network& inNetwork)
+WallTool::WallTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , selectedSpriteSet{nullptr}
 {

@@ -11,7 +11,7 @@ namespace AM
 namespace Client
 {
 
-FloorCoveringTool::FloorCoveringTool(const World& inWorld, Network& inNetwork)
+FloorCoveringTool::FloorCoveringTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , selectedSpriteSet{nullptr}
 , selectedSpriteIndex{0}

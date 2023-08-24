@@ -13,7 +13,7 @@ namespace AM
 namespace Client 
 {
 
-RemoveTool::RemoveTool(const World& inWorld,
+RemoveTool::RemoveTool(World& inWorld,
                        const WorldObjectLocator& inWorldObjectLocator,
                        Network& inNetwork)
 : BuildTool(inWorld, inNetwork)

@@ -1,31 +1,45 @@
 #include "DynamicObjectPanelContent.h"
+#include "World.h"
+#include "Network.h"
 #include "SpriteData.h"
 #include "BuildPanel.h"
 #include "MainThumbnail.h"
 #include "DynamicObjectTool.h"
+#include "Name.h"
+#include "Position.h"
+#include "Rotation.h"
+#include "SpriteSets.h"
+#include "DynamicObjectInitRequest.h"
+#include "InitScriptRequest.h"
+#include "SpriteChange.h"
 #include "Paths.h"
+#include "AMAssert.h"
 #include "entt/entity/entity.hpp"
+#include <fstream>
 
 namespace AM
 {
 namespace Client
 {
 DynamicObjectPanelContent::DynamicObjectPanelContent(
-    EventDispatcher& inNetworkEventDispatcher, SpriteData& inSpriteData,
+    World& inWorld, Network& inNetwork, SpriteData& inSpriteData,
     BuildPanel& inBuildPanel, const SDL_Rect& inScreenExtent,
     const std::string& inDebugName)
 : AUI::Widget(inScreenExtent, inDebugName)
+, world{inWorld}
+, network{inNetwork}
 , spriteData{inSpriteData}
 , buildPanel{inBuildPanel}
+, currentView{ViewType::Template}
 , dynamicObjectTool{nullptr}
 , editingObjectID{entt::null}
+, editingObjectInitScript{""}
 , selectedSpriteThumbnail{nullptr}
-, objectTemplatesQueue{inNetworkEventDispatcher}
+, objectTemplatesQueue{inNetwork.getEventDispatcher()}
+, initScriptQueue{inNetwork.getEventDispatcher()}
 // Note: These dimensions are based on the top left that BuildPanel gives us.
 , templateContainer{{0, 0, logicalExtent.w, logicalExtent.h},
                     "TemplateContainer"}
-, spriteSetContainer{{0, 0, logicalExtent.w, logicalExtent.h},
-                    "SpriteSetContainer"}
 , nameLabel{{526, 1, 138, 36}, "NameLabel"}
 , nameInput{{468, 38, 255, 42}, "NameInput"}
 , changeSpriteButton{{308, 113, 160, 36}, "Change Sprite", "ChangeSpriteButton"}
@@ -33,15 +47,17 @@ DynamicObjectPanelContent::DynamicObjectPanelContent(
 , saveTemplateButton{{724, 113, 188, 36},
                      "Save as Template",
                      "SaveTemplateButton"}
+, spriteSetContainer{{0, 0, logicalExtent.w, logicalExtent.h},
+                    "SpriteSetContainer"}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(templateContainer);
-    children.push_back(spriteSetContainer);
     children.push_back(nameLabel);
     children.push_back(nameInput);
     children.push_back(changeSpriteButton);
     children.push_back(changeScriptButton);
     children.push_back(saveTemplateButton);
+    children.push_back(spriteSetContainer);
 
     /* Label */
     auto setTextStyle = [](AUI::Text& text) {
@@ -52,6 +68,15 @@ DynamicObjectPanelContent::DynamicObjectPanelContent(
     };
     setTextStyle(nameLabel);
     nameLabel.setText("Name");
+
+    /* Containers */
+    auto setContainerStyle = [](AUI::VerticalGridContainer& container) {
+        container.setNumColumns(11);
+        container.setCellWidth(108);
+        container.setCellHeight(109 + 1);
+    };
+    setContainerStyle(templateContainer);
+    setContainerStyle(spriteSetContainer);
 
     /* Text input */
     nameInput.normalImage.setNineSliceImage(
@@ -67,38 +92,51 @@ DynamicObjectPanelContent::DynamicObjectPanelContent(
     nameInput.setCursorColor({255, 255, 255, 255});
 
     nameInput.setOnTextCommitted([this]() {
-        // TODO: Send a "change name" or "update object" or whatever
+        // Send a re-init request with the updated name.
+        const entt::registry& registry{world.registry};
+        const auto& position{registry.get<Position>(editingObjectID)};
+        const auto& rotation{registry.get<Rotation>(editingObjectID)};
+        const auto& spriteSet{registry.get<ObjectSpriteSet>(editingObjectID)};
+        network.serializeAndSend(DynamicObjectInitRequest{
+            editingObjectID, nameInput.getText(), position, rotation,
+            spriteSet.numericID, editingObjectInitScript});
     });
 
-    /* Containers */
-    auto setContainerStyle = [](AUI::VerticalGridContainer& container) {
-        container.setNumColumns(11);
-        container.setCellWidth(108);
-        container.setCellHeight(109 + 1);
-    };
-    setContainerStyle(templateContainer);
-    setContainerStyle(spriteSetContainer);
-
-    // Hide the edit view widgets.
-    nameLabel.setIsVisible(false);
-    nameInput.setIsVisible(false);
-    changeSpriteButton.setIsVisible(false);
-    changeScriptButton.setIsVisible(false);
-    saveTemplateButton.setIsVisible(false);
-
     /* Buttons */
+    changeSpriteButton.setOnPressed(
+        [this]() { changeView(ViewType::SpriteSet); });
+
     changeScriptButton.setOnPressed([this]() {
-        // TODO: Open the file picker and send the change message
+        // Send a re-init request with the updated script.
+        const entt::registry& registry{world.registry};
+        const auto& name{registry.get<Name>(editingObjectID)};
+        const auto& position{registry.get<Position>(editingObjectID)};
+        const auto& rotation{registry.get<Rotation>(editingObjectID)};
+        const auto& spriteSet{registry.get<ObjectSpriteSet>(editingObjectID)};
+        std::string script{""};
+        // TEMP
+        std::ifstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
+        if (scriptFile.is_open()) {
+            std::stringstream buffer;
+            buffer << scriptFile.rdbuf();
+            script = buffer.str();
+        }
+        // TEMP
+        network.serializeAndSend(
+            DynamicObjectInitRequest{editingObjectID, name.name, position,
+                                     rotation, spriteSet.numericID, script});
     });
 
     saveTemplateButton.setOnPressed([this]() {
-        // TODO: Send a save object template message
+        // TODO: Send an add object template message
     });
 
     // Add the thumbnails that we can (we get some later from the server).
     addAddThumbnail();
+    addSpriteSetThumbnails();
 
-    // TODO: Add sprite set thumbnails
+    // Hide any non-template-view widgets.
+    changeView(ViewType::Template);
 }
 
 void DynamicObjectPanelContent::setBuildTool(
@@ -109,20 +147,22 @@ void DynamicObjectPanelContent::setBuildTool(
     // Register our callbacks.
     if (dynamicObjectTool != nullptr) {
         dynamicObjectTool->setOnObjectSelected(
-            [this](entt::entity objectEntityID, const std::string& name,
-                   const Rotation& rotation, const ObjectSpriteSet& spriteSet) {
-                // Save the object's data and switch to the edit view.
+            [this](entt::entity objectEntityID) {
+                // Save the object's data.
                 editingObjectID = objectEntityID;
-                editingObjectName = name;
-                editingObjectSpriteSet = &spriteSet;
-                editingObjectSpriteIndex
-                    = static_cast<Uint8>(rotation.direction);
-                openEditView();
+
+                // Ask the server for the object's init script.
+                network.serializeAndSend(InitScriptRequest{editingObjectID});
+
+                // Switch to the edit view.
+                changeView(ViewType::Edit);
             });
 
         dynamicObjectTool->setOnSelectionCleared([this]() {
             buildPanel.clearSelectedThumbnail();
-            closeEditView();
+            if (currentView != ViewType::Template) {
+                changeView(ViewType::Template);
+            }
         });
     }
 }
@@ -141,48 +181,63 @@ void DynamicObjectPanelContent::onTick(double timestepS)
 
         addTemplateThumbnails(entityTemplates);
     }
+
+    InitScriptResponse initScriptResponse{};
+    while (initScriptQueue.pop(initScriptResponse)) {
+        // If the received script is for the currently selected entity, save it.
+        if (initScriptResponse.entity == editingObjectID) {
+            editingObjectInitScript = initScriptResponse.initScript;
+
+            // TEMP
+            // Write to CurrentScript.lua
+            std::ofstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
+            scriptFile << initScriptResponse.initScript;
+            LOG_INFO("Received script. Saved to CurrentScript.lua");
+            // TEMP
+        }
+    }
 }
 
-void DynamicObjectPanelContent::setObjectToEdit(
-    entt::entity ID, std::string name, const ObjectSpriteSet& spriteSet,
-    Uint8 spriteIndex)
+void DynamicObjectPanelContent::setObjectToEdit(entt::entity newEditingObjectID)
 {
-    editingObjectID = ID;
-    editingObjectName = name;
-    editingObjectSpriteSet = &spriteSet;
-    editingObjectSpriteIndex = spriteIndex;
+    editingObjectID = newEditingObjectID;
 
     // Set the name input's text to match the new object.
-    nameInput.setText(name);
+    nameInput.setText(world.registry.get<Name>(editingObjectID).name);
 }
 
-void DynamicObjectPanelContent::openEditView()
+void DynamicObjectPanelContent::changeView(ViewType newView)
 {
-    // Update the component's data.
-    nameInput.setText(editingObjectName);
-
-    // Make all the normal view components invisible.
+    // Hide everything.
     templateContainer.setIsVisible(false);
-
-    // Make all the edit view components visible.
-    nameLabel.setIsVisible(true);
-    nameInput.setIsVisible(true);
-    changeSpriteButton.setIsVisible(true);
-    changeScriptButton.setIsVisible(true);
-    saveTemplateButton.setIsVisible(true);
-}
-
-void DynamicObjectPanelContent::closeEditView()
-{
-    // Make all the edit view components invisible.
     nameLabel.setIsVisible(false);
     nameInput.setIsVisible(false);
     changeSpriteButton.setIsVisible(false);
     changeScriptButton.setIsVisible(false);
     saveTemplateButton.setIsVisible(false);
+    spriteSetContainer.setIsVisible(false);
 
-    // Make all the normal view components visible.
-    templateContainer.setIsVisible(true);
+    // Show the new view's widgets.
+    if (newView == ViewType::Template) {
+        // TODO: Select the correct thumbnail
+        templateContainer.setIsVisible(true);
+    }
+    else if (newView == ViewType::Edit) {
+        // Update the name component's data.
+        nameInput.setText(world.registry.get<Name>(editingObjectID).name);
+
+        nameLabel.setIsVisible(true);
+        nameInput.setIsVisible(true);
+        changeSpriteButton.setIsVisible(true);
+        changeScriptButton.setIsVisible(true);
+        saveTemplateButton.setIsVisible(true);
+    }
+    else if (newView == ViewType::SpriteSet) {
+        // TODO: Select the correct thumbnail
+        spriteSetContainer.setIsVisible(true);
+    }
+
+    currentView = newView;
 }
 
 void DynamicObjectPanelContent::addAddThumbnail()
@@ -227,7 +282,7 @@ void DynamicObjectPanelContent::addTemplateThumbnails(
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 
-        // Get the object's default sprite.
+        // Get the sprite.
         const ObjectSpriteSet& spriteSet{
             spriteData.getObjectSpriteSet(objectData.spriteSetID)};
         const Sprite* sprite{spriteSet.sprites[objectData.rotation.direction]};
@@ -259,6 +314,71 @@ void DynamicObjectPanelContent::addTemplateThumbnails(
         });
 
         templateContainer.push_back(std::move(thumbnailPtr));
+    }
+}
+
+void DynamicObjectPanelContent::addSpriteSetThumbnails()
+{
+    // Add thumbnails for all object sprite sets.
+    for (const ObjectSpriteSet& spriteSet :
+         spriteData.getAllObjectSpriteSets()) {
+        // Construct the new thumbnail.
+        std::unique_ptr<AUI::Widget> thumbnailPtr{
+            std::make_unique<MainThumbnail>("DynamicObjectThumbnail")};
+        MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
+        thumbnail.setText("");
+        thumbnail.setIsActivateable(false);
+
+        // Find the first sprite in the set.
+        const Sprite* sprite{nullptr};
+        for (const Sprite* spritePtr : spriteSet.sprites) {
+            if (spritePtr != nullptr) {
+                sprite = spritePtr;
+            }
+        }
+        AM_ASSERT(sprite != nullptr, "No valid sprite found in set.");
+
+        // Calc a square texture extent that shows the bottom of the sprite 
+        // (so we don't have to squash it).
+        SpriteRenderData renderData{
+            spriteData.getRenderData(sprite->numericID)};
+        SDL_Rect textureExtent{renderData.textureExtent};
+        if (textureExtent.h > textureExtent.w) {
+            int diff{textureExtent.h - textureExtent.w};
+            textureExtent.h -= diff;
+            textureExtent.y += diff;
+        }
+
+        // Load the sprite's image.
+        thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath,
+                                                textureExtent);
+
+        // Find the first non-empty slot in the sprite set.
+        Uint8 firstSpriteIndex{SDL_MAX_UINT8};
+        for (std::size_t i = 0; i < spriteSet.sprites.size(); ++i) {
+            if (spriteSet.sprites[i] != nullptr) {
+                firstSpriteIndex = static_cast<Uint8>(i);
+            }
+        }
+        AM_ASSERT(firstSpriteIndex != SDL_MAX_UINT8,
+                  "Set didn't contain any sprites.");
+
+        // Add the callback.
+        thumbnail.setOnSelected([this, &spriteSet,
+                                 firstSpriteIndex](AUI::Thumbnail* selectedThumb) {
+            // This view closes immediately so we don't want to select this 
+            // thumbnail, but we should clear any existing selection.
+            buildPanel.clearSelectedThumbnail();
+
+            // Tell the server to change the object's sprite.
+            network.serializeAndSend(SpriteChange{
+                0, editingObjectID, spriteSet.numericID, firstSpriteIndex});
+
+            // Switch back to the edit view.
+            changeView(ViewType::Edit);
+        });
+
+        spriteSetContainer.push_back(std::move(thumbnailPtr));
     }
 }
 

@@ -29,7 +29,7 @@ class SpriteData;
 class MainScreen : public AUI::Screen
 {
 public:
-    MainScreen(const World& inWorld, WorldSinks& inWorldSinks,
+    MainScreen(World& inWorld, WorldSinks& inWorldSinks,
                const WorldObjectLocator& inWorldObjectLocator,
                EventDispatcher& inUiEventDispatcher,
                Network& inNetwork,

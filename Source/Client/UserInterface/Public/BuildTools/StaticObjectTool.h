@@ -15,7 +15,7 @@ namespace Client
 class StaticObjectTool : public BuildTool
 {
 public:
-    StaticObjectTool(const World& inWorld, Network& inNetwork);
+    StaticObjectTool(World& inWorld, Network& inNetwork);
 
     void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
 

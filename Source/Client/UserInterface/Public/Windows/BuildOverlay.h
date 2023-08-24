@@ -38,7 +38,7 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    BuildOverlay(const World& inWorld, WorldSinks& inWorldSinks,
+    BuildOverlay(World& inWorld, WorldSinks& inWorldSinks,
                  const WorldObjectLocator& inWorldObjectLocator,
                  Network& inNetwork);
 
@@ -111,7 +111,7 @@ private:
     void onTileMapExtentChanged(TileExtent inTileExtent);
 
     /** We hold onto this so we can pass it to the current tool. */
-    const World& world;
+    World& world;
 
     /** We hold onto this so we can pass it to the current tool. */
     const WorldObjectLocator& worldObjectLocator;

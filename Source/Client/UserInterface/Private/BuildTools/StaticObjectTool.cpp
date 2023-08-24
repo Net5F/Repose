@@ -11,7 +11,7 @@ namespace AM
 namespace Client 
 {
 
-StaticObjectTool::StaticObjectTool(const World& inWorld, Network& inNetwork)
+StaticObjectTool::StaticObjectTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , selectedSpriteSet{nullptr}
 , selectedSpriteIndex{0}

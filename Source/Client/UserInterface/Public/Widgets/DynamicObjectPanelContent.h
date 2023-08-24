@@ -1,8 +1,9 @@
 #pragma once
 
 #include "MainButton.h"
-#include "QueuedEvents.h"
 #include "DynamicObjectTemplates.h"
+#include "InitScriptResponse.h"
+#include "QueuedEvents.h"
 #include "AUI/Widget.h"
 #include "AUI/Text.h"
 #include "AUI/TextInput.h"
@@ -22,6 +23,8 @@ struct Sprite;
 
 namespace Client
 {
+class World;
+class Network;
 class SpriteData;
 class BuildPanel;
 class DynamicObjectTool;
@@ -32,7 +35,8 @@ class DynamicObjectTool;
 class DynamicObjectPanelContent : public AUI::Widget
 {
 public:
-    DynamicObjectPanelContent(EventDispatcher& inNetworkEventDispatcher,
+    DynamicObjectPanelContent(World& inWorld,
+                              Network& inNetwork,
                               SpriteData& inSpriteData,
                               BuildPanel& inBuildPanel,
                               const SDL_Rect& inScreenExtent,
@@ -54,18 +58,21 @@ private:
     /**
      * Sets the current object for the edit view.
      */
-    void setObjectToEdit(entt::entity ID, std::string name,
-                         const ObjectSpriteSet& spriteSet, Uint8 spriteIndex);
+    void setObjectToEdit(entt::entity newEditingObjectID);
+
+    enum class ViewType {
+        /** The default view, shows the available object templates. */
+        Template,
+        /** The edit view, for when an object is selected. */
+        Edit,
+        /** The sprite set view, for changing an object's sprite set. */
+        SpriteSet
+    };
 
     /**
-     * Opens the "dynamic object edit view" and hides the template container.
+     * Changes the current view to the given view.
      */
-    void openEditView();
-
-    /**
-     * Closes the edit view, showing the template container again.
-     */
-    void closeEditView();
+    void changeView(ViewType newView);
 
     /**
      * Add the "add dynamic object" thumbnail to the templates container.
@@ -78,14 +85,25 @@ private:
     void addTemplateThumbnails(
         const DynamicObjectTemplates& objectTemplates);
 
-    // TODO: Add function for adding sprites to spriteContainer. Make sure 
-    //       to blow out each sprite set into the individual sprites.
+    /**
+     * Fills the sprite set container with all of the object sprite sets.
+     */
+    void addSpriteSetThumbnails();
+
+    /** Used for getting the current editing object's component data. */
+    World& world;
+
+    /** Used for sending dynamic object init requests to the server. */
+    Network& network;
 
     /** Used to get the sprite sets that we fill the panel with. */
     SpriteData& spriteData;
 
     /** Used to properly deselect thumbnails when a new one is selected. */
     BuildPanel& buildPanel;
+
+    /** The current content view type. */
+    ViewType currentView;
 
     /** Used to tell the tool when a thumbnail is selected, and to register for 
         "a dynamic object was clicked" callbacks. */
@@ -94,14 +112,8 @@ private:
     /** The ID of the object that we're currently editing. */
     entt::entity editingObjectID;
 
-    /** The name of the object that we're currently editing. */
-    std::string editingObjectName;
-
-    /** The sprite set of the object that we're currently editing. */
-    const ObjectSpriteSet* editingObjectSpriteSet;
-
-    /** The sprite index of the object that we're currently editing. */
-    Uint8 editingObjectSpriteIndex;
+    /** The init script of the object that we're currently editing. */
+    std::string editingObjectInitScript;
 
     /** The currently selected sprite thumbnail in the "change sprite" view. */
     AUI::Thumbnail* selectedSpriteThumbnail;
@@ -111,15 +123,14 @@ private:
 
     EventQueue<DynamicObjectTemplates> objectTemplatesQueue;
 
+    EventQueue<InitScriptResponse> initScriptQueue;
+
     //-------------------------------------------------------------------------
     // Private child widgets
     //-------------------------------------------------------------------------
-    // Normal view
+    // Template view
     /** Holds the templates and the "New Dynamic Object" button. */
     AUI::VerticalGridContainer templateContainer;
-
-    /** Holds the dynamic object sprite sets. */
-    AUI::VerticalGridContainer spriteSetContainer;
 
     // Edit view
     AUI::Text nameLabel;
@@ -131,6 +142,11 @@ private:
     MainButton changeScriptButton;
 
     MainButton saveTemplateButton;
+
+    // SpriteSet selection view
+    /** Holds the dynamic object sprite sets that are used to change a 
+        selected object's sprite. */
+    AUI::VerticalGridContainer spriteSetContainer;
 };
 
 } // End namespace Client

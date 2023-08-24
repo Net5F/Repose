@@ -22,8 +22,9 @@ struct Sprite;
 
 namespace Client
 {
-class SpriteData;
+class World;
 class Network;
+class SpriteData;
 class BuildOverlay;
 
 /**
@@ -38,7 +39,7 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    BuildPanel(Network& inNetwork, SpriteData& inSpriteData,
+    BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteData,
                BuildOverlay& inBuildOverlay);
 
     ~BuildPanel() = default;

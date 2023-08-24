@@ -9,7 +9,7 @@ namespace AM
 namespace Client
 {
 
-BuildTool::BuildTool(const World& inWorld, Network& inNetwork)
+BuildTool::BuildTool(World& inWorld, Network& inNetwork)
 : world{inWorld}
 , network{inNetwork}
 , camera{}

@@ -19,7 +19,8 @@ enum class ProjectMessageType : Uint8 {
       = static_cast<Uint8>(EngineMessageType::PROJECT_START),
 
     // Server -> Client Messages
-    DynamicObjectTemplates
+    DynamicObjectTemplates,
+    DynamicObjectInitScript
 
     // Bidirectional Messages
 };

@@ -9,7 +9,7 @@ namespace AM
 {
 namespace Client 
 {
-FloorTool::FloorTool(const World& inWorld, Network& inNetwork)
+FloorTool::FloorTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , selectedSpriteSet{nullptr}
 {

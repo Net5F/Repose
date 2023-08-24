@@ -40,7 +40,7 @@ struct DynamicObjectTemplates {
 template<typename S>
 void serialize(S& serializer, DynamicObjectTemplates::Data& data)
 {
-    serializer.text1b(data.name, ClientEntityInit::NAME_LENGTH);
+    serializer.text1b(data.name, ClientEntityInit::MAX_NAME_LENGTH);
     serializer.object(data.rotation);
     serializer.value2b(data.spriteSetID);
 }

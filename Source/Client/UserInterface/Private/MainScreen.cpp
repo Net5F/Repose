@@ -14,7 +14,7 @@ namespace AM
 {
 namespace Client
 {
-MainScreen::MainScreen(const World& inWorld, WorldSinks& inWorldSinks,
+MainScreen::MainScreen(World& inWorld, WorldSinks& inWorldSinks,
                        const WorldObjectLocator& inWorldObjectLocator,
                        EventDispatcher& inUiEventDispatcher,
                        Network& inNetwork,
@@ -23,7 +23,7 @@ MainScreen::MainScreen(const World& inWorld, WorldSinks& inWorldSinks,
 , playerIsInBuildArea{false}
 , mainOverlay{}
 , buildOverlay{inWorld, inWorldSinks, inWorldObjectLocator, inNetwork}
-, buildPanel{inNetwork, inSpriteData, buildOverlay}
+, buildPanel{inWorld, inNetwork, inSpriteData, buildOverlay}
 {
     // Add our windows so they're included in rendering, etc.
     windows.push_back(mainOverlay);

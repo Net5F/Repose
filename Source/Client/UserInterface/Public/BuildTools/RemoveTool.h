@@ -14,7 +14,7 @@ class WorldObjectLocator;
 class RemoveTool : public BuildTool
 {
 public:
-    RemoveTool(const World& inWorld,
+    RemoveTool(World& inWorld,
                const WorldObjectLocator& inWorldObjectLocator,
                Network& inNetwork);
 

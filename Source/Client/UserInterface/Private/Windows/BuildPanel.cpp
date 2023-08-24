@@ -1,5 +1,6 @@
 #include "BuildPanel.h"
 #include "MainScreen.h"
+#include "World.h"
 #include "Network.h"
 #include "SpriteData.h"
 #include "BuildOverlay.h"
@@ -16,7 +17,7 @@ namespace AM
 {
 namespace Client
 {
-BuildPanel::BuildPanel(Network& inNetwork, SpriteData& inSpriteData,
+BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteData,
                        BuildOverlay& inBuildOverlay)
 : AUI::Window{{0, 761, 1920, 319}, "BuildPanel"}
 , network{inNetwork}
@@ -28,7 +29,7 @@ BuildPanel::BuildPanel(Network& inNetwork, SpriteData& inSpriteData,
 , floorCoveringContainer{{366 - 2, 91, 1188, 220}, "FloorCoveringContainer"}
 , wallContainer{{366 - 2, 91, 1188, 220}, "WallContainer"}
 , staticObjectContainer{{366 - 2, 91, 1188, 220}, "StaticObjectContainer"}
-, dynamicObjectPanelContent{network.getEventDispatcher(), spriteData, *this,
+, dynamicObjectPanelContent{inWorld, network, spriteData, *this,
                        {366 - 2, 91, 1188, 220}, "DynamicObjPanelContent"}
 , removeHintText{{679, 171, 562, 36}, "RemoveHintText"}
 , tileLayersLabel{{152, 92, 138, 36}, "TileLayersLabel"}

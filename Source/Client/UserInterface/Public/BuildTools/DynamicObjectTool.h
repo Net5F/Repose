@@ -1,6 +1,8 @@
 #pragma once
 
 #include "BuildTool.h"
+#include "InitScriptResponse.h"
+#include "QueuedEvents.h"
 #include "entt/fwd.hpp"
 
 namespace AM
@@ -10,6 +12,7 @@ struct ObjectSpriteSet;
 namespace Client 
 {
 class WorldObjectLocator;
+class Network;
 
 /**
  * The build mode tool used for adding object entities (dynamic objects).
@@ -17,7 +20,7 @@ class WorldObjectLocator;
 class DynamicObjectTool : public BuildTool
 {
 public:
-    DynamicObjectTool(const World& inWorld,
+    DynamicObjectTool(World& inWorld,
                const WorldObjectLocator& inWorldObjectLocator,
                Network& inNetwork);
 
@@ -35,10 +38,7 @@ public:
      *                            dynamic object that isn't already selected.
      */
     void setOnObjectSelected(
-        std::function<void(entt::entity objectEntityID, const std::string& name,
-                           const Rotation& rotation,
-                           const ObjectSpriteSet& spriteSet)>
-            inOnObjectSelected);
+        std::function<void(entt::entity objectEntityID)> inOnObjectSelected);
 
     /**
      * @param inOnSelectionCleared  A callback for when the user right clicks 
@@ -63,6 +63,11 @@ private:
     void trySelectObject(entt::entity entity);
 
     /**
+     * Listens for if the current selected object is destroyed.
+     */
+    void onEntityDestroyed(entt::registry& registry, entt::entity entity);
+
+    /**
      * If we have an entity or template selected, clears it and calls 
      * onSelectionCleared.
      */
@@ -83,7 +88,7 @@ private:
 
     // Note: We only have either an object or a template selected at one time.
     /** The selected object's ID. */
-    entt::entity selectedObject;
+    entt::entity selectedObjectID;
 
     /** The selected template's name. */
     std::string selectedTemplateName;
@@ -97,10 +102,7 @@ private:
     /** The selected template's sprite index. */
     std::size_t selectedTemplateSpriteIndex;
 
-    std::function<void(entt::entity objectEntityID, const std::string& name,
-                       const Rotation& rotation,
-                       const ObjectSpriteSet& spriteSet)>
-        onObjectSelected;
+    std::function<void(entt::entity objectEntityID)> onObjectSelected;
 
     std::function<void(void)> onSelectionCleared;
 };
