@@ -219,7 +219,7 @@ void DynamicObjectPanelContent::changeView(ViewType newView)
 
     // Show the new view's widgets.
     if (newView == ViewType::Template) {
-        // TODO: Select the correct thumbnail
+        buildPanel.clearSelectedThumbnail();
         templateContainer.setIsVisible(true);
     }
     else if (newView == ViewType::Edit) {

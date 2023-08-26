@@ -15,6 +15,11 @@ class WorldObjectLocator;
 class Network;
 
 /**
+ * TODO: Add Change Position and Change Rotation buttons
+ *       Make highlights look better
+ */
+
+/**
  * The build mode tool used for adding object entities (dynamic objects).
  */
 class DynamicObjectTool : public BuildTool
