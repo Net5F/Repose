@@ -1,6 +1,5 @@
 #pragma once
 
-#include "TilePosition.h"
 #include "Timer.h"
 
 namespace AM
@@ -9,38 +8,26 @@ namespace Server
 {
 
 /**
- * A single plant.
+ * The data associated with a plant entity.
  */
 struct Plant {
     /**
-     * Possible types of plant.
-     */
-    enum class Type : unsigned int {
-        Sunflower,
-    };
-
-    /**
      * The stages of life that a plant goes through.
-     * The values of stages 0 - 3 line up with their sprite's index within the 
-     * sunflower sprite set.
+     * As the plant progresses through stages 0 - 3, it will switch to the 
+     * sprite at the same index within the entity's current sprite set.
+     * E.g. when a plant progress to MidGrowth, it will switch to the sprite 
+     * at spriteSet.sprites[1].
      */
     enum class LifeStage : unsigned int {
         Sapling,
         MidGrowth,
         FullyGrown,
-        Dying,
         Dead
     };
 
-    /** The tile that this plant resides on. */
-    TilePosition position{-1, -1};
-
-    /** The type of plant that this is. */
-    Type type{Type::Sunflower};
-
     /** How long it takes for this plant to progress to the next stage, in
         seconds. */
-    double updateTimeS{0};
+    static constexpr float UPDATE_TIME_S{10};
 
     /** This plant's current stage of life. */
     LifeStage lifeStage{LifeStage::Sapling};

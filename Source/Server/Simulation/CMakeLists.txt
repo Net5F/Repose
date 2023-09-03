@@ -8,13 +8,12 @@ target_sources(Server
     PUBLIC
         Public/BuildModeDataSystem.h
         Public/MazeGenerationSystem.h
-        Public/Plant.h
-        Public/PlantRegion.h
         Public/PlantSystem.h
         Public/MazeTopology.h
         Public/MazeCell.h
         Public/SimulationExtension.h
         Public/TeleportSystem.h
+        Public/Components/Plant.h
 )
 
 target_include_directories(Server
@@ -22,4 +21,5 @@ target_include_directories(Server
         ${CMAKE_CURRENT_SOURCE_DIR}/Private
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Public
+        ${CMAKE_CURRENT_SOURCE_DIR}/Public/Components
 )

@@ -92,7 +92,7 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
 
     // For each entity in the maze, clear to the existing path or an exit.
     const std::vector<entt::entity>& entitiesInMaze{
-        world.entityLocator.getEntitiesFine(mazeExtent)};
+        world.entityLocator.getCollisions(mazeExtent)};
     for (const entt::entity entity : entitiesInMaze) {
         // Calc the tile that the entity's center is on.
         const Position& position{world.registry.get<Position>(entity)};

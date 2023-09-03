@@ -30,6 +30,7 @@ void MessageProcessorExtension::processReceivedMessage(Uint8 messageType,
         }
         default: {
             LOG_FATAL("Received unexpected message type: %u", messageType);
+            break;
         }
     }
 }

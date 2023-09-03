@@ -1,4 +1,5 @@
 #include "SimulationExtension.h"
+#include "Simulation.h"
 #include "Camera.h"
 #include "Log.h"
 
@@ -8,7 +9,7 @@ namespace Client
 {
 
 SimulationExtension::SimulationExtension(SimulationExDependencies deps)
-: animationSystem{deps.world, deps.spriteData}
+: animationSystem{deps.simulation.getWorld(), deps.spriteData}
 {
 }
 

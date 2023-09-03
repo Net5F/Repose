@@ -192,7 +192,7 @@ void DynamicObjectPanelContent::onTick(double timestepS)
             // Write to CurrentScript.lua
             std::ofstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
             scriptFile << initScriptResponse.initScript;
-            LOG_INFO("Received script. Saved to CurrentScript.lua");
+            LOG_INFO("Received script. Saved to InitScript.lua");
             // TEMP
         }
     }

@@ -1,13 +1,21 @@
 #pragma once
 
-#include "PlantRegion.h"
+#include "InteractionRequest.h"
+#include "TileExtent.h"
+#include "Timer.h"
+#include "entt/fwd.hpp"
+#include <queue>
 #include <random>
 
 namespace AM
 {
+struct Position;
+struct ObjectSpriteSet;
+
 namespace Server
 {
 
+class Simulation;
 class World;
 class SpriteData;
 
@@ -19,7 +27,7 @@ class SpriteData;
 class PlantSystem
 {
 public:
-    PlantSystem(World& inWorld, SpriteData& inSpriteData);
+    PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData);
 
     /**
      * Iterates through the plants and updates any that need to grow or die.
@@ -27,43 +35,44 @@ public:
     void updatePlants();
 
 private:
-    /** The minimum time a plant can take before updating. */
-    static constexpr float MINIMUM_UPDATE_TIME_S{5};
-
-    /** The maximum time a plant can take before updating. */
-    static constexpr float MAXIMUM_UPDATE_TIME_S{30};
+    /** How often to check if plants need to be updated. */
+    static constexpr double UPDATE_TIMESTEP_S{0.2};
 
     /**
-     * Updates the given plant to the next stage of life.
-     * If the plant dies, calls replantPlant().
+     * Updates the given plant entity to the next stage of life.
      */
-    void updatePlant(PlantRegion& region, Plant& plant);
+    void updatePlant(entt::entity plantEntity);
 
     /**
-     * Replants the given plant, re-randomizing its parameters and setting it
-     * back to LifeStage::Sapling.
+     * Constructs a new entity with a Plant component set to Sapling.
      */
-    void replantPlant(PlantRegion& region, Plant& plant);
+    void constructSapling(const Position& position);
+
+    /**
+     * Constructs a new entity with a Plant component set to Dead, and a 
+     * "Replant" interaction.
+     */
+    void constructDeadPlant(const Position& position);
+
+    /**
+     * Deletes the given old plant and plants a new sapling in its place.
+     */
+    void replantPlant(entt::entity oldPlant);
 
     /** Used to modify the tile map. */
     World& world;
-
     /** Used to get the plant sprites that we apply to the tile map. */
     SpriteData& spriteData;
 
-    /** The regions where plants are being grown. */
-    std::vector<PlantRegion> plantRegions;
+    Timer updateTimer;
 
-    // For random positions, types, and update times.
-    std::random_device randomDevice;
-    std::mt19937 generator;
+    // Queue for receiving interaction events.
+    std::queue<InteractionRequest> replantInteractionQueue;
 
-    /** Used for setting plant sprites. */
-    const Uint16 SUNFLOWER_SPRITE_SET_ID;
-    const Uint8 SUNFLOWER_SAPLING_INDEX;
-    const Uint8 SUNFLOWER_MIDGROWTH_INDEX;
-    const Uint8 SUNFLOWER_FULLYGROWN_INDEX;
-    const Uint8 SUNFLOWER_DYING_INDEX;
+    /** The world extent that the plants are located within. */
+    TileExtent plantExtent;
+
+    const ObjectSpriteSet& sunflowerSpriteSet;
 };
 
 } // End namespace Server

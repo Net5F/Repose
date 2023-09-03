@@ -1,8 +1,9 @@
 #include "SimulationExtension.h"
-#include "World.h"
+#include "Simulation.h"
 #include "Network.h"
 #include "SpriteData.h"
 #include "TileExtent.h"
+#include "InteractionRequest.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
 #include "Log.h"
@@ -13,11 +14,12 @@ namespace Server
 {
 
 SimulationExtension::SimulationExtension(SimulationExDependencies deps)
-: buildModeDataSystem{deps.world, deps.network.getEventDispatcher(),
-                        deps.network, deps.spriteData}
-, mazeGenerationSystem{deps.world, deps.spriteData}
-, plantSystem{deps.world, deps.spriteData}
-, teleportSystem{deps.world}
+: buildModeDataSystem{deps.simulation.getWorld(),
+                      deps.network.getEventDispatcher(), deps.network,
+                      deps.spriteData}
+, mazeGenerationSystem{deps.simulation.getWorld(), deps.spriteData}
+, plantSystem{deps.simulation, deps.spriteData}
+, teleportSystem{deps.simulation.getWorld()}
 {
 }
 

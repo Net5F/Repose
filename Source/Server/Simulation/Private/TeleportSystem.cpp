@@ -42,7 +42,7 @@ void TeleportSystem::teleportPlayers()
 
             // Get the list of entities that are touching this volume.
             std::vector<entt::entity>& entitiesIntersectingVolume{
-                world.entityLocator.getEntitiesFine(volume)};
+                world.entityLocator.getCollisions(volume)};
 
             // Teleport each entity to the destination.
             const Position& destination{teleportDestinations[i]};
