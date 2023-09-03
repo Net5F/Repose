@@ -22,12 +22,12 @@ PlantSystem::PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData)
 , spriteData{inSpriteData}
 , updateTimer{}
 , replantInteractionQueue{}
-, plantExtent{5, 36, 8, 11}
+, plantExtent{5, 36, 9, 11}
 , sunflowerSpriteSet{spriteData.getObjectSpriteSet("sunflower")}
 {
     // Construct all the sunflower entities.
-    for (int x = plantExtent.x; x <= plantExtent.xMax(); x += 2) {
-        for (int y = plantExtent.y; y <= plantExtent.yMax(); ++y) {
+    for (int x = plantExtent.x; x <= plantExtent.xMax(); ++x) {
+        for (int y = plantExtent.y; y <= plantExtent.yMax(); y += 2) {
             Position tileCenter{TilePosition{x, y}.getCenterPosition()};
             constructSapling(tileCenter);
         }
@@ -112,7 +112,7 @@ void PlantSystem::constructSapling(const Position& position)
 
 void PlantSystem::constructDeadPlant(const Position& position)
 {
-    Rotation rotation{static_cast<Rotation::Direction>(0)};
+    Rotation rotation{static_cast<Rotation::Direction>(3)};
     entt::entity newEntity{
         world.constructDynamicObject(Name{"Sunflower"}, position, rotation,
                                      sunflowerSpriteSet, InitScript{})};
