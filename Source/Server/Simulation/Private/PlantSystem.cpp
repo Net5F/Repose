@@ -4,7 +4,7 @@
 #include "ProjectInteractionType.h"
 #include "Name.h"
 #include "InitScript.h"
-#include "Interactions.h"
+#include "Interaction.h"
 #include "SpriteStateNeedsSync.h"
 #include "Plant.h"
 #include "EmptySpriteID.h"
@@ -25,6 +25,14 @@ PlantSystem::PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData)
 , plantExtent{5, 36, 9, 11}
 , sunflowerSpriteSet{spriteData.getObjectSpriteSet("sunflower")}
 {
+    // Delete any existing plants.
+    auto& entitiesInPlantExtent{world.entityLocator.getEntities(plantExtent)};
+    for (entt::entity entity : entitiesInPlantExtent) {
+        if (world.registry.all_of<Plant>(entity)) {
+            world.registry.destroy(entity);
+        }
+    }
+
     // Construct all the sunflower entities.
     for (int x = plantExtent.x; x <= plantExtent.xMax(); ++x) {
         for (int y = plantExtent.y; y <= plantExtent.yMax(); y += 2) {
@@ -45,6 +53,8 @@ void PlantSystem::updatePlants()
         const InteractionRequest replantRequest{
             replantInteractionQueue.front()};
         replantPlant(replantRequest.targetEntity);
+
+        replantInteractionQueue.pop();
     }
 
     // Update all the plants.
@@ -122,8 +132,9 @@ void PlantSystem::constructDeadPlant(const Position& position)
     world.registry.emplace<Plant>(newEntity, plant);
 
     // Give it a Replant interaction.
-    Interactions& interactions{world.registry.get<Interactions>(newEntity)};
-    interactions.addInteraction(ProjectInteractionType::Replant);
+    Interaction& interaction{
+        world.registry.get_or_emplace<Interaction>(newEntity)};
+    interaction.add(ProjectInteractionType::Replant);
 }
 
 void PlantSystem::replantPlant(entt::entity oldPlant)
@@ -131,16 +142,14 @@ void PlantSystem::replantPlant(entt::entity oldPlant)
     // Verify that the given entity is a dead plant.
     if (!(world.entityIDIsInUse(oldPlant))
         || !(world.registry.all_of<Plant>(oldPlant))) {
-        LOG_ERROR("Tried to replant entity that isn't a dead plant.");
+        LOG_ERROR("Tried to replant entity that isn't a plant.");
         return;
     }
     const Plant& plant{world.registry.get<Plant>(oldPlant)};
     if (plant.lifeStage != Plant::LifeStage::Dead) {
-        LOG_ERROR("Tried to replant entity that isn't a dead plant.");
+        LOG_ERROR("Tried to replant plant that isn't dead.");
         return;
     }
-
-    // TODO: Verify that the client entity is in range of the target.
 
     // Construct the new sapling and delete the old dead plant.
     constructSapling(world.registry.get<Position>(oldPlant));

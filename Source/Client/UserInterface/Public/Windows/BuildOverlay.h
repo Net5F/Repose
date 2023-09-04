@@ -20,7 +20,7 @@ namespace Client
 class World;
 class WorldSinks;
 class WorldObjectLocator;
-class SpriteData;
+class Network;
 
 /**
  * The build mode overlay on the main screen. Allows the user to place tiles

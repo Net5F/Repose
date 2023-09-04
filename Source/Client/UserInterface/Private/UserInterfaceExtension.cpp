@@ -2,6 +2,7 @@
 #include "Config.h"
 #include "World.h"
 #include "WorldSinks.h"
+#include "Network.h"
 #include "AssetCache.h"
 #include "SpriteData.h"
 #include "Camera.h"
@@ -26,6 +27,7 @@ UserInterfaceExtension::UserInterfaceExtension(UserInterfaceExDependencies deps)
 , mainScreen{deps.world, worldSinks, deps.worldObjectLocator,
              deps.uiEventDispatcher, deps.network, deps.spriteData}
 , currentScreen{&titleScreen}
+, userErrorStringQueue{deps.network.getEventDispatcher()}
 {
     SDL_Rect windowSize{UserConfig::get().getWindowSize()};
     AUI::Core::setActualScreenSize({windowSize.w, windowSize.h});
@@ -78,6 +80,12 @@ bool UserInterfaceExtension::handleOSEvent(SDL_Event& event)
 void UserInterfaceExtension::tick(double timestepS)
 {
     currentScreen->tick(timestepS);
+
+    // TEMP: Process any waiting error strings.
+    UserErrorString userErrorString{};
+    while (userErrorStringQueue.pop(userErrorString)) {
+        LOG_INFO("Server: %s", userErrorString.errorString.c_str());
+    }
 }
 
 void UserInterfaceExtension::render(const Camera& camera)

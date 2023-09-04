@@ -21,7 +21,7 @@ MainScreen::MainScreen(World& inWorld, WorldSinks& inWorldSinks,
                        SpriteData& inSpriteData)
 : AUI::Screen("MainScreen")
 , playerIsInBuildArea{false}
-, mainOverlay{}
+, mainOverlay{inWorld, inWorldObjectLocator, inNetwork}
 , buildOverlay{inWorld, inWorldSinks, inWorldObjectLocator, inNetwork}
 , buildPanel{inWorld, inNetwork, inSpriteData, buildOverlay}
 {

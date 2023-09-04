@@ -1,7 +1,7 @@
 #include "BuildOverlay.h"
 #include "WorldSinks.h"
 #include "WorldObjectLocator.h"
-#include "SpriteData.h"
+#include "Network.h"
 #include "Sprite.h"
 #include "FloorTool.h"
 #include "FloorCoveringTool.h"

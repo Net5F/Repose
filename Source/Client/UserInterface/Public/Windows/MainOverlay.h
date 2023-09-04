@@ -7,7 +7,9 @@ namespace AM
 {
 namespace Client
 {
-class WorldSinks;
+class World;
+class WorldObjectLocator;
+class Network;
 
 /**
  * The main overlay on the main screen. Shows basic HUD information.
@@ -18,7 +20,8 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    MainOverlay();
+    MainOverlay(World& inWorld, const WorldObjectLocator& inWorldObjectLocator,
+                Network& inNetwork);
 
     /**
      * Sets the visibility of the hint text.
@@ -27,7 +30,34 @@ public:
      */
     void setBuildModeHintVisibility(bool isVisible);
 
+    //-------------------------------------------------------------------------
+    // Widget class overrides
+    //-------------------------------------------------------------------------
+    AUI::EventResult onMouseDown(AUI::MouseButtonType buttonType,
+                                 const SDL_Point& cursorPosition) override;
+
+    AUI::EventResult
+        onMouseDoubleClick(AUI::MouseButtonType buttonType,
+                           const SDL_Point& cursorPosition) override;
+
+    AUI::EventResult onMouseMove(const SDL_Point& cursorPosition) override;
+
 private:
+    /** Used for getting the world state so we can make decisions and send 
+        messages. */
+    World& world;
+
+    /** Used to see if see if the cursor is hovering or clicking on 
+        something. */
+    const WorldObjectLocator& worldObjectLocator;
+
+    /** Used to send interaction requests. */
+    Network& network;
+
+    /** The text at the top of the screen that tells you what action will 
+        be performed if you click. */
+    AUI::Text interactionText;
+
     /** The "Press 'b' to enter Build Mode" text. */
     AUI::Text buildModeHintText;
 };

@@ -21,6 +21,7 @@ target_sources(Client
         Private/Windows/BuildPanel.cpp
         Private/Windows/TitleWindow.cpp
     PUBLIC
+        Public/InteractionHelpers.h
         Public/MainScreen.h
         Public/TitleScreen.h
         Public/UserInterfaceExtension.h
