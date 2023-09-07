@@ -3,9 +3,10 @@
 #include "SpriteData.h"
 #include "ProjectInteractionType.h"
 #include "Name.h"
+#include "AnimationState.h"
 #include "InitScript.h"
 #include "Interaction.h"
-#include "SpriteStateNeedsSync.h"
+#include "AnimationStateNeedsSync.h"
 #include "Plant.h"
 #include "EmptySpriteID.h"
 #include "SharedConfig.h"
@@ -23,7 +24,7 @@ PlantSystem::PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData)
 , updateTimer{}
 , replantInteractionQueue{}
 , plantExtent{5, 36, 9, 11}
-, sunflowerSpriteSet{spriteData.getObjectSpriteSet("sunflower")}
+, sunflowerSpriteSetID{spriteData.getObjectSpriteSet("sunflower").numericID}
 {
     // Delete any existing plants.
     auto& entitiesInPlantExtent{world.entityLocator.getEntities(plantExtent)};
@@ -70,8 +71,8 @@ void PlantSystem::updatePlants()
 
 void PlantSystem::updatePlant(entt::entity plantEntity)
 {
-    auto [name, position, rotation, spriteSet, plant]
-        = world.registry.get<Name, Position, Rotation, ObjectSpriteSet, Plant>(
+    auto [name, position, animationState, plant]
+        = world.registry.get<Name, Position, AnimationState, Plant>(
             plantEntity);
 
     // Keep the plant in the fully grown stage longer than the other stages.
@@ -94,8 +95,8 @@ void PlantSystem::updatePlant(entt::entity plantEntity)
 
         // If the plant is still alive, update its sprite.
         if (plant.lifeStage != Plant::LifeStage::Dead) {
-            rotation.direction = static_cast<Rotation::Direction>(newStage);
-            world.registry.emplace<SpriteStateNeedsSync>(plantEntity);
+            animationState.spriteIndex = newStage;
+            world.registry.emplace<AnimationStateNeedsSync>(plantEntity);
             plant.timer.reset();
         }
         else {
@@ -110,10 +111,10 @@ void PlantSystem::updatePlant(entt::entity plantEntity)
 
 void PlantSystem::constructSapling(const Position& position)
 {
-    Rotation rotation{static_cast<Rotation::Direction>(0)};
-    entt::entity newEntity{
-        world.constructDynamicObject(Name{"Sunflower"}, position, rotation,
-                                     sunflowerSpriteSet, InitScript{})};
+    AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
+                                  0};
+    entt::entity newEntity{world.constructDynamicObject(
+        Name{"Sunflower"}, position, animationState, InitScript{})};
 
     // Tag it as a Sapling.
     Plant plant{Plant::LifeStage::Sapling};
@@ -122,10 +123,10 @@ void PlantSystem::constructSapling(const Position& position)
 
 void PlantSystem::constructDeadPlant(const Position& position)
 {
-    Rotation rotation{static_cast<Rotation::Direction>(3)};
-    entt::entity newEntity{
-        world.constructDynamicObject(Name{"Sunflower"}, position, rotation,
-                                     sunflowerSpriteSet, InitScript{})};
+    AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
+                                  3};
+    entt::entity newEntity{world.constructDynamicObject(
+        Name{"Dead Sunflower"}, position, animationState, InitScript{})};
 
     // Tag it as Dead.
     Plant plant{Plant::LifeStage::Dead};

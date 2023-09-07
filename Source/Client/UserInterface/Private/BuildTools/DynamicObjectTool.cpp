@@ -4,7 +4,7 @@
 #include "WorldObjectLocator.h"
 #include "DynamicObjectInitRequest.h"
 #include "EntityType.h"
-#include "SpriteSets.h"
+#include "AnimationState.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
 #include "AMAssert.h"
@@ -84,12 +84,14 @@ void DynamicObjectTool::onMouseDown(AUI::MouseButtonType buttonType,
         // If a template is selected in the content panel.
         if (selectedTemplateSpriteSet != nullptr) {
             // Tell the sim to create an object based on the template.
-            Rotation rotation{static_cast<Rotation::Direction>(
-                selectedTemplateValidSpriteIndices
-                    [selectedTemplateSpriteIndex])};
-            network.serializeAndSend(DynamicObjectInitRequest{entt::null,
-                selectedTemplateName, mouseWorldPosition, rotation,
-                selectedTemplateSpriteSet->numericID, ""});
+            Uint16 spriteSetID{selectedTemplateSpriteSet->numericID};
+            Uint8 spriteIndex{selectedTemplateValidSpriteIndices
+                                  [selectedTemplateSpriteIndex]};
+            AnimationState animationState{SpriteSet::Type::Object,
+                                          spriteSetID, spriteIndex};
+            network.serializeAndSend(DynamicObjectInitRequest{
+                entt::null, selectedTemplateName, mouseWorldPosition,
+                animationState, ""});
 
             // To deter users from placing a million entities, we deselect after
             // placement. This also makes it faster if the user's next goal is

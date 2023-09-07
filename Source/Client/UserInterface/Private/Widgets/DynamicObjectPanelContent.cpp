@@ -8,7 +8,7 @@
 #include "Name.h"
 #include "Position.h"
 #include "Rotation.h"
-#include "SpriteSets.h"
+#include "AnimationState.h"
 #include "DynamicObjectInitRequest.h"
 #include "InitScriptRequest.h"
 #include "SpriteChange.h"
@@ -95,11 +95,11 @@ DynamicObjectPanelContent::DynamicObjectPanelContent(
         // Send a re-init request with the updated name.
         const entt::registry& registry{world.registry};
         const auto& position{registry.get<Position>(editingObjectID)};
-        const auto& rotation{registry.get<Rotation>(editingObjectID)};
-        const auto& spriteSet{registry.get<ObjectSpriteSet>(editingObjectID)};
+        const auto& animationState{
+            registry.get<AnimationState>(editingObjectID)};
         network.serializeAndSend(DynamicObjectInitRequest{
-            editingObjectID, nameInput.getText(), position, rotation,
-            spriteSet.numericID, editingObjectInitScript});
+            editingObjectID, nameInput.getText(), position, animationState,
+            editingObjectInitScript});
     });
 
     /* Buttons */
@@ -111,8 +111,8 @@ DynamicObjectPanelContent::DynamicObjectPanelContent(
         const entt::registry& registry{world.registry};
         const auto& name{registry.get<Name>(editingObjectID)};
         const auto& position{registry.get<Position>(editingObjectID)};
-        const auto& rotation{registry.get<Rotation>(editingObjectID)};
-        const auto& spriteSet{registry.get<ObjectSpriteSet>(editingObjectID)};
+        const auto& animationState{
+            registry.get<AnimationState>(editingObjectID)};
         std::string script{""};
         // TEMP
         std::ifstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
@@ -122,9 +122,8 @@ DynamicObjectPanelContent::DynamicObjectPanelContent(
             script = buffer.str();
         }
         // TEMP
-        network.serializeAndSend(
-            DynamicObjectInitRequest{editingObjectID, name.name, position,
-                                     rotation, spriteSet.numericID, script});
+        network.serializeAndSend(DynamicObjectInitRequest{
+            editingObjectID, name.name, position, animationState, script});
     });
 
     saveTemplateButton.setOnPressed([this]() {

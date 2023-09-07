@@ -72,7 +72,7 @@ private:
     /** The world extent that the plants are located within. */
     TileExtent plantExtent;
 
-    const ObjectSpriteSet& sunflowerSpriteSet;
+    Uint16 sunflowerSpriteSetID;
 };
 
 } // End namespace Server

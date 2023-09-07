@@ -54,10 +54,13 @@ public:
     static constexpr float SQUARED_INTERACTION_DISTANCE{INTERACTION_DISTANCE
                                                         * INTERACTION_DISTANCE};
 
-    /** The string ID of the default sprite for character entities.
-        This is the sprite that players and NPCs get assigned before the
+    // TODO: We currently use an object sprite set for characters. When we 
+    //       add character sprite sets, update this.
+    /** The string ID of the default sprite set for character entities.
+        This is the sprite set that players and NPCs get assigned before the
         project's animation system gives them their real sprite. */
-    static constexpr const char* DEFAULT_CHARACTER_SPRITE{"ghost_south"};
+    static constexpr const char* DEFAULT_CHARACTER_SPRITE_SET{"ghost"};
+    static constexpr Uint8 DEFAULT_CHARACTER_SPRITE_INDEX{0};
 
     /** The string ID of the default sprite set for dynamic objects. */
     static constexpr const char* DEFAULT_DYNAMIC_OBJECT_SPRITE_SET{"sunflower"};
