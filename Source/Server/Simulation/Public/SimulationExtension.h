@@ -9,10 +9,9 @@
 
 namespace AM
 {
-struct TileUpdateRequest;
-
 namespace Server
 {
+class World;
 
 /**
  * An extension of the engine's Simulation class.
@@ -48,9 +47,14 @@ public:
     void afterMovement();
 
     /**
-     * Called after all entity movement state has been sent to the clients.
+     * Called after all relevant state has been sent to the clients.
      */
-    void afterMovementSync();
+    void afterClientSync();
+
+    /**
+     * Called after all other systems.
+     */
+    void afterAll();
 
     /**
      * See OSEventHandler for details.
@@ -64,17 +68,22 @@ public:
     // Simulation System Hooks (Hooks into engine systems)
     //-------------------------------------------------------------------------
     // TODO: Replace this with a permissions system.
-    /**
-     * Called by the engine when a "add tile layer" or "create entity" message is 
-     * received, before applying the update.
-     * Allows the project to place constraints on world modifications, such as
-     * requiring certain permissions, or only allowing updates to certain areas.
-     *
-     * @return true if the extent is editable, else false.
-     */
-    bool isExtentEditable(const TileExtent& tileExtent) const override;
+    // These functions allow the project to place constraints on various 
+    // World state modifications.
+    /** @return true if the given extent is editable, else false. */
+    bool isTileExtentEditable(NetworkID netID,
+                              const TileExtent& tileExtent) const;
+    /** @return true if the given request is valid, else false. */
+    bool isEntityInitRequestValid(
+        const EntityInitRequest& entityInitRequest) const;
+    /** @return true if the given request is valid, else false. */
+    bool isComponentUpdateRequestValid(
+        const ComponentUpdateRequest& componentUpdateRequest) const;
 
 private:
+    /** Used to validate change requests. */
+    World& world;
+
     BuildModeDataSystem buildModeDataSystem;
     MazeGenerationSystem mazeGenerationSystem;
     PlantSystem plantSystem;

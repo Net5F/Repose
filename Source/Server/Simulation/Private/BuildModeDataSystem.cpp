@@ -2,7 +2,7 @@
 #include "World.h"
 #include "Network.h"
 #include "SpriteData.h"
-#include "DynamicObjectTemplates.h"
+#include "EntityTemplates.h"
 #include "Log.h"
 
 namespace AM
@@ -16,7 +16,7 @@ BuildModeDataSystem::BuildModeDataSystem(
 : world{inWorld}
 , network{inNetwork}
 , spriteData{inSpriteData}
-, objectTemplatesRequestQueue{inNetworkEventDispatcher}
+, entityTemplatesRequestQueue{inNetworkEventDispatcher}
 {
 }
 
@@ -25,23 +25,25 @@ void BuildModeDataSystem::processMessages()
     // TODO: Add any waiting templates
 
     // Respond to any waiting template data requests.
-    DynamicObjectTemplatesRequest objectTemplatesRequest{};
-    while (objectTemplatesRequestQueue.pop(objectTemplatesRequest)) {
-        // Send the latest dynamic object templates to the requesting client.
-        DynamicObjectTemplates objectTemplates{};
+    EntityTemplatesRequest entityTemplatesRequest{};
+    while (entityTemplatesRequestQueue.pop(entityTemplatesRequest)) {
+        // Send the latest entity templates to the requesting client.
+        EntityTemplates entityTemplates{};
 
         // TODO: Replace this placeholder data with real data from the user.
         Uint16 spriteSetID{
             spriteData.getObjectSpriteSet("sunflower").numericID};
-        objectTemplates.templates.emplace_back(
-            "First", Rotation{Rotation::Direction::South}, spriteSetID);
-        objectTemplates.templates.emplace_back(
-            "Second", Rotation{Rotation::Direction::SouthWest}, spriteSetID);
-        objectTemplates.templates.emplace_back(
-            "Third", Rotation{Rotation::Direction::West}, spriteSetID);
+        entityTemplates.templates.emplace_back(
+            Name{"First"},
+            AnimationState{SpriteSet::Type::Object, spriteSetID, 0});
+        entityTemplates.templates.emplace_back(
+            Name{"Second"},
+            AnimationState{SpriteSet::Type::Object, spriteSetID, 1});
+        entityTemplates.templates.emplace_back(
+            Name{"Third"},
+            AnimationState{SpriteSet::Type::Object, spriteSetID, 2});
 
-        network.serializeAndSend(objectTemplatesRequest.netID,
-                                 objectTemplates);
+        network.serializeAndSend(entityTemplatesRequest.netID, entityTemplates);
     }
 
     // TODO: Respond to any waiting script data requests.

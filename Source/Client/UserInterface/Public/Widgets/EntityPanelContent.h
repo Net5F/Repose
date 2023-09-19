@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MainButton.h"
-#include "DynamicObjectTemplates.h"
+#include "EntityTemplates.h"
 #include "InitScriptResponse.h"
 #include "QueuedEvents.h"
 #include "AUI/Widget.h"
@@ -27,27 +27,26 @@ class World;
 class Network;
 class SpriteData;
 class BuildPanel;
-class DynamicObjectTool;
+class EntityTool;
 
+// TODO: This uses object sprite sets everywhere. When we add character sprite 
+//       sets, figure out how the UI should surface them.
 /**
- * Content for the BuildPanel when the dynamic object tool is selected.
+ * Content for the BuildPanel when the entity tool is selected.
  */
-class DynamicObjectPanelContent : public AUI::Widget
+class EntityPanelContent : public AUI::Widget
 {
 public:
-    DynamicObjectPanelContent(World& inWorld,
-                              Network& inNetwork,
-                              SpriteData& inSpriteData,
-                              BuildPanel& inBuildPanel,
-                              const SDL_Rect& inScreenExtent,
-                              const std::string& inDebugName
-                              = "DynamicObjectPanelContent");
+    EntityPanelContent(World& inWorld, Network& inNetwork,
+                       SpriteData& inSpriteData, BuildPanel& inBuildPanel,
+                       const SDL_Rect& inScreenExtent,
+                       const std::string& inDebugName = "EntityPanelContent");
 
     /**
      * Sets the given tool as the current build tool.
-     * Nullptr may be given, to say that we left dynamic object mode.
+     * Nullptr may be given, to say that we left entity mode.
      */
-    void setBuildTool(DynamicObjectTool* inDynamicObjectTool);
+    void setBuildTool(EntityTool* inEntityTool);
 
     //-------------------------------------------------------------------------
     // Widget class overrides
@@ -56,16 +55,16 @@ public:
 
 private:
     /**
-     * Sets the current object for the edit view.
+     * Sets the current entity for the edit view.
      */
-    void setObjectToEdit(entt::entity newEditingObjectID);
+    void setEntityToEdit(entt::entity newEditingEntityID);
 
     enum class ViewType {
-        /** The default view, shows the available object templates. */
+        /** The default view, shows the available entity templates. */
         Template,
-        /** The edit view, for when an object is selected. */
+        /** The edit view, for when an entity is selected. */
         Edit,
-        /** The sprite set view, for changing an object's sprite set. */
+        /** The sprite set view, for changing an entity's sprite set. */
         SpriteSet
     };
 
@@ -75,25 +74,25 @@ private:
     void changeView(ViewType newView);
 
     /**
-     * Add the "add dynamic object" thumbnail to the templates container.
+     * Add the "add entity" thumbnail to the templates container.
      */
     void addAddThumbnail();
 
     /**
-     * Fills the templates container with the given object templates.
+     * Fills the templates container with the given entity templates.
      */
     void addTemplateThumbnails(
-        const DynamicObjectTemplates& objectTemplates);
+        const EntityTemplates& entityTemplates);
 
     /**
-     * Fills the sprite set container with all of the object sprite sets.
+     * Fills the sprite set container with all of the entity sprite sets.
      */
     void addSpriteSetThumbnails();
 
-    /** Used for getting the current editing object's component data. */
+    /** Used for getting the current editing entity's component data. */
     World& world;
 
-    /** Used for sending dynamic object init requests to the server. */
+    /** Used for sending entity init requests to the server. */
     Network& network;
 
     /** Used to get the sprite sets that we fill the panel with. */
@@ -106,14 +105,14 @@ private:
     ViewType currentView;
 
     /** Used to tell the tool when a thumbnail is selected, and to register for 
-        "a dynamic object was clicked" callbacks. */
-    DynamicObjectTool* dynamicObjectTool;
+        "a entity was clicked" callbacks. */
+    EntityTool* entityTool;
 
-    /** The ID of the object that we're currently editing. */
-    entt::entity editingObjectID;
+    /** The ID of the entity that we're currently editing. */
+    entt::entity editingEntityID;
 
-    /** The init script of the object that we're currently editing. */
-    std::string editingObjectInitScript;
+    /** The init script of the entity that we're currently editing. */
+    std::string editingEntityInitScript;
 
     /** The currently selected sprite thumbnail in the "change sprite" view. */
     AUI::Thumbnail* selectedSpriteThumbnail;
@@ -121,7 +120,7 @@ private:
     /** Maps a sprite to the thumbnail that represents it. */
     std::unordered_map<const Sprite*, AUI::Thumbnail*> spriteThumbnailMap;
 
-    EventQueue<DynamicObjectTemplates> objectTemplatesQueue;
+    EventQueue<EntityTemplates> entityTemplatesQueue;
 
     EventQueue<InitScriptResponse> initScriptQueue;
 
@@ -129,7 +128,7 @@ private:
     // Private child widgets
     //-------------------------------------------------------------------------
     // Template view
-    /** Holds the templates and the "New Dynamic Object" button. */
+    /** Holds the templates and the "New Entity" button. */
     AUI::VerticalGridContainer templateContainer;
 
     // Edit view
@@ -144,8 +143,8 @@ private:
     MainButton saveTemplateButton;
 
     // SpriteSet selection view
-    /** Holds the dynamic object sprite sets that are used to change a 
-        selected object's sprite. */
+    /** Holds the sprite sets that are used to change a selected entity's 
+        sprite. */
     AUI::VerticalGridContainer spriteSetContainer;
 };
 

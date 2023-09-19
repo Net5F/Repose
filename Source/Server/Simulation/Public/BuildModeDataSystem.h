@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DynamicObjectTemplatesRequest.h"
+#include "EntityTemplatesRequest.h"
 #include "QueuedEvents.h"
 
 namespace AM
@@ -13,7 +13,7 @@ class Network;
 class SpriteData;
 
 /**
- * Responds to requests for template and script data, for use in a client's 
+ * Responds to requests for template and script data, for use in a client's
  * build mode.
  */
 class BuildModeDataSystem
@@ -39,7 +39,7 @@ private:
     // TODO: Remove when we remove the placeholder data?
     SpriteData& spriteData;
 
-    EventQueue<DynamicObjectTemplatesRequest> objectTemplatesRequestQueue;
+    EventQueue<EntityTemplatesRequest> entityTemplatesRequestQueue;
 };
 
 } // End namespace Server

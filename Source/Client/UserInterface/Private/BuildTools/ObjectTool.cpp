@@ -1,4 +1,4 @@
-#include "StaticObjectTool.h"
+#include "ObjectTool.h"
 #include "World.h"
 #include "Network.h"
 #include "TileAddLayer.h"
@@ -11,14 +11,14 @@ namespace AM
 namespace Client 
 {
 
-StaticObjectTool::StaticObjectTool(World& inWorld, Network& inNetwork)
+ObjectTool::ObjectTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , selectedSpriteSet{nullptr}
 , selectedSpriteIndex{0}
 {
 }
 
-void StaticObjectTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
+void ObjectTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
 {
     // Note: This cast should be safe, since only object sprite sets should 
     //       be clickable while this tool is alive.
@@ -38,7 +38,7 @@ void StaticObjectTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet
     selectedSpriteIndex = 0;
 }
 
-void StaticObjectTool::onMouseDown(AUI::MouseButtonType buttonType,
+void ObjectTool::onMouseDown(AUI::MouseButtonType buttonType,
                             const SDL_Point& cursorPosition)
 {
     // Note: mouseTilePosition is set in onMouseMove().
@@ -56,14 +56,14 @@ void StaticObjectTool::onMouseDown(AUI::MouseButtonType buttonType,
     }
 }
 
-void StaticObjectTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
+void ObjectTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
                                    const SDL_Point& cursorPosition)
 {
     // We treat additional clicks as regular MouseDown events.
     onMouseDown(buttonType, cursorPosition);
 }
 
-void StaticObjectTool::onMouseWheel(int amountScrolled)
+void ObjectTool::onMouseWheel(int amountScrolled)
 {
     // If this tool isn't active, do nothing.
     if (!isActive) {
@@ -83,7 +83,7 @@ void StaticObjectTool::onMouseWheel(int amountScrolled)
         selectedSpriteSet->sprites[validSpriteIndices[selectedSpriteIndex]]);
 }
 
-void StaticObjectTool::onMouseMove(const SDL_Point& cursorPosition)
+void ObjectTool::onMouseMove(const SDL_Point& cursorPosition)
 {
     // Call the parent function to update mouseTilePosition and isActive.
     BuildTool::onMouseMove(cursorPosition);

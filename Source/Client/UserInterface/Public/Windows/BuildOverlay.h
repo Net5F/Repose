@@ -21,6 +21,7 @@ class World;
 class WorldSinks;
 class WorldObjectLocator;
 class Network;
+class SpriteData;
 
 /**
  * The build mode overlay on the main screen. Allows the user to place tiles
@@ -40,7 +41,7 @@ public:
     //-------------------------------------------------------------------------
     BuildOverlay(World& inWorld, WorldSinks& inWorldSinks,
                  const WorldObjectLocator& inWorldObjectLocator,
-                 Network& inNetwork);
+                 Network& inNetwork, SpriteData& inSpriteData);
 
     virtual ~BuildOverlay() = default;
 
@@ -112,12 +113,12 @@ private:
 
     /** We hold onto this so we can pass it to the current tool. */
     World& world;
-
     /** We hold onto this so we can pass it to the current tool. */
     const WorldObjectLocator& worldObjectLocator;
-
     /** We hold onto this so we can pass it to the current tool. */
     Network& network;
+    /** Used to get sprites from AnimationStates. */
+    SpriteData& spriteData;
 
     /** The currently selected sprite set. */
     const SpriteSet* selectedSpriteSet;

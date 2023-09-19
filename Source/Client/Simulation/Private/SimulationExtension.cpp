@@ -22,6 +22,8 @@ void SimulationExtension::afterMovement()
     animationSystem.updateAnimations();
 }
 
+void SimulationExtension::afterAll() {}
+
 bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
 {
     return false;

@@ -6,7 +6,6 @@
 #include "AnimationState.h"
 #include "InitScript.h"
 #include "Interaction.h"
-#include "AnimationStateNeedsSync.h"
 #include "Plant.h"
 #include "EmptySpriteID.h"
 #include "SharedConfig.h"
@@ -71,9 +70,7 @@ void PlantSystem::updatePlants()
 
 void PlantSystem::updatePlant(entt::entity plantEntity)
 {
-    auto [name, position, animationState, plant]
-        = world.registry.get<Name, Position, AnimationState, Plant>(
-            plantEntity);
+    auto [position, plant] = world.registry.get<Position, Plant>(plantEntity);
 
     // Keep the plant in the fully grown stage longer than the other stages.
     double updateTimeS{Plant::UPDATE_TIME_S};
@@ -95,8 +92,10 @@ void PlantSystem::updatePlant(entt::entity plantEntity)
 
         // If the plant is still alive, update its sprite.
         if (plant.lifeStage != Plant::LifeStage::Dead) {
-            animationState.spriteIndex = newStage;
-            world.registry.emplace<AnimationStateNeedsSync>(plantEntity);
+            world.registry.patch<AnimationState>(
+                plantEntity, [&](auto& animationState) {
+                    animationState.spriteIndex = newStage;
+                });
             plant.timer.reset();
         }
         else {
@@ -113,8 +112,9 @@ void PlantSystem::constructSapling(const Position& position)
 {
     AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
                                   0};
-    entt::entity newEntity{world.constructDynamicObject(
-        Name{"Sunflower"}, position, animationState, InitScript{})};
+    std::array<ReplicatedComponent, 3> components{Name{"Sunflower"}, position,
+                                                  animationState};
+    entt::entity newEntity{world.constructEntity(components, InitScript{})};
 
     // Tag it as a Sapling.
     Plant plant{Plant::LifeStage::Sapling};
@@ -125,8 +125,9 @@ void PlantSystem::constructDeadPlant(const Position& position)
 {
     AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
                                   3};
-    entt::entity newEntity{world.constructDynamicObject(
-        Name{"Dead Sunflower"}, position, animationState, InitScript{})};
+    std::array<ReplicatedComponent, 3> components{Name{"Dead Sunflower"}, position,
+                                                  animationState};
+    entt::entity newEntity{world.constructEntity(components, InitScript{})};
 
     // Tag it as Dead.
     Plant plant{Plant::LifeStage::Dead};

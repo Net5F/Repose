@@ -111,7 +111,7 @@ AUI::EventResult MainOverlay::onMouseMove(const SDL_Point& cursorPosition)
             if (interactionCount > 0) {
                 std::string displayText{InteractionHelpers::toDisplayString(
                     interaction.supportedInteractions[0])};
-                displayText += " " + name.name;
+                displayText += " " + name.value;
                 if (interactionCount > 1) {
                     displayText += " / ";
                     displayText += std::to_string(interactionCount);

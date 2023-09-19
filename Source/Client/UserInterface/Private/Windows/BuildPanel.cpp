@@ -5,8 +5,8 @@
 #include "SpriteData.h"
 #include "BuildOverlay.h"
 #include "MainThumbnail.h"
-#include "DynamicObjectTool.h"
-#include "DynamicObjectTemplatesRequest.h"
+#include "EntityTool.h"
+#include "EntityTemplatesRequest.h"
 #include "SharedConfig.h"
 #include "EmptySpriteID.h"
 #include "Paths.h"
@@ -28,9 +28,9 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
 , floorContainer{{366 - 2, 91, 1188, 220}, "FloorContainer"}
 , floorCoveringContainer{{366 - 2, 91, 1188, 220}, "FloorCoveringContainer"}
 , wallContainer{{366 - 2, 91, 1188, 220}, "WallContainer"}
-, staticObjectContainer{{366 - 2, 91, 1188, 220}, "StaticObjectContainer"}
-, dynamicObjectPanelContent{inWorld, network, spriteData, *this,
-                       {366 - 2, 91, 1188, 220}, "DynamicObjPanelContent"}
+, objectContainer{{366 - 2, 91, 1188, 220}, "ObjectContainer"}
+, entityPanelContent{inWorld, network, spriteData, *this,
+                       {366 - 2, 91, 1188, 220}, "EntityPanelContent"}
 , removeHintText{{679, 171, 562, 36}, "RemoveHintText"}
 , tileLayersLabel{{152, 92, 138, 36}, "TileLayersLabel"}
 , entitiesLabel{{1630, 92, 138, 36}, "EntitiesLabel"}
@@ -39,8 +39,8 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
       MainButton{{164, 132, 114, 32}, "Floor", "FloorToolButton"},
       MainButton{{164, 168, 114, 32}, "Floor Cover", "FloorCoveringToolButton"},
       MainButton{{164, 204, 114, 32}, "Wall", "WallToolButton"},
-      MainButton{{164, 240, 114, 32}, "Object", "StaticObjectToolButton"},
-      MainButton{{1642, 132, 114, 32}, "Object", "DynamicObjectToolButton"},
+      MainButton{{164, 240, 114, 32}, "Object", "ObjectToolButton"},
+      MainButton{{1642, 132, 114, 32}, "Entity", "EntityToolButton"},
       MainButton{{1642, 220, 114, 32}, "Remove", "RemoveToolButton"}}
 {
     // Add our children so they're included in rendering, etc.
@@ -48,8 +48,8 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
     children.push_back(floorContainer);
     children.push_back(floorCoveringContainer);
     children.push_back(wallContainer);
-    children.push_back(staticObjectContainer);
-    children.push_back(dynamicObjectPanelContent);
+    children.push_back(objectContainer);
+    children.push_back(entityPanelContent);
     children.push_back(removeHintText);
     children.push_back(tileLayersLabel);
     children.push_back(entitiesLabel);
@@ -58,8 +58,8 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
     children.push_back(
         buildToolButtons[BuildTool::Type::FloorCovering]);
     children.push_back(buildToolButtons[BuildTool::Type::Wall]);
-    children.push_back(buildToolButtons[BuildTool::Type::StaticObject]);
-    children.push_back(buildToolButtons[BuildTool::Type::DynamicObject]);
+    children.push_back(buildToolButtons[BuildTool::Type::Object]);
+    children.push_back(buildToolButtons[BuildTool::Type::Entity]);
     children.push_back(buildToolButtons[BuildTool::Type::Remove]);
 
     /* Background image */
@@ -79,8 +79,8 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
     setContainerStyle(floorContainer);
     setContainerStyle(floorCoveringContainer);
     setContainerStyle(wallContainer);
-    setContainerStyle(staticObjectContainer);
-    dynamicObjectPanelContent.setIsVisible(false);
+    setContainerStyle(objectContainer);
+    entityPanelContent.setIsVisible(false);
 
     /* Labels */
     auto setTextStyle = [](AUI::Text& text) {
@@ -114,10 +114,10 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
         });
     buildToolButtons[BuildTool::Type::Wall].setOnPressed(
         [this]() { setBuildTool(BuildTool::Type::Wall); });
-    buildToolButtons[BuildTool::Type::StaticObject].setOnPressed(
-        [this]() { setBuildTool(BuildTool::Type::StaticObject); });
-    buildToolButtons[BuildTool::Type::DynamicObject].setOnPressed(
-        [this]() { setBuildTool(BuildTool::Type::DynamicObject); });
+    buildToolButtons[BuildTool::Type::Object].setOnPressed(
+        [this]() { setBuildTool(BuildTool::Type::Object); });
+    buildToolButtons[BuildTool::Type::Entity].setOnPressed(
+        [this]() { setBuildTool(BuildTool::Type::Entity); });
     buildToolButtons[BuildTool::Type::Remove].setOnPressed(
         [this]() { setBuildTool(BuildTool::Type::Remove); });
 
@@ -201,8 +201,25 @@ void BuildPanel::addTileSpriteSet(TileLayer::Type type, const SpriteSet& spriteS
         wallContainer.push_back(std::move(thumbnailPtr));
     }
     else if (type == TileLayer::Type::Object) {
-        staticObjectContainer.push_back(std::move(thumbnailPtr));
+        objectContainer.push_back(std::move(thumbnailPtr));
     }
+}
+
+template<typename T>
+requires std::same_as<T, FloorCoveringSpriteSet>
+         || std::same_as<T, ObjectSpriteSet>
+const Sprite* BuildPanel::getFirstSprite(const T& spriteSet)
+{
+    for (const Sprite* sprite : spriteSet.sprites) {
+        if (sprite != nullptr) {
+            return sprite;
+        }
+    }
+
+    // Note: The sprite editor assures that every floor covering and 
+    //       object has at least 1 sprite, so this shouldn't happen.
+    LOG_FATAL("Failed to find sprite when expected.");
+    return nullptr;
 }
 
 void BuildPanel::setBuildTool(BuildTool::Type toolType)
@@ -220,8 +237,8 @@ void BuildPanel::setBuildTool(BuildTool::Type toolType)
     floorContainer.setIsVisible(false);
     floorCoveringContainer.setIsVisible(false);
     wallContainer.setIsVisible(false);
-    staticObjectContainer.setIsVisible(false);
-    dynamicObjectPanelContent.setIsVisible(false);
+    objectContainer.setIsVisible(false);
+    entityPanelContent.setIsVisible(false);
     removeHintText.setIsVisible(false);
 
     if (toolType == BuildTool::Type::Floor) {
@@ -233,16 +250,16 @@ void BuildPanel::setBuildTool(BuildTool::Type toolType)
     else if (toolType == BuildTool::Type::Wall) {
         wallContainer.setIsVisible(true);
     }
-    else if (toolType == BuildTool::Type::StaticObject) {
-        staticObjectContainer.setIsVisible(true);
+    else if (toolType == BuildTool::Type::Object) {
+        objectContainer.setIsVisible(true);
     }
-    else if (toolType == BuildTool::Type::DynamicObject) {
-        dynamicObjectPanelContent.setBuildTool(static_cast<DynamicObjectTool*>(
+    else if (toolType == BuildTool::Type::Entity) {
+        entityPanelContent.setBuildTool(static_cast<EntityTool*>(
             buildOverlay.getCurrentBuildTool()));
-        dynamicObjectPanelContent.setIsVisible(true);
+        entityPanelContent.setIsVisible(true);
 
-        // Request the latest dynamic object templates from the server.
-        network.serializeAndSend<DynamicObjectTemplatesRequest>({});
+        // Request the latest entity templates from the server.
+        network.serializeAndSend<EntityTemplatesRequest>({});
     }
     else if (toolType == BuildTool::Type::Remove) {
         removeHintText.setIsVisible(true);

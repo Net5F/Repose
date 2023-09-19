@@ -2,12 +2,13 @@
 #include "WorldSinks.h"
 #include "WorldObjectLocator.h"
 #include "Network.h"
+#include "SpriteData.h"
 #include "Sprite.h"
 #include "FloorTool.h"
 #include "FloorCoveringTool.h"
 #include "WallTool.h"
-#include "StaticObjectTool.h"
-#include "DynamicObjectTool.h"
+#include "ObjectTool.h"
+#include "EntityTool.h"
 #include "RemoveTool.h"
 #include "Paths.h"
 #include "Transforms.h"
@@ -22,11 +23,12 @@ namespace Client
 {
 BuildOverlay::BuildOverlay(World& inWorld, WorldSinks& inWorldSinks,
                            const WorldObjectLocator& inWorldObjectLocator,
-                           Network& inNetwork)
+                           Network& inNetwork, SpriteData& inSpriteData)
 : AUI::Window({0, 0, 1920, 744}, "BuildOverlay")
 , world{inWorld}
 , worldObjectLocator{inWorldObjectLocator}
 , network{inNetwork}
+, spriteData{inSpriteData}
 , selectedSpriteSet{nullptr}
 , currentBuildTool{nullptr}
 , camera{}
@@ -66,14 +68,14 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
                 = std::make_unique<WallTool>(world, network);
             break;
         }
-        case BuildTool::Type::StaticObject: {
+        case BuildTool::Type::Object: {
             currentBuildTool
-                = std::make_unique<StaticObjectTool>(world, network);
+                = std::make_unique<ObjectTool>(world, network);
             break;
         }
-        case BuildTool::Type::DynamicObject: {
-            currentBuildTool = std::make_unique<DynamicObjectTool>(
-                world, worldObjectLocator, network);
+        case BuildTool::Type::Entity: {
+            currentBuildTool = std::make_unique<EntityTool>(
+                world, worldObjectLocator, network, spriteData);
             break;
         }
         case BuildTool::Type::Remove: {

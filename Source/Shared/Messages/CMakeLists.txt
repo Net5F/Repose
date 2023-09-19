@@ -5,8 +5,8 @@
 target_sources(Shared
 #    PUBLIC
     INTERFACE
-        Public/DynamicObjectTemplates.h
-        Public/DynamicObjectTemplatesRequest.h
+        Public/EntityTemplates.h
+        Public/EntityTemplatesRequest.h
         Public/ProjectMessageType.h
 )
 

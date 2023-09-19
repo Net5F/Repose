@@ -3,7 +3,7 @@
 #include "MainButton.h"
 #include "TileLayers.h"
 #include "BuildTool.h"
-#include "DynamicObjectPanelContent.h"
+#include "EntityPanelContent.h"
 #include "Log.h"
 #include "AUI/Window.h"
 #include "AUI/Image.h"
@@ -79,10 +79,8 @@ private:
 
     /** Used to send and receive content-related build mode messages. */
     Network& network;
-
     /** Used to get the sprite sets that we fill the panel with. */
     SpriteData& spriteData;
-
     /** We keep the overlay updated on which tool and sprite set is selected. */
     BuildOverlay& buildOverlay;
 
@@ -105,11 +103,11 @@ private:
     // Wall tile layer tool content.
     AUI::VerticalGridContainer wallContainer;
 
-    // Static object tile layer tool content.
-    AUI::VerticalGridContainer staticObjectContainer;
+    // Object tile layer tool content.
+    AUI::VerticalGridContainer objectContainer;
 
-    // Dynamic object tool content panel.
-    DynamicObjectPanelContent dynamicObjectPanelContent;
+    // Entity tool content panel.
+    EntityPanelContent entityPanelContent;
 
     // Remove tool content.
     AUI::Text removeHintText;
@@ -120,23 +118,6 @@ private:
 
     std::array<MainButton, BuildTool::Type::Count> buildToolButtons;
 };
-
-template<typename T>
-requires std::same_as<T, FloorCoveringSpriteSet>
-         || std::same_as<T, ObjectSpriteSet>
-const Sprite* BuildPanel::getFirstSprite(const T& spriteSet)
-{
-    for (const Sprite* sprite : spriteSet.sprites) {
-        if (sprite != nullptr) {
-            return sprite;
-        }
-    }
-
-    // Note: The sprite editor assures that every floor covering and 
-    //       object has at least 1 sprite, so this shouldn't happen.
-    LOG_FATAL("Failed to find sprite when expected.");
-    return nullptr;
-}
 
 } // End namespace Client
 } // End namespace AM

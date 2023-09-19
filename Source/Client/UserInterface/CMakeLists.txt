@@ -5,13 +5,13 @@ target_sources(Client
         Private/UserInterfaceExtension.cpp
         Private/WorldSinks.cpp
         Private/BuildTools/BuildTool.cpp
-        Private/BuildTools/DynamicObjectTool.cpp
+        Private/BuildTools/EntityTool.cpp
         Private/BuildTools/FloorCoveringTool.cpp
         Private/BuildTools/FloorTool.cpp
+        Private/BuildTools/ObjectTool.cpp
         Private/BuildTools/RemoveTool.cpp
-        Private/BuildTools/StaticObjectTool.cpp
         Private/BuildTools/WallTool.cpp
-        Private/Widgets/DynamicObjectPanelContent.cpp
+        Private/Widgets/EntityPanelContent.cpp
         Private/Widgets/MainButton.cpp
         Private/Widgets/MainThumbnail.cpp
         Private/Widgets/TitleButton.cpp
@@ -27,13 +27,13 @@ target_sources(Client
         Public/UserInterfaceExtension.h
         Public/WorldSinks.h
         Public/BuildTools/BuildTool.h
-        Public/BuildTools/DynamicObjectTool.h
+        Public/BuildTools/EntityTool.h
         Public/BuildTools/FloorCoveringTool.h
         Public/BuildTools/FloorTool.h
+        Public/BuildTools/ObjectTool.h
         Public/BuildTools/RemoveTool.h
-        Public/BuildTools/StaticObjectTool.h
         Public/BuildTools/WallTool.h
-        Public/Widgets/DynamicObjectPanelContent.h
+        Public/Widgets/EntityPanelContent.h
         Public/Widgets/MainButton.h
         Public/Widgets/MainThumbnail.h
         Public/Widgets/TitleButton.h

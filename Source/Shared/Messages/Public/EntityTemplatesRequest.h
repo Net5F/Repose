@@ -9,16 +9,16 @@ namespace AM
 /**
  * Used to request the latest dynamic object templates from the server.
  */
-struct DynamicObjectTemplatesRequest {
+struct EntityTemplatesRequest {
     // The MessageType enum value that this message corresponds to.
     // Declares this struct as a message that the Network can send and receive.
     static constexpr ProjectMessageType MESSAGE_TYPE{
-        ProjectMessageType::DynamicObjectTemplatesRequest};
+        ProjectMessageType::EntityTemplatesRequest};
 
-    // Note: No replicated data.
+    // Note: No networked data.
 
     //--------------------------------------------------------------------------
-    // Non-replicated data
+    // Local data
     //--------------------------------------------------------------------------
     /**
      * The network ID of the client that sent this message.
@@ -30,7 +30,7 @@ struct DynamicObjectTemplatesRequest {
 };
 
 template<typename S>
-void serialize(S& serializer, DynamicObjectTemplatesRequest& objectTemplatesRequest)
+void serialize(S& serializer, EntityTemplatesRequest& entityTemplatesRequest)
 {
     // Note: No data to serialize.
 }
