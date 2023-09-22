@@ -16,10 +16,11 @@ namespace Client
 {
 MainScreen::MainScreen(World& inWorld, WorldSinks& inWorldSinks,
                        const WorldObjectLocator& inWorldObjectLocator,
-                       EventDispatcher& inUiEventDispatcher,
+                       EventDispatcher&,
                        Network& inNetwork,
                        SpriteData& inSpriteData)
 : AUI::Screen("MainScreen")
+, world{inWorld}
 , playerIsInBuildArea{false}
 , mainOverlay{inWorld, inWorldObjectLocator, inNetwork}
 , buildOverlay{inWorld, inWorldSinks, inWorldObjectLocator, inNetwork,
@@ -38,8 +39,8 @@ MainScreen::MainScreen(World& inWorld, WorldSinks& inWorldSinks,
     // If world changes are restricted, we need to know when the player enters
     // or exits the build area.
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
-        inWorldSinks.playerPositionChanged
-            .connect<&MainScreen::onPlayerPositionChanged>(*this);
+        inWorld.registry.on_update<Position>()
+            .connect<&MainScreen::onPositionChanged>(*this);
     }
     else {
         // World changes are unrestricted, so the player is always in the build
@@ -93,9 +94,15 @@ bool MainScreen::onKeyDown(SDL_Keycode keyCode)
     return false;
 }
 
-void MainScreen::onPlayerPositionChanged(Position position)
+void MainScreen::onPositionChanged(entt::registry& registry, entt::entity entity)
 {
+    // We only care about updates to the player entity.
+    if (entity != world.playerEntity) {
+        return;
+    }
+
     // If the new position is within the build area, make the hint text visible.
+    const Position& position{registry.get<Position>(entity)};
     if (BUILD_MODE_AREA_EXTENT.containsPosition(position.asTilePosition())) {
         if (!playerIsInBuildArea) {
             // The player just entered the build area.

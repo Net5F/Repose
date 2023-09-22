@@ -7,7 +7,6 @@
 #include "Velocity.h"
 #include "Rotation.h"
 #include "Collision.h"
-#include "MovementStateNeedsSync.h"
 #include "Transforms.h"
 #include "Log.h"
 
@@ -54,9 +53,8 @@ void TeleportSystem::teleportPlayers()
                     collision.modelBounds, position);
 
                 // Flag that the entity's movement state needs to be synced.
-                if (!(world.registry.all_of<MovementStateNeedsSync>(entity))) {
-                    world.registry.emplace<MovementStateNeedsSync>(entity);
-                }
+                // (movement state is auto-synced when Input is dirtied).
+                world.registry.patch<Input>(entity, [](auto&) {});
             }
         }
 

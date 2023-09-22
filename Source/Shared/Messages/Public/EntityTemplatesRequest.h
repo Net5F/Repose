@@ -30,7 +30,7 @@ struct EntityTemplatesRequest {
 };
 
 template<typename S>
-void serialize(S& serializer, EntityTemplatesRequest& entityTemplatesRequest)
+void serialize(S&, EntityTemplatesRequest&)
 {
     // Note: No data to serialize.
 }

@@ -112,6 +112,7 @@ void PlantSystem::constructSapling(const Position& position)
 {
     AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
                                   0};
+    // TODO: Is this not adding Position?
     std::array<ReplicatedComponent, 3> components{Name{"Sunflower"}, position,
                                                   animationState};
     entt::entity newEntity{world.constructEntity(components, InitScript{})};

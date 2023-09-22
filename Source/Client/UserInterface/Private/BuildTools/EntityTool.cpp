@@ -35,11 +35,6 @@ EntityTool::EntityTool(World& inWorld,
 void EntityTool::setSelectedTemplate(const Name& name,
                                      const AnimationState& animationState)
 {
-    const ObjectSpriteSet& spriteSet{
-        spriteData.getObjectSpriteSet(animationState.spriteSetID)};
-    AM_ASSERT(spriteSet.sprites[animationState.spriteIndex] != nullptr,
-              "Tried to set invalid sprite.");
-
     // Save the name and animation state.
     selectedTemplateName = name;
     selectedTemplateAnimationState = animationState;
@@ -215,8 +210,7 @@ void EntityTool::trySelectEntity(entt::entity entity)
     }
 }
 
-void EntityTool::onEntityDestroyed(entt::registry& registry,
-                                                  entt::entity entity)
+void EntityTool::onEntityDestroyed(entt::registry&, entt::entity entity)
 {
     // If the selected entity was destroyed, clear our selection.
     if (entity == selectedEntityID) {

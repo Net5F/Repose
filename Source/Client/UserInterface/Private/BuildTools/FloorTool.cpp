@@ -39,8 +39,7 @@ void FloorTool::onMouseDown(AUI::MouseButtonType buttonType,
     }
 }
 
-void FloorTool::onMouseUp(AUI::MouseButtonType buttonType,
-                          const SDL_Point& cursorPosition)
+void FloorTool::onMouseUp(AUI::MouseButtonType, const SDL_Point&)
 {
     // TODO: Add support for click-and-drag to set an extent instead of a 
     //       single tile.

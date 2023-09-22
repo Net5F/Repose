@@ -16,6 +16,7 @@
 #include "AMAssert.h"
 #include "entt/entity/entity.hpp"
 #include <fstream>
+#include <sstream>
 
 namespace AM
 {
@@ -170,7 +171,7 @@ void EntityPanelContent::setBuildTool(EntityTool* inEntityTool)
     }
 }
 
-void EntityPanelContent::onTick(double timestepS)
+void EntityPanelContent::onTick(double)
 {
     // Process any waiting messages.
     EntityTemplates entityTemplates{};
@@ -369,7 +370,7 @@ void EntityPanelContent::addSpriteSetThumbnails()
 
         // Add the callback.
         thumbnail.setOnSelected([this, &spriteSet,
-                                 firstSpriteIndex](AUI::Thumbnail* selectedThumb) {
+                                 firstSpriteIndex](AUI::Thumbnail*) {
             // This view closes immediately so we don't want to select this 
             // thumbnail, but we should clear any existing selection.
             buildPanel.clearSelectedThumbnail();

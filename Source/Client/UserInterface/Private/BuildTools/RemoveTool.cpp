@@ -52,8 +52,7 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
     }
 }
 
-void RemoveTool::onMouseUp(AUI::MouseButtonType buttonType,
-                          const SDL_Point& cursorPosition)
+void RemoveTool::onMouseUp(AUI::MouseButtonType, const SDL_Point&)
 {
     // TODO: Add support for click-and-drag to remove an extent instead of a 
     //       single layer.

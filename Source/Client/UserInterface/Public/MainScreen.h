@@ -65,7 +65,10 @@ private:
      * If the player enters or exits the build area, performs the necessary UI
      * changes.
      */
-    void onPlayerPositionChanged(Position position);
+    void onPositionChanged(entt::registry& registry, entt::entity entity);
+
+    /** Used to get the player entity's ID. */
+    World& world;
 
     /** If true, the player is currently in the build area. */
     bool playerIsInBuildArea;

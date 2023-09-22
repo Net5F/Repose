@@ -71,8 +71,7 @@ void WallTool::onMouseDown(AUI::MouseButtonType buttonType,
     }
 }
 
-void WallTool::onMouseUp(AUI::MouseButtonType buttonType,
-                          const SDL_Point& cursorPosition)
+void WallTool::onMouseUp(AUI::MouseButtonType, const SDL_Point&)
 {
     // TODO: Add support for click-and-drag to set an extent instead of a 
     //       single tile.
