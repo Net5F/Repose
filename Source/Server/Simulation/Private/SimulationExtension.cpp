@@ -5,7 +5,8 @@
 #include "TileExtent.h"
 #include "InteractionRequest.h"
 #include "EntityInitRequest.h"
-#include "ComponentUpdateRequest.h"
+#include "NameChangeRequest.h"
+#include "AnimationStateChangeRequest.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
 #include "Log.h"
@@ -91,12 +92,12 @@ bool SimulationExtension::isEntityInitRequestValid(
     }
 }
 
-bool SimulationExtension::isComponentUpdateRequestValid(
-    const ComponentUpdateRequest& componentUpdateRequest) const
+bool SimulationExtension::isNameChangeRequestValid(
+    const NameChangeRequest& nameChangeRequest) const
 {
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
         // Only return true if the entity exists and is in the build area.
-        entt::entity entity{componentUpdateRequest.entity};
+        entt::entity entity{nameChangeRequest.entity};
         if (world.entityIDIsInUse(entity)) {
             if (const auto* position
                 = world.registry.try_get<Position>(entity)) {
@@ -109,7 +110,29 @@ bool SimulationExtension::isComponentUpdateRequestValid(
     }
     else {
         // No restrictions, return true if the entity exists.
-        return world.entityIDIsInUse(componentUpdateRequest.entity);
+        return world.entityIDIsInUse(nameChangeRequest.entity);
+    }
+}
+
+bool SimulationExtension::isAnimationStateChangeRequestValid(
+    const AnimationStateChangeRequest& animationStateChangeRequest) const
+{
+    if (SharedConfig::RESTRICT_WORLD_CHANGES) {
+        // Only return true if the entity exists and is in the build area.
+        entt::entity entity{animationStateChangeRequest.entity};
+        if (world.entityIDIsInUse(entity)) {
+            if (const auto* position
+                = world.registry.try_get<Position>(entity)) {
+                return VALID_BUILD_AREA_EXTENT.containsPosition(
+                    position->asTilePosition());
+            }
+        }
+
+        return false;
+    }
+    else {
+        // No restrictions, return true if the entity exists.
+        return world.entityIDIsInUse(animationStateChangeRequest.entity);
     }
 }
 

@@ -76,9 +76,10 @@ public:
     /** @return true if the given request is valid, else false. */
     bool isEntityInitRequestValid(
         const EntityInitRequest& entityInitRequest) const;
-    /** @return true if the given request is valid, else false. */
-    bool isComponentUpdateRequestValid(
-        const ComponentUpdateRequest& componentUpdateRequest) const;
+    bool isNameChangeRequestValid(
+        const NameChangeRequest& nameChangeRequest) const;
+    bool isAnimationStateChangeRequestValid(
+        const AnimationStateChangeRequest& nameChangeRequest) const;
 
 private:
     /** Used to validate change requests. */
