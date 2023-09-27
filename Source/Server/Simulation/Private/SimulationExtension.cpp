@@ -74,17 +74,9 @@ bool SimulationExtension::isEntityInitRequestValid(
     const EntityInitRequest& entityInitRequest) const
 {
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
-        // Try to find a Position component in the request.
-        for (const auto& componentVariant : entityInitRequest.components) {
-            // Only return true if the new entity is within the build area.
-            if (const Position* position
-                = std::get_if<Position>(&componentVariant)) {
-                return VALID_BUILD_AREA_EXTENT.containsPosition(
-                    position->asTilePosition());
-            }
-        }
-
-        return false;
+        // Only return true if the new entity is within the build area.
+        return VALID_BUILD_AREA_EXTENT.containsPosition(
+            entityInitRequest.position.asTilePosition());
     }
     else {
         // No restrictions, always return true;

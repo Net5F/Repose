@@ -95,9 +95,8 @@ EntityPanelContent::EntityPanelContent(
     nameInput.setOnTextCommitted([this]() {
         // Send a re-init request with the updated name.
         const entt::registry& registry{world.registry};
-        EntityInitRequest initRequest{editingEntityID};
-        initRequest.components.push_back(
-            registry.get<Position>(editingEntityID));
+        EntityInitRequest initRequest{editingEntityID,
+                                      registry.get<Position>(editingEntityID)};
         initRequest.components.push_back(
             registry.get<AnimationState>(editingEntityID));
         initRequest.components.push_back(Name{nameInput.getText()});
@@ -112,11 +111,10 @@ EntityPanelContent::EntityPanelContent(
     changeScriptButton.setOnPressed([this]() {
         // Send a re-init request with the updated script.
         const entt::registry& registry{world.registry};
-        EntityInitRequest initRequest{editingEntityID};
+        EntityInitRequest initRequest{editingEntityID,
+                                      registry.get<Position>(editingEntityID)};
         initRequest.components.push_back(
             registry.get<Name>(editingEntityID));
-        initRequest.components.push_back(
-            registry.get<Position>(editingEntityID));
         initRequest.components.push_back(
             registry.get<AnimationState>(editingEntityID));
         std::string initScript{""};
@@ -294,7 +292,7 @@ void EntityPanelContent::addTemplateThumbnails(
 
         // Calc a square texture extent that shows the bottom of the sprite 
         // (so we don't have to squash it).
-        SpriteRenderData renderData{
+        const SpriteRenderData& renderData{
             spriteData.getRenderData(sprite->numericID)};
         SDL_Rect textureExtent{renderData.textureExtent};
         if (textureExtent.h > textureExtent.w) {
@@ -345,7 +343,7 @@ void EntityPanelContent::addSpriteSetThumbnails()
 
         // Calc a square texture extent that shows the bottom of the sprite 
         // (so we don't have to squash it).
-        SpriteRenderData renderData{
+        const SpriteRenderData& renderData{
             spriteData.getRenderData(sprite->numericID)};
         SDL_Rect textureExtent{renderData.textureExtent};
         if (textureExtent.h > textureExtent.w) {

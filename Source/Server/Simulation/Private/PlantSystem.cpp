@@ -112,10 +112,10 @@ void PlantSystem::constructSapling(const Position& position)
 {
     AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
                                   0};
-    // TODO: Is this not adding Position?
-    std::array<ReplicatedComponent, 3> components{Name{"Sunflower"}, position,
+    std::array<ReplicatedComponent, 2> components{Name{"Sunflower"},
                                                   animationState};
-    entt::entity newEntity{world.constructEntity(components, InitScript{})};
+    entt::entity newEntity{
+        world.constructEntity(position, components, InitScript{})};
 
     // Tag it as a Sapling.
     Plant plant{Plant::LifeStage::Sapling};
@@ -126,9 +126,10 @@ void PlantSystem::constructDeadPlant(const Position& position)
 {
     AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
                                   3};
-    std::array<ReplicatedComponent, 3> components{Name{"Dead Sunflower"}, position,
+    std::array<ReplicatedComponent, 2> components{Name{"Dead Sunflower"},
                                                   animationState};
-    entt::entity newEntity{world.constructEntity(components, InitScript{})};
+    entt::entity newEntity{
+        world.constructEntity(position, components, InitScript{})};
 
     // Tag it as Dead.
     Plant plant{Plant::LifeStage::Dead};

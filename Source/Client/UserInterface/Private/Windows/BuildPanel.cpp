@@ -170,7 +170,8 @@ void BuildPanel::addTileSpriteSet(TileLayer::Type type, const SpriteSet& spriteS
 
     // Calc a square texture extent that shows the bottom of the sprite (so we
     // don't have to squash it).
-    SpriteRenderData renderData{spriteData.getRenderData(sprite.numericID)};
+    const SpriteRenderData& renderData{
+        spriteData.getRenderData(sprite.numericID)};
     SDL_Rect textureExtent{renderData.textureExtent};
     if (textureExtent.h > textureExtent.w) {
         int diff{textureExtent.h - textureExtent.w};
