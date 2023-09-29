@@ -76,6 +76,8 @@ public:
     /** @return true if the given request is valid, else false. */
     bool isEntityInitRequestValid(
         const EntityInitRequest& entityInitRequest) const;
+    bool isEntityDeleteRequestValid(
+        const EntityDeleteRequest& entityDeleteRequest) const;
     bool isNameChangeRequestValid(
         const NameChangeRequest& nameChangeRequest) const;
     bool isAnimationStateChangeRequestValid(

@@ -5,6 +5,7 @@
 #include "TileRemoveLayer.h"
 #include "World.h"
 #include "Tile.h"
+#include "EntityDeleteRequest.h"
 #include "QueuedEvents.h"
 #include "Ignore.h"
 
@@ -40,8 +41,7 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
                                    layer->spriteSetID, layer->spriteIndex);
         }
         else if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
-            // TODO: Remove dynamic entities and NPCs
-            LOG_INFO("Hit Entity");
+            network.serializeAndSend(EntityDeleteRequest{*entity});
         }
         else {
             // Didn't hit a removable object. Tell the sim to remove the floor.

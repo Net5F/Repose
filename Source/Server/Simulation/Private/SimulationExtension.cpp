@@ -84,47 +84,56 @@ bool SimulationExtension::isEntityInitRequestValid(
     }
 }
 
-bool SimulationExtension::isNameChangeRequestValid(
-    const NameChangeRequest& nameChangeRequest) const
+bool SimulationExtension::isEntityDeleteRequestValid(
+    const EntityDeleteRequest& entityDeleteRequest) const
 {
+    entt::entity entity{entityDeleteRequest.entity};
+
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
-        // Only return true if the entity exists and is in the build area.
-        entt::entity entity{nameChangeRequest.entity};
-        if (world.entityIDIsInUse(entity)) {
-            if (const auto* position
-                = world.registry.try_get<Position>(entity)) {
-                return VALID_BUILD_AREA_EXTENT.containsPosition(
-                    position->asTilePosition());
-            }
-        }
+        // Only return true if the entity is within the build area.
+        const auto& position{world.registry.get<Position>(entity)};
+        return VALID_BUILD_AREA_EXTENT.containsPosition(
+            position.asTilePosition());
 
         return false;
     }
     else {
-        // No restrictions, return true if the entity exists.
-        return world.entityIDIsInUse(nameChangeRequest.entity);
+        // No restrictions, always return true;
+        return true;
+    }
+}
+
+bool SimulationExtension::isNameChangeRequestValid(
+    const NameChangeRequest& nameChangeRequest) const
+{
+    entt::entity entity{nameChangeRequest.entity};
+
+    if (SharedConfig::RESTRICT_WORLD_CHANGES) {
+        // Only return true if the entity is within the build area.
+        const auto& position{world.registry.get<Position>(entity)};
+        return VALID_BUILD_AREA_EXTENT.containsPosition(
+            position.asTilePosition());
+    }
+    else {
+        // No restrictions, always return true;
+        return true;
     }
 }
 
 bool SimulationExtension::isAnimationStateChangeRequestValid(
     const AnimationStateChangeRequest& animationStateChangeRequest) const
 {
-    if (SharedConfig::RESTRICT_WORLD_CHANGES) {
-        // Only return true if the entity exists and is in the build area.
-        entt::entity entity{animationStateChangeRequest.entity};
-        if (world.entityIDIsInUse(entity)) {
-            if (const auto* position
-                = world.registry.try_get<Position>(entity)) {
-                return VALID_BUILD_AREA_EXTENT.containsPosition(
-                    position->asTilePosition());
-            }
-        }
+    entt::entity entity{animationStateChangeRequest.entity};
 
-        return false;
+    if (SharedConfig::RESTRICT_WORLD_CHANGES) {
+        // Only return true if the entity is within the build area.
+        const auto& position{world.registry.get<Position>(entity)};
+        return VALID_BUILD_AREA_EXTENT.containsPosition(
+            position.asTilePosition());
     }
     else {
-        // No restrictions, return true if the entity exists.
-        return world.entityIDIsInUse(animationStateChangeRequest.entity);
+        // No restrictions, always return true;
+        return true;
     }
 }
 
