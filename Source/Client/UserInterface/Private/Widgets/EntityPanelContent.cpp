@@ -10,7 +10,8 @@
 #include "Rotation.h"
 #include "AnimationState.h"
 #include "EntityInitRequest.h"
-#include "ComponentUpdateRequest.h"
+#include "NameChangeRequest.h"
+#include "AnimationStateChangeRequest.h"
 #include "InitScriptRequest.h"
 #include "Paths.h"
 #include "AMAssert.h"
@@ -93,15 +94,10 @@ EntityPanelContent::EntityPanelContent(
     nameInput.setCursorColor({255, 255, 255, 255});
 
     nameInput.setOnTextCommitted([this]() {
-        // Send a re-init request with the updated name.
-        const entt::registry& registry{world.registry};
-        EntityInitRequest initRequest{editingEntityID,
-                                      registry.get<Position>(editingEntityID)};
-        initRequest.components.push_back(
-            registry.get<AnimationState>(editingEntityID));
-        initRequest.components.push_back(Name{nameInput.getText()});
-        initRequest.initScript = editingEntityInitScript;
-        network.serializeAndSend(initRequest);
+        // Send a request to change the entity's name.
+        NameChangeRequest nameChangeRequest{editingEntityID,
+                                            Name{nameInput.getText()}};
+        network.serializeAndSend(nameChangeRequest);
     });
 
     /* Buttons */
@@ -373,12 +369,12 @@ void EntityPanelContent::addSpriteSetThumbnails()
             // thumbnail, but we should clear any existing selection.
             buildPanel.clearSelectedThumbnail();
 
-            // Tell the server to change the entity's sprite.
-            ComponentUpdateRequest updateRequest{editingEntityID};
-            updateRequest.components.push_back(
+            // Send a request to change the entity's animation state.
+            AnimationStateChangeRequest changeRequest{
+                editingEntityID,
                 AnimationState{SpriteSet::Type::Object, spriteSet.numericID,
-                               firstSpriteIndex});
-            network.serializeAndSend(updateRequest);
+                               firstSpriteIndex}};
+            network.serializeAndSend(changeRequest);
 
             // Switch back to the edit view.
             changeView(ViewType::Edit);
