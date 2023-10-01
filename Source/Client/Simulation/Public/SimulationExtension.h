@@ -1,13 +1,13 @@
 #pragma once
 
 #include "ISimulationExtension.h"
+#include "SimulationExDependencies.h"
 #include <memory>
 
 namespace AM
 {
 namespace Client
 {
-struct SimulationExDependencies;
 class AnimationSystem;
 
 /**
