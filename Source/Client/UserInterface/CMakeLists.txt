@@ -3,7 +3,6 @@ target_sources(Client
         Private/MainScreen.cpp
         Private/TitleScreen.cpp
         Private/UserInterfaceExtension.cpp
-        Private/WorldSinks.cpp
         Private/BuildTools/BuildTool.cpp
         Private/BuildTools/EntityTool.cpp
         Private/BuildTools/FloorCoveringTool.cpp
@@ -25,7 +24,6 @@ target_sources(Client
         Public/MainScreen.h
         Public/TitleScreen.h
         Public/UserInterfaceExtension.h
-        Public/WorldSinks.h
         Public/BuildTools/BuildTool.h
         Public/BuildTools/EntityTool.h
         Public/BuildTools/FloorCoveringTool.h

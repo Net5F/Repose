@@ -1,8 +1,6 @@
 #pragma once
 
 #include "IUserInterfaceExtension.h"
-#include "UserInterfaceExDependencies.h"
-#include "WorldSinks.h"
 #include "TitleScreen.h"
 #include "MainScreen.h"
 #include "UserErrorString.h"
@@ -20,6 +18,7 @@ struct Camera;
 
 namespace Client
 {
+struct UserInterfaceExDependencies;
 
 /**
  * Owns the UI widget tree (built using AmalgamUI) and manages its state.
@@ -36,7 +35,7 @@ public:
 
     // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
-    UserInterfaceExtension(UserInterfaceExDependencies deps);
+    UserInterfaceExtension(const UserInterfaceExDependencies& deps);
 
     virtual ~UserInterfaceExtension() = default;
 
@@ -81,9 +80,6 @@ public:
     bool handleOSEvent(SDL_Event& event) override;
 
 private:
-    /** Signals World state changes from the Simulation to this UI. */
-    WorldSinks worldSinks;
-
     /** AmalgamUI initializer, used to init/quit the library at the proper
         times. */
     AUI::Initializer auiInitializer;

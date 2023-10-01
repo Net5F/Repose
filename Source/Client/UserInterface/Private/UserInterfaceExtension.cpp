@@ -1,7 +1,7 @@
 #include "UserInterfaceExtension.h"
+#include "UserInterfaceExDependencies.h"
 #include "Config.h"
 #include "World.h"
-#include "WorldSinks.h"
 #include "Network.h"
 #include "AssetCache.h"
 #include "SpriteData.h"
@@ -19,12 +19,12 @@ namespace AM
 namespace Client
 {
 
-UserInterfaceExtension::UserInterfaceExtension(UserInterfaceExDependencies deps)
-: worldSinks{deps.worldSignals}
-, auiInitializer{deps.sdlRenderer,
+UserInterfaceExtension::UserInterfaceExtension(
+    const UserInterfaceExDependencies& deps)
+: auiInitializer{deps.sdlRenderer,
                  {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT}}
-, titleScreen{*this, worldSinks, deps.uiEventDispatcher}
-, mainScreen{deps.world, worldSinks, deps.worldObjectLocator,
+, titleScreen{*this, deps.simulation, deps.uiEventDispatcher}
+, mainScreen{deps.simulation, deps.worldObjectLocator,
              deps.uiEventDispatcher, deps.network, deps.spriteData}
 , currentScreen{&titleScreen}
 , userErrorStringQueue{deps.network.getEventDispatcher()}

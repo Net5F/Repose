@@ -1,13 +1,15 @@
 #pragma once
 
 #include "IMessageProcessorExtension.h"
-#include "MessageProcessorExDependencies.h"
 #include <SDL_stdinc.h>
 
 namespace AM
 {
+class EventDispatcher;
+
 namespace Client
 {
+struct MessageProcessorExDependencies;
 
 /**
  * Processes project messages (i.e. any message that the engine doesn't handle).
@@ -17,7 +19,7 @@ class MessageProcessorExtension : public IMessageProcessorExtension
 public:
     // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
-    MessageProcessorExtension(MessageProcessorExDependencies deps);
+    MessageProcessorExtension(const MessageProcessorExDependencies& deps);
 
     /**
      * Called when a message is received that the engine doesn't have a handler

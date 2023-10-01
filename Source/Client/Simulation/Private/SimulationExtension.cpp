@@ -1,4 +1,6 @@
 #include "SimulationExtension.h"
+#include "SimulationExDependencies.h"
+#include "AnimationSystem.h"
 #include "Simulation.h"
 #include "Camera.h"
 #include "Log.h"
@@ -8,9 +10,17 @@ namespace AM
 namespace Client
 {
 
-SimulationExtension::SimulationExtension(SimulationExDependencies deps)
-: animationSystem{deps.simulation.getWorld(), deps.spriteData}
+SimulationExtension::SimulationExtension(const SimulationExDependencies& inDeps)
+: deps{inDeps}
 {
+}
+
+SimulationExtension::~SimulationExtension() = default;
+
+void SimulationExtension::initializeSystems()
+{
+    animationSystem = std::make_unique<AnimationSystem>(
+        deps.simulation.getWorld(), deps.spriteData);
 }
 
 void SimulationExtension::beforeAll() {}
@@ -19,7 +29,7 @@ void SimulationExtension::afterMapAndConnectionUpdates() {}
 
 void SimulationExtension::afterMovement()
 {
-    animationSystem.updateAnimations();
+    animationSystem->updateAnimations();
 }
 
 void SimulationExtension::afterAll() {}

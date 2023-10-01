@@ -1,4 +1,5 @@
 #include "MessageProcessorExtension.h"
+#include "MessageProcessorExDependencies.h"
 #include "DispatchMessage.h"
 #include "ProjectMessageType.h"
 #include "EntityTemplates.h"
@@ -10,7 +11,7 @@ namespace Client
 {
 
 MessageProcessorExtension::MessageProcessorExtension(
-    MessageProcessorExDependencies deps)
+    const MessageProcessorExDependencies& deps)
 : networkEventDispatcher{deps.networkEventDispatcher}
 {
 }

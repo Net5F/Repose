@@ -14,8 +14,7 @@ namespace AM
 namespace Client
 {
 class UserInterfaceExtension;
-class TitleScreen;
-class WorldSinks;
+class Simulation;
 
 /**
  * The single window for the title screen.
@@ -24,7 +23,7 @@ class TitleWindow : public AUI::Window
 {
 public:
     TitleWindow(UserInterfaceExtension& inUserInterface,
-                WorldSinks& inWorldSinks, EventDispatcher& inUiEventDispatcher);
+                Simulation& inSimulation, EventDispatcher& inUiEventDispatcher);
 
 private:
     // UI event handlers.

@@ -1,4 +1,5 @@
 #include "RendererExtension.h"
+#include "RendererExDependencies.h"
 #include "Camera.h"
 #include "Log.h"
 
@@ -8,7 +9,7 @@ namespace Client
 {
 
 RendererExtension::RendererExtension(
-    [[maybe_unused]] RendererExDependencies deps)
+    [[maybe_unused]] const RendererExDependencies& deps)
 {
 }
 

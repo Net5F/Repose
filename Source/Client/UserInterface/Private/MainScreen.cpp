@@ -1,6 +1,6 @@
 #include "MainScreen.h"
+#include "Simulation.h"
 #include "World.h"
-#include "WorldSinks.h"
 #include "WorldObjectLocator.h"
 #include "Network.h"
 #include "SpriteData.h"
@@ -14,18 +14,18 @@ namespace AM
 {
 namespace Client
 {
-MainScreen::MainScreen(World& inWorld, WorldSinks& inWorldSinks,
+MainScreen::MainScreen(Simulation& inSimulation,
                        const WorldObjectLocator& inWorldObjectLocator,
                        EventDispatcher&,
                        Network& inNetwork,
                        SpriteData& inSpriteData)
 : AUI::Screen("MainScreen")
-, world{inWorld}
+, world{inSimulation.getWorld()}
 , playerIsInBuildArea{false}
-, mainOverlay{inWorld, inWorldObjectLocator, inNetwork}
-, buildOverlay{inWorld, inWorldSinks, inWorldObjectLocator, inNetwork,
+, mainOverlay{world, inWorldObjectLocator, inNetwork}
+, buildOverlay{inSimulation, inWorldObjectLocator, inNetwork,
                inSpriteData}
-, buildPanel{inWorld, inNetwork, inSpriteData, buildOverlay}
+, buildPanel{world, inNetwork, inSpriteData, buildOverlay}
 {
     // Add our windows so they're included in rendering, etc.
     windows.push_back(mainOverlay);
@@ -39,7 +39,7 @@ MainScreen::MainScreen(World& inWorld, WorldSinks& inWorldSinks,
     // If world changes are restricted, we need to know when the player enters
     // or exits the build area.
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
-        inWorld.registry.on_update<Position>()
+        world.registry.on_update<Position>()
             .connect<&MainScreen::onPositionChanged>(*this);
     }
     else {

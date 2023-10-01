@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ISimulationExtension.h"
-#include "SimulationExDependencies.h"
 #include "BuildModeDataSystem.h"
 #include "MazeGenerationSystem.h"
 #include "PlantSystem.h"
@@ -12,6 +11,7 @@ namespace AM
 namespace Server
 {
 class World;
+struct SimulationExDependencies;
 
 /**
  * An extension of the engine's Simulation class.
@@ -24,7 +24,7 @@ class SimulationExtension : public ISimulationExtension
 public:
     // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
-    SimulationExtension(SimulationExDependencies deps);
+    SimulationExtension(const SimulationExDependencies& deps);
 
     //-------------------------------------------------------------------------
     // Simulation Tick Hooks (Call your systems in these)

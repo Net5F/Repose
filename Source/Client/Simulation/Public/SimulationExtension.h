@@ -1,13 +1,14 @@
 #pragma once
 
 #include "ISimulationExtension.h"
-#include "SimulationExDependencies.h"
-#include "AnimationSystem.h"
+#include <memory>
 
 namespace AM
 {
 namespace Client
 {
+struct SimulationExDependencies;
+class AnimationSystem;
 
 /**
  * An extension of the engine's Simulation class.
@@ -20,10 +21,20 @@ class SimulationExtension : public ISimulationExtension
 public:
     // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
-    SimulationExtension(SimulationExDependencies deps);
+    SimulationExtension(const SimulationExDependencies& inDeps);
+
+    ~SimulationExtension();
 
     /**
-     * Called before any systems are ran.
+     * Initializes or re-initializes our simulation systems.
+     *
+     * Used to put the systems in a consistent state, so they don't need to 
+     * account for disconnects/reconnects.
+     */
+    void initializeSystems();
+
+    /**
+     * Called first in the simulation loop.
      */
     void beforeAll();
 
@@ -51,7 +62,11 @@ public:
     bool handleOSEvent(SDL_Event& event) override;
 
 private:
-    AnimationSystem animationSystem;
+    SimulationExDependencies deps;
+
+    // Note: These are pointers so that we can delete/reconstruct them when we 
+    //       connect to the server. This gives them a consistent starting state.
+    std::unique_ptr<AnimationSystem> animationSystem;
 };
 
 } // End namespace Client

@@ -7,10 +7,10 @@ namespace AM
 namespace Client
 {
 TitleScreen::TitleScreen(UserInterfaceExtension& inUserInterface,
-                         WorldSinks& inWorldSinks,
+                         Simulation& inSimulation,
                          EventDispatcher& inUiEventDispatcher)
 : AUI::Screen("TitleScreen")
-, titleWindow{inUserInterface, inWorldSinks, inUiEventDispatcher}
+, titleWindow{inUserInterface, inSimulation, inUiEventDispatcher}
 {
     // Add our windows so they're included in rendering, etc.
     windows.push_back(titleWindow);

@@ -1,4 +1,5 @@
 #include "SimulationExtension.h"
+#include "SimulationExDependencies.h"
 #include "Simulation.h"
 #include "Network.h"
 #include "SpriteData.h"
@@ -16,7 +17,7 @@ namespace AM
 namespace Server
 {
 
-SimulationExtension::SimulationExtension(SimulationExDependencies deps)
+SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
 : world{deps.simulation.getWorld()}
 , buildModeDataSystem{deps.simulation.getWorld(),
                       deps.network.getEventDispatcher(), deps.network,

@@ -17,8 +17,7 @@ struct Position;
 
 namespace Client
 {
-class World;
-class WorldSinks;
+class Simulation;
 class WorldObjectLocator;
 class Network;
 class SpriteData;
@@ -29,7 +28,7 @@ class SpriteData;
 class MainScreen : public AUI::Screen
 {
 public:
-    MainScreen(World& inWorld, WorldSinks& inWorldSinks,
+    MainScreen(Simulation& inSimulation,
                const WorldObjectLocator& inWorldObjectLocator,
                EventDispatcher& inUiEventDispatcher,
                Network& inNetwork,

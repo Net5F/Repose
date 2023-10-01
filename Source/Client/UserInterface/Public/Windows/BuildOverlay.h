@@ -17,8 +17,8 @@ struct Sprite;
 
 namespace Client
 {
+class Simulation;
 class World;
-class WorldSinks;
 class WorldObjectLocator;
 class Network;
 class SpriteData;
@@ -39,7 +39,7 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    BuildOverlay(World& inWorld, WorldSinks& inWorldSinks,
+    BuildOverlay(Simulation& inSimulation,
                  const WorldObjectLocator& inWorldObjectLocator,
                  Network& inNetwork, SpriteData& inSpriteData);
 

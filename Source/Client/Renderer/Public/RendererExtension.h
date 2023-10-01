@@ -1,12 +1,12 @@
 #pragma once
 
 #include "IRendererExtension.h"
-#include "RendererExDependencies.h"
 
 namespace AM
 {
 namespace Client
 {
+struct RendererExDependencies;
 
 /**
  * PLACEHOLDER - Currently not rendering anything at the project level.
@@ -16,7 +16,7 @@ class RendererExtension : public IRendererExtension
 public:
     // Note: This is the canonical constructor, expected by the factory that
     //       constructs this class. Do not modify it.
-    RendererExtension(RendererExDependencies deps);
+    RendererExtension(const RendererExDependencies& deps);
 
     /**
      * Called before tiles and entities are rendered.

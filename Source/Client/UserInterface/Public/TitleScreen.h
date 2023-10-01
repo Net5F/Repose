@@ -9,7 +9,7 @@ class EventDispatcher;
 namespace Client
 {
 class UserInterfaceExtension;
-class WorldSinks;
+class Simulation;
 
 /**
  * The opening title screen that you see on app launch.
@@ -18,7 +18,7 @@ class TitleScreen : public AUI::Screen
 {
 public:
     TitleScreen(UserInterfaceExtension& inUserInterface,
-                WorldSinks& inWorldSinks, EventDispatcher& inUiEventDispatcher);
+                Simulation& inSimulation, EventDispatcher& inUiEventDispatcher);
 
     void render() override;
 

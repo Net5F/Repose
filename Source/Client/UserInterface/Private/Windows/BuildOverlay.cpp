@@ -1,5 +1,5 @@
 #include "BuildOverlay.h"
-#include "WorldSinks.h"
+#include "Simulation.h"
 #include "WorldObjectLocator.h"
 #include "Network.h"
 #include "SpriteData.h"
@@ -21,11 +21,11 @@ namespace AM
 {
 namespace Client
 {
-BuildOverlay::BuildOverlay(World& inWorld, WorldSinks& inWorldSinks,
+BuildOverlay::BuildOverlay(Simulation& inSimulation,
                            const WorldObjectLocator& inWorldObjectLocator,
                            Network& inNetwork, SpriteData& inSpriteData)
 : AUI::Window({0, 0, 1920, 744}, "BuildOverlay")
-, world{inWorld}
+, world{inSimulation.getWorld()}
 , worldObjectLocator{inWorldObjectLocator}
 , network{inNetwork}
 , spriteData{inSpriteData}
@@ -37,8 +37,8 @@ BuildOverlay::BuildOverlay(World& inWorld, WorldSinks& inWorldSinks,
 {
     // We need to know when the map size changes so we can bound the cursor
     // appropriately.
-    inWorldSinks.tileMapExtentChanged
-        .connect<&BuildOverlay::onTileMapExtentChanged>(*this);
+    world.tileMap.sizeChanged.connect<&BuildOverlay::onTileMapExtentChanged>(
+        *this);
 }
 
 void BuildOverlay::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)

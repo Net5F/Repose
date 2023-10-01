@@ -1,5 +1,6 @@
 #include "TitleWindow.h"
 #include "UserInterfaceExtension.h"
+#include "Simulation.h"
 #include "TitleScreen.h"
 #include "ConnectionRequest.h"
 #include "Paths.h"
@@ -10,7 +11,7 @@ namespace AM
 namespace Client
 {
 TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
-                         WorldSinks& inWorldSinks,
+                         Simulation& inSimulation,
                          EventDispatcher& inUiEventDispatcher)
 : AUI::Window({0, 0, 1920, 1080}, "TitleWindow")
 , userInterface{inUserInterface}
@@ -77,9 +78,9 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
         std::bind(&TitleWindow::onConnectButtonPressed, this));
 
     // Register our world signal handlers.
-    inWorldSinks.simulationStarted.connect<&TitleWindow::onSimulationStarted>(
+    inSimulation.simulationStarted.connect<&TitleWindow::onSimulationStarted>(
         *this);
-    inWorldSinks.serverConnectionError
+    inSimulation.serverConnectionError
         .connect<&TitleWindow::onServerConnectionError>(*this);
 }
 

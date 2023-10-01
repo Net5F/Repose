@@ -1,8 +1,10 @@
 #include "MessageProcessorExtension.h"
+#include "MessageProcessorExDependencies.h"
 #include "DispatchMessage.h"
 #include "ProjectMessageType.h"
 #include "EntityTemplatesRequest.h"
 #include "Log.h"
+#include "QueuedEvents.h"
 
 namespace AM
 {
@@ -10,7 +12,7 @@ namespace Server
 {
 
 MessageProcessorExtension::MessageProcessorExtension(
-    MessageProcessorExDependencies deps)
+    const MessageProcessorExDependencies& deps)
 : networkEventDispatcher{deps.networkEventDispatcher}
 {
 }
