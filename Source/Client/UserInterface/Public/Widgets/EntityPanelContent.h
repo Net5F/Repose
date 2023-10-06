@@ -28,6 +28,7 @@ class Network;
 class SpriteData;
 class BuildPanel;
 class EntityTool;
+struct SpriteRenderData;
 
 // TODO: This uses object sprite sets everywhere. When we add character sprite 
 //       sets, figure out how the UI should surface them.
@@ -74,9 +75,9 @@ private:
     void changeView(ViewType newView);
 
     /**
-     * Add the "add entity" thumbnail to the templates container.
+     * Add the "default template" thumbnail to the templates container.
      */
-    void addAddThumbnail();
+    void addDefaultTemplateThumbnail();
 
     /**
      * Fills the templates container with the given entity templates.
@@ -88,6 +89,11 @@ private:
      * Fills the sprite set container with all of the entity sprite sets.
      */
     void addSpriteSetThumbnails();
+
+    /**
+     * Returns a square texture extent that shows the bottom of the given sprite.
+     */
+    SDL_Rect calcSquareTexExtent(const SpriteRenderData& renderData);
 
     /** Used for getting the current editing entity's component data. */
     World& world;

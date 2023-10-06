@@ -127,7 +127,7 @@ EntityPanelContent::EntityPanelContent(
     });
 
     // Add the thumbnails that we can (we get some later from the server).
-    addAddThumbnail();
+    addDefaultTemplateThumbnail();
     addSpriteSetThumbnails();
 
     // Hide any non-template-view widgets.
@@ -237,7 +237,7 @@ void EntityPanelContent::changeView(ViewType newView)
     currentView = newView;
 }
 
-void EntityPanelContent::addAddThumbnail()
+void EntityPanelContent::addDefaultTemplateThumbnail()
 {
     // Construct the new thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
@@ -246,9 +246,21 @@ void EntityPanelContent::addAddThumbnail()
     thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 
-    // Load the "add new entity" image.
-    thumbnail.thumbnailImage.setSimpleImage(Paths::TEXTURE_DIR
-                                            + "BuildPanel/EraserIcon_1600.png");
+    // Get the sprite.
+    const ObjectSpriteSet& spriteSet{spriteData.getObjectSpriteSet(
+        SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_SET)};
+    const Sprite* sprite{
+        spriteSet.sprites[SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_INDEX]};
+
+    // Calc a square texture extent that shows the bottom of the sprite 
+    // (so we don't have to squash it).
+    const SpriteRenderData& renderData{
+        spriteData.getRenderData(sprite->numericID)};
+    SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
+
+    // Load the sprite's image.
+    thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath,
+                                            textureExtent);
 
     // Add the callback.
     thumbnail.setOnSelected([this](AUI::Thumbnail* selectedThumb) {
@@ -261,7 +273,7 @@ void EntityPanelContent::addAddThumbnail()
         AnimationState animationState{
             SpriteSet::Type::Object, spriteSet.numericID,
             SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_INDEX};
-        entityTool->setSelectedTemplate({"NewEntity"}, animationState);
+        entityTool->setSelectedTemplate({"Default"}, animationState);
     });
 
     templateContainer.push_back(std::move(thumbnailPtr));
@@ -289,12 +301,7 @@ void EntityPanelContent::addTemplateThumbnails(
         // (so we don't have to squash it).
         const SpriteRenderData& renderData{
             spriteData.getRenderData(sprite->numericID)};
-        SDL_Rect textureExtent{renderData.textureExtent};
-        if (textureExtent.h > textureExtent.w) {
-            int diff{textureExtent.h - textureExtent.w};
-            textureExtent.h -= diff;
-            textureExtent.y += diff;
-        }
+        SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
 
         // Load the sprite's image.
         thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath,
@@ -340,12 +347,7 @@ void EntityPanelContent::addSpriteSetThumbnails()
         // (so we don't have to squash it).
         const SpriteRenderData& renderData{
             spriteData.getRenderData(sprite->numericID)};
-        SDL_Rect textureExtent{renderData.textureExtent};
-        if (textureExtent.h > textureExtent.w) {
-            int diff{textureExtent.h - textureExtent.w};
-            textureExtent.h -= diff;
-            textureExtent.y += diff;
-        }
+        SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
 
         // Load the sprite's image.
         thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath,
@@ -381,6 +383,19 @@ void EntityPanelContent::addSpriteSetThumbnails()
 
         spriteSetContainer.push_back(std::move(thumbnailPtr));
     }
+}
+
+SDL_Rect
+    EntityPanelContent::calcSquareTexExtent(const SpriteRenderData& renderData)
+{
+    SDL_Rect textureExtent{renderData.textureExtent};
+    if (textureExtent.h > textureExtent.w) {
+        int diff{textureExtent.h - textureExtent.w};
+        textureExtent.h -= diff;
+        textureExtent.y += diff;
+    }
+
+    return textureExtent;
 }
 
 } // End namespace Client
