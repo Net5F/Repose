@@ -19,13 +19,15 @@ namespace Server
 
 SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
 : world{deps.simulation.getWorld()}
-, buildModeDataSystem{deps.simulation.getWorld(),
-                      deps.network.getEventDispatcher(), deps.network,
+, projectLuaBindings{deps.simulation.getLua(), world}
+, buildModeDataSystem{world, deps.network.getEventDispatcher(), deps.network,
                       deps.spriteData}
-, mazeGenerationSystem{deps.simulation.getWorld(), deps.spriteData}
+, mazeGenerationSystem{world, deps.spriteData}
 , plantSystem{deps.simulation, deps.spriteData}
 , teleportSystem{deps.simulation.getWorld()}
 {
+    // Add our Lua bindings.
+    projectLuaBindings.addBindings();
 }
 
 void SimulationExtension::beforeAll() {}

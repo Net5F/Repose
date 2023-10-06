@@ -5,6 +5,9 @@
 
 namespace AM
 {
+namespace InteractionType
+{
+
 /**
  * The types of interactions that a user may be able to perform on an entity.
  * 
@@ -12,13 +15,13 @@ namespace AM
  * holds engine-defined interaction types, this file holds project-defined 
  * interaction types.
  */
-struct ProjectInteractionType {
-    enum Value : Uint8 {
-        // Note: The engine reserves values 0 - 124. 125 - 255 are available.
+enum Project : Uint8
+{
+    // Note: The engine reserves values 0 - 124. 125 - 255 are available.
 
-        // Sunflower garden
-        Replant = static_cast<Uint8>(EngineInteractionType::PROJECT_START),
-    };
+    // Sunflower garden
+    Replant = static_cast<Uint8>(InteractionType::PROJECT_START),
 };
 
+} // End namespace InteractionType
 } // End namespace AM

@@ -27,7 +27,7 @@ UserInterfaceExtension::UserInterfaceExtension(
 , mainScreen{deps.simulation, deps.worldObjectLocator,
              deps.uiEventDispatcher, deps.network, deps.spriteData}
 , currentScreen{&titleScreen}
-, userErrorStringQueue{deps.network.getEventDispatcher()}
+, systemMessageQueue{deps.network.getEventDispatcher()}
 {
     SDL_Rect windowSize{UserConfig::get().getWindowSize()};
     AUI::Core::setActualScreenSize({windowSize.w, windowSize.h});
@@ -81,10 +81,10 @@ void UserInterfaceExtension::tick(double timestepS)
 {
     currentScreen->tick(timestepS);
 
-    // TEMP: Process any waiting error strings.
-    UserErrorString userErrorString{};
-    while (userErrorStringQueue.pop(userErrorString)) {
-        LOG_INFO("Server: %s", userErrorString.errorString.c_str());
+    // TEMP: Process any waiting system messages.
+    SystemMessage systemMessage{};
+    while (systemMessageQueue.pop(systemMessage)) {
+        LOG_INFO("Server: %s", systemMessage.messageString.c_str());
     }
 }
 

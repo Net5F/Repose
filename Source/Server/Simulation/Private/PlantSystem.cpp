@@ -33,16 +33,16 @@ PlantSystem::PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData)
         }
     }
 
-    // Construct all the sunflower entities.
+    // Create all the sunflower entities.
     for (int x = plantExtent.x; x <= plantExtent.xMax(); ++x) {
         for (int y = plantExtent.y; y <= plantExtent.yMax(); y += 2) {
             Position tileCenter{TilePosition{x, y}.getCenterPosition()};
-            constructSapling(tileCenter);
+            createSapling(tileCenter);
         }
     }
 
     // Subscribe to receive any Grow or Replant interactions.
-    inSimulation.registerInteractionQueue(ProjectInteractionType::Replant,
+    inSimulation.registerInteractionQueue(InteractionType::Replant,
                                           replantInteractionQueue);
 }
 
@@ -101,35 +101,33 @@ void PlantSystem::updatePlant(entt::entity plantEntity)
         else {
             // The plant is dead. Replace it with a new entity so we can add 
             // the "Replant" interaction.
-            constructDeadPlant(position);
+            createDeadPlant(position);
             world.registry.destroy(plantEntity);
             return;
         }
     }
 }
 
-void PlantSystem::constructSapling(const Position& position)
+void PlantSystem::createSapling(const Position& position)
 {
     AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
                                   0};
-    std::array<ReplicatedComponent, 2> components{Name{"Sunflower"},
-                                                  animationState};
-    entt::entity newEntity{
-        world.constructEntity(position, components, InitScript{})};
+    entt::entity newEntity{world.createEntity(position)};
+    world.registry.emplace<Name>(newEntity, "Sunflower");
+    world.addGraphicsComponents(newEntity, animationState);
 
     // Tag it as a Sapling.
     Plant plant{Plant::LifeStage::Sapling};
     world.registry.emplace<Plant>(newEntity, plant);
 }
 
-void PlantSystem::constructDeadPlant(const Position& position)
+void PlantSystem::createDeadPlant(const Position& position)
 {
     AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
                                   3};
-    std::array<ReplicatedComponent, 2> components{Name{"Dead Sunflower"},
-                                                  animationState};
-    entt::entity newEntity{
-        world.constructEntity(position, components, InitScript{})};
+    entt::entity newEntity{world.createEntity(position)};
+    world.registry.emplace<Name>(newEntity, "Dead Sunflower");
+    world.addGraphicsComponents(newEntity, animationState);
 
     // Tag it as Dead.
     Plant plant{Plant::LifeStage::Dead};
@@ -138,7 +136,7 @@ void PlantSystem::constructDeadPlant(const Position& position)
     // Give it a Replant interaction.
     Interaction& interaction{
         world.registry.get_or_emplace<Interaction>(newEntity)};
-    interaction.add(ProjectInteractionType::Replant);
+    interaction.add(InteractionType::Replant);
 }
 
 void PlantSystem::replantPlant(entt::entity oldPlant)
@@ -155,8 +153,8 @@ void PlantSystem::replantPlant(entt::entity oldPlant)
         return;
     }
 
-    // Construct the new sapling and delete the old dead plant.
-    constructSapling(world.registry.get<Position>(oldPlant));
+    // Create the new sapling and delete the old dead plant.
+    createSapling(world.registry.get<Position>(oldPlant));
     world.registry.destroy(oldPlant);
 }
 

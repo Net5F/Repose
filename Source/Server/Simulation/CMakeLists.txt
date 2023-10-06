@@ -3,16 +3,20 @@ target_sources(Server
         Private/BuildModeDataSystem.cpp
         Private/MazeGenerationSystem.cpp
         Private/PlantSystem.cpp
+        Private/ProjectLuaBindings.cpp
         Private/SimulationExtension.cpp
         Private/TeleportSystem.cpp
+        Private/AILogic/RandomWalkerAILogic.cpp
     PUBLIC
         Public/BuildModeDataSystem.h
         Public/MazeGenerationSystem.h
-        Public/PlantSystem.h
         Public/MazeTopology.h
         Public/MazeCell.h
+        Public/PlantSystem.h
+        Public/ProjectLuaBindings.h
         Public/SimulationExtension.h
         Public/TeleportSystem.h
+        Public/AILogic/RandomWalkerAILogic.h
         Public/Components/Plant.h
 )
 
@@ -21,5 +25,6 @@ target_include_directories(Server
         ${CMAKE_CURRENT_SOURCE_DIR}/Private
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Public
+        ${CMAKE_CURRENT_SOURCE_DIR}/Public/AILogic
         ${CMAKE_CURRENT_SOURCE_DIR}/Public/Components
 )

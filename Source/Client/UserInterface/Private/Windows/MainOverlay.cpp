@@ -57,17 +57,15 @@ AUI::EventResult MainOverlay::onMouseDown(AUI::MouseButtonType buttonType,
 
     // If we hit an entity with an interaction.
     if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
-        if (world.registry.all_of<Interaction>(*entity)) {
-            const Interaction& interaction{
-                world.registry.get<Interaction>(*entity)};
-            if (interaction.supportedInteractions[0]
-                == EngineInteractionType::NotSet) {
-
+        if (auto* interaction = world.registry.try_get<Interaction>(*entity)) {
+            if (interaction->isEmpty()) {
+                // No interactions, return early.
+                return AUI::EventResult{.wasHandled{false}};
             }
 
             // If the user left-clicked, perform the default interaction.
             if (buttonType == AUI::MouseButtonType::Left) {
-                Uint8 defaultInteraction{interaction.supportedInteractions[0]};
+                Uint8 defaultInteraction{interaction->supportedInteractions[0]};
                 network.serializeAndSend(InteractionRequest{
                     world.playerEntity, *entity, defaultInteraction});
             }
@@ -103,7 +101,7 @@ AUI::EventResult MainOverlay::onMouseMove(const SDL_Point& cursorPosition)
             // Count the interactions.
             std::size_t interactionCount{0};
             for (Uint8 interactionType : interaction.supportedInteractions) {
-                if (interactionType != EngineInteractionType::NotSet) {
+                if (interactionType != InteractionType::NotSet) {
                     interactionCount++;
                 }
             }

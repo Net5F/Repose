@@ -3,7 +3,7 @@
 #include "IUserInterfaceExtension.h"
 #include "TitleScreen.h"
 #include "MainScreen.h"
-#include "UserErrorString.h"
+#include "SystemMessage.h"
 #include "QueuedEvents.h"
 #include "AUI/Initializer.h"
 
@@ -94,7 +94,7 @@ private:
     AUI::Screen* currentScreen;
 
     // TEMP: When text chat gets built, move this there.
-    EventQueue<UserErrorString> userErrorStringQueue;
+    EventQueue<SystemMessage> systemMessageQueue;
 };
 
 } // End namespace Client

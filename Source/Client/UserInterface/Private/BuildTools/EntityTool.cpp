@@ -64,10 +64,9 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
         if (selectedTemplateAnimationState.spriteSetType
             != SpriteSet::Type::None) {
             // Tell the sim to create an object based on the template.
-            EntityInitRequest initRequest{entt::null, mouseWorldPosition};
-            initRequest.components.push_back(selectedTemplateName);
-            initRequest.components.push_back(selectedTemplateAnimationState);
-            network.serializeAndSend(initRequest);
+            network.serializeAndSend(EntityInitRequest{
+                entt::null, selectedTemplateName, mouseWorldPosition,
+                selectedTemplateAnimationState});
 
             // To deter users from placing a million entities, we deselect after
             // placement. This also makes it faster if the user's next goal is

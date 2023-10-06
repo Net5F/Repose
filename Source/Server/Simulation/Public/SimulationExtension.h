@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ISimulationExtension.h"
+#include "ProjectLuaBindings.h"
 #include "BuildModeDataSystem.h"
 #include "MazeGenerationSystem.h"
 #include "PlantSystem.h"
@@ -86,6 +87,9 @@ public:
 private:
     /** Used to validate change requests. */
     World& world;
+
+    /** This project's Lua bindings. */
+    ProjectLuaBindings projectLuaBindings;
 
     BuildModeDataSystem buildModeDataSystem;
     MazeGenerationSystem mazeGenerationSystem;

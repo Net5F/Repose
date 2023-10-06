@@ -107,12 +107,6 @@ EntityPanelContent::EntityPanelContent(
     changeScriptButton.setOnPressed([this]() {
         // Send a re-init request with the updated script.
         const entt::registry& registry{world.registry};
-        EntityInitRequest initRequest{editingEntityID,
-                                      registry.get<Position>(editingEntityID)};
-        initRequest.components.push_back(
-            registry.get<Name>(editingEntityID));
-        initRequest.components.push_back(
-            registry.get<AnimationState>(editingEntityID));
         std::string initScript{""};
         // TEMP
         std::ifstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
@@ -122,8 +116,10 @@ EntityPanelContent::EntityPanelContent(
             initScript = buffer.str();
         }
         // TEMP
-        initRequest.initScript = initScript;
-        network.serializeAndSend(initRequest);
+        network.serializeAndSend(EntityInitRequest{
+            editingEntityID, registry.get<Name>(editingEntityID),
+            registry.get<Position>(editingEntityID),
+            registry.get<AnimationState>(editingEntityID), initScript});
     });
 
     saveTemplateButton.setOnPressed([this]() {

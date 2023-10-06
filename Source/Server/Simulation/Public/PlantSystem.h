@@ -44,15 +44,15 @@ private:
     void updatePlant(entt::entity plantEntity);
 
     /**
-     * Constructs a new entity with a Plant component set to Sapling.
+     * Creates a new entity with a Plant component set to Sapling.
      */
-    void constructSapling(const Position& position);
+    void createSapling(const Position& position);
 
     /**
-     * Constructs a new entity with a Plant component set to Dead, and a 
+     * Creates a new entity with a Plant component set to Dead, and a 
      * "Replant" interaction.
      */
-    void constructDeadPlant(const Position& position);
+    void createDeadPlant(const Position& position);
 
     /**
      * Deletes the given old plant and plants a new sapling in its place.
