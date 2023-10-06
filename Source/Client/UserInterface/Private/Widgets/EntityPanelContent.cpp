@@ -138,6 +138,9 @@ void EntityPanelContent::setBuildTool(EntityTool* inEntityTool)
 {
     entityTool = inEntityTool;
 
+    // New tool, reset the view.
+    changeView(ViewType::Template);
+
     // Register our callbacks.
     if (entityTool != nullptr) {
         entityTool->setOnEntitySelected(
