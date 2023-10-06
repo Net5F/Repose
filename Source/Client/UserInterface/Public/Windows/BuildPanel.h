@@ -113,8 +113,7 @@ private:
     AUI::Text removeHintText;
 
     AUI::Text tileLayersLabel;
-    AUI::Text entitiesLabel;
-    AUI::Text generalLabel;
+    AUI::Text otherLabel;
 
     std::array<MainButton, BuildTool::Type::Count> buildToolButtons;
 };

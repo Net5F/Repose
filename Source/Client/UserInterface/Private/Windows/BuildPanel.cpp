@@ -33,15 +33,14 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
                        {366 - 2, 91, 1188, 220}, "EntityPanelContent"}
 , removeHintText{{679, 171, 562, 36}, "RemoveHintText"}
 , tileLayersLabel{{152, 92, 138, 36}, "TileLayersLabel"}
-, entitiesLabel{{1630, 92, 138, 36}, "EntitiesLabel"}
-, generalLabel{{1630, 180, 138, 36}, "GeneralLabel"}
+, otherLabel{{1630, 92, 138, 36}, "OtherLabel"}
 , buildToolButtons{
       MainButton{{164, 132, 114, 32}, "Floor", "FloorToolButton"},
       MainButton{{164, 168, 114, 32}, "Floor Cover", "FloorCoveringToolButton"},
       MainButton{{164, 204, 114, 32}, "Wall", "WallToolButton"},
       MainButton{{164, 240, 114, 32}, "Object", "ObjectToolButton"},
       MainButton{{1642, 132, 114, 32}, "Entity", "EntityToolButton"},
-      MainButton{{1642, 220, 114, 32}, "Remove", "RemoveToolButton"}}
+      MainButton{{1642, 168, 114, 32}, "Remove", "RemoveToolButton"}}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
@@ -52,8 +51,7 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
     children.push_back(entityPanelContent);
     children.push_back(removeHintText);
     children.push_back(tileLayersLabel);
-    children.push_back(entitiesLabel);
-    children.push_back(generalLabel);
+    children.push_back(otherLabel);
     children.push_back(buildToolButtons[BuildTool::Type::Floor]);
     children.push_back(
         buildToolButtons[BuildTool::Type::FloorCovering]);
@@ -90,13 +88,10 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
         text.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
     };
     setTextStyle(tileLayersLabel);
-    tileLayersLabel.setText("Static");
+    tileLayersLabel.setText("Tile Layers");
 
-    setTextStyle(entitiesLabel);
-    entitiesLabel.setText("Dynamic");
-
-    setTextStyle(generalLabel);
-    generalLabel.setText("General");
+    setTextStyle(otherLabel);
+    otherLabel.setText("Other");
 
     setTextStyle(removeHintText);
     removeHintText.setText("Click on a Tile Layer or Entity to remove it.");
