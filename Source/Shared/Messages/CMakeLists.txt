@@ -5,6 +5,7 @@
 target_sources(Shared
 #    PUBLIC
     INTERFACE
+        Public/AddEntityTemplate.h
         Public/EntityTemplates.h
         Public/EntityTemplatesRequest.h
         Public/ProjectMessageType.h

@@ -6,7 +6,6 @@
 #include "BuildOverlay.h"
 #include "MainThumbnail.h"
 #include "EntityTool.h"
-#include "EntityTemplatesRequest.h"
 #include "SharedConfig.h"
 #include "EmptySpriteID.h"
 #include "Paths.h"
@@ -253,9 +252,6 @@ void BuildPanel::setBuildTool(BuildTool::Type toolType)
         entityPanelContent.setBuildTool(static_cast<EntityTool*>(
             buildOverlay.getCurrentBuildTool()));
         entityPanelContent.setIsVisible(true);
-
-        // Request the latest entity templates from the server.
-        network.serializeAndSend<EntityTemplatesRequest>({});
     }
     else if (toolType == BuildTool::Type::Remove) {
         removeHintText.setIsVisible(true);

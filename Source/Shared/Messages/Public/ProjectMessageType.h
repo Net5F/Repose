@@ -19,6 +19,8 @@ enum class ProjectMessageType : Uint8 {
     // Client -> Server Messages
     EntityTemplatesRequest
       = static_cast<Uint8>(EngineMessageType::PROJECT_START),
+    AddEntityTemplate,
+    TemplateInitScriptRequest,
 
     // Server -> Client Messages
     EntityTemplates,

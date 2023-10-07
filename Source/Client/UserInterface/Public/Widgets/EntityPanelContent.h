@@ -52,6 +52,7 @@ public:
     //-------------------------------------------------------------------------
     // Widget class overrides
     //-------------------------------------------------------------------------
+    void setIsVisible(bool inIsVisible) override;
     void onTick(double timestepS) override;
 
 private:
@@ -73,6 +74,12 @@ private:
      * Changes the current view to the given view.
      */
     void changeView(ViewType newView);
+
+    /**
+     * Adds the "refresh button", which requests the latest entity templates 
+     * from the server.
+     */
+    void addRefreshButton();
 
     /**
      * Add the "default template" thumbnail to the templates container.
@@ -106,6 +113,9 @@ private:
 
     /** Used to properly deselect thumbnails when a new one is selected. */
     BuildPanel& buildPanel;
+
+    /** Set to true after we first request entity templates from the server. */
+    bool hasRequestedTemplates;
 
     /** The current content view type. */
     ViewType currentView;

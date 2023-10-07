@@ -33,12 +33,6 @@ private:
     //-------------------------------------------------------------------------
     // Handlers for messages relevant to the network layer.
     //-------------------------------------------------------------------------
-    /**
-     * Pushes EntityTemplatesRequest event.
-     */
-    void handleEntityTemplatesRequest(NetworkID netID,
-                                      Uint8* messageBuffer,
-                                      std::size_t messageSize);
     //-------------------------------------------------------------------------
 
     /** The dispatcher for network events. Used to send events to the

@@ -73,15 +73,12 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
             // to select the object and modify it.
             clearCurrentSelection();
         }
+        // Else we don't have a template selected. If we hit an entity, try 
+        // to select it.
         else {
-            // We don't have a template selected. Check if we're clicking a new
-            // object in the world.
-
             // Get the first world object under the mouse.
             WorldObjectID objectID{
                 worldObjectLocator.getObjectUnderPoint(cursorPosition)};
-
-            // If we hit a dynamic object try to select it.
             if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
                 trySelectEntity(*entity);
             }
@@ -155,8 +152,8 @@ void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
 
     // If this tool is active.
     if (isActive) {
-        // If we have a selection. Set the selected sprite as a phantom at 
-        // the new location.
+        // If we have a template selected, set the selected sprite as a phantom
+        // at the new location.
         if (selectedTemplateAnimationState.spriteSetType
             != SpriteSet::Type::None) {
             PhantomSpriteInfo phantomInfo{};

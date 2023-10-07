@@ -3,6 +3,7 @@
 #include "ProjectMessageType.h"
 #include "Name.h"
 #include "AnimationState.h"
+#include "InitScript.h"
 #include <vector>
 
 namespace AM
@@ -10,6 +11,8 @@ namespace AM
 
 /**
  * Used to send the latest list of entity templates to a client.
+ *
+ * TODO: Once user accounts are added, templates should be made account-specific.
  */
 struct EntityTemplates {
     // The ProjectMessageType enum value that this message corresponds to.
@@ -26,11 +29,8 @@ struct EntityTemplates {
      */
     struct Data {
         Name name{};
-
         AnimationState animationState{};
-
-        // TODO: This should also have init script, or we should 
-        //       request it when a template is clicked.
+        InitScript initScript{};
     };
 
     std::vector<Data> templates;
@@ -41,6 +41,7 @@ void serialize(S& serializer, EntityTemplates::Data& data)
 {
     serializer.object(data.name);
     serializer.object(data.animationState);
+    serializer.object(data.initScript);
 }
 
 template<typename S>

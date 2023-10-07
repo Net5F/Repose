@@ -9,10 +9,12 @@
 #include "Position.h"
 #include "Rotation.h"
 #include "AnimationState.h"
+#include "EntityTemplatesRequest.h"
 #include "EntityInitRequest.h"
 #include "NameChangeRequest.h"
 #include "AnimationStateChangeRequest.h"
 #include "InitScriptRequest.h"
+#include "AddEntityTemplate.h"
 #include "Paths.h"
 #include "AMAssert.h"
 #include "entt/entity/entity.hpp"
@@ -32,6 +34,7 @@ EntityPanelContent::EntityPanelContent(
 , network{inNetwork}
 , spriteData{inSpriteData}
 , buildPanel{inBuildPanel}
+, hasRequestedTemplates{false}
 , currentView{ViewType::Template}
 , entityTool{nullptr}
 , editingEntityID{entt::null}
@@ -123,10 +126,11 @@ EntityPanelContent::EntityPanelContent(
     });
 
     saveTemplateButton.setOnPressed([this]() {
-        // TODO: Send an add entity template message
+        network.serializeAndSend(AddEntityTemplate{editingEntityID});
     });
 
     // Add the thumbnails that we can (we get some later from the server).
+    addRefreshButton();
     addDefaultTemplateThumbnail();
     addSpriteSetThumbnails();
 
@@ -164,15 +168,28 @@ void EntityPanelContent::setBuildTool(EntityTool* inEntityTool)
     }
 }
 
+void EntityPanelContent::setIsVisible(bool inIsVisible)
+{
+    // The first time we're made visible, request the latest entity templates 
+    // from the server.
+    if (!hasRequestedTemplates && inIsVisible) {
+        network.serializeAndSend<EntityTemplatesRequest>({});
+
+        hasRequestedTemplates = true;
+    }
+
+    Widget::setIsVisible(inIsVisible);
+}
+
 void EntityPanelContent::onTick(double)
 {
     // Process any waiting messages.
     EntityTemplates entityTemplates{};
     while (entityTemplatesQueue.pop(entityTemplates)) {
-        // Clear any existing entity templates (skipping the "add entity" 
-        // thumbnail).
-        if (templateContainer.size() > 1) {
-            templateContainer.erase(templateContainer.begin() + 1,
+        // Clear any existing entity templates (skipping the "refresh" and 
+        // "default entity" thumbnails).
+        if (templateContainer.size() > 2) {
+            templateContainer.erase(templateContainer.begin() + 2,
                                     templateContainer.end());
         }
 
@@ -235,6 +252,49 @@ void EntityPanelContent::changeView(ViewType newView)
     }
 
     currentView = newView;
+}
+
+void EntityPanelContent::addRefreshButton()
+{
+    // Construct the new thumbnail.
+    std::unique_ptr<AUI::Widget> buttonPtr{std::make_unique<AUI::Button>(
+        SDL_Rect{6, 5, 96, 96}, "RefreshTemplatesButton")};
+    AUI::Button& button{static_cast<AUI::Button&>(*buttonPtr)};
+
+    button.text.setFont(
+        (Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 20);
+    button.text.setText("");
+
+    // Load the "refresh" icon.
+    button.normalImage.setMultiResImage(
+        {{{1920, 1080},
+          Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Normal_1920.png"},
+         {{1600, 900},
+          Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Normal_1600.png"},
+         {{1280, 720},
+          Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Normal_1280.png"}});
+    button.hoveredImage.setMultiResImage(
+        {{{1920, 1080},
+          Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Hovered_1920.png"},
+         {{1600, 900},
+          Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Hovered_1600.png"},
+         {{1280, 720},
+          Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Hovered_1280.png"}});
+    button.pressedImage.setMultiResImage(
+        {{{1920, 1080},
+          Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Pressed_1920.png"},
+         {{1600, 900},
+          Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Pressed_1600.png"},
+         {{1280, 720},
+          Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Pressed_1280.png"}});
+
+    // Add the callback.
+    button.setOnPressed([this]() {
+        // Request the latest entity templates from the server.
+        network.serializeAndSend<EntityTemplatesRequest>({});
+    });
+
+    templateContainer.push_back(std::move(buttonPtr));
 }
 
 void EntityPanelContent::addDefaultTemplateThumbnail()

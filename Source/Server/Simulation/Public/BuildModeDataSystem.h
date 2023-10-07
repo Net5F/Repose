@@ -1,6 +1,8 @@
 #pragma once
 
+#include "EntityTemplates.h"
 #include "EntityTemplatesRequest.h"
+#include "AddEntityTemplate.h"
 #include "QueuedEvents.h"
 
 namespace AM
@@ -20,8 +22,8 @@ class BuildModeDataSystem
 {
 public:
     BuildModeDataSystem(World& inWorld,
-                              EventDispatcher& inNetworkEventDispatcher,
-                              Network& inNetwork, SpriteData& inSpriteData);
+                        EventDispatcher& inNetworkEventDispatcher,
+                        Network& inNetwork, SpriteData& inSpriteData);
 
     /**
      * Adds any waiting templates to the list, responds to entity template 
@@ -39,7 +41,11 @@ private:
     // TODO: Remove when we remove the placeholder data?
     SpriteData& spriteData;
 
+    /** Our current list of entity templates. */
+    EntityTemplates entityTemplates;
+
     EventQueue<EntityTemplatesRequest> entityTemplatesRequestQueue;
+    EventQueue<AddEntityTemplate> addEntityTemplateQueue;
 };
 
 } // End namespace Server
