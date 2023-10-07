@@ -2,6 +2,7 @@
 #include "World.h"
 #include "SpriteData.h"
 #include "MazeTopology.h"
+#include "Position.h"
 #include "Collision.h"
 #include "Log.h"
 #include "AMAssert.h"
