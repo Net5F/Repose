@@ -54,6 +54,9 @@ private:
     /** Used to send interaction requests. */
     Network& network;
 
+    //-------------------------------------------------------------------------
+    // Private child widgets
+    //-------------------------------------------------------------------------
     /** The text at the top of the screen that tells you what action will 
         be performed if you click. */
     AUI::Text interactionText;

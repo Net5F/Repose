@@ -12,7 +12,6 @@
 #include "ClientTransforms.h"
 #include "Log.h"
 #include "AUI/Core.h"
-#include "QueuedEvents.h"
 
 namespace AM
 {
@@ -24,10 +23,8 @@ UserInterfaceExtension::UserInterfaceExtension(
 : auiInitializer{deps.sdlRenderer,
                  {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT}}
 , titleScreen{*this, deps.simulation, deps.uiEventDispatcher}
-, mainScreen{deps.simulation, deps.worldObjectLocator,
-             deps.uiEventDispatcher, deps.network, deps.spriteData}
+, mainScreen{deps}
 , currentScreen{&titleScreen}
-, systemMessageQueue{deps.network.getEventDispatcher()}
 {
     SDL_Rect windowSize{UserConfig::get().getWindowSize()};
     AUI::Core::setActualScreenSize({windowSize.w, windowSize.h});
@@ -80,12 +77,6 @@ bool UserInterfaceExtension::handleOSEvent(SDL_Event& event)
 void UserInterfaceExtension::tick(double timestepS)
 {
     currentScreen->tick(timestepS);
-
-    // TEMP: Process any waiting system messages.
-    SystemMessage systemMessage{};
-    while (systemMessageQueue.pop(systemMessage)) {
-        LOG_INFO("Server: %s", systemMessage.messageString.c_str());
-    }
 }
 
 void UserInterfaceExtension::render(const Camera& camera)

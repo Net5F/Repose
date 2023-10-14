@@ -7,6 +7,7 @@
 #include "BuildPanel.h"
 #include "BuildOverlay.h"
 #include "MainOverlay.h"
+#include "ChatWindow.h"
 #include "TileExtent.h"
 #include <span>
 
@@ -17,10 +18,7 @@ struct Position;
 
 namespace Client
 {
-class Simulation;
-class WorldObjectLocator;
-class Network;
-class SpriteData;
+struct UserInterfaceExDependencies;
 
 /**
  * The main UI that overlays the world.
@@ -28,11 +26,7 @@ class SpriteData;
 class MainScreen : public AUI::Screen
 {
 public:
-    MainScreen(Simulation& inSimulation,
-               const WorldObjectLocator& inWorldObjectLocator,
-               EventDispatcher& inUiEventDispatcher,
-               Network& inNetwork,
-               SpriteData& inSpriteData);
+    MainScreen(const UserInterfaceExDependencies& deps);
 
     virtual ~MainScreen() = default;
 
@@ -76,8 +70,12 @@ private:
     // Windows
     //-------------------------------------------------------------------------
     /** The main overlay. Currently only shows the "build mode" text, but
-        will eventually show the chat box, player names, etc. */
+        will eventually show player names, etc. */
     MainOverlay mainOverlay;
+
+    /** The chat window. Currently only shows system messages, but will 
+        eventually show player messages and support sending messages. */
+    ChatWindow chatWindow;
 
     /** The build mode overlay. Allows the user to place tiles. */
     BuildOverlay buildOverlay;

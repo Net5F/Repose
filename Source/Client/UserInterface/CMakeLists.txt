@@ -18,6 +18,7 @@ target_sources(Client
         Private/Windows/MainOverlay.cpp
         Private/Windows/BuildOverlay.cpp
         Private/Windows/BuildPanel.cpp
+        Private/Windows/ChatWindow.cpp
         Private/Windows/TitleWindow.cpp
     PUBLIC
         Public/InteractionHelpers.h
@@ -39,6 +40,7 @@ target_sources(Client
         Public/Windows/MainOverlay.h
         Public/Windows/BuildOverlay.h
         Public/Windows/BuildPanel.h
+        Public/Windows/ChatWindow.h
         Public/Windows/TitleWindow.h
 )
 

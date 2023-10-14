@@ -3,8 +3,6 @@
 #include "IUserInterfaceExtension.h"
 #include "TitleScreen.h"
 #include "MainScreen.h"
-#include "SystemMessage.h"
-#include "QueuedEvents.h"
 #include "AUI/Initializer.h"
 
 namespace AUI
@@ -92,9 +90,6 @@ private:
 
     /** The current active UI screen. */
     AUI::Screen* currentScreen;
-
-    // TEMP: When text chat gets built, move this there.
-    EventQueue<SystemMessage> systemMessageQueue;
 };
 
 } // End namespace Client

@@ -21,25 +21,21 @@ MainOverlay::MainOverlay(World& inWorld,
 , worldObjectLocator{inWorldObjectLocator}
 , network{inNetwork}
 , interactionText{{20, 20, 500, 100}, "InteractionText"}
-, buildModeHintText({50, 850, 500, 100}, "BuildModeHintText")
+, buildModeHintText({50, 850, 500, 500}, "BuildModeHintText")
 {
     // Add our children so they're included in rendering, etc.
-    children.push_back(buildModeHintText);
     children.push_back(interactionText);
+    children.push_back(buildModeHintText);
 
     /* Interaction text. */
     interactionText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 30);
     interactionText.setColor({255, 255, 255, 255});
-    interactionText.setHorizontalAlignment(
-        AUI::Text::HorizontalAlignment::Left);
     interactionText.setIsVisible(false);
 
     /* Build mode text. */
     buildModeHintText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 30);
     buildModeHintText.setColor({255, 255, 255, 255});
-    buildModeHintText.setText("Press 'b' to enter Build Mode");
-    buildModeHintText.setHorizontalAlignment(
-        AUI::Text::HorizontalAlignment::Left);
+    buildModeHintText.setText("Press 'b' to enter Build Mode.");
     buildModeHintText.setIsVisible(false);
 }
 

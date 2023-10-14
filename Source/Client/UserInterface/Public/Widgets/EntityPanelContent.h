@@ -3,11 +3,11 @@
 #include "MainButton.h"
 #include "EntityTemplates.h"
 #include "InitScriptResponse.h"
-#include "QueuedEvents.h"
 #include "AUI/Widget.h"
 #include "AUI/Text.h"
 #include "AUI/TextInput.h"
 #include "AUI/VerticalGridContainer.h"
+#include "QueuedEvents.h"
 #include "entt/fwd.hpp"
 
 namespace AUI

@@ -1,4 +1,5 @@
 #include "MainScreen.h"
+#include "UserInterfaceExDependencies.h"
 #include "Simulation.h"
 #include "World.h"
 #include "WorldObjectLocator.h"
@@ -14,21 +15,19 @@ namespace AM
 {
 namespace Client
 {
-MainScreen::MainScreen(Simulation& inSimulation,
-                       const WorldObjectLocator& inWorldObjectLocator,
-                       EventDispatcher&,
-                       Network& inNetwork,
-                       SpriteData& inSpriteData)
+MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 : AUI::Screen("MainScreen")
-, world{inSimulation.getWorld()}
+, world{deps.simulation.getWorld()}
 , playerIsInBuildArea{false}
-, mainOverlay{world, inWorldObjectLocator, inNetwork}
-, buildOverlay{inSimulation, inWorldObjectLocator, inNetwork,
-               inSpriteData}
-, buildPanel{world, inNetwork, inSpriteData, buildOverlay}
+, mainOverlay{world, deps.worldObjectLocator, deps.network}
+, chatWindow{deps.network, deps.sdlRenderer}
+, buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
+               deps.spriteData}
+, buildPanel{world, deps.network, deps.spriteData, buildOverlay}
 {
     // Add our windows so they're included in rendering, etc.
     windows.push_back(mainOverlay);
+    windows.push_back(chatWindow);
     windows.push_back(buildOverlay);
     windows.push_back(buildPanel);
 
