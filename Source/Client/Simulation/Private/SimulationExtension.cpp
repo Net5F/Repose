@@ -27,7 +27,7 @@ void SimulationExtension::beforeAll() {}
 
 void SimulationExtension::afterMapAndConnectionUpdates() {}
 
-void SimulationExtension::afterMovement()
+void SimulationExtension::afterSimUpdate()
 {
     animationSystem->updateAnimations();
 }

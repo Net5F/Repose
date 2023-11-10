@@ -1,13 +1,13 @@
 #include "PlantSystem.h"
 #include "Simulation.h"
 #include "SpriteData.h"
-#include "ProjectInteractionType.h"
+#include "EntityInteractionType.h"
 #include "Name.h"
 #include "AnimationState.h"
 #include "InitScript.h"
 #include "Interaction.h"
 #include "Plant.h"
-#include "EmptySpriteID.h"
+#include "NullSpriteID.h"
 #include "SharedConfig.h"
 #include "Log.h"
 #include "AMAssert.h"
@@ -41,8 +41,8 @@ PlantSystem::PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData)
         }
     }
 
-    // Subscribe to receive any Grow or Replant interactions.
-    inSimulation.registerInteractionQueue(InteractionType::Replant,
+    // Subscribe to receive any Replant interactions.
+    inSimulation.registerInteractionQueue(EntityInteractionType::Replant,
                                           replantInteractionQueue);
 }
 
@@ -50,7 +50,7 @@ void PlantSystem::updatePlants()
 {
     // Process any waiting interactions.
     while (!(replantInteractionQueue.empty())) {
-        const InteractionRequest replantRequest{
+        const EntityInteractionRequest replantRequest{
             replantInteractionQueue.front()};
         replantPlant(replantRequest.targetEntity);
 
@@ -136,7 +136,7 @@ void PlantSystem::createDeadPlant(const Position& position)
     // Give it a Replant interaction.
     Interaction& interaction{
         world.registry.get_or_emplace<Interaction>(newEntity)};
-    interaction.add(InteractionType::Replant);
+    interaction.add(EntityInteractionType::Replant);
 }
 
 void PlantSystem::replantPlant(entt::entity oldPlant)

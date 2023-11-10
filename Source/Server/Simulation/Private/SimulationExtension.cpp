@@ -4,10 +4,11 @@
 #include "Network.h"
 #include "SpriteData.h"
 #include "TileExtent.h"
-#include "InteractionRequest.h"
 #include "EntityInitRequest.h"
 #include "NameChangeRequest.h"
 #include "AnimationStateChangeRequest.h"
+#include "ItemChangeRequest.h"
+#include "InventoryAddItem.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
 #include "Log.h"
@@ -45,7 +46,7 @@ void SimulationExtension::afterMapAndConnectionUpdates()
     plantSystem.updatePlants();
 }
 
-void SimulationExtension::afterMovement()
+void SimulationExtension::afterSimUpdate()
 {
     // Teleport any players that are touching a teleport volume.
     teleportSystem.teleportPlayers();
@@ -138,6 +139,20 @@ bool SimulationExtension::isAnimationStateChangeRequestValid(
         // No restrictions, always return true;
         return true;
     }
+}
+
+bool SimulationExtension::isItemChangeRequestValid(
+    const ItemChangeRequest& itemChangeRequest) const
+{
+    // TODO: Check permissions or something.
+    return true;
+}
+
+bool SimulationExtension::isInventoryAddItemValid(
+    const InventoryAddItem& inventoryAddItem) const
+{
+    // TODO: Check permissions or something.
+    return true;
 }
 
 } // End namespace Server

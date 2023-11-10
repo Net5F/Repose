@@ -1,12 +1,22 @@
 #pragma once
 
+///////////////////////////////////////////////////////////////////////////////
+// Note: This file overrides the engine's default 
+//       SharedLib/ProjectComponentLists.h
+///////////////////////////////////////////////////////////////////////////////
+
 #include "boost/mp11/list.hpp"
 
+/**
+ * Add component types to these lists to have them be automatically replicated 
+ * (sent to nearby clients) by the engine.
+ *
+ * See SharedLib/ProjectComponentLists.h for more info.
+ */
 namespace AM
 {
 namespace ProjectComponentLists
 {
-
 /**
  * All of the project's component types that are relevant to the client.
  *

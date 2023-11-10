@@ -21,6 +21,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 , playerIsInBuildArea{false}
 , mainOverlay{world, deps.worldObjectLocator, deps.network}
 , chatWindow{deps.network, deps.sdlRenderer}
+, inventoryWindow{deps.network}
 , buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
                deps.spriteData}
 , buildPanel{world, deps.network, deps.spriteData, buildOverlay}
@@ -28,12 +29,14 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
     // Add our windows so they're included in rendering, etc.
     windows.push_back(mainOverlay);
     windows.push_back(chatWindow);
+    windows.push_back(inventoryWindow);
     windows.push_back(buildOverlay);
     windows.push_back(buildPanel);
 
-    // Deactivate build mode.
+    // Hide the build mode and inventory windows.
     buildOverlay.setIsVisible(false);
     buildPanel.setIsVisible(false);
+    inventoryWindow.setIsVisible(false);
 
     // If world changes are restricted, we need to know when the player enters
     // or exits the build area.
@@ -88,6 +91,10 @@ bool MainScreen::onKeyDown(SDL_Keycode keyCode)
         buildPanel.setIsVisible(!buildModeIsActive);
 
         return true;
+    }
+    // If the 'i' key is pressed, toggle the inventory.
+    else if (keyCode == SDLK_i) {
+        inventoryWindow.setIsVisible(!(inventoryWindow.getIsVisible()));
     }
 
     return false;

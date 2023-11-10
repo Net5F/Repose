@@ -5,7 +5,7 @@
 #include "Name.h"
 #include "Interaction.h"
 #include "InteractionHelpers.h"
-#include "InteractionRequest.h"
+#include "EntityInteractionRequest.h"
 #include "Paths.h"
 #include "Ignore.h"
 
@@ -61,8 +61,9 @@ AUI::EventResult MainOverlay::onMouseDown(AUI::MouseButtonType buttonType,
 
             // If the user left-clicked, perform the default interaction.
             if (buttonType == AUI::MouseButtonType::Left) {
-                Uint8 defaultInteraction{interaction->supportedInteractions[0]};
-                network.serializeAndSend(InteractionRequest{
+                EntityInteractionType defaultInteraction{
+                    interaction->supportedInteractions[0]};
+                network.serializeAndSend(EntityInteractionRequest{
                     world.playerEntity, *entity, defaultInteraction});
             }
             else if (buttonType == AUI::MouseButtonType::Right) {
@@ -96,8 +97,9 @@ AUI::EventResult MainOverlay::onMouseMove(const SDL_Point& cursorPosition)
 
             // Count the interactions.
             std::size_t interactionCount{0};
-            for (Uint8 interactionType : interaction.supportedInteractions) {
-                if (interactionType != InteractionType::NotSet) {
+            for (EntityInteractionType interactionType :
+                 interaction.supportedInteractions) {
+                if (interactionType != EntityInteractionType::NotSet) {
                     interactionCount++;
                 }
             }

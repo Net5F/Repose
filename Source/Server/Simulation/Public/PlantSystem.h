@@ -1,6 +1,6 @@
 #pragma once
 
-#include "InteractionRequest.h"
+#include "EntityInteractionRequest.h"
 #include "TileExtent.h"
 #include "Timer.h"
 #include "entt/fwd.hpp"
@@ -67,7 +67,7 @@ private:
     Timer updateTimer;
 
     // Queue for receiving interaction events.
-    std::queue<InteractionRequest> replantInteractionQueue;
+    std::queue<EntityInteractionRequest> replantInteractionQueue;
 
     /** The world extent that the plants are located within. */
     TileExtent plantExtent;

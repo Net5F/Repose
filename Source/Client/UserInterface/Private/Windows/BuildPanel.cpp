@@ -7,7 +7,6 @@
 #include "MainThumbnail.h"
 #include "EntityTool.h"
 #include "SharedConfig.h"
-#include "EmptySpriteID.h"
 #include "Paths.h"
 #include "Ignore.h"
 #include "AMAssert.h"

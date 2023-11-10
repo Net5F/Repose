@@ -1,7 +1,7 @@
 #pragma once
 
-#include "EngineInteractionType.h"
-#include "ProjectInteractionType.h"
+#include "EntityInteractionType.h"
+#include "ItemInteractionType.h"
 #include "Log.h"
 #include <SDL_stdinc.h>
 #include <string>
@@ -17,15 +17,28 @@ namespace Client
 class InteractionHelpers
 {
 public:
-    static std::string toDisplayString(Uint8 interactionType)
+    static std::string toDisplayString(EntityInteractionType interactionType)
     {
         switch (interactionType) {
             // Engine interaction types.
-            case InteractionType::Temp:
-                return "Temp";
             // Project interaction types.
-            case InteractionType::Replant:
+            case EntityInteractionType::Replant:
                 return "Replant";
+            default:
+                break;
+        }
+
+        LOG_ERROR("Tried to get display name for unknown interaction type.");
+        return "?";
+    }
+
+    static std::string toDisplayString(ItemInteractionType interactionType)
+    {
+        switch (interactionType) {
+            // Engine interaction types.
+            case ItemInteractionType::Examine:
+                return "Examine";
+            // Project interaction types.
             default:
                 break;
         }

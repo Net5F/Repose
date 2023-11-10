@@ -1,6 +1,5 @@
 #pragma once
 
-#include "EmptySpriteID.h"
 #include "TileExtent.h"
 #include "PhantomSpriteInfo.h"
 #include "SpriteColorModInfo.h"

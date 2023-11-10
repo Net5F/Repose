@@ -6,7 +6,6 @@ target_sources(Shared
 #    PUBLIC
     INTERFACE
         Public/BuildModeDefs.h
-        Public/ProjectInteractionType.h
 )
 
 target_include_directories(Shared

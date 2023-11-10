@@ -45,7 +45,7 @@ void ChatWindow::onMouseLeave()
     idleTimer.reset();
 }
 
-void ChatWindow::onTick(double timestepS)
+void ChatWindow::onTick(double)
 {
     // Process any waiting messages.
     SystemMessage systemMessage{};

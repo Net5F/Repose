@@ -8,6 +8,7 @@
 #include "BuildOverlay.h"
 #include "MainOverlay.h"
 #include "ChatWindow.h"
+#include "InventoryWindow.h"
 #include "TileExtent.h"
 #include <span>
 
@@ -77,10 +78,13 @@ private:
         eventually show player messages and support sending messages. */
     ChatWindow chatWindow;
 
-    /** The build mode overlay. Allows the user to place tiles. */
+    /** The player's inventory window. */
+    InventoryWindow inventoryWindow;
+
+    /** The build mode overlay. Allows the player to place tiles. */
     BuildOverlay buildOverlay;
 
-    /** The build mode panel. Allows the user to select tiles. */
+    /** The build mode panel. Allows the player to select tiles. */
     BuildPanel buildPanel;
 };
 

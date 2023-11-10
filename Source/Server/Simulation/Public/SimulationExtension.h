@@ -42,10 +42,10 @@ public:
     void afterMapAndConnectionUpdates();
 
     /**
-     * Called after all entity movement has been processed, but before the new
-     * movement state has been sent to the clients.
+     * Called after the general simulation update logic (movement, interactions,
+     * etc.)
      */
-    void afterMovement();
+    void afterSimUpdate();
 
     /**
      * Called after all relevant state has been sent to the clients.
@@ -82,7 +82,11 @@ public:
     bool isNameChangeRequestValid(
         const NameChangeRequest& nameChangeRequest) const;
     bool isAnimationStateChangeRequestValid(
-        const AnimationStateChangeRequest& nameChangeRequest) const;
+        const AnimationStateChangeRequest& animationStateChangeRequest) const;
+    bool isItemChangeRequestValid(
+        const ItemChangeRequest& itemChangeRequest) const;
+    bool
+        isInventoryAddItemValid(const InventoryAddItem& inventoryAddItem) const;
 
 private:
     /** Used to validate change requests. */
