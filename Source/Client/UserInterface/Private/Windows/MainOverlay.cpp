@@ -52,8 +52,8 @@ AUI::EventResult MainOverlay::onMouseDown(AUI::MouseButtonType buttonType,
         worldObjectLocator.getObjectUnderPoint(cursorPosition)};
 
     // If we hit an entity with an interaction.
-    if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
-        if (auto* interaction = world.registry.try_get<Interaction>(*entity)) {
+    if (entt::entity* entity{std::get_if<entt::entity>(&objectID)}) {
+        if (auto* interaction{world.registry.try_get<Interaction>(*entity)}) {
             if (interaction->isEmpty()) {
                 // No interactions, return early.
                 return AUI::EventResult{.wasHandled{false}};
@@ -63,8 +63,8 @@ AUI::EventResult MainOverlay::onMouseDown(AUI::MouseButtonType buttonType,
             if (buttonType == AUI::MouseButtonType::Left) {
                 EntityInteractionType defaultInteraction{
                     interaction->supportedInteractions[0]};
-                network.serializeAndSend(EntityInteractionRequest{
-                    world.playerEntity, *entity, defaultInteraction});
+                network.serializeAndSend(
+                    EntityInteractionRequest{*entity, defaultInteraction});
             }
             else if (buttonType == AUI::MouseButtonType::Right) {
                 // TODO: User right-clicked. Open the interaction menu.

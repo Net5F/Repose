@@ -14,12 +14,15 @@ namespace AM
 /** The item's description. */
 struct Description
 {
+    /** The max length of an item's description text. */
+    static constexpr std::size_t MAX_TEXT_LENGTH{50};
+
     std::string text{};
 };
 template<typename S>
 void serialize(S& serializer, Description& description)
 {
-    serializer.text1b(description.text);
+    serializer.text1b(description.text, Description::MAX_TEXT_LENGTH);
 }
 
 /** The type of plant that will be grown. */
