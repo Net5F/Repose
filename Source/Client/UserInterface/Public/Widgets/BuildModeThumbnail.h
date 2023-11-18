@@ -9,10 +9,10 @@ namespace Client
 /**
  * The thumbnail style used for the main screen.
  */
-class MainThumbnail : public AUI::Thumbnail
+class BuildModeThumbnail : public AUI::Thumbnail
 {
 public:
-    MainThumbnail(const std::string& inDebugName = "MainThumbnail");
+    BuildModeThumbnail(const std::string& inDebugName = "BuildModeThumbnail");
 };
 
 } // End namespace Client

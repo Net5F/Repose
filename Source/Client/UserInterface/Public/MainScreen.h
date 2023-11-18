@@ -4,11 +4,12 @@
 #include "Camera.h"
 #include "PhantomSpriteInfo.h"
 #include "SpriteColorModInfo.h"
-#include "BuildPanel.h"
-#include "BuildOverlay.h"
+#include "InteractionManager.h"
 #include "MainOverlay.h"
 #include "ChatWindow.h"
 #include "InventoryWindow.h"
+#include "BuildPanel.h"
+#include "BuildOverlay.h"
 #include "TileExtent.h"
 #include <span>
 
@@ -63,6 +64,10 @@ private:
 
     /** Used to get the player entity's ID. */
     World& world;
+
+    /** Orchestrates item and entity interactions from MainOverlay and 
+        InventoryWindow. */
+    InteractionManager interactionManager;
 
     /** If true, the player is currently in the build area. */
     bool playerIsInBuildArea;

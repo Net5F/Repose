@@ -10,6 +10,7 @@ namespace Client
 class World;
 class WorldObjectLocator;
 class Network;
+class InteractionManager;
 
 /**
  * The main overlay on the main screen. Shows basic HUD information.
@@ -21,7 +22,7 @@ public:
     // Public interface
     //-------------------------------------------------------------------------
     MainOverlay(World& inWorld, const WorldObjectLocator& inWorldObjectLocator,
-                Network& inNetwork);
+                Network& inNetwork, InteractionManager& inInteractionManager);
 
     /**
      * Sets the visibility of the hint text.
@@ -46,13 +47,13 @@ private:
     /** Used for getting the world state so we can make decisions and send 
         messages. */
     World& world;
-
     /** Used to see if see if the cursor is hovering or clicking on 
         something. */
     const WorldObjectLocator& worldObjectLocator;
-
     /** Used to send interaction requests. */
     Network& network;
+    /** Used to orchestrate item/entity interactions. */
+    InteractionManager& interactionManager;
 
     //-------------------------------------------------------------------------
     // Private child widgets

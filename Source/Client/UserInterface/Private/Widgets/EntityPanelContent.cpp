@@ -3,7 +3,7 @@
 #include "Network.h"
 #include "SpriteData.h"
 #include "BuildPanel.h"
-#include "MainThumbnail.h"
+#include "BuildModeThumbnail.h"
 #include "EntityTool.h"
 #include "Name.h"
 #include "Position.h"
@@ -301,8 +301,8 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
 {
     // Construct the new thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
-        std::make_unique<MainThumbnail>("EntityThumbnail")};
-    MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
+        std::make_unique<BuildModeThumbnail>("EntityThumbnail")};
+    BuildModeThumbnail& thumbnail{static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
     thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 
@@ -346,8 +346,8 @@ void EntityPanelContent::addTemplateThumbnails(
     for (const auto& entityData : entityTemplates.templates) {
         // Construct the new thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
-            std::make_unique<MainThumbnail>("EntityThumbnail")};
-        MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
+            std::make_unique<BuildModeThumbnail>("EntityThumbnail")};
+        BuildModeThumbnail& thumbnail{static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 
@@ -389,8 +389,8 @@ void EntityPanelContent::addSpriteSetThumbnails()
          spriteData.getAllObjectSpriteSets()) {
         // Construct the new thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
-            std::make_unique<MainThumbnail>("EntityThumbnail")};
-        MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
+            std::make_unique<BuildModeThumbnail>("EntityThumbnail")};
+        BuildModeThumbnail& thumbnail{static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 

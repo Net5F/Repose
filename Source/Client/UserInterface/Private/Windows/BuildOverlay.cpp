@@ -14,7 +14,6 @@
 #include "Transforms.h"
 #include "ClientTransforms.h"
 #include "QueuedEvents.h"
-#include "Ignore.h"
 #include "AUI/Core.h"
 
 namespace AM

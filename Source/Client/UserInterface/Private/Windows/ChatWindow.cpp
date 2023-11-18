@@ -1,7 +1,6 @@
 #include "ChatWindow.h"
 #include "Network.h"
 #include "Paths.h"
-#include "Ignore.h"
 #include "AUI/ScalingHelpers.h"
 #include <SDL_render.h>
 #include <cmath>

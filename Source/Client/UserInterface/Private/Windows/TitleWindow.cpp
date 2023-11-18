@@ -78,9 +78,9 @@ TitleWindow::TitleWindow(UserInterfaceExtension& inUserInterface,
         std::bind(&TitleWindow::onConnectButtonPressed, this));
 
     // Register our world signal handlers.
-    inSimulation.simulationStarted.connect<&TitleWindow::onSimulationStarted>(
-        *this);
-    inSimulation.serverConnectionError
+    inSimulation.getSimulationStartedSink()
+        .connect<&TitleWindow::onSimulationStarted>(*this);
+    inSimulation.getServerConnectionErrorSink()
         .connect<&TitleWindow::onServerConnectionError>(*this);
 }
 

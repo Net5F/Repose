@@ -18,10 +18,11 @@ namespace Client
 MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 : AUI::Screen("MainScreen")
 , world{deps.simulation.getWorld()}
+, interactionManager{deps.simulation.getWorld(), deps.network, *this}
 , playerIsInBuildArea{false}
-, mainOverlay{world, deps.worldObjectLocator, deps.network}
+, mainOverlay{world, deps.worldObjectLocator, deps.network, interactionManager}
 , chatWindow{deps.network, deps.sdlRenderer}
-, inventoryWindow{deps.network}
+, inventoryWindow{deps.simulation, deps.network, interactionManager}
 , buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
                deps.spriteData}
 , buildPanel{world, deps.network, deps.spriteData, buildOverlay}

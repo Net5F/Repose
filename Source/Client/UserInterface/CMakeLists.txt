@@ -1,5 +1,6 @@
 target_sources(Client
     PRIVATE
+        Private/InteractionManager.cpp
         Private/MainScreen.cpp
         Private/TitleScreen.cpp
         Private/UserInterfaceExtension.cpp
@@ -10,9 +11,10 @@ target_sources(Client
         Private/BuildTools/ObjectTool.cpp
         Private/BuildTools/RemoveTool.cpp
         Private/BuildTools/WallTool.cpp
+        Private/Widgets/BuildModeThumbnail.cpp
         Private/Widgets/EntityPanelContent.cpp
+        Private/Widgets/ItemThumbnail.cpp
         Private/Widgets/MainButton.cpp
-        Private/Widgets/MainThumbnail.cpp
         Private/Widgets/TitleButton.cpp
         Private/Widgets/TitleTextInput.cpp
         Private/Windows/BuildOverlay.cpp
@@ -23,6 +25,7 @@ target_sources(Client
         Private/Windows/TitleWindow.cpp
     PUBLIC
         Public/InteractionHelpers.h
+        Public/InteractionManager.h
         Public/MainScreen.h
         Public/TitleScreen.h
         Public/UserInterfaceExtension.h
@@ -33,9 +36,10 @@ target_sources(Client
         Public/BuildTools/ObjectTool.h
         Public/BuildTools/RemoveTool.h
         Public/BuildTools/WallTool.h
+        Public/Widgets/BuildModeThumbnail.h
         Public/Widgets/EntityPanelContent.h
+        Public/Widgets/ItemThumbnail.h
         Public/Widgets/MainButton.h
-        Public/Widgets/MainThumbnail.h
         Public/Widgets/TitleButton.h
         Public/Widgets/TitleTextInput.h
         Public/Windows/BuildOverlay.h

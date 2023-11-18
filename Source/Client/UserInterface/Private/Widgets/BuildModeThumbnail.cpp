@@ -1,11 +1,11 @@
-#include "MainThumbnail.h"
+#include "BuildModeThumbnail.h"
 #include "Paths.h"
 
 namespace AM
 {
 namespace Client
 {
-MainThumbnail::MainThumbnail(const std::string& inDebugName)
+BuildModeThumbnail::BuildModeThumbnail(const std::string& inDebugName)
 : AUI::Thumbnail({0, 0, 108, 109}, inDebugName)
 {
     // Add our backgrounds.

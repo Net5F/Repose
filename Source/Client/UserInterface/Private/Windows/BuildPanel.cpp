@@ -4,11 +4,10 @@
 #include "Network.h"
 #include "SpriteData.h"
 #include "BuildOverlay.h"
-#include "MainThumbnail.h"
+#include "BuildModeThumbnail.h"
 #include "EntityTool.h"
 #include "SharedConfig.h"
 #include "Paths.h"
-#include "Ignore.h"
 #include "AMAssert.h"
 
 namespace AM
@@ -156,8 +155,8 @@ void BuildPanel::addTileSpriteSet(TileLayer::Type type, const SpriteSet& spriteS
 {
     // Construct the new sprite thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
-        std::make_unique<MainThumbnail>("BuildPanelThumbnail")};
-    MainThumbnail& thumbnail{static_cast<MainThumbnail&>(*thumbnailPtr)};
+        std::make_unique<BuildModeThumbnail>("BuildPanelThumbnail")};
+    BuildModeThumbnail& thumbnail{static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
     thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 

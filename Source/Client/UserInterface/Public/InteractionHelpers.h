@@ -36,6 +36,10 @@ public:
     {
         switch (interactionType) {
             // Engine interaction types.
+            case ItemInteractionType::UseOn:
+                return "Use";
+            case ItemInteractionType::Destroy:
+                return "Destroy";
             case ItemInteractionType::Examine:
                 return "Examine";
             // Project interaction types.
