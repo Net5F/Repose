@@ -1,7 +1,9 @@
 #pragma once
 
+#include "AUI/MouseButtonType.h"
 #include "entt/fwd.hpp"
 #include <SDL_stdinc.h>
+#include <SDL_rect.h>
 #include <functional>
 #include <string_view>
 #include <string>
@@ -31,15 +33,22 @@ public:
                        MainScreen& inMainScreen);
 
     // Entity interactions.
+    /** @param entity The relevant entity. */
     void entityHovered(entt::entity entity);
     void entityLeftClicked(entt::entity entity);
     void entityRightClicked(entt::entity entity);
 
     // Item interactions.
-    /** @param slotIndex The inventory slot of the item. */
+    /** @param slotIndex The inventory slot containing the relevant item.
+        @param itemThumbnail The widget to focus. */
     void itemHovered(Uint8 slotIndex);
-    void itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail);
-    void itemRightClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail);
+    /** @return true if the event was handled, else false. */
+    bool itemPreviewMouseDown(Uint8 slotIndex, AUI::MouseButtonType buttonType,
+                              ItemThumbnail& itemThumbnail);
+    void itemMouseDown(Uint8 slotIndex, AUI::MouseButtonType buttonType,
+                       ItemThumbnail& itemThumbnail);
+    void itemMouseUp(Uint8 slotIndex, AUI::MouseButtonType buttonType,
+                     ItemThumbnail& itemThumbnail);
     void itemDeselected();
 
     /**
@@ -55,6 +64,24 @@ public:
         std::function<void(std::string_view)> inOnInteractionTextUpdated);
 
 private:
+    // Both of these are called by itemMouseUp(), since we treat MouseUp as 
+    // actually clicking the item (see comment in itemMouseDown()).
+    void itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail);
+    void itemRightClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail);
+
+    /**
+     * Begins a "Use item on" interaction.
+     * If there's an existing item being used, replaces it with the new item.
+     * 
+     * @param slotIndex The item's inventory slot containing the item that's 
+     *                  being used.
+     * @param displayName The item's display name.
+     * @param itemThumbnail The thumbnail of the item that's being used.
+     */
+    void beginUseItemOnInteraction(Uint8 slotIndex,
+                                   std::string_view displayName,
+                                   const ItemThumbnail& itemThumbnail);
+
     /** Used to access the registry for interactions and inventory. */
     World& world;
     /** Used to send interaction messages. */

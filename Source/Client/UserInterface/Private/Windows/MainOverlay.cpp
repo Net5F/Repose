@@ -3,10 +3,6 @@
 #include "WorldObjectLocator.h"
 #include "Network.h"
 #include "InteractionManager.h"
-#include "Name.h"
-#include "Interaction.h"
-#include "InteractionHelpers.h"
-#include "EntityInteractionRequest.h"
 #include "Paths.h"
 
 namespace AM

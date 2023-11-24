@@ -2,7 +2,7 @@
 
 #include "AUI/Window.h"
 #include "AUI/Image.h"
-#include "AUI/VerticalListContainer.h"
+#include "AUI/VerticalGridContainer.h"
 #include "QueuedEvents.h"
 #include "entt/fwd.hpp"
 
@@ -31,6 +31,13 @@ public:
     InventoryWindow(Simulation& inSimulation, Network& inNetwork,
                     InteractionManager& inInteractionManager);
 
+    //-------------------------------------------------------------------------
+    // Widget class overrides
+    //-------------------------------------------------------------------------
+    AUI::EventResult
+        onPreviewMouseDown(AUI::MouseButtonType buttonType,
+                           const SDL_Point& cursorPosition) override;
+
 private:
     /**
      * Refreshes this widget, making it match the given inventory.
@@ -53,7 +60,7 @@ private:
     AUI::Image backgroundImage;
 
     /** Holds the inventory items. */
-    AUI::VerticalListContainer itemContainer;
+    AUI::VerticalGridContainer itemContainer;
 };
 
 } // End namespace Client

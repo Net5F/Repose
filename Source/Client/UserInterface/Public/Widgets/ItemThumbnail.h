@@ -48,12 +48,15 @@ public:
     //-------------------------------------------------------------------------
     // Public child widgets
     //-------------------------------------------------------------------------
+    // TODO: Move this out and just draw it in InventoryWindow?
     /** The backdrop that goes behind the thumbnail. */
     AUI::Image backdropImage;
 
     /** Middle-ground thumbnail image. */
     AUI::Image thumbnailImage;
 
+    // TODO: We have hover feedback through the interaction text. Remove it?
+    //       Selection as separate icon like rs? Or keep this?
     /** Foreground highlight image, hovered state. */
     AUI::Image hoveredImage;
     /** Foreground highlight image, selected state. */
@@ -69,10 +72,12 @@ public:
 
     void setOnUnhovered(std::function<void(ItemThumbnail*)> inOnUnhovered);
 
-    void setOnLeftClicked(std::function<void(ItemThumbnail*)> inOnLeftClicked);
-
     void
-        setOnRightClicked(std::function<void(ItemThumbnail*)> inOnRightClicked);
+        setOnMouseDown(std::function<void(ItemThumbnail*, AUI::MouseButtonType)>
+                           inOnMouseDown);
+
+    void setOnMouseUp(
+        std::function<void(ItemThumbnail*, AUI::MouseButtonType)> inOnMouseUp);
 
     void setOnDeselected(std::function<void(ItemThumbnail*)> inOnDeselected);
 
@@ -106,8 +111,8 @@ private:
 
     std::function<void(ItemThumbnail*)> onHovered;
     std::function<void(ItemThumbnail*)> onUnhovered;
-    std::function<void(ItemThumbnail*)> onLeftClicked;
-    std::function<void(ItemThumbnail*)> onRightClicked;
+    std::function<void(ItemThumbnail*, AUI::MouseButtonType)> onMouseDownFunc;
+    std::function<void(ItemThumbnail*, AUI::MouseButtonType)> onMouseUpFunc;
     std::function<void(ItemThumbnail*)> onDeselected;
 
     /** If true, this widget displays hoveredImage when hovered. */

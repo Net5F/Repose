@@ -10,8 +10,9 @@
 #include "InventoryWindow.h"
 #include "BuildPanel.h"
 #include "BuildOverlay.h"
-#include "TileExtent.h"
-#include <span>
+#include "RightClickMenu.h"
+#include <string_view>
+#include <functional>
 
 namespace AM
 {
@@ -31,6 +32,25 @@ public:
     MainScreen(const UserInterfaceExDependencies& deps);
 
     virtual ~MainScreen() = default;
+
+    /**
+     * Clears all actions from the right-click menu.
+     */
+    void clearRightClickMenu();
+
+    /**
+     * Adds an action to the right-click menu.
+     * 
+     * @param displayText The text to display for this menu option.
+     * @param onSelected The function to call when this option is selected.
+     */
+    void addRightClickMenuAction(std::string_view displayText,
+                                 std::function<void(void)> onSelected);
+
+    /**
+     * Moves the right-click menu to the mouse's current position and opens it.
+     */
+    void openRightClickMenu();
 
     /**
      * Sets the camera to use when rendering.
@@ -91,6 +111,10 @@ private:
 
     /** The build mode panel. Allows the player to select tiles. */
     BuildPanel buildPanel;
+
+    /** A general-purpose right-click menu. Used for e.g. displaying 
+        the supported interactions when a user right-clicks an item. */
+    RightClickMenu rightClickMenu;
 };
 
 } // End namespace Client

@@ -30,6 +30,11 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
     backgroundImage.setNineSliceImage(
         (Paths::TEXTURE_DIR + "TextInput/Normal.png"), {8, 8, 8, 8});
 
+    /* Item container */
+    itemContainer.setNumColumns(4);
+    itemContainer.setCellWidth(50);
+    itemContainer.setCellHeight(50);
+
     // We need to update this widget when the player's inventory changes, or 
     // when an item defintion changes.
     world.registry.on_update<Inventory>()
@@ -38,6 +43,30 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
         *this);
 }
 
+AUI::EventResult
+    InventoryWindow::onPreviewMouseDown(AUI::MouseButtonType buttonType,
+                                        const SDL_Point& cursorPosition)
+{
+    // Give InteractionManager a chance to intercept this click.
+    bool wasHandled{false};
+    Uint8 slotIndex{0};
+    for (std::unique_ptr<AUI::Widget>& item : itemContainer) {
+        if (item->containsPoint(cursorPosition)) {
+            wasHandled = interactionManager.itemPreviewMouseDown(
+                slotIndex, buttonType,
+                static_cast<ItemThumbnail&>(*(item.get())));
+        }
+
+        slotIndex++;
+    }
+
+    // If InteractionManager handled this click (i.e. if it was the second click
+    // of a UseOn), handle it so it doesn't go on to select the thumbnail.
+    return AUI::EventResult{.wasHandled{wasHandled}};
+}
+
+// TODO: Can't hover from 1 widget straight to the next
+//       Item widgets are missing their background?
 void InventoryWindow::refresh(const Inventory& inventory)
 {
     // If an item was selected, deselect it.
@@ -46,6 +75,11 @@ void InventoryWindow::refresh(const Inventory& inventory)
     // Add thumbnails for each item in the player's inventory.
     itemContainer.clear();
     for (std::size_t i = 0; i < inventory.items.size(); ++i) {
+        // Skip empty slots.
+        if (inventory.items[i].ID == NULL_ITEM_ID) {
+            continue;
+        }
+
         // Construct the new item thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
             std::make_unique<ItemThumbnail>(SDL_Rect{0, 0, 50, 50},
@@ -64,11 +98,14 @@ void InventoryWindow::refresh(const Inventory& inventory)
         thumbnail.setOnUnhovered([&, slotIndex](ItemThumbnail* thumbnail) {
             interactionManager.unhovered();
         });
-        thumbnail.setOnLeftClicked([&, slotIndex](ItemThumbnail* thumbnail) {
-            interactionManager.itemLeftClicked(slotIndex, *thumbnail);
+        thumbnail.setOnMouseDown(
+            [&, slotIndex](ItemThumbnail* thumbnail,
+                           AUI::MouseButtonType buttonType) {
+            interactionManager.itemMouseDown(slotIndex, buttonType, *thumbnail);
         });
-        thumbnail.setOnRightClicked([&, slotIndex](ItemThumbnail* thumbnail) {
-            interactionManager.itemRightClicked(slotIndex, *thumbnail);
+        thumbnail.setOnMouseUp([&, slotIndex](ItemThumbnail* thumbnail,
+                                              AUI::MouseButtonType buttonType) {
+            interactionManager.itemMouseUp(slotIndex, buttonType, *thumbnail);
         });
         thumbnail.setOnDeselected([&, slotIndex](ItemThumbnail* thumbnail) {
             interactionManager.itemDeselected();
@@ -86,8 +123,7 @@ void InventoryWindow::onInventoryUpdated(entt::registry& registry,
         return;
     }
 
-    const Inventory& inventory{world.registry.get<Inventory>(entity)};
-    refresh(inventory);
+    refresh(registry.get<Inventory>(entity));
 }
 
 void InventoryWindow::onItemUpdated(const Item& item)

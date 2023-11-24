@@ -9,6 +9,7 @@
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
 #include "AUI/Core.h"
+#include "AUI/ScalingHelpers.h"
 #include "Log.h"
 
 namespace AM
@@ -26,6 +27,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 , buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
                deps.spriteData}
 , buildPanel{world, deps.network, deps.spriteData, buildOverlay}
+, rightClickMenu{}
 {
     // Add our windows so they're included in rendering, etc.
     windows.push_back(mainOverlay);
@@ -33,11 +35,13 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
     windows.push_back(inventoryWindow);
     windows.push_back(buildOverlay);
     windows.push_back(buildPanel);
+    windows.push_back(rightClickMenu);
 
-    // Hide the build mode and inventory windows.
+    // Hide the windows that aren't always open.
     buildOverlay.setIsVisible(false);
     buildPanel.setIsVisible(false);
     inventoryWindow.setIsVisible(false);
+    rightClickMenu.setIsVisible(false);
 
     // If world changes are restricted, we need to know when the player enters
     // or exits the build area.
@@ -49,6 +53,38 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
         // World changes are unrestricted, so the player is always in the build
         // area.
         playerIsInBuildArea = true;
+    }
+}
+
+void MainScreen::clearRightClickMenu()
+{
+    rightClickMenu.actionContainer.clear();
+}
+
+void MainScreen::addRightClickMenuAction(std::string_view displayText,
+                                         std::function<void(void)> onSelected)
+{
+    rightClickMenu.addMenuAction(displayText, std::move(onSelected));
+}
+
+void MainScreen::openRightClickMenu()
+{
+    // If the menu isn't already open.
+    if (!rightClickMenu.getIsVisible()) {
+        // Get the current mouse position and convert to logical.
+        SDL_Point cursorPosition{};
+        SDL_GetMouseState(&(cursorPosition.x), &(cursorPosition.y));
+        cursorPosition = AUI::ScalingHelpers::actualToLogical(cursorPosition);
+
+        // Move the menu to where the cursor is.
+        SDL_Rect menuExtent{rightClickMenu.getLogicalExtent()};
+        menuExtent.x = cursorPosition.x;
+        menuExtent.y = cursorPosition.y;
+        rightClickMenu.setLogicalExtent(menuExtent);
+
+        // Open the menu and focus it, so it can close itself if necessary.
+        rightClickMenu.setIsVisible(true);
+        setFocusAfterNextLayout(&rightClickMenu);
     }
 }
 

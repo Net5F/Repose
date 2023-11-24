@@ -59,14 +59,16 @@ void ItemThumbnail::setOnUnhovered(
     onUnhovered = std::move(inOnUnhovered);
 }
 
-void ItemThumbnail::setOnLeftClicked(std::function<void(ItemThumbnail*)> inOnLeftClicked)
+void ItemThumbnail::setOnMouseDown(
+    std::function<void(ItemThumbnail*, AUI::MouseButtonType)> inOnMouseDown)
 {
-    onLeftClicked = std::move(inOnLeftClicked);
+    onMouseDownFunc = std::move(inOnMouseDown);
 }
 
-void ItemThumbnail::setOnRightClicked(std::function<void(ItemThumbnail*)> inOnRightClicked)
+void ItemThumbnail::setOnMouseUp(
+    std::function<void(ItemThumbnail*, AUI::MouseButtonType)> inOnMouseUp)
 {
-    onRightClicked = std::move(inOnRightClicked);
+    onMouseUpFunc = std::move(inOnMouseUp);
 }
 
 void ItemThumbnail::setOnDeselected(std::function<void(ItemThumbnail*)> inOnDeselected)
@@ -79,29 +81,33 @@ AUI::EventResult ItemThumbnail::onMouseDown(AUI::MouseButtonType buttonType,
 {
     // TODO: Drag/drop
 
+    // If the user set a callback for this event, call it.
+    if (onMouseDownFunc) {
+        onMouseDownFunc(this, buttonType);
+    }
+
     // Set mouse capture so we get the associated MouseUp.
     return AUI::EventResult{.wasHandled{true}, .setMouseCapture{this}};
 }
 
 AUI::EventResult ItemThumbnail::onMouseUp(AUI::MouseButtonType buttonType,
-                                          const SDL_Point&)
+                                          const SDL_Point& cursorPosition)
 {
     // Note: We have to handle clicks on mouse up since we have a drag 
     //       interaction.
 
-    // If the user set a callback for this event, call it.
-    if ((buttonType == AUI::MouseButtonType::Left)
-        && onLeftClicked) {
-        onLeftClicked(this);
-        return AUI::EventResult{.wasHandled{true}};
-    }
-    else if ((buttonType == AUI::MouseButtonType::Right)
-        && onRightClicked) {
-        onRightClicked(this);
-        return AUI::EventResult{.wasHandled{true}};
+    // Since we capture the mouse on MouseDown, we need to check if the 
+    // cursor is actually touching this widget.
+    if (!containsPoint(cursorPosition)) {
+        return AUI::EventResult{.wasHandled{false}, .releaseMouseCapture{true}};
     }
 
-    return AUI::EventResult{.wasHandled{false}};
+    // If the user set a callback for this event, call it.
+    if (onMouseUpFunc) {
+        onMouseUpFunc(this, buttonType);
+    }
+
+    return AUI::EventResult{.wasHandled{false}, .releaseMouseCapture{true}};
 }
 
 AUI::EventResult ItemThumbnail::onMouseDoubleClick(AUI::MouseButtonType buttonType,

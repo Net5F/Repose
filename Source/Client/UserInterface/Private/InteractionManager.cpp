@@ -5,9 +5,10 @@
 #include "Inventory.h"
 #include "EntityInteractionRequest.h"
 #include "UseItemOnEntityRequest.h"
-#include "CombineItems.h"
+#include "CombineItemsRequest.h"
 #include "ItemInteractionRequest.h"
-#include "InteractionHelpers.h"
+#include "InventoryDeleteItem.h"
+#include "DisplayStrings.h"
 #include "ItemThumbnail.h"
 #include "Log.h"
 
@@ -46,7 +47,7 @@ void InteractionManager::entityHovered(entt::entity entity)
     else {
         // Update the text to reflect the hovered entity's default interaction.
         EntityInteractionType defaultInteraction{interaction->getDefault()};
-        stringStream << InteractionHelpers::toDisplayString(defaultInteraction)
+        stringStream << DisplayStrings::get(defaultInteraction)
                      << name.value;
 
         std::size_t interactionCount{interaction->getCount()};
@@ -118,8 +119,8 @@ void InteractionManager::itemHovered(Uint8 slotIndex)
         // Update the text to reflect the hovered item's default interaction.
         ItemInteractionType defaultInteraction{
             hoveredItem->getDefaultInteraction()};
-        stringStream << InteractionHelpers::toDisplayString(defaultInteraction)
-                     << hoveredItem->displayName;
+        stringStream << DisplayStrings::get(defaultInteraction)
+                     << " " << hoveredItem->displayName;
 
         std::size_t interactionCount{hoveredItem->getInteractionCount()};
         if (interactionCount > 1) {
@@ -131,50 +132,46 @@ void InteractionManager::itemHovered(Uint8 slotIndex)
     onInteractionTextUpdated(stringStream.str());
 }
 
-void InteractionManager::itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail)
+bool InteractionManager::itemPreviewMouseDown(Uint8 slotIndex,
+                                              AUI::MouseButtonType buttonType,
+                                              ItemThumbnail& itemThumbnail)
 {
-    // If the given slot doesn't contain an item, do nothing.
-    auto& inventory{world.registry.get<Inventory>(world.playerEntity)};
-    const Item* clickedItem{inventory.getItem(slotIndex, world.itemData)};
-    if (!clickedItem) {
-        return;
+    // We only care about intercepting the 2nd left click of a UseOn.
+    if ((buttonType != AUI::MouseButtonType::Left) || !usingItem
+        || (slotIndex == sourceSlotIndex)) {
+        return false;
     }
 
-    // If we're using an item, this is the target. Send the combine request and 
-    // deselect the first item.
-    if (usingItem) {
-        network.serializeAndSend(CombineItems{sourceSlotIndex, slotIndex});
+    // This is a left click and we're using an item. The given item is the 
+    // target. Send the combine request and deselect the first item.
+    network.serializeAndSend(CombineItemsRequest{sourceSlotIndex, slotIndex});
 
-        // Note: Dropping focus will cause the first item to deselect itself.
-        mainScreen.dropFocus();
-        usingItem = false;
-    }
-    else {
-        // Not using an item. If this item's default interaction is UseOn, start
-        // using it.
-        ItemInteractionType defaultInteraction{
-            clickedItem->getDefaultInteraction()};
-        if (defaultInteraction == ItemInteractionType::UseOn) {
-            sourceSlotIndex = slotIndex;
-            sourceName = clickedItem->displayName;
-            usingItem = true;
-            mainScreen.setFocus(&itemThumbnail);
+    // Note: Dropping focus will cause the first item to deselect itself.
+    mainScreen.dropFocus();
+    usingItem = false;
 
-            std::ostringstream stringStream{};
-            stringStream << "Use " << sourceName << " on";
-            onInteractionTextUpdated(stringStream.str());
-        }
-        else {
-            // Request the default interaction be performed.
-            network.serializeAndSend(
-                ItemInteractionRequest{slotIndex, defaultInteraction});
-        }
-    }
+    return true;
 }
 
-void InteractionManager::itemRightClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail)
+void InteractionManager::itemMouseDown(Uint8 slotIndex,
+                                       AUI::MouseButtonType buttonType,
+                                       ItemThumbnail& itemThumbnail)
 {
-    // TODO: Make sure we check for Destroy and send the different message
+    // TODO: Drag and drop?
+}
+
+void InteractionManager::itemMouseUp(Uint8 slotIndex,
+                                     AUI::MouseButtonType buttonType,
+                                     ItemThumbnail& itemThumbnail)
+{
+    // Note: For items, since we have drag+drop, we count MouseUp as the actual 
+    //       click.
+    if (buttonType == AUI::MouseButtonType::Left) {
+        itemLeftClicked(slotIndex, itemThumbnail);
+    }
+    else if (buttonType == AUI::MouseButtonType::Right) {
+        itemRightClicked(slotIndex, itemThumbnail);
+    }
 }
 
 void InteractionManager::itemDeselected()
@@ -204,6 +201,106 @@ void InteractionManager::setOnInteractionTextUpdated(
     std::function<void(std::string_view)> inOnInteractionTextUpdated)
 {
     onInteractionTextUpdated = std::move(inOnInteractionTextUpdated);
+}
+
+void InteractionManager::itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail)
+{
+    // If the given slot doesn't contain an item, do nothing.
+    auto& inventory{world.registry.get<Inventory>(world.playerEntity)};
+    const Item* clickedItem{inventory.getItem(slotIndex, world.itemData)};
+    if (!clickedItem) {
+        return;
+    }
+
+    // Note: The second click of UseOn is handled in MouseDown.
+
+    // If this item's default interaction is UseOn, start using it.
+    ItemInteractionType defaultInteraction{
+        clickedItem->getDefaultInteraction()};
+    if (defaultInteraction == ItemInteractionType::UseOn) {
+        beginUseItemOnInteraction(slotIndex, clickedItem->displayName,
+                                  itemThumbnail);
+
+        std::ostringstream stringStream{};
+        stringStream << "Use " << sourceName << " on";
+        onInteractionTextUpdated(stringStream.str());
+    }
+    else {
+        // Request the default interaction be performed.
+        network.serializeAndSend(
+            ItemInteractionRequest{slotIndex, defaultInteraction});
+    }
+}
+
+// TODO: "Use" from right click menu isn't working
+void InteractionManager::itemRightClicked(Uint8 slotIndex,
+                                          ItemThumbnail& itemThumbnail)
+{
+    // If the given slot doesn't contain an item, do nothing.
+    auto& inventory{world.registry.get<Inventory>(world.playerEntity)};
+    const Item* clickedItem{inventory.getItem(slotIndex, world.itemData)};
+    if (!clickedItem) {
+        return;
+    }
+
+    // If we're using an item, cancel it.
+    if (usingItem) {
+        usingItem = false;
+        onInteractionTextUpdated("");
+    }
+
+    // Fill the right-click menu with this item's interactions.
+    mainScreen.clearRightClickMenu();
+    auto interactionList{clickedItem->getInteractionList()};
+    for (ItemInteractionType interactionType : interactionList) {
+        if (interactionType == ItemInteractionType::NotSet) {
+            // No more interactions in this list.
+            break;
+        }
+        else if (interactionType == ItemInteractionType::UseOn) {
+            // If the item is still in the inventory, begin using it.
+            auto useItemOn = [&, slotIndex, name{clickedItem->displayName},
+                              thumbnail{AUI::WidgetWeakRef{itemThumbnail}}]() {
+                if (thumbnail.isValid()) {
+                    auto* thumbnailPtr{
+                        static_cast<ItemThumbnail*>(&(thumbnail.get()))};
+                    beginUseItemOnInteraction(slotIndex, name, *thumbnailPtr);
+                }
+                mainScreen.dropFocus();
+            };
+            mainScreen.addRightClickMenuAction("Use", std::move(useItemOn));
+        }
+        else if (interactionType == ItemInteractionType::Destroy) {
+            // Tell the server to delete the items in this slot.
+            auto deleteItem = [&, slotIndex,
+                               count{inventory.items[slotIndex].count}]() {
+                network.serializeAndSend(InventoryDeleteItem{slotIndex, count});
+                mainScreen.dropFocus();
+            };
+            mainScreen.addRightClickMenuAction("Destroy", std::move(deleteItem));
+        }
+        else {
+            // Tell the server to process this interaction.
+            auto interactWith = [&, slotIndex, interactionType]() {
+                network.serializeAndSend(
+                    ItemInteractionRequest{slotIndex, interactionType});
+                mainScreen.dropFocus();
+            };
+            mainScreen.addRightClickMenuAction(
+                DisplayStrings::get(interactionType), std::move(interactWith));
+        }
+    }
+
+    mainScreen.openRightClickMenu();
+}
+
+void InteractionManager::beginUseItemOnInteraction(Uint8 slotIndex,
+    std::string_view displayName, const ItemThumbnail& itemThumbnail)
+{
+    sourceSlotIndex = slotIndex;
+    sourceName = displayName;
+    usingItem = true;
+    mainScreen.setFocus(&itemThumbnail);
 }
 
 } // End namespace Client

@@ -4,7 +4,6 @@
 #include "TileExtent.h"
 #include "Timer.h"
 #include "entt/fwd.hpp"
-#include <queue>
 #include <random>
 
 namespace AM
@@ -59,15 +58,14 @@ private:
      */
     void replantPlant(entt::entity oldPlant);
 
+    /** Used for getting Replant interaction requests. */
+    Simulation& simulation;
     /** Used to modify the tile map. */
     World& world;
     /** Used to get the plant sprites that we apply to the tile map. */
     SpriteData& spriteData;
 
     Timer updateTimer;
-
-    // Queue for receiving interaction events.
-    std::queue<EntityInteractionRequest> replantInteractionQueue;
 
     /** The world extent that the plants are located within. */
     TileExtent plantExtent;

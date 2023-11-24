@@ -18,10 +18,10 @@ namespace Server
 {
 
 PlantSystem::PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData)
-: world{inSimulation.getWorld()}
+: simulation{inSimulation}
+, world{inSimulation.getWorld()}
 , spriteData{inSpriteData}
 , updateTimer{}
-, replantInteractionQueue{}
 , plantExtent{5, 36, 9, 11}
 , sunflowerSpriteSetID{spriteData.getObjectSpriteSet("sunflower").numericID}
 {
@@ -34,27 +34,21 @@ PlantSystem::PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData)
     }
 
     // Create all the sunflower entities.
-    for (int x = plantExtent.x; x <= plantExtent.xMax(); ++x) {
-        for (int y = plantExtent.y; y <= plantExtent.yMax(); y += 2) {
+    for (int x{plantExtent.x}; x <= plantExtent.xMax(); ++x) {
+        for (int y{plantExtent.y}; y <= plantExtent.yMax(); y += 2) {
             Position tileCenter{TilePosition{x, y}.getCenterPosition()};
             createSapling(tileCenter);
         }
     }
-
-    // Subscribe to receive any Replant interactions.
-    inSimulation.registerInteractionQueue(EntityInteractionType::Replant,
-                                          replantInteractionQueue);
 }
 
 void PlantSystem::updatePlants()
 {
     // Process any waiting interactions.
-    while (!(replantInteractionQueue.empty())) {
-        const EntityInteractionRequest replantRequest{
-            replantInteractionQueue.front()};
+    Simulation::EntityInteractionData replantRequest{};
+    while (simulation.popEntityInteractionRequest(
+        EntityInteractionType::Replant, replantRequest)) {
         replantPlant(replantRequest.targetEntity);
-
-        replantInteractionQueue.pop();
     }
 
     // Update all the plants.

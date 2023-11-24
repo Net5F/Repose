@@ -12,12 +12,12 @@ namespace Client
 {
 
 /**
- * Shared static functions for dealing with interactions.
+ * Shared static functions for converting enums to display strings.
  */
-class InteractionHelpers
+class DisplayStrings
 {
 public:
-    static std::string toDisplayString(EntityInteractionType interactionType)
+    static std::string get(EntityInteractionType interactionType)
     {
         switch (interactionType) {
             // Engine interaction types.
@@ -32,7 +32,7 @@ public:
         return "?";
     }
 
-    static std::string toDisplayString(ItemInteractionType interactionType)
+    static std::string get(ItemInteractionType interactionType)
     {
         switch (interactionType) {
             // Engine interaction types.

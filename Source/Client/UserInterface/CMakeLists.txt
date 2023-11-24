@@ -22,9 +22,10 @@ target_sources(Client
         Private/Windows/ChatWindow.cpp
         Private/Windows/InventoryWindow.cpp
         Private/Windows/MainOverlay.cpp
+        Private/Windows/RightClickMenu.cpp
         Private/Windows/TitleWindow.cpp
     PUBLIC
-        Public/InteractionHelpers.h
+        Public/DisplayStrings.h
         Public/InteractionManager.h
         Public/MainScreen.h
         Public/TitleScreen.h
@@ -47,6 +48,7 @@ target_sources(Client
         Public/Windows/ChatWindow.h
         Public/Windows/InventoryWindow.h
         Public/Windows/MainOverlay.h
+        Public/Windows/RightClickMenu.h
         Public/Windows/TitleWindow.h
 )
 
