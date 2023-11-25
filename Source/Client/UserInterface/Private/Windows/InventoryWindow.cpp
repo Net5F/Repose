@@ -20,7 +20,8 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
 , network{inNetwork}
 , interactionManager{inInteractionManager}
 , backgroundImage({0, 0, logicalExtent.w, logicalExtent.h}, "BackgroundImage")
-, itemContainer({0, 0, logicalExtent.w, logicalExtent.h}, "ItemContainer")
+, itemContainer({12, 12, (logicalExtent.w - 12), (logicalExtent.h - 12)},
+                "ItemContainer")
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
@@ -32,8 +33,8 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
 
     /* Item container */
     itemContainer.setNumColumns(4);
-    itemContainer.setCellWidth(50);
-    itemContainer.setCellHeight(50);
+    itemContainer.setCellWidth(58);
+    itemContainer.setCellHeight(58);
 
     // We need to update this widget when the player's inventory changes, or 
     // when an item defintion changes.
@@ -65,8 +66,9 @@ AUI::EventResult
     return AUI::EventResult{.wasHandled{wasHandled}};
 }
 
-// TODO: Can't hover from 1 widget straight to the next
-//       Item widgets are missing their background?
+// TODO: Test with lots of items
+//       Get rid of highlight, get rid of backdrop?
+//       Final spacing
 void InventoryWindow::refresh(const Inventory& inventory)
 {
     // If an item was selected, deselect it.
@@ -82,11 +84,13 @@ void InventoryWindow::refresh(const Inventory& inventory)
 
         // Construct the new item thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
-            std::make_unique<ItemThumbnail>(SDL_Rect{0, 0, 50, 50},
+            std::make_unique<ItemThumbnail>(SDL_Rect{2, 2, 50, 50},
                                             "InventoryThumbnail")};
         ItemThumbnail& thumbnail{static_cast<ItemThumbnail&>(*thumbnailPtr)};
 
-        // Load the item's icon.
+        // Load the item's images.
+        thumbnail.backdropImage.setSimpleImage(
+            Paths::TEXTURE_DIR + "Highlights/Hovered.png");
         thumbnail.thumbnailImage.setSimpleImage(
             Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Normal_1920.png");
 

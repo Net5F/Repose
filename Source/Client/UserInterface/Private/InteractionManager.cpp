@@ -220,10 +220,6 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThu
     if (defaultInteraction == ItemInteractionType::UseOn) {
         beginUseItemOnInteraction(slotIndex, clickedItem->displayName,
                                   itemThumbnail);
-
-        std::ostringstream stringStream{};
-        stringStream << "Use " << sourceName << " on";
-        onInteractionTextUpdated(stringStream.str());
     }
     else {
         // Request the default interaction be performed.
@@ -232,7 +228,6 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThu
     }
 }
 
-// TODO: "Use" from right click menu isn't working
 void InteractionManager::itemRightClicked(Uint8 slotIndex,
                                           ItemThumbnail& itemThumbnail)
 {
@@ -262,11 +257,12 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
             auto useItemOn = [&, slotIndex, name{clickedItem->displayName},
                               thumbnail{AUI::WidgetWeakRef{itemThumbnail}}]() {
                 if (thumbnail.isValid()) {
+                    // Note: This will change focus, so we don't need to 
+                    //       explicitly drop focus to close the menu.
                     auto* thumbnailPtr{
                         static_cast<ItemThumbnail*>(&(thumbnail.get()))};
                     beginUseItemOnInteraction(slotIndex, name, *thumbnailPtr);
                 }
-                mainScreen.dropFocus();
             };
             mainScreen.addRightClickMenuAction("Use", std::move(useItemOn));
         }
@@ -301,6 +297,10 @@ void InteractionManager::beginUseItemOnInteraction(Uint8 slotIndex,
     sourceName = displayName;
     usingItem = true;
     mainScreen.setFocus(&itemThumbnail);
+
+    std::ostringstream stringStream{};
+    stringStream << "Use " << sourceName << " on";
+    onInteractionTextUpdated(stringStream.str());
 }
 
 } // End namespace Client

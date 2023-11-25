@@ -8,6 +8,7 @@ namespace AM
 namespace Client
 {
 // TODO: Size this to fit the max number of interactions
+//       Fix highlight sizing to not overlap border
 RightClickMenu::RightClickMenu()
 : AUI::Window({0, 0, 169, 187}, "RightClickMenu")
 , backgroundImage({0, 0, logicalExtent.w, logicalExtent.h})
