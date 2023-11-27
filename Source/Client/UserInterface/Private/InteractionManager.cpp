@@ -30,11 +30,6 @@ InteractionManager::InteractionManager(World& inWorld, Network& inNetwork,
 
 void InteractionManager::entityHovered(entt::entity entity)
 {
-    // If this entity has no interactions, return early.
-    auto* interaction{world.registry.try_get<Interaction>(entity)};
-    if (!interaction || interaction->isEmpty()) {
-        return;
-    }
     Name& name{world.registry.get<Name>(entity)};
 
     // If we're using an item, update the text to reflect the hovered entity as 
@@ -44,7 +39,14 @@ void InteractionManager::entityHovered(entt::entity entity)
         stringStream << "Use " << sourceName << " on "
                      << name.value;
     }
+    // Else, update the text to reflect the hovered entity's interactions.
     else {
+        // If this entity has no interactions, return early.
+        auto* interaction{world.registry.try_get<Interaction>(entity)};
+        if (!interaction || interaction->isEmpty()) {
+            return;
+        }
+
         // Update the text to reflect the hovered entity's default interaction.
         EntityInteractionType defaultInteraction{interaction->getDefault()};
         stringStream << DisplayStrings::get(defaultInteraction) << " "
@@ -62,17 +64,9 @@ void InteractionManager::entityHovered(entt::entity entity)
 
 void InteractionManager::entityLeftClicked(entt::entity entity)
 {
-    // If this entity has no interactions, return early.
-    auto* interaction{world.registry.try_get<Interaction>(entity)};
-    if (!interaction || interaction->isEmpty()) {
-        return;
-    }
-
     // If we're using an item, this is the target. Send the UseOn request and 
     // deselect the first item.
     if (usingItem) {
-        EntityInteractionType defaultInteraction{
-            interaction->supportedInteractions[0]};
         network.serializeAndSend(
             UseItemOnEntityRequest{sourceSlotIndex, entity});
 
@@ -80,8 +74,14 @@ void InteractionManager::entityLeftClicked(entt::entity entity)
         mainScreen.dropFocus();
         usingItem = false;
     }
+    // Else, request the entity's default interaction be performed.
     else {
-        // Not using an item. Request the default interaction be performed.
+        // If this entity has no interactions, return early.
+        auto* interaction{world.registry.try_get<Interaction>(entity)};
+        if (!interaction || interaction->isEmpty()) {
+            return;
+        }
+
         network.serializeAndSend(
             EntityInteractionRequest{entity, interaction->getDefault()});
     }
@@ -138,8 +138,8 @@ void InteractionManager::itemHovered(Uint8 slotIndex)
         stringStream << "Use " << sourceName << " on "
                      << hoveredItem->displayName;
     }
+    // Else, update the text to reflect the hovered item's interactions.
     else {
-        // Update the text to reflect the hovered item's default interaction.
         ItemInteractionType defaultInteraction{
             hoveredItem->getDefaultInteraction()};
         stringStream << DisplayStrings::get(defaultInteraction)
@@ -247,8 +247,8 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThu
         beginUseItemOnInteraction(slotIndex, clickedItem->displayName,
                                   itemThumbnail);
     }
+    // Else, request the item's default interaction be performed.
     else {
-        // Request the default interaction be performed.
         network.serializeAndSend(
             ItemInteractionRequest{slotIndex, defaultInteraction});
     }
