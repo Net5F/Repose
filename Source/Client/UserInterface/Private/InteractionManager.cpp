@@ -89,14 +89,37 @@ void InteractionManager::entityLeftClicked(entt::entity entity)
 
 void InteractionManager::entityRightClicked(entt::entity entity)
 {
-    if (auto* interaction{world.registry.try_get<Interaction>(entity)}) {
-        if (interaction->isEmpty()) {
-            // No interactions, return early.
-            return;
-        }
-
-        // TODO: User right-clicked. Open the interaction menu.
+    auto* interaction{world.registry.try_get<Interaction>(entity)};
+    if (!interaction || interaction->isEmpty()) {
+        return;
     }
+
+    // If we're using an item, cancel it.
+    if (usingItem) {
+        usingItem = false;
+        onInteractionTextUpdated("");
+    }
+
+    // Fill the right-click menu with this entity's interactions.
+    mainScreen.clearRightClickMenu();
+    for (EntityInteractionType interactionType :
+         interaction->supportedInteractions) {
+        if (interactionType == EntityInteractionType::NotSet) {
+            // No more interactions in this list.
+            break;
+        }
+        else {
+            // Tell the server to process this interaction.
+            auto interactWith = [&, entity, interactionType]() {
+                network.serializeAndSend(
+                    EntityInteractionRequest{entity, interactionType});
+            };
+            mainScreen.addRightClickMenuAction(
+                DisplayStrings::get(interactionType), std::move(interactWith));
+        }
+    }
+
+    mainScreen.openRightClickMenu();
 }
 
 void InteractionManager::itemHovered(Uint8 slotIndex)
@@ -274,7 +297,6 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
             auto deleteItem = [&, slotIndex,
                                count{inventory.items[slotIndex].count}]() {
                 network.serializeAndSend(InventoryDeleteItem{slotIndex, count});
-                mainScreen.dropFocus();
             };
             mainScreen.addRightClickMenuAction("Destroy", std::move(deleteItem));
         }
@@ -283,7 +305,6 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
             auto interactWith = [&, slotIndex, interactionType]() {
                 network.serializeAndSend(
                     ItemInteractionRequest{slotIndex, interactionType});
-                mainScreen.dropFocus();
             };
             mainScreen.addRightClickMenuAction(
                 DisplayStrings::get(interactionType), std::move(interactWith));
