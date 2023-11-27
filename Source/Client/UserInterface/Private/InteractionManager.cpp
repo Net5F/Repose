@@ -28,6 +28,7 @@ InteractionManager::InteractionManager(World& inWorld, Network& inNetwork,
 {
 }
 
+// TODO: What's the state of this stuff?
 void InteractionManager::entityHovered(entt::entity entity)
 {
     // If this entity has no interactions, return early.

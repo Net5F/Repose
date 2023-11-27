@@ -74,7 +74,7 @@ void InventoryWindow::updateLayout()
         bool hoveringItem{false};
         for (Uint8 slotIndex = 0; slotIndex < itemContainer.size(); ++slotIndex) {
             std::unique_ptr<AUI::Widget>& item{itemContainer[slotIndex]};
-            if (item->containsPoint(cursorPosition)) {
+            if (item->getIsVisible() && item->containsPoint(cursorPosition)) {
                 interactionManager.itemHovered(slotIndex);
                 hoveringItem = true;
             }
@@ -96,10 +96,11 @@ void InventoryWindow::refresh(const Inventory& inventory)
     // Add thumbnails for each item in the player's inventory.
     itemContainer.clear();
     for (Uint8 slotIndex = 0; slotIndex < inventory.items.size(); ++slotIndex) {
-        // Fill empty slots with a blank image to preserve spacing.
+        // Fill empty slots with a blank, hidden image to preserve spacing.
         if (inventory.items[slotIndex].ID == NULL_ITEM_ID) {
             itemContainer.push_back(std::make_unique<AUI::Image>(
                 SDL_Rect{0, 0, 50, 50}, "InventoryBlankSpace"));
+            itemContainer.back()->setIsVisible(false);
             continue;
         }
 

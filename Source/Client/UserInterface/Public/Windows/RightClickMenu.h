@@ -57,7 +57,7 @@ public:
 
 private:
     /** The base menu width, before padding is added. Includes border width. */
-    static constexpr int MENU_WIDTH{169};
+    static constexpr int MENU_WIDTH{120};
 
     /** The logical width of the border in the background image. */
     static constexpr int BORDER_WIDTH{5};
