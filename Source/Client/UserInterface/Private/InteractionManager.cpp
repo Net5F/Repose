@@ -28,7 +28,6 @@ InteractionManager::InteractionManager(World& inWorld, Network& inNetwork,
 {
 }
 
-// TODO: What's the state of this stuff?
 void InteractionManager::entityHovered(entt::entity entity)
 {
     // If this entity has no interactions, return early.
@@ -48,7 +47,7 @@ void InteractionManager::entityHovered(entt::entity entity)
     else {
         // Update the text to reflect the hovered entity's default interaction.
         EntityInteractionType defaultInteraction{interaction->getDefault()};
-        stringStream << DisplayStrings::get(defaultInteraction)
+        stringStream << DisplayStrings::get(defaultInteraction) << " "
                      << name.value;
 
         std::size_t interactionCount{interaction->getCount()};

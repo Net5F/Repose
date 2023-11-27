@@ -1,5 +1,6 @@
 #pragma once
 
+#include "entt/fwd.hpp"
 #include "AUI/Window.h"
 #include "AUI/Text.h"
 
@@ -54,6 +55,10 @@ private:
     Network& network;
     /** Used to orchestrate item/entity interactions. */
     InteractionManager& interactionManager;
+
+    /** If the mouse is currently hovering over an entity, this is its ID. 
+        Else, this will be entt::null. */
+    entt::entity hoveredEntity;
 
     //-------------------------------------------------------------------------
     // Private child widgets

@@ -3,6 +3,7 @@
 #include "WorldObjectLocator.h"
 #include "Network.h"
 #include "InteractionManager.h"
+#include "entt/entity/entity.hpp"
 #include "Paths.h"
 
 namespace AM
@@ -18,6 +19,7 @@ MainOverlay::MainOverlay(World& inWorld,
 , worldObjectLocator{inWorldObjectLocator}
 , network{inNetwork}
 , interactionManager{inInteractionManager}
+, hoveredEntity{entt::null}
 , interactionText{{20, 20, 700, 100}, "InteractionText"}
 , buildModeHintText({50, 850, 500, 500}, "BuildModeHintText")
 {
@@ -90,11 +92,18 @@ AUI::EventResult MainOverlay::onMouseMove(const SDL_Point& cursorPosition)
     WorldObjectID objectID{
         worldObjectLocator.getObjectUnderPoint(cursorPosition)};
 
-    // If we hit an entity, pass it to the interaction manager.
-    if (entt::entity* entity{std::get_if<entt::entity>(&objectID)}) {
+    // If we hit an entity, pass it to InteractionManager.
+    entt::entity* entity{std::get_if<entt::entity>(&objectID)};
+    if (entity && (*entity != hoveredEntity)) {
+        hoveredEntity = *entity;
         interactionManager.entityHovered(*entity);
 
         return AUI::EventResult{.wasHandled{true}};
+    }
+    // If we didn't hit an entity, tell InteractionManager to unhover.
+    else if (!entity) {
+        interactionManager.unhovered();
+        hoveredEntity = entt::null;
     }
 
     return AUI::EventResult{.wasHandled{false}};
