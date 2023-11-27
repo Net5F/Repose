@@ -53,6 +53,11 @@ public:
     void openRightClickMenu();
 
     /**
+     * @return true if the right-click menu is open, else false.
+     */
+    bool rightClickMenuIsOpen() const;
+
+    /**
      * Sets the camera to use when rendering.
      *
      * Called during the render pass to give us the lerped camera for the 

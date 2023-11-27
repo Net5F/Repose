@@ -7,6 +7,7 @@
 #include "ItemThumbnail.h"
 #include "ItemInteractionRequest.h"
 #include "InventoryDeleteItem.h"
+#include "AUI/ScalingHelpers.h"
 #include "entt/entity/registry.hpp"
 
 namespace AM
@@ -19,8 +20,9 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
 , world{inSimulation.getWorld()}
 , network{inNetwork}
 , interactionManager{inInteractionManager}
+, wasRefreshed{false}
 , backgroundImage({0, 0, logicalExtent.w, logicalExtent.h}, "BackgroundImage")
-, itemContainer({12, 12, (logicalExtent.w - 12), (logicalExtent.h - 12)},
+, itemContainer({12, 12, (logicalExtent.w - 12), (logicalExtent.h - 18)},
                 "ItemContainer")
 {
     // Add our children so they're included in rendering, etc.
@@ -44,31 +46,48 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
         *this);
 }
 
-AUI::EventResult
-    InventoryWindow::onPreviewMouseDown(AUI::MouseButtonType buttonType,
-                                        const SDL_Point& cursorPosition)
+void InventoryWindow::updateLayout()
 {
-    // Give InteractionManager a chance to intercept this click.
-    bool wasHandled{false};
-    Uint8 slotIndex{0};
-    for (std::unique_ptr<AUI::Widget>& item : itemContainer) {
-        if (item->containsPoint(cursorPosition)) {
-            wasHandled = interactionManager.itemPreviewMouseDown(
-                slotIndex, buttonType,
-                static_cast<ItemThumbnail&>(*(item.get())));
+    // Do the normal layout updating.
+    Window::updateLayout();
+
+    // Items in the inventory may have changed. If the mouse is hovering over 
+    // the inventory, update InteractionManager's hover state.
+    // Note: We have to wait until after layout, so the thumbnails are in their 
+    //       actual position.
+    if (wasRefreshed) {
+        wasRefreshed = false;
+
+        // Get the current mouse position and make it window-relative.
+        SDL_Point cursorPosition{};
+        SDL_GetMouseState(&(cursorPosition.x), &(cursorPosition.y));
+        cursorPosition.x -= scaledExtent.x;
+        cursorPosition.y -= scaledExtent.y;
+
+        // If the mouse isn't in the inventory, no items are being hovered and 
+        // none were being hovered before the update. Do nothing.
+        if (!containsPoint(cursorPosition)) {
+            return;
         }
 
-        slotIndex++;
-    }
+        // If we're hovering an item thumbnail, tell InteractionManager.
+        bool hoveringItem{false};
+        for (Uint8 slotIndex = 0; slotIndex < itemContainer.size(); ++slotIndex) {
+            std::unique_ptr<AUI::Widget>& item{itemContainer[slotIndex]};
+            if (item->containsPoint(cursorPosition)) {
+                interactionManager.itemHovered(slotIndex);
+                hoveringItem = true;
+            }
+        }
 
-    // If InteractionManager handled this click (i.e. if it was the second click
-    // of a UseOn), handle it so it doesn't go on to select the thumbnail.
-    return AUI::EventResult{.wasHandled{wasHandled}};
+        // If we aren't hovering an item, tell InteractionManager to unhover 
+        // since we may been hovering an item before the update.
+        if (!hoveringItem) {
+            interactionManager.unhovered();
+        }
+    }
 }
 
-// TODO: Test with lots of items
-//       Get rid of highlight, get rid of backdrop?
-//       Final spacing
 void InventoryWindow::refresh(const Inventory& inventory)
 {
     // If an item was selected, deselect it.
@@ -76,26 +95,28 @@ void InventoryWindow::refresh(const Inventory& inventory)
 
     // Add thumbnails for each item in the player's inventory.
     itemContainer.clear();
-    for (std::size_t i = 0; i < inventory.items.size(); ++i) {
-        // Skip empty slots.
-        if (inventory.items[i].ID == NULL_ITEM_ID) {
+    for (Uint8 slotIndex = 0; slotIndex < inventory.items.size(); ++slotIndex) {
+        // Fill empty slots with a blank image to preserve spacing.
+        if (inventory.items[slotIndex].ID == NULL_ITEM_ID) {
+            itemContainer.push_back(std::make_unique<AUI::Image>(
+                SDL_Rect{0, 0, 50, 50}, "InventoryBlankSpace"));
             continue;
         }
 
         // Construct the new item thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
-            std::make_unique<ItemThumbnail>(SDL_Rect{2, 2, 50, 50},
+            std::make_unique<ItemThumbnail>(SDL_Rect{0, 0, 50, 50},
                                             "InventoryThumbnail")};
         ItemThumbnail& thumbnail{static_cast<ItemThumbnail&>(*thumbnailPtr)};
 
-        // Load the item's images.
-        thumbnail.backdropImage.setSimpleImage(
-            Paths::TEXTURE_DIR + "Highlights/Hovered.png");
+        // Load the thumbnail's images.
         thumbnail.thumbnailImage.setSimpleImage(
             Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Normal_1920.png");
+        thumbnail.selectedImage.setNineSliceImage(
+            Paths::TEXTURE_DIR + "Thumbnail/Selected_NineSlice.png",
+            {4, 4, 4, 4});
 
         // Add our callbacks.
-        Uint8 slotIndex{static_cast<Uint8>(i)};
         thumbnail.setOnHovered([&, slotIndex](ItemThumbnail* thumbnail) {
             interactionManager.itemHovered(slotIndex);
         });
@@ -105,18 +126,25 @@ void InventoryWindow::refresh(const Inventory& inventory)
         thumbnail.setOnMouseDown(
             [&, slotIndex](ItemThumbnail* thumbnail,
                            AUI::MouseButtonType buttonType) {
-            interactionManager.itemMouseDown(slotIndex, buttonType, *thumbnail);
+                return interactionManager.itemMouseDown(slotIndex, buttonType,
+                                                        *thumbnail);
         });
         thumbnail.setOnMouseUp([&, slotIndex](ItemThumbnail* thumbnail,
                                               AUI::MouseButtonType buttonType) {
             interactionManager.itemMouseUp(slotIndex, buttonType, *thumbnail);
         });
         thumbnail.setOnDeselected([&, slotIndex](ItemThumbnail* thumbnail) {
+            // Note: We keep our thumbnails non-focusable by default since 
+            //       we only want them focused when we Use them.
+            //       InteractionManager handles setting isFocusable to true.
+            thumbnail->setIsFocusable(false);
             interactionManager.itemDeselected();
         });
 
         itemContainer.push_back(std::move(thumbnailPtr));
     }
+
+    wasRefreshed = true;
 }
 
 void InventoryWindow::onInventoryUpdated(entt::registry& registry,

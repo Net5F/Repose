@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AUI/MouseButtonType.h"
+#include "AUI/WidgetWeakRef.h"
 #include "entt/fwd.hpp"
 #include <SDL_stdinc.h>
 #include <SDL_rect.h>
@@ -42,10 +43,9 @@ public:
     /** @param slotIndex The inventory slot containing the relevant item.
         @param itemThumbnail The widget to focus. */
     void itemHovered(Uint8 slotIndex);
-    /** @return true if the event was handled, else false. */
-    bool itemPreviewMouseDown(Uint8 slotIndex, AUI::MouseButtonType buttonType,
-                              ItemThumbnail& itemThumbnail);
-    void itemMouseDown(Uint8 slotIndex, AUI::MouseButtonType buttonType,
+    /** @return true if the given thumbnail should request mouse capture, else 
+                false. */
+    bool itemMouseDown(Uint8 slotIndex, AUI::MouseButtonType buttonType,
                        ItemThumbnail& itemThumbnail);
     void itemMouseUp(Uint8 slotIndex, AUI::MouseButtonType buttonType,
                      ItemThumbnail& itemThumbnail);
@@ -64,8 +64,6 @@ public:
         std::function<void(std::string_view)> inOnInteractionTextUpdated);
 
 private:
-    // Both of these are called by itemMouseUp(), since we treat MouseUp as 
-    // actually clicking the item (see comment in itemMouseDown()).
     void itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail);
     void itemRightClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail);
 
@@ -80,7 +78,7 @@ private:
      */
     void beginUseItemOnInteraction(Uint8 slotIndex,
                                    std::string_view displayName,
-                                   const ItemThumbnail& itemThumbnail);
+                                   ItemThumbnail& itemThumbnail);
 
     /** Used to access the registry for interactions and inventory. */
     World& world;

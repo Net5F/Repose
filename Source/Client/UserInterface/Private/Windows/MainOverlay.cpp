@@ -18,7 +18,7 @@ MainOverlay::MainOverlay(World& inWorld,
 , worldObjectLocator{inWorldObjectLocator}
 , network{inNetwork}
 , interactionManager{inInteractionManager}
-, interactionText{{20, 20, 500, 100}, "InteractionText"}
+, interactionText{{20, 20, 700, 100}, "InteractionText"}
 , buildModeHintText({50, 850, 500, 500}, "BuildModeHintText")
 {
     // Add our children so they're included in rendering, etc.

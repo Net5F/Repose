@@ -7,19 +7,24 @@ namespace AM
 {
 namespace Client
 {
-// TODO: Size this to fit the max number of interactions
-//       Fix highlight sizing to not overlap border
+
+/** The default height. This should never be seen since we adjust to fit the 
+    content, but we need a default for textures. */
+static constexpr int DEFAULT_HEIGHT{150};
+
 RightClickMenu::RightClickMenu()
-: AUI::Window({0, 0, 169, 187}, "RightClickMenu")
-, backgroundImage({0, 0, logicalExtent.w, logicalExtent.h})
-, actionContainer({0, 0, logicalExtent.w, logicalExtent.h}, "ActionContainer")
+: AUI::Window(
+    {0, 0, MENU_WIDTH + (PADDING * 2), DEFAULT_HEIGHT + (PADDING * 2)},
+    "RightClickMenu")
+, backgroundImage({PADDING, PADDING, MENU_WIDTH, DEFAULT_HEIGHT})
+, actionContainer({(PADDING + BORDER_WIDTH), (PADDING + BORDER_WIDTH),
+                   (MENU_WIDTH - (BORDER_WIDTH * 2)),
+                   (DEFAULT_HEIGHT - (BORDER_WIDTH * 2))},
+                  "ActionContainer")
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
     children.push_back(actionContainer);
-
-    // Flag ourselves as focusable, so we can close when focus is lost.
-    isFocusable = true;
 
     /* Background image. */
     backgroundImage.setNineSliceImage(
@@ -32,18 +37,40 @@ RightClickMenu::RightClickMenu()
 void RightClickMenu::addMenuAction(std::string_view displayText,
                                    std::function<void(void)> onSelected)
 {
+    // Add the new action.
     std::unique_ptr<AUI::Widget> newMenuAction{std::make_unique<AUI::Button>(
-        SDL_Rect{1, 1, (logicalExtent.w - 2), 32}, "RightClickMenuButton")};
+        SDL_Rect{0, 0, actionContainer.getLogicalExtent().w, BUTTON_HEIGHT},
+        "RightClickMenuButton")};
     AUI::Button& button{static_cast<AUI::Button&>(*newMenuAction)};
     styleButton(button, displayText);
     button.setOnPressed(std::move(onSelected));
 
     actionContainer.push_back(std::move(newMenuAction));
+
+    // Grow this menu's height to fit the new action.
+    int contentHeight{BUTTON_HEIGHT
+                      * static_cast<int>(actionContainer.size())};
+    SDL_Rect newMenuExtent{logicalExtent};
+    newMenuExtent.h = (PADDING * 2) + (BORDER_WIDTH * 2) + contentHeight;
+    setLogicalExtent(newMenuExtent);
+
+    SDL_Rect newBackgroundExtent{backgroundImage.getLogicalExtent()};
+    newBackgroundExtent.h = contentHeight + (BORDER_WIDTH * 2);
+    backgroundImage.setLogicalExtent(newBackgroundExtent);
+
+    SDL_Rect newContainerExtent{actionContainer.getLogicalExtent()};
+    newContainerExtent.h = contentHeight;
+    actionContainer.setLogicalExtent(newContainerExtent);
 }
 
-void RightClickMenu::onFocusLost(AUI::FocusLostType focusLostType)
+void RightClickMenu::clear()
 {
-    // When we lose focus, close the menu.
+    actionContainer.clear();
+}
+
+void RightClickMenu::onMouseLeave()
+{
+    // When the mouse leaves our padded bounds, close this menu.
     setIsVisible(false);
 }
 

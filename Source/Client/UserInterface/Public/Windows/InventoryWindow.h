@@ -32,15 +32,17 @@ public:
                     InteractionManager& inInteractionManager);
 
     //-------------------------------------------------------------------------
-    // Widget class overrides
+    // Base class overrides
     //-------------------------------------------------------------------------
-    AUI::EventResult
-        onPreviewMouseDown(AUI::MouseButtonType buttonType,
-                           const SDL_Point& cursorPosition) override;
+    /**
+     * Calls Window::updateLayout() and, if itemContainer has been refreshed, 
+     * notifies InteractionManager.
+     */
+    void updateLayout() override;
 
 private:
     /**
-     * Refreshes this widget, making it match the given inventory.
+     * Refreshes itemContainer, making it match the given inventory.
      */
     void refresh(const Inventory& inventory);
 
@@ -53,6 +55,10 @@ private:
     Network& network;
     /** Used to orchestrate item/entity interactions. */
     InteractionManager& interactionManager;
+
+    /** If true, itemContainer has been refreshed and InteractionManager needs 
+        to be notified. */
+    bool wasRefreshed;
 
     //-------------------------------------------------------------------------
     // Private child widgets

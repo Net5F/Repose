@@ -21,8 +21,21 @@ namespace Client
 class RightClickMenu : public AUI::Window
 {
 public:
+    /** The padding to add on each side of this menu. Allows the mouse to move 
+        slightly outside the menu without accidentally closing it. */
+    static constexpr int PADDING{20};
+
     RightClickMenu();
 
+    //-------------------------------------------------------------------------
+    // Public child widgets
+    //-------------------------------------------------------------------------
+    /** The menu's background */
+    AUI::Image backgroundImage;
+
+    //-------------------------------------------------------------------------
+    // Limited public interface of private widgets
+    //-------------------------------------------------------------------------
     /**
      * Adds an action to this menu.
      * 
@@ -32,25 +45,36 @@ public:
     void addMenuAction(std::string_view displayText,
                        std::function<void(void)> onSelected);
 
-    //-------------------------------------------------------------------------
-    // Public child widgets
-    //-------------------------------------------------------------------------
-    /** The menu's background */
-    AUI::Image backgroundImage;
-
-    /** The menu's selectable actions. */
-    AUI::VerticalListContainer actionContainer;
+    /**
+     * Clears all actions from this menu.
+     */
+    void clear();
 
     //-------------------------------------------------------------------------
     // Base class overrides
     //-------------------------------------------------------------------------
-    void onFocusLost(AUI::FocusLostType focusLostType) override;
+    void onMouseLeave() override;
 
 private:
+    /** The base menu width, before padding is added. Includes border width. */
+    static constexpr int MENU_WIDTH{169};
+
+    /** The logical width of the border in the background image. */
+    static constexpr int BORDER_WIDTH{5};
+
+    /** The logical height of each action button in the menu. */
+    static constexpr int BUTTON_HEIGHT{32};
+
     /**
      * Styles the given button and sets its text to the given text.
      */
     void styleButton(AUI::Button& button, std::string_view text);
+
+    //-------------------------------------------------------------------------
+    // Private child widgets
+    //-------------------------------------------------------------------------
+    /** The menu's selectable actions. */
+    AUI::VerticalListContainer actionContainer;
 };
 
 } // End namespace Client

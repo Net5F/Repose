@@ -8,6 +8,7 @@
 #include "Paths.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
+#include "SdlHelpers.h"
 #include "AUI/Core.h"
 #include "AUI/ScalingHelpers.h"
 #include "Log.h"
@@ -58,7 +59,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 
 void MainScreen::clearRightClickMenu()
 {
-    rightClickMenu.actionContainer.clear();
+    rightClickMenu.clear();
 }
 
 void MainScreen::addRightClickMenuAction(std::string_view displayText,
@@ -70,22 +71,26 @@ void MainScreen::addRightClickMenuAction(std::string_view displayText,
 void MainScreen::openRightClickMenu()
 {
     // If the menu isn't already open.
-    if (!rightClickMenu.getIsVisible()) {
+    if (!(rightClickMenu.getIsVisible())) {
         // Get the current mouse position and convert to logical.
         SDL_Point cursorPosition{};
         SDL_GetMouseState(&(cursorPosition.x), &(cursorPosition.y));
         cursorPosition = AUI::ScalingHelpers::actualToLogical(cursorPosition);
 
-        // Move the menu to where the cursor is.
+        // Center the menu where the cursor is.
         SDL_Rect menuExtent{rightClickMenu.getLogicalExtent()};
-        menuExtent.x = cursorPosition.x;
-        menuExtent.y = cursorPosition.y;
+        menuExtent.x = (cursorPosition.x - (menuExtent.w / 2));
+        menuExtent.y = (cursorPosition.y - RightClickMenu::PADDING);
         rightClickMenu.setLogicalExtent(menuExtent);
 
-        // Open the menu and focus it, so it can close itself if necessary.
+        // Open the menu.
         rightClickMenu.setIsVisible(true);
-        setFocusAfterNextLayout(&rightClickMenu);
     }
+}
+
+bool MainScreen::rightClickMenuIsOpen() const
+{
+    return rightClickMenu.getIsVisible();
 }
 
 void MainScreen::setCamera(const Camera& inCamera)

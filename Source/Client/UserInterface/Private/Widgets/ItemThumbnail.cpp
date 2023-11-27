@@ -10,25 +10,17 @@ namespace Client
 ItemThumbnail::ItemThumbnail(const SDL_Rect& inLogicalExtent,
                      const std::string& inDebugName)
 : Widget(inLogicalExtent, inDebugName)
-, backdropImage({0, 0, logicalExtent.w, logicalExtent.h})
 , thumbnailImage({0, 0, logicalExtent.w, logicalExtent.h})
-, hoveredImage({0, 0, logicalExtent.w, logicalExtent.h})
 , selectedImage({0, 0, logicalExtent.w, logicalExtent.h})
 , isHoverable{true}
 , isHovered{false}
 , isSelected{false}
 {
     // Add our children so they're included in rendering, etc.
-    children.push_back(backdropImage);
     children.push_back(thumbnailImage);
-    children.push_back(hoveredImage);
     children.push_back(selectedImage);
 
-    // Flag ourselves as focusable, so we can auto-select.
-    isFocusable = true;
-
     // Make the images we aren't using invisible.
-    hoveredImage.setIsVisible(false);
     selectedImage.setIsVisible(false);
 }
 
@@ -60,7 +52,7 @@ void ItemThumbnail::setOnUnhovered(
 }
 
 void ItemThumbnail::setOnMouseDown(
-    std::function<void(ItemThumbnail*, AUI::MouseButtonType)> inOnMouseDown)
+    std::function<bool(ItemThumbnail*, AUI::MouseButtonType)> inOnMouseDown)
 {
     onMouseDownFunc = std::move(inOnMouseDown);
 }
@@ -82,12 +74,15 @@ AUI::EventResult ItemThumbnail::onMouseDown(AUI::MouseButtonType buttonType,
     // TODO: Drag/drop
 
     // If the user set a callback for this event, call it.
+    bool setMouseCapture{false};
     if (onMouseDownFunc) {
-        onMouseDownFunc(this, buttonType);
+        setMouseCapture = onMouseDownFunc(this, buttonType);
     }
 
-    // Set mouse capture so we get the associated MouseUp.
-    return AUI::EventResult{.wasHandled{true}, .setMouseCapture{this}};
+    // If the handler says to request mouse capture, do so. This will let 
+    // us receive the associated MouseUp.
+    Widget* mouseCaptor{setMouseCapture ? this : nullptr};
+    return AUI::EventResult{.wasHandled{true}, .setMouseCapture{mouseCaptor}};
 }
 
 AUI::EventResult ItemThumbnail::onMouseUp(AUI::MouseButtonType buttonType,
@@ -170,7 +165,6 @@ void ItemThumbnail::onFocusLost(AUI::FocusLostType focusLostType)
 void ItemThumbnail::setIsHovered(bool inIsHovered)
 {
     isHovered = inIsHovered;
-    hoveredImage.setIsVisible(isHovered);
 }
 
 void ItemThumbnail::setIsSelected(bool inIsSelected)

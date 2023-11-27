@@ -132,32 +132,37 @@ void InteractionManager::itemHovered(Uint8 slotIndex)
     onInteractionTextUpdated(stringStream.str());
 }
 
-bool InteractionManager::itemPreviewMouseDown(Uint8 slotIndex,
-                                              AUI::MouseButtonType buttonType,
-                                              ItemThumbnail& itemThumbnail)
-{
-    // We only care about intercepting the 2nd left click of a UseOn.
-    if ((buttonType != AUI::MouseButtonType::Left) || !usingItem
-        || (slotIndex == sourceSlotIndex)) {
-        return false;
-    }
-
-    // This is a left click and we're using an item. The given item is the 
-    // target. Send the combine request and deselect the first item.
-    network.serializeAndSend(CombineItemsRequest{sourceSlotIndex, slotIndex});
-
-    // Note: Dropping focus will cause the first item to deselect itself.
-    mainScreen.dropFocus();
-    usingItem = false;
-
-    return true;
-}
-
-void InteractionManager::itemMouseDown(Uint8 slotIndex,
+bool InteractionManager::itemMouseDown(Uint8 slotIndex,
                                        AUI::MouseButtonType buttonType,
                                        ItemThumbnail& itemThumbnail)
 {
-    // TODO: Drag and drop?
+    // There's no drag+drop on right click, so we can handle it immediately.
+    if (buttonType == AUI::MouseButtonType::Right) {
+        itemRightClicked(slotIndex, itemThumbnail);
+
+        // Clear out the interaction text, since thumbnail interactions are 
+        // blocked while the right-click menu is open.
+        onInteractionTextUpdated("");
+
+        return false;
+    }
+    // We need to handle the 2nd click of UseOn immediately, so a drag+drop 
+    // doesn't get started.
+    else if ((buttonType == AUI::MouseButtonType::Left) && usingItem
+        && (slotIndex != sourceSlotIndex)) {
+        // Send the combine request and reset our state.
+        network.serializeAndSend(
+            CombineItemsRequest{sourceSlotIndex, slotIndex});
+        usingItem = false;
+
+        return false;
+    }
+    else if (buttonType == AUI::MouseButtonType::Left) {
+        // TODO: Drag and drop?
+    }
+
+    // Request mouse capture, so we get the associated MouseUp.
+    return true;
 }
 
 void InteractionManager::itemMouseUp(Uint8 slotIndex,
@@ -166,11 +171,9 @@ void InteractionManager::itemMouseUp(Uint8 slotIndex,
 {
     // Note: For items, since we have drag+drop, we count MouseUp as the actual 
     //       click.
+
     if (buttonType == AUI::MouseButtonType::Left) {
         itemLeftClicked(slotIndex, itemThumbnail);
-    }
-    else if (buttonType == AUI::MouseButtonType::Right) {
-        itemRightClicked(slotIndex, itemThumbnail);
     }
 }
 
@@ -185,7 +188,7 @@ void InteractionManager::itemDeselected()
 
 void InteractionManager::unhovered()
 {
-    // If we're using an item, go back to the use text without a target.
+    // If we're using an item, go back to the Use text without a target.
     if (usingItem) {
         std::ostringstream stringStream{};
         stringStream << "Use " << sourceName << " on";
@@ -212,7 +215,7 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThu
         return;
     }
 
-    // Note: The second click of UseOn is handled in MouseDown.
+    // Note: The second click of UseOn is handled in itemMouseDown().
 
     // If this item's default interaction is UseOn, start using it.
     ItemInteractionType defaultInteraction{
@@ -291,15 +294,21 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
 }
 
 void InteractionManager::beginUseItemOnInteraction(Uint8 slotIndex,
-    std::string_view displayName, const ItemThumbnail& itemThumbnail)
+    std::string_view displayName, ItemThumbnail& itemThumbnail)
 {
     sourceSlotIndex = slotIndex;
     sourceName = displayName;
     usingItem = true;
+
+    // Note: We leave thumbnails as non-focusable most of the time, since we 
+    //       only want them to be focused when we Use them.
+    //       InventoryWindow handles setting isFocusable back to false when 
+    //       they lose focus.
+    itemThumbnail.setIsFocusable(true);
     mainScreen.setFocus(&itemThumbnail);
 
     std::ostringstream stringStream{};
-    stringStream << "Use " << sourceName << " on";
+    stringStream << "Use " << sourceName << " on " << sourceName;
     onInteractionTextUpdated(stringStream.str());
 }
 
