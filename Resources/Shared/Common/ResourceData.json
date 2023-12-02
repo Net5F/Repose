@@ -74,6 +74,57 @@
             "stringID": "template"
         }
     ],
+    "iconSheets": [
+        {
+            "icons": [
+                {
+                    "displayName": "Test_0",
+                    "numericID": 0,
+                    "stringID": "test_0",
+                    "textureExtent": {
+                        "h": 64,
+                        "w": 64,
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "displayName": "Test_1",
+                    "numericID": 1,
+                    "stringID": "test_1",
+                    "textureExtent": {
+                        "h": 64,
+                        "w": 64,
+                        "x": 64,
+                        "y": 0
+                    }
+                },
+                {
+                    "displayName": "Test_2",
+                    "numericID": 2,
+                    "stringID": "test_2",
+                    "textureExtent": {
+                        "h": 64,
+                        "w": 64,
+                        "x": 0,
+                        "y": 64
+                    }
+                },
+                {
+                    "displayName": "Test_3",
+                    "numericID": 3,
+                    "stringID": "test_3",
+                    "textureExtent": {
+                        "h": 64,
+                        "w": 64,
+                        "x": 64,
+                        "y": 64
+                    }
+                }
+            ],
+            "relPath": "Icons/Items/Test.png"
+        }
+    ],
     "objects": [
         {
             "displayName": "Sunflower",

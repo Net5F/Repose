@@ -6,7 +6,7 @@ message(STATUS "Configuring Server")
 # Configure Step
 ###############################################################################
 add_executable(Server
-    "${PROJECT_SOURCE_DIR}/Resources/Shared/Icons/appicon.rc"
+    "${PROJECT_SOURCE_DIR}/Resources/Shared/AppIcons/appicon.rc"
 )
 
 target_link_libraries(Server
@@ -30,8 +30,8 @@ endif()
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Server/Common/UserConfig.json
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
-# Copy SpriteData.json to the build directory.
-file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
+# Copy ResourceData.json to the build directory.
+file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/ResourceData.json
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
 # Copy TileMap.bin to the build directory.
@@ -60,7 +60,7 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/
         DESTINATION ${CMAKE_PROJECT_NAME}/Server)
 install(FILES ${PROJECT_SOURCE_DIR}/Resources/Server/Common/UserConfig.json
         DESTINATION ${CMAKE_PROJECT_NAME}/Server)
-install(FILES ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
+install(FILES ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/ResourceData.json
         DESTINATION ${CMAKE_PROJECT_NAME}/Server)
 
 # Add platform-specific files to the install step.

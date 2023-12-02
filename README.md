@@ -18,7 +18,7 @@ To join the demo world and play with other people, you can [download the latest 
 #### Visual Studio (MSVC)
 1. Open CMakeLists.txt in Visual Studio (`Open` -> `CMake`).
 1. (Optional) Open CMakeSettings.json (in this repo) and enable flags for extra build targets:
-   1. `AM_BUILD_SPRITE_EDITOR` to build the sprite editor.
+   1. `AM_BUILD_RESOURCE_IMPORTER` to build the Resource Importer.
    1. `BUILD_TOOLS` to build our extra tools, such as the Map Generator.
 1. `Project` -> `Generate CMake cache` (or just let it run if you have auto-config on).
 1. `Build` -> `Build All`
@@ -37,7 +37,7 @@ Note: This is only tested on Ubuntu 20.04. If you have experience in multi-distr
 1. (From the base of the repo) `mkdir -p Build/Linux/Release`
 1. `cd Build/Linux/Release`
 1. `cmake -DCMAKE_BUILD_TYPE=Release -G Ninja ../../../`
-   1. (Optional) Add `-DAM_BUILD_SPRITE_EDITOR=ON` to build the sprite editor.
+   1. (Optional) Add `-DAM_BUILD_RESOURCE_IMPORTER=ON` to build the Resource Importer.
    1. (Optional) Add `-DBUILD_TOOLS` to build our extra tools, such as the Map Generator.
 1. `ninja all`
 
@@ -49,7 +49,7 @@ Note: AmalgamEngine requires GCC to build on macOS. Clang / Apple Clang does not
 1. (From the base of the repo) `mkdir -p Build/macOS/Release`
 1. `cd Build/macOS/Release`
 1. `CC=gcc-NN CXX=g++-NN cmake -DCMAKE_BUILD_TYPE=Release -G Ninja ../../../`. Replace the `NN` in `gcc-NN` and `g++-NN` with the version of GCC that you installed with Homebrew. This is important, as using `gcc` without a version number will alias to `clang`.
-   1. ~~(Optional) Add `-DAM_BUILD_SPRITE_EDITOR=ON` to build the sprite editor.~~ Sprite editor doesn't currently build on macOS due to GCC not being able to build with Apple SDK headers which use certain Objective C extensions.
+   1. ~~(Optional) Add `-DAM_BUILD_RESOURCE_IMPORTER=ON` to build the Resource Importer.~~ Resource Importer doesn't currently build on macOS due to GCC not being able to build with Apple SDK headers which use certain Objective C extensions.
    1. (Optional) Add `-DBUILD_TOOLS` to build our extra tools, such as the Map Generator.
 1. `ninja all`
 

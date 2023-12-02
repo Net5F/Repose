@@ -8,11 +8,11 @@ message(STATUS "Configuring Client")
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     add_executable(Client
         WIN32
-        "${PROJECT_SOURCE_DIR}/Resources/Shared/Icons/appicon.rc"
+        "${PROJECT_SOURCE_DIR}/Resources/Shared/AppIcons/appicon.rc"
     )
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     # Add the app icon to the app bundle
-    set(CLIENT_ICON "${PROJECT_SOURCE_DIR}/Resources/Shared/Icons/icon.icns")
+    set(CLIENT_ICON "${PROJECT_SOURCE_DIR}/Resources/Shared/AppIcons/icon.icns")
     set_source_files_properties(${CLIENT_ICON}
                                 PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
@@ -98,8 +98,8 @@ file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/UserConfig.json
      DESTINATION ${BUILD_RESOURCES_FOLDER}/)
 
-# Copy SpriteData.json to the build directory.
-file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
+# Copy ResourceData.json to the build directory.
+file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/ResourceData.json
      DESTINATION ${BUILD_RESOURCES_FOLDER}/)
 
 # On Windows, copy the SDL2 DLLs into the build folder so we can run our executable.
@@ -141,7 +141,7 @@ else()
             DESTINATION ${CMAKE_PROJECT_NAME}/Client)
     install(FILES ${PROJECT_SOURCE_DIR}/Resources/Client/Common/UserConfig.json
             DESTINATION ${CMAKE_PROJECT_NAME}/Client)
-    install(FILES ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/SpriteData.json
+    install(FILES ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/ResourceData.json
             DESTINATION ${CMAKE_PROJECT_NAME}/Client)
 endif()
 

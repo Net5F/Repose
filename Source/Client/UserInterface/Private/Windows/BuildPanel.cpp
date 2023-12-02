@@ -209,7 +209,7 @@ const Sprite* BuildPanel::getFirstSprite(const T& spriteSet)
         }
     }
 
-    // Note: The sprite editor assures that every floor covering and 
+    // Note: The resource importer assures that every floor covering and 
     //       object has at least 1 sprite, so this shouldn't happen.
     LOG_FATAL("Failed to find sprite when expected.");
     return nullptr;
