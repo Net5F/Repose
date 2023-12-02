@@ -24,7 +24,8 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 , playerIsInBuildArea{false}
 , mainOverlay{world, deps.worldObjectLocator, deps.network, interactionManager}
 , chatWindow{deps.network, deps.sdlRenderer}
-, inventoryWindow{deps.simulation, deps.network, interactionManager}
+, inventoryWindow{deps.simulation, deps.network, deps.iconData,
+                  interactionManager}
 , buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
                deps.spriteData}
 , buildPanel{world, deps.network, deps.spriteData, buildOverlay}

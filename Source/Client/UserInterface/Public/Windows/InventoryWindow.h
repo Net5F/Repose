@@ -16,6 +16,7 @@ namespace Client
 class Simulation;
 class World;
 class Network;
+class IconData;
 class InteractionManager;
 class ItemThumbnail;
 
@@ -29,6 +30,7 @@ public:
     // Public interface
     //-------------------------------------------------------------------------
     InventoryWindow(Simulation& inSimulation, Network& inNetwork,
+                    IconData& inIconData,
                     InteractionManager& inInteractionManager);
 
     //-------------------------------------------------------------------------
@@ -53,6 +55,8 @@ private:
     World& world;
     /** Used to send interaction requests. */
     Network& network;
+    /** Used to get item icons. */
+    IconData& iconData;
     /** Used to orchestrate item/entity interactions. */
     InteractionManager& interactionManager;
 

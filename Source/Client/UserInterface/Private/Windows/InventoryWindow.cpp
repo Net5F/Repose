@@ -1,6 +1,7 @@
 #include "InventoryWindow.h"
 #include "Simulation.h"
 #include "Network.h"
+#include "IconData.h"
 #include "InteractionManager.h"
 #include "Paths.h"
 #include "Inventory.h"
@@ -15,10 +16,12 @@ namespace AM
 namespace Client
 {
 InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
+                                 IconData& inIconData,
                                  InteractionManager& inInteractionManager)
 : AUI::Window({1362, 340, 248, 248}, "InventoryWindow")
 , world{inSimulation.getWorld()}
 , network{inNetwork}
+, iconData{inIconData}
 , interactionManager{inInteractionManager}
 , wasRefreshed{false}
 , backgroundImage({0, 0, logicalExtent.w, logicalExtent.h}, "BackgroundImage")
@@ -97,7 +100,8 @@ void InventoryWindow::refresh(const Inventory& inventory)
     itemContainer.clear();
     for (Uint8 slotIndex = 0; slotIndex < inventory.items.size(); ++slotIndex) {
         // Fill empty slots with a blank, hidden image to preserve spacing.
-        if (inventory.items[slotIndex].ID == NULL_ITEM_ID) {
+        ItemID itemID{inventory.items[slotIndex].ID};
+        if (itemID == NULL_ITEM_ID) {
             itemContainer.push_back(std::make_unique<AUI::Image>(
                 SDL_Rect{0, 0, 50, 50}, "InventoryBlankSpace"));
             itemContainer.back()->setIsVisible(false);
@@ -110,9 +114,22 @@ void InventoryWindow::refresh(const Inventory& inventory)
                                             "InventoryThumbnail")};
         ItemThumbnail& thumbnail{static_cast<ItemThumbnail&>(*thumbnailPtr)};
 
+        // Load the item's icon.
+        if (const Item* item{world.itemData.getItem(itemID)}) {
+            const IconRenderData& renderData{
+                iconData.getRenderData(item->iconID)};
+
+            thumbnail.thumbnailImage.setSimpleImage(renderData.iconSheetRelPath,
+                                                    renderData.textureExtent);
+        }
+        else {
+            // Default icon
+            thumbnail.thumbnailImage.setSimpleImage(
+                Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Normal_1920.png");
+        }
+
         // Load the thumbnail's images.
-        thumbnail.thumbnailImage.setSimpleImage(
-            Paths::TEXTURE_DIR + "BuildPanel/RefreshIcon_Normal_1920.png");
+        // Load the thumbnail's selected image.
         thumbnail.selectedImage.setNineSliceImage(
             Paths::TEXTURE_DIR + "Thumbnail/Selected_NineSlice.png",
             {4, 4, 4, 4});
