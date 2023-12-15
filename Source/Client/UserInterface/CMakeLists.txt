@@ -13,6 +13,7 @@ target_sources(Client
         Private/BuildTools/WallTool.cpp
         Private/Widgets/BuildModeThumbnail.cpp
         Private/Widgets/EntityPanelContent.cpp
+        Private/Widgets/ItemPanelContent.cpp
         Private/Widgets/ItemThumbnail.cpp
         Private/Widgets/MainButton.cpp
         Private/Widgets/TitleButton.cpp
@@ -25,6 +26,7 @@ target_sources(Client
         Private/Windows/RightClickMenu.cpp
         Private/Windows/TitleWindow.cpp
     PUBLIC
+        Public/BuildModeType.h
         Public/DisplayStrings.h
         Public/InteractionManager.h
         Public/MainScreen.h
@@ -39,6 +41,7 @@ target_sources(Client
         Public/BuildTools/WallTool.h
         Public/Widgets/BuildModeThumbnail.h
         Public/Widgets/EntityPanelContent.h
+        Public/Widgets/ItemPanelContent.h
         Public/Widgets/ItemThumbnail.h
         Public/Widgets/MainButton.h
         Public/Widgets/TitleButton.h

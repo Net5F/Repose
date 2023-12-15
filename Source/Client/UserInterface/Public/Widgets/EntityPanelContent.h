@@ -2,7 +2,7 @@
 
 #include "MainButton.h"
 #include "EntityTemplates.h"
-#include "InitScriptResponse.h"
+#include "EntityInitScriptResponse.h"
 #include "AUI/Widget.h"
 #include "AUI/Text.h"
 #include "AUI/TextInput.h"
@@ -138,7 +138,7 @@ private:
 
     EventQueue<EntityTemplates> entityTemplatesQueue;
 
-    EventQueue<InitScriptResponse> initScriptQueue;
+    EventQueue<EntityInitScriptResponse> entityInitScriptQueue;
 
     //-------------------------------------------------------------------------
     // Private child widgets
@@ -154,7 +154,7 @@ private:
 
     MainButton changeSpriteButton;
 
-    MainButton changeScriptButton;
+    MainButton editScriptButton;
 
     MainButton saveTemplateButton;
 

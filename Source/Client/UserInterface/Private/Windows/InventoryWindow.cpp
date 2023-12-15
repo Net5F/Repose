@@ -42,10 +42,10 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
     itemContainer.setCellHeight(58);
 
     // We need to update this widget when the player's inventory changes, or 
-    // when an item defintion changes.
+    // when an item definition changes.
     world.registry.on_update<Inventory>()
         .connect<&InventoryWindow::onInventoryUpdated>(*this);
-    inSimulation.getItemUpdatedSink().connect<&InventoryWindow::onItemUpdated>(
+    inSimulation.getItemUpdateSink().connect<&InventoryWindow::onItemUpdate>(
         *this);
 }
 
@@ -176,11 +176,17 @@ void InventoryWindow::onInventoryUpdated(entt::registry& registry,
     refresh(registry.get<Inventory>(entity));
 }
 
-void InventoryWindow::onItemUpdated(const Item& item)
+void InventoryWindow::onItemUpdate(const Item& item)
 {
-    // Item updates are only sent to players that own the item, so we already 
-    // know it's in the inventory and we need to refresh.
-    refresh(world.registry.get<Inventory>(world.playerEntity));
+    // If this update is for an item in the inventory, we need to refresh.
+    Inventory& inventory{world.registry.get<Inventory>(world.playerEntity)};
+    auto it{std::find_if(inventory.items.begin(), inventory.items.end(),
+                         [&](const Inventory::ItemSlot& itemSlot) {
+                             return (itemSlot.ID == item.numericID);
+                         })};
+    if (it != inventory.items.end()) {
+        refresh(inventory);
+    }
 }
 
 } // End namespace Client

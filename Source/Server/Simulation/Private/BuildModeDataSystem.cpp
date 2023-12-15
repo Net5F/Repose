@@ -50,8 +50,8 @@ void BuildModeDataSystem::processMessages()
                     world.registry.try_get<AnimationState>(entity)}) {
                 templateData.animationState = *animationState;
             }
-            if (InitScript* initScript{
-                    world.registry.try_get<InitScript>(entity)}) {
+            if (EntityInitScript* initScript{
+                    world.registry.try_get<EntityInitScript>(entity)}) {
                 templateData.initScript = *initScript;
             }
 

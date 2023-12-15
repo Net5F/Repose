@@ -49,7 +49,7 @@ private:
     void refresh(const Inventory& inventory);
 
     void onInventoryUpdated(entt::registry& registry, entt::entity entity);
-    void onItemUpdated(const Item& item);
+    void onItemUpdate(const Item& item);
 
     /** Used to interact with the player's inventory. */
     World& world;

@@ -4,7 +4,7 @@
 #include "TileExtent.h"
 #include "TileLayers.h"
 #include "SpriteSets.h"
-#include "BuildTool.h"
+#include "BuildModeType.h"
 #include "PhantomSpriteInfo.h"
 #include "SpriteColorModInfo.h"
 #include "AUI/Window.h"
@@ -22,6 +22,7 @@ class World;
 class WorldObjectLocator;
 class Network;
 class SpriteData;
+class BuildTool;
 
 /**
  * The build mode overlay on the main screen. Allows the user to place tiles
@@ -43,7 +44,7 @@ public:
                  const WorldObjectLocator& inWorldObjectLocator,
                  Network& inNetwork, SpriteData& inSpriteData);
 
-    virtual ~BuildOverlay() = default;
+    virtual ~BuildOverlay();
 
     /**
      * Used by the BuildPanel to tell us when a sprite set is selected.
@@ -51,12 +52,12 @@ public:
     void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet);
 
     /**
-     * Used by the BuildPanel to tell us which build tool is currently selected.
+     * Used by the BuildPanel to tell us which build mode is currently active.
      *
      * User interactions will be passed to the current tool, which will notify 
      * the sim if the tile map needs to change.
      */
-    void setBuildTool(BuildTool::Type toolType);
+    void setBuildMode(BuildMode::Type buildModeType);
 
     /**
      * Returns the current build tool.

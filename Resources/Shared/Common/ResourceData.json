@@ -79,7 +79,7 @@
             "icons": [
                 {
                     "displayName": "Test_0",
-                    "numericID": 0,
+                    "numericID": 1,
                     "stringID": "test_0",
                     "textureExtent": {
                         "h": 64,
@@ -90,7 +90,7 @@
                 },
                 {
                     "displayName": "Test_1",
-                    "numericID": 1,
+                    "numericID": 2,
                     "stringID": "test_1",
                     "textureExtent": {
                         "h": 64,
@@ -101,7 +101,7 @@
                 },
                 {
                     "displayName": "Test_2",
-                    "numericID": 2,
+                    "numericID": 3,
                     "stringID": "test_2",
                     "textureExtent": {
                         "h": 64,
@@ -112,7 +112,7 @@
                 },
                 {
                     "displayName": "Test_3",
-                    "numericID": 3,
+                    "numericID": 4,
                     "stringID": "test_3",
                     "textureExtent": {
                         "h": 64,

@@ -10,23 +10,30 @@ namespace AM
 namespace Server
 {
 
-ProjectLuaBindings::ProjectLuaBindings(sol::state& inLua, World& inWorld)
-: lua{inLua}
+ProjectLuaBindings::ProjectLuaBindings(sol::state& inEntityInitLua,
+                                       sol::state& inItemInitLua,
+                                       World& inWorld)
+: entityInitLua{inEntityInitLua}
+, itemInitLua{inItemInitLua}
 , world{inWorld}
 {
 }
 
 void ProjectLuaBindings::addBindings()
 {
-    lua.set_function("addRandomWalkerAIBehavior",
-                     &ProjectLuaBindings::addRandomWalkerAIBehavior, this);
+    // Entity init
+    entityInitLua.set_function("addRandomWalkerAIBehavior",
+                               &ProjectLuaBindings::addRandomWalkerAIBehavior,
+                               this);
+
+    // Item init
 }
 
 void ProjectLuaBindings::addRandomWalkerAIBehavior(
     double timeToWalk, double timeToWait, double timeTillDirectionChange)
 {
     // Add any components that this behavior requires.
-    entt::entity entity{lua["selfEntityID"]};
+    entt::entity entity{entityInitLua["selfEntityID"]};
     if (!(world.hasMovementComponents(entity))) {
         world.addMovementComponents(entity);
     }

@@ -1,8 +1,10 @@
 #include "BuildPanel.h"
 #include "MainScreen.h"
+#include "Simulation.h"
 #include "World.h"
 #include "Network.h"
 #include "SpriteData.h"
+#include "IconData.h"
 #include "BuildOverlay.h"
 #include "BuildModeThumbnail.h"
 #include "EntityTool.h"
@@ -14,7 +16,8 @@ namespace AM
 {
 namespace Client
 {
-BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteData,
+BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
+                       SpriteData& inSpriteData, IconData& inIconData,
                        BuildOverlay& inBuildOverlay)
 : AUI::Window{{0, 761, 1920, 319}, "BuildPanel"}
 , network{inNetwork}
@@ -22,22 +25,32 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
 , buildOverlay{inBuildOverlay}
 , selectedThumbnail{nullptr}
 , backgroundImage{{0, 0, 1920, 319}, "BuildPanelBackground"}
-, floorContainer{{366 - 2, 91, 1188, 220}, "FloorContainer"}
+, floorContainer{{366, 91, 1188, 220}, "FloorContainer"}
 , floorCoveringContainer{{366 - 2, 91, 1188, 220}, "FloorCoveringContainer"}
-, wallContainer{{366 - 2, 91, 1188, 220}, "WallContainer"}
-, objectContainer{{366 - 2, 91, 1188, 220}, "ObjectContainer"}
-, entityPanelContent{inWorld, network, spriteData, *this,
-                       {366 - 2, 91, 1188, 220}, "EntityPanelContent"}
+, wallContainer{{366, 91, 1188, 220}, "WallContainer"}
+, objectContainer{{366, 91, 1188, 220}, "ObjectContainer"}
+, entityPanelContent{inSimulation.getWorld(),
+                     network,
+                     spriteData,
+                     *this,
+                     {366, 91, 1188, 220},
+                     "EntityPanelContent"}
 , removeHintText{{679, 171, 562, 36}, "RemoveHintText"}
+, itemPanelContent{inSimulation,
+                   network,
+                   inIconData,
+                   {366, 91, 1188, 220},
+                   "ItemPanelContent"}
 , tileLayersLabel{{152, 92, 138, 36}, "TileLayersLabel"}
 , otherLabel{{1630, 92, 138, 36}, "OtherLabel"}
-, buildToolButtons{
+, buildModeButtons{
       MainButton{{164, 132, 114, 32}, "Floor", "FloorToolButton"},
       MainButton{{164, 168, 114, 32}, "Floor Cover", "FloorCoveringToolButton"},
       MainButton{{164, 204, 114, 32}, "Wall", "WallToolButton"},
       MainButton{{164, 240, 114, 32}, "Object", "ObjectToolButton"},
       MainButton{{1642, 132, 114, 32}, "Entity", "EntityToolButton"},
-      MainButton{{1642, 168, 114, 32}, "Remove", "RemoveToolButton"}}
+      MainButton{{1642, 168, 114, 32}, "Remove", "RemoveToolButton"},
+      MainButton{{1642, 204, 114, 32}, "Item", "ItemToolButton"}}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
@@ -47,15 +60,17 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
     children.push_back(objectContainer);
     children.push_back(entityPanelContent);
     children.push_back(removeHintText);
+    children.push_back(itemPanelContent);
     children.push_back(tileLayersLabel);
     children.push_back(otherLabel);
-    children.push_back(buildToolButtons[BuildTool::Type::Floor]);
+    children.push_back(buildModeButtons[BuildMode::Type::Floor]);
     children.push_back(
-        buildToolButtons[BuildTool::Type::FloorCovering]);
-    children.push_back(buildToolButtons[BuildTool::Type::Wall]);
-    children.push_back(buildToolButtons[BuildTool::Type::Object]);
-    children.push_back(buildToolButtons[BuildTool::Type::Entity]);
-    children.push_back(buildToolButtons[BuildTool::Type::Remove]);
+        buildModeButtons[BuildMode::Type::FloorCovering]);
+    children.push_back(buildModeButtons[BuildMode::Type::Wall]);
+    children.push_back(buildModeButtons[BuildMode::Type::Object]);
+    children.push_back(buildModeButtons[BuildMode::Type::Entity]);
+    children.push_back(buildModeButtons[BuildMode::Type::Remove]);
+    children.push_back(buildModeButtons[BuildMode::Type::Item]);
 
     /* Background image */
     backgroundImage.setMultiResImage(
@@ -76,6 +91,7 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
     setContainerStyle(wallContainer);
     setContainerStyle(objectContainer);
     entityPanelContent.setIsVisible(false);
+    itemPanelContent.setIsVisible(false);
 
     /* Labels */
     auto setTextStyle = [](AUI::Text& text) {
@@ -95,23 +111,26 @@ BuildPanel::BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteD
     removeHintText.setIsVisible(false);
 
     /* Build tool buttons. */
-    buildToolButtons[BuildTool::Type::FloorCovering].text.setFont(
+    buildModeButtons[BuildMode::Type::FloorCovering].text.setFont(
         (Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 18);
 
-    buildToolButtons[BuildTool::Type::Floor].setOnPressed(
-        [this]() { setBuildTool(BuildTool::Type::Floor); });
-    buildToolButtons[BuildTool::Type::FloorCovering].setOnPressed(
+    buildModeButtons[BuildMode::Type::Floor].setOnPressed(
+        [this]() { setBuildMode(BuildMode::Type::Floor); });
+    buildModeButtons[BuildMode::Type::FloorCovering].setOnPressed(
         [this]() {
-            setBuildTool(BuildTool::Type::FloorCovering);
+            setBuildMode(BuildMode::Type::FloorCovering);
         });
-    buildToolButtons[BuildTool::Type::Wall].setOnPressed(
-        [this]() { setBuildTool(BuildTool::Type::Wall); });
-    buildToolButtons[BuildTool::Type::Object].setOnPressed(
-        [this]() { setBuildTool(BuildTool::Type::Object); });
-    buildToolButtons[BuildTool::Type::Entity].setOnPressed(
-        [this]() { setBuildTool(BuildTool::Type::Entity); });
-    buildToolButtons[BuildTool::Type::Remove].setOnPressed(
-        [this]() { setBuildTool(BuildTool::Type::Remove); });
+    buildModeButtons[BuildMode::Type::Wall].setOnPressed(
+        [this]() { setBuildMode(BuildMode::Type::Wall); });
+    buildModeButtons[BuildMode::Type::Object].setOnPressed(
+        [this]() { setBuildMode(BuildMode::Type::Object); });
+    buildModeButtons[BuildMode::Type::Entity].setOnPressed(
+        [this]() { setBuildMode(BuildMode::Type::Entity); });
+    buildModeButtons[BuildMode::Type::Remove].setOnPressed(
+        [this]() { setBuildMode(BuildMode::Type::Remove); });
+    // TODO: Segfaulting when pressing this
+    buildModeButtons[BuildMode::Type::Item].setOnPressed(
+        [this]() { setBuildMode(BuildMode::Type::Item); });
 
     // Fill the containers with the available sprite sets.
     for (const FloorSpriteSet& spriteSet : spriteData.getAllFloorSpriteSets()) {
@@ -215,7 +234,7 @@ const Sprite* BuildPanel::getFirstSprite(const T& spriteSet)
     return nullptr;
 }
 
-void BuildPanel::setBuildTool(BuildTool::Type toolType)
+void BuildPanel::setBuildMode(BuildMode::Type buildModeType)
 {
     // When we switch build tools, we deselect any selected thumbnails.
     if (selectedThumbnail != nullptr) {
@@ -223,8 +242,8 @@ void BuildPanel::setBuildTool(BuildTool::Type toolType)
         selectedThumbnail = nullptr;
     }
 
-    // Set the overlay's build tool.
-    buildOverlay.setBuildTool(toolType);
+    // Set the overlay to the given build mode.
+    buildOverlay.setBuildMode(buildModeType);
 
     // Make all the content invisible, then show the correct content.
     floorContainer.setIsVisible(false);
@@ -233,26 +252,31 @@ void BuildPanel::setBuildTool(BuildTool::Type toolType)
     objectContainer.setIsVisible(false);
     entityPanelContent.setIsVisible(false);
     removeHintText.setIsVisible(false);
+    itemPanelContent.setIsVisible(false);
 
-    if (toolType == BuildTool::Type::Floor) {
+    if (buildModeType == BuildMode::Type::Floor) {
         floorContainer.setIsVisible(true);
     }
-    else if (toolType == BuildTool::Type::FloorCovering) {
+    else if (buildModeType == BuildMode::Type::FloorCovering) {
         floorCoveringContainer.setIsVisible(true);
     }
-    else if (toolType == BuildTool::Type::Wall) {
+    else if (buildModeType == BuildMode::Type::Wall) {
         wallContainer.setIsVisible(true);
     }
-    else if (toolType == BuildTool::Type::Object) {
+    else if (buildModeType == BuildMode::Type::Object) {
         objectContainer.setIsVisible(true);
     }
-    else if (toolType == BuildTool::Type::Entity) {
+    else if (buildModeType == BuildMode::Type::Entity) {
         entityPanelContent.setBuildTool(static_cast<EntityTool*>(
             buildOverlay.getCurrentBuildTool()));
         entityPanelContent.setIsVisible(true);
     }
-    else if (toolType == BuildTool::Type::Remove) {
+    else if (buildModeType == BuildMode::Type::Remove) {
         removeHintText.setIsVisible(true);
+    }
+    else if (buildModeType == BuildMode::Type::Item) {
+        itemPanelContent.reset();
+        itemPanelContent.setIsVisible(true);
     }
 }
 

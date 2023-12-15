@@ -2,7 +2,6 @@
 #include "World.h"
 #include "Network.h"
 #include "Transforms.h"
-#include "Ignore.h"
 
 namespace AM
 {
@@ -32,9 +31,8 @@ std::span<const SpriteColorModInfo> BuildTool::getSpriteColorMods() const
     return spriteColorMods;
 }
 
-void BuildTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
+void BuildTool::setSelectedSpriteSet(const SpriteSet&)
 {
-    ignore(inSelectedSpriteSet);
 }
 
 void BuildTool::setCamera(const Camera& inCamera)
@@ -47,30 +45,19 @@ void BuildTool::setTileMapExtent(const TileExtent& inTileExtent)
     mapTileExtent = inTileExtent;
 }
 
-void BuildTool::onMouseDown(AUI::MouseButtonType buttonType,
-    const SDL_Point& cursorPosition)
-{
-    ignore(buttonType);
-    ignore(cursorPosition);
+void BuildTool::onMouseDown(AUI::MouseButtonType, const SDL_Point&) {
 }
 
-void BuildTool::onMouseUp(AUI::MouseButtonType buttonType,
-                       const SDL_Point& cursorPosition)
+void BuildTool::onMouseUp(AUI::MouseButtonType, const SDL_Point&)
 {
-    ignore(buttonType);
-    ignore(cursorPosition);
 }
 
-void BuildTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
-                                const SDL_Point& cursorPosition)
+void BuildTool::onMouseDoubleClick(AUI::MouseButtonType, const SDL_Point&)
 {
-    ignore(buttonType);
-    ignore(cursorPosition);
 }
 
-void BuildTool::onMouseWheel(int amountScrolled)
+void BuildTool::onMouseWheel(int)
 {
-    ignore(amountScrolled);
 }
 
 void BuildTool::onMouseMove(const SDL_Point& cursorPosition)

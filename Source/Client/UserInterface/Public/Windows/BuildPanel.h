@@ -2,8 +2,9 @@
 
 #include "MainButton.h"
 #include "TileLayers.h"
-#include "BuildTool.h"
+#include "BuildModeType.h"
 #include "EntityPanelContent.h"
+#include "ItemPanelContent.h"
 #include "Log.h"
 #include "AUI/Window.h"
 #include "AUI/Image.h"
@@ -22,9 +23,11 @@ struct Sprite;
 
 namespace Client
 {
+class Simulation;
 class World;
 class Network;
 class SpriteData;
+class IconData;
 class BuildOverlay;
 
 /**
@@ -39,7 +42,8 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    BuildPanel(World& inWorld, Network& inNetwork, SpriteData& inSpriteData,
+    BuildPanel(Simulation& inSimulation, Network& inNetwork,
+               SpriteData& inSpriteData, IconData& inIconData,
                BuildOverlay& inBuildOverlay);
 
     ~BuildPanel() = default;
@@ -73,9 +77,9 @@ private:
     const Sprite* getFirstSprite(const T& spriteSet);
 
     /**
-     * Sets the current build tool to the given tool type.
+     * Sets this panel up for the given build mode type.
      */
-    void setBuildTool(BuildTool::Type toolType);
+    void setBuildMode(BuildMode::Type buildModeType);
 
     /** Used to send and receive content-related build mode messages. */
     Network& network;
@@ -112,10 +116,13 @@ private:
     // Remove tool content.
     AUI::Text removeHintText;
 
+    // Item tool content panel.
+    ItemPanelContent itemPanelContent;
+
     AUI::Text tileLayersLabel;
     AUI::Text otherLabel;
 
-    std::array<MainButton, BuildTool::Type::Count> buildToolButtons;
+    std::array<MainButton, BuildMode::Type::Count> buildModeButtons;
 };
 
 } // End namespace Client

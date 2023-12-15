@@ -5,8 +5,6 @@
 #include "SpriteColorModInfo.h"
 #include "Camera.h"
 #include "AUI/MouseButtonType.h"
-#include <SDL_stdinc.h>
-#include <SDL_rect.h>
 #include <span>
 #include <vector>
 
@@ -24,18 +22,6 @@ class Network;
  */
 class BuildTool {
 public:
-    /** The types of tools that our build mode supports. */
-    enum Type : Uint8 { 
-        Floor,
-        FloorCovering,
-        Wall,
-        Object,
-        Entity,
-        Remove,
-        Count,
-        None
-    };
-
     // TODO: We may eventually want to render things like highlight lines 
     //       around an extent that we're clearing. We could do so by adding 
     //       something like a DisplayInfo struct with a getter that lets the 

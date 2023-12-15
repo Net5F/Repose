@@ -11,9 +11,9 @@
 #include "AnimationState.h"
 #include "EntityTemplatesRequest.h"
 #include "EntityInitRequest.h"
-#include "NameChangeRequest.h"
+#include "EntityNameChangeRequest.h"
 #include "AnimationStateChangeRequest.h"
-#include "InitScriptRequest.h"
+#include "EntityInitScriptRequest.h"
 #include "AddEntityTemplate.h"
 #include "Paths.h"
 #include "AMAssert.h"
@@ -41,15 +41,15 @@ EntityPanelContent::EntityPanelContent(
 , editingEntityInitScript{""}
 , selectedSpriteThumbnail{nullptr}
 , entityTemplatesQueue{inNetwork.getEventDispatcher()}
-, initScriptQueue{inNetwork.getEventDispatcher()}
+, entityInitScriptQueue{inNetwork.getEventDispatcher()}
 // Note: These dimensions are based on the top left that BuildPanel gives us.
 , templateContainer{{0, 0, logicalExtent.w, logicalExtent.h},
                     "TemplateContainer"}
-, nameLabel{{526, 1, 138, 36}, "NameLabel"}
-, nameInput{{468, 38, 255, 42}, "NameInput"}
-, changeSpriteButton{{308, 113, 160, 36}, "Change Sprite", "ChangeSpriteButton"}
-, changeScriptButton{{518, 113, 156, 36}, "Change Script", "ChangeScriptButton"}
-, saveTemplateButton{{724, 113, 188, 36},
+, nameLabel{{464, 8, 260, 36}, "NameLabel"}
+, nameInput{{464, 53, 260, 42}, "NameInput"}
+, changeSpriteButton{{342, 117, 160, 36}, "Change Sprite", "ChangeSpriteButton"}
+, editScriptButton{{516, 117, 156, 36}, "Edit Script", "EditScriptButton"}
+, saveTemplateButton{{686, 117, 188, 36},
                      "Save as Template",
                      "SaveTemplateButton"}
 , spriteSetContainer{{0, 0, logicalExtent.w, logicalExtent.h},
@@ -60,7 +60,7 @@ EntityPanelContent::EntityPanelContent(
     children.push_back(nameLabel);
     children.push_back(nameInput);
     children.push_back(changeSpriteButton);
-    children.push_back(changeScriptButton);
+    children.push_back(editScriptButton);
     children.push_back(saveTemplateButton);
     children.push_back(spriteSetContainer);
 
@@ -72,7 +72,7 @@ EntityPanelContent::EntityPanelContent(
         text.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
     };
     setTextStyle(nameLabel);
-    nameLabel.setText("Name");
+    nameLabel.setText("Entity Name");
 
     /* Containers */
     auto setContainerStyle = [](AUI::VerticalGridContainer& container) {
@@ -98,8 +98,8 @@ EntityPanelContent::EntityPanelContent(
 
     nameInput.setOnTextCommitted([this]() {
         // Send a request to change the entity's name.
-        NameChangeRequest nameChangeRequest{editingEntityID,
-                                            Name{nameInput.getText()}};
+        EntityNameChangeRequest nameChangeRequest{editingEntityID,
+                                                  Name{nameInput.getText()}};
         network.serializeAndSend(nameChangeRequest);
     });
 
@@ -107,11 +107,11 @@ EntityPanelContent::EntityPanelContent(
     changeSpriteButton.setOnPressed(
         [this]() { changeView(ViewType::SpriteSet); });
 
-    changeScriptButton.setOnPressed([this]() {
+    editScriptButton.setOnPressed([this]() {
         // Send a re-init request with the updated script.
         const entt::registry& registry{world.registry};
         std::string initScript{""};
-        // TEMP
+        // TEMP - Replace this when we add a text editor UI.
         std::ifstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
         if (scriptFile.is_open()) {
             std::stringstream buffer;
@@ -153,7 +153,8 @@ void EntityPanelContent::setBuildTool(EntityTool* inEntityTool)
                 editingEntityID = entity;
 
                 // Ask the server for the entity's init script.
-                network.serializeAndSend(InitScriptRequest{editingEntityID});
+                network.serializeAndSend(
+                    EntityInitScriptRequest{editingEntityID});
 
                 // Switch to the edit view.
                 changeView(ViewType::Edit);
@@ -196,17 +197,17 @@ void EntityPanelContent::onTick(double)
         addTemplateThumbnails(entityTemplates);
     }
 
-    InitScriptResponse initScriptResponse{};
-    while (initScriptQueue.pop(initScriptResponse)) {
+    EntityInitScriptResponse initScriptResponse{};
+    while (entityInitScriptQueue.pop(initScriptResponse)) {
         // If the received script is for the currently selected entity, save it.
         if (initScriptResponse.entity == editingEntityID) {
-            editingEntityInitScript = initScriptResponse.initScript;
+            editingEntityInitScript = initScriptResponse.initScript.script;
 
             // TEMP
-            // Write to CurrentScript.lua
+            // Write to InitScript.lua
             std::ofstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
-            scriptFile << initScriptResponse.initScript;
-            LOG_INFO("Received script. Saved to InitScript.lua");
+            scriptFile << initScriptResponse.initScript.script;
+            LOG_INFO("Received entity script. Saved to InitScript.lua");
             // TEMP
         }
     }
@@ -227,7 +228,7 @@ void EntityPanelContent::changeView(ViewType newView)
     nameLabel.setIsVisible(false);
     nameInput.setIsVisible(false);
     changeSpriteButton.setIsVisible(false);
-    changeScriptButton.setIsVisible(false);
+    editScriptButton.setIsVisible(false);
     saveTemplateButton.setIsVisible(false);
     spriteSetContainer.setIsVisible(false);
 
@@ -243,7 +244,7 @@ void EntityPanelContent::changeView(ViewType newView)
         nameLabel.setIsVisible(true);
         nameInput.setIsVisible(true);
         changeSpriteButton.setIsVisible(true);
-        changeScriptButton.setIsVisible(true);
+        editScriptButton.setIsVisible(true);
         saveTemplateButton.setIsVisible(true);
     }
     else if (newView == ViewType::SpriteSet) {

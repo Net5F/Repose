@@ -22,7 +22,8 @@ class World;
 class ProjectLuaBindings
 {
 public:
-    ProjectLuaBindings(sol::state& inLua, World& inWorld);
+    ProjectLuaBindings(sol::state& inEntityInitLua, sol::state& inItemInitLua,
+                       World& inWorld);
 
     /**
      * Adds our bindings to the lua object.
@@ -30,7 +31,8 @@ public:
     void addBindings();
 
 private:
-    sol::state& lua;
+    sol::state& entityInitLua;
+    sol::state& itemInitLua;
     World& world;
 
     /**

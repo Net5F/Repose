@@ -3,7 +3,7 @@
 #include "ProjectMessageType.h"
 #include "Name.h"
 #include "AnimationState.h"
-#include "InitScript.h"
+#include "EntityInitScript.h"
 #include <vector>
 
 namespace AM
@@ -30,7 +30,7 @@ struct EntityTemplates {
     struct Data {
         Name name{};
         AnimationState animationState{};
-        InitScript initScript{};
+        EntityInitScript initScript{};
     };
 
     std::vector<Data> templates;

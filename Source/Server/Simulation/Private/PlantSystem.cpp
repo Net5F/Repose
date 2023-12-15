@@ -4,7 +4,6 @@
 #include "EntityInteractionType.h"
 #include "Name.h"
 #include "AnimationState.h"
-#include "InitScript.h"
 #include "Interaction.h"
 #include "Plant.h"
 #include "NullSpriteID.h"

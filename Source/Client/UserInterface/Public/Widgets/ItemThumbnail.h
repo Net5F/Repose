@@ -67,6 +67,10 @@ public:
 
     void setOnUnhovered(std::function<void(ItemThumbnail*)> inOnUnhovered);
 
+    /**
+     * @param inOnMouseDown A callback that returns true if the mouse should be
+     *        captured, else false.
+     */
     void
         setOnMouseDown(std::function<bool(ItemThumbnail*, AUI::MouseButtonType)>
                            inOnMouseDown);

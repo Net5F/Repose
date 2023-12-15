@@ -28,7 +28,8 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
                   interactionManager}
 , buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
                deps.spriteData}
-, buildPanel{world, deps.network, deps.spriteData, buildOverlay}
+, buildPanel{deps.simulation, deps.network, deps.spriteData, deps.iconData,
+             buildOverlay}
 , rightClickMenu{}
 {
     // Add our windows so they're included in rendering, etc.

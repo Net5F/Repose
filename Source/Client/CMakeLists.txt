@@ -94,6 +94,10 @@ file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/
      DESTINATION ${BUILD_RESOURCES_FOLDER}/)
 
+# Copy engine default assets to the build directory.
+file(COPY ${PROJECT_SOURCE_DIR}/Libraries/AmalgamEngine/Resources/EngineDefaults/Common/
+     DESTINATION ${BUILD_RESOURCES_FOLDER}/)
+
 # Copy UserConfig.json to the build directory.
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/UserConfig.json
      DESTINATION ${BUILD_RESOURCES_FOLDER}/)
@@ -138,6 +142,8 @@ else()
     install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/
             DESTINATION ${CMAKE_PROJECT_NAME}/Client)
     install(DIRECTORY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/
+            DESTINATION ${CMAKE_PROJECT_NAME}/Client)
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/Libraries/AmalgamEngine/Resources/EngineDefaults/Common/
             DESTINATION ${CMAKE_PROJECT_NAME}/Client)
     install(FILES ${PROJECT_SOURCE_DIR}/Resources/Client/Common/UserConfig.json
             DESTINATION ${CMAKE_PROJECT_NAME}/Client)

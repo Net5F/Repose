@@ -4,6 +4,7 @@
 #include "Network.h"
 #include "SpriteData.h"
 #include "Sprite.h"
+#include "BuildTool.h"
 #include "FloorTool.h"
 #include "FloorCoveringTool.h"
 #include "WallTool.h"
@@ -40,6 +41,8 @@ BuildOverlay::BuildOverlay(Simulation& inSimulation,
         *this);
 }
 
+BuildOverlay::~BuildOverlay() = default;
+
 void BuildOverlay::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
 {
     selectedSpriteSet = &inSelectedSpriteSet;
@@ -49,37 +52,42 @@ void BuildOverlay::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
     }
 }
 
-void BuildOverlay::setBuildTool(BuildTool::Type toolType)
+void BuildOverlay::setBuildMode(BuildMode::Type buildModeType)
 {
-    switch (toolType) {
-        case BuildTool::Type::Floor: {
+    switch (buildModeType) {
+        case BuildMode::Type::Floor: {
             currentBuildTool
                 = std::make_unique<FloorTool>(world, network);
             break;
         }
-        case BuildTool::Type::FloorCovering: {
+        case BuildMode::Type::FloorCovering: {
             currentBuildTool = std::make_unique<FloorCoveringTool>(
                 world, network);
             break;
         }
-        case BuildTool::Type::Wall: {
+        case BuildMode::Type::Wall: {
             currentBuildTool
                 = std::make_unique<WallTool>(world, network);
             break;
         }
-        case BuildTool::Type::Object: {
+        case BuildMode::Type::Object: {
             currentBuildTool
                 = std::make_unique<ObjectTool>(world, network);
             break;
         }
-        case BuildTool::Type::Entity: {
+        case BuildMode::Type::Entity: {
             currentBuildTool = std::make_unique<EntityTool>(
                 world, worldObjectLocator, network, spriteData);
             break;
         }
-        case BuildTool::Type::Remove: {
+        case BuildMode::Type::Remove: {
             currentBuildTool = std::make_unique<RemoveTool>(
                 world, worldObjectLocator, network);
+            break;
+        }
+        case BuildMode::Type::Item: {
+            // Item build mode doesn't have any overlay interactions.
+            currentBuildTool = nullptr;
             break;
         }
         default: {
@@ -88,8 +96,10 @@ void BuildOverlay::setBuildTool(BuildTool::Type toolType)
         }
     }
 
-    currentBuildTool->setCamera(camera);
-    currentBuildTool->setTileMapExtent(mapTileExtent);
+    if (currentBuildTool != nullptr) {
+        currentBuildTool->setCamera(camera);
+        currentBuildTool->setTileMapExtent(mapTileExtent);
+    }
 }
 
 BuildTool* BuildOverlay::getCurrentBuildTool()

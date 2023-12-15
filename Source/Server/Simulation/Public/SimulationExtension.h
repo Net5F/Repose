@@ -79,12 +79,12 @@ public:
         const EntityInitRequest& entityInitRequest) const;
     bool isEntityDeleteRequestValid(
         const EntityDeleteRequest& entityDeleteRequest) const;
-    bool isNameChangeRequestValid(
-        const NameChangeRequest& nameChangeRequest) const;
+    bool isEntityNameChangeRequestValid(
+        const EntityNameChangeRequest& nameChangeRequest) const;
     bool isAnimationStateChangeRequestValid(
         const AnimationStateChangeRequest& animationStateChangeRequest) const;
-    bool isItemChangeRequestValid(
-        const ItemChangeRequest& itemChangeRequest) const;
+    bool isItemInitRequestValid(
+        const ItemInitRequest& itemInitRequest) const;
     bool
         isInventoryAddItemValid(const InventoryAddItem& inventoryAddItem) const;
 

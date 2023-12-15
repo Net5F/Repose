@@ -5,9 +5,9 @@
 #include "SpriteData.h"
 #include "TileExtent.h"
 #include "EntityInitRequest.h"
-#include "NameChangeRequest.h"
+#include "EntityNameChangeRequest.h"
 #include "AnimationStateChangeRequest.h"
-#include "ItemChangeRequest.h"
+#include "ItemInitRequest.h"
 #include "InventoryAddItem.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
@@ -20,7 +20,8 @@ namespace Server
 
 SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
 : world{deps.simulation.getWorld()}
-, projectLuaBindings{deps.simulation.getLua(), world}
+, projectLuaBindings{deps.simulation.getEntityInitLua(),
+                     deps.simulation.getItemInitLua(), world}
 , buildModeDataSystem{world, deps.network.getEventDispatcher(), deps.network,
                       deps.spriteData}
 , mazeGenerationSystem{world, deps.spriteData}
@@ -107,8 +108,8 @@ bool SimulationExtension::isEntityDeleteRequestValid(
     }
 }
 
-bool SimulationExtension::isNameChangeRequestValid(
-    const NameChangeRequest& nameChangeRequest) const
+bool SimulationExtension::isEntityNameChangeRequestValid(
+    const EntityNameChangeRequest& nameChangeRequest) const
 {
     entt::entity entity{nameChangeRequest.entity};
 
@@ -141,8 +142,8 @@ bool SimulationExtension::isAnimationStateChangeRequestValid(
     }
 }
 
-bool SimulationExtension::isItemChangeRequestValid(
-    const ItemChangeRequest& itemChangeRequest) const
+bool SimulationExtension::isItemInitRequestValid(
+    const ItemInitRequest& itemInitRequest) const
 {
     // TODO: Check permissions or something.
     return true;
