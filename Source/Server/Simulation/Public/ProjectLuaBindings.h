@@ -35,6 +35,7 @@ private:
     sol::state& itemInitLua;
     World& world;
 
+    // Entity init
     /**
      * Makes the entity walk around randomly.
      * @param timeToWalk How long to walk for.
@@ -43,6 +44,8 @@ private:
      */
     void addRandomWalkerAIBehavior(double timeToWalk, double timeToWait,
                                    double timeTillDirectionChange);
+
+    // Item init
 };
 
 } // namespace Server
