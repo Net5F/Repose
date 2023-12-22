@@ -69,7 +69,7 @@ private:
      * If we have a selected item and have received its init script, sends 
      * an init request to the server.
      */
-    void sendItemReInitRequest();
+    void sendItemChangeRequest();
 
     enum class ViewType {
         /** The default view, used to search for items. */

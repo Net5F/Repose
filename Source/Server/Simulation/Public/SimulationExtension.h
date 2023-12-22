@@ -83,10 +83,6 @@ public:
         const EntityNameChangeRequest& nameChangeRequest) const;
     bool isAnimationStateChangeRequestValid(
         const AnimationStateChangeRequest& animationStateChangeRequest) const;
-    bool isItemInitRequestValid(
-        const ItemInitRequest& itemInitRequest) const;
-    bool
-        isInventoryAddItemValid(const InventoryAddItem& inventoryAddItem) const;
 
 private:
     /** Used to validate change requests. */

@@ -7,7 +7,6 @@
 #include "Inventory.h"
 #include "ItemThumbnail.h"
 #include "ItemInteractionRequest.h"
-#include "InventoryDeleteItem.h"
 #include "AUI/ScalingHelpers.h"
 #include "entt/entity/registry.hpp"
 
@@ -98,9 +97,9 @@ void InventoryWindow::refresh(const Inventory& inventory)
 
     // Add thumbnails for each item in the player's inventory.
     itemContainer.clear();
-    for (Uint8 slotIndex = 0; slotIndex < inventory.items.size(); ++slotIndex) {
+    for (Uint8 slotIndex = 0; slotIndex < inventory.slots.size(); ++slotIndex) {
         // Fill empty slots with a blank, hidden image to preserve spacing.
-        ItemID itemID{inventory.items[slotIndex].ID};
+        ItemID itemID{inventory.slots[slotIndex].ID};
         if (itemID == NULL_ITEM_ID) {
             itemContainer.push_back(std::make_unique<AUI::Image>(
                 SDL_Rect{0, 0, 50, 50}, "InventoryBlankSpace"));
@@ -180,11 +179,11 @@ void InventoryWindow::onItemUpdate(const Item& item)
 {
     // If this update is for an item in the inventory, we need to refresh.
     Inventory& inventory{world.registry.get<Inventory>(world.playerEntity)};
-    auto it{std::find_if(inventory.items.begin(), inventory.items.end(),
+    auto it{std::find_if(inventory.slots.begin(), inventory.slots.end(),
                          [&](const Inventory::ItemSlot& itemSlot) {
                              return (itemSlot.ID == item.numericID);
                          })};
-    if (it != inventory.items.end()) {
+    if (it != inventory.slots.end()) {
         refresh(inventory);
     }
 }

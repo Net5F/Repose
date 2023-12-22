@@ -6,11 +6,12 @@
 #include "IconData.h"
 #include "BuildPanel.h"
 #include "BuildModeThumbnail.h"
-#include "ItemUpdateRequest.h"
+#include "ItemDataRequest.h"
 #include "ItemError.h"
 #include "ItemInitScriptRequest.h"
 #include "ItemInitRequest.h"
-#include "InventoryAddItem.h"
+#include "ItemChangeRequest.h"
+#include "InventoryOperation.h"
 #include "Paths.h"
 #include <fstream>
 #include <sstream>
@@ -75,6 +76,7 @@ ItemPanelContent::ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
         text.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
     };
     setTextStyle(nameLabel);
+    setTextStyle(errorLabel);
     setTextStyle(itemNotFoundLabel);
     itemNotFoundLabel.setText("Item not found.");
 
@@ -129,11 +131,11 @@ void ItemPanelContent::onTick(double)
 {
     // Process any waiting messages.
 
+    // Display any errors appropriately.
     ItemError itemError{};
     while (itemErrorQueue.pop(itemError)) {
-        // If we requested an item that wasn't found, tell the user.
         if ((currentView == ViewType::Home)
-            && (itemError.errorType == ItemError::Type::NotFound)
+            && (itemError.errorType == ItemError::StringIDNotFound)
             && (itemError.stringID == requestedItemStringID)) {
             requestedItemStringID = "";
             itemIconImage.setIsVisible(false);
@@ -142,16 +144,26 @@ void ItemPanelContent::onTick(double)
             rightButton3.setIsVisible(false);
             itemNotFoundLabel.setIsVisible(true);
         }
+        else if (((currentView == ViewType::Create)
+                  || (currentView == ViewType::Edit)
+                  || (currentView == ViewType::Duplicate))
+                 && (itemError.errorType == ItemError::StringIDInUse)) {
+            errorLabel.setText("Error: Name already in use.");
+            errorLabel.setIsVisible(true);
+        }
         else if (currentView == ViewType::Edit) {
-            if (itemError.errorType == ItemError::Type::PermissionFailure) {
+            if (itemError.errorType == ItemError::PermissionFailure) {
                 errorLabel.setText(
                     "Error: You don't have permission to edit this item.");
             }
             else if (itemError.errorType
-                     == ItemError::Type::InitScriptFailure) {
+                     == ItemError::InitScriptFailure) {
                 errorLabel.setText(
                     "Error: Invalid script (see chat for details).");
             }
+        }
+        else if (itemError.errorType == ItemError::NumericIDNotFound) {
+            AM_ASSERT(false, "Numeric ID wasn't found while editing item.");
         }
     }
 
@@ -185,7 +197,7 @@ void ItemPanelContent::trySelectItem(std::string_view displayName)
     requestedItemStringID = stringID;
 
     // Ask the server for the latest definition for this item.
-    network.serializeAndSend(ItemUpdateRequest{stringID});
+    network.serializeAndSend(ItemDataRequest{stringID});
 }
 
 void ItemPanelContent::onItemUpdate(const Item& item)
@@ -232,6 +244,7 @@ void ItemPanelContent::onItemUpdate(const Item& item)
             iconData.getRenderData(item.iconID)};
         itemIconImage.setSimpleImage(iconRenderData.iconSheetRelPath,
                                      iconRenderData.textureExtent);
+        errorLabel.setIsVisible(false);
 
         // Request the item's new init script.
         initScriptReceived = false;
@@ -242,9 +255,9 @@ void ItemPanelContent::onItemUpdate(const Item& item)
     refreshItemCacheThumbnails();
 }
 
-void ItemPanelContent::sendItemReInitRequest()
+void ItemPanelContent::sendItemChangeRequest()
 {
-    // Don't send an init request if we haven't yet received the init script, 
+    // Don't send a change request if we haven't yet received the init script, 
     // since we would end up overwriting the current one.
     if (initScriptReceived) {
         // Send a re-init request with the updated name.
@@ -259,8 +272,8 @@ void ItemPanelContent::sendItemReInitRequest()
         // TEMP
 
         network.serializeAndSend(
-            ItemInitRequest{selectedItemID, nameInput.getText(),
-                            selectedItemIconID, initScript});
+            ItemChangeRequest{selectedItemID, nameInput.getText(),
+                              selectedItemIconID, initScript});
     }
 }
 
@@ -369,7 +382,7 @@ void ItemPanelContent::addIconThumbnails()
                 if (buttonType == AUI::MouseButtonType::Left) {
                     // Set the new icon and request the server update the item.
                     selectedItemIconID = iconID;
-                    sendItemReInitRequest();
+                    sendItemChangeRequest();
 
                     changeView(ViewType::Edit);
 
@@ -405,12 +418,18 @@ void ItemPanelContent::showHomeView()
                   "Somehow selected Give without a selected item.");
 
         // Ask the server to add the selected item to the player's inventory.
-        network.serializeAndSend(
-            InventoryAddItem{world.playerEntity, selectedItemID, 1});
+        network.serializeAndSend(InventoryOperation{
+            InventoryAddItem{world.playerEntity, selectedItemID, 1}});
     });
+
+    // Put the error label in the correct place for this view.
+    SDL_Rect errorLabelExtent{errorLabel.getLogicalExtent()};
+    errorLabelExtent.y = 165;
+    errorLabel.setLogicalExtent(errorLabelExtent);
 
     // If we have an item selected, show it.
     if (selectedItemID != NULL_ITEM_ID) {
+        nameLabel.setText(selectedItemDisplayName);
         itemIconImage.setIsVisible(true);
         rightButton1.setIsVisible(true);
         rightButton2.setIsVisible(true);
@@ -443,13 +462,18 @@ void ItemPanelContent::showCreateView()
     centerButton.text.setText("Create");
     centerButton.setOnPressed([this]() {
         // Ask the server to create a blank item with the given name.
-        network.serializeAndSend(ItemInitRequest{
-            NULL_ITEM_ID, nameInput.getText(), NULL_ICON_ID, ""});
+        network.serializeAndSend(
+            ItemInitRequest{nameInput.getText(), NULL_ICON_ID, ""});
 
         // Track that we're requesting this item. 
         std::string stringID{ItemData::deriveStringID(nameInput.getText())};
         requestedItemStringID = stringID;
     });
+
+    // Put the error label in the correct place for this view.
+    SDL_Rect errorLabelExtent{errorLabel.getLogicalExtent()};
+    errorLabelExtent.y = 165;
+    errorLabel.setLogicalExtent(errorLabelExtent);
 
     // Make the proper widgets visible.
     nameLabel.setIsVisible(true);
@@ -467,15 +491,20 @@ void ItemPanelContent::showEditView()
     nameInput.setOnTextCommitted([this]() {
         // Only update if the name actually changed.
         if (nameInput.getText() != selectedItemDisplayName) {
-            sendItemReInitRequest();
+            sendItemChangeRequest();
         }
     });
 
     rightButton1.text.setText("Edit Script");
-    rightButton1.setOnPressed([this]() { sendItemReInitRequest(); });
+    rightButton1.setOnPressed([this]() { sendItemChangeRequest(); });
 
     rightButton2.text.setText("Select Icon");
     rightButton2.setOnPressed([this]() { changeView(ViewType::IconList); });
+
+    // Put the error label in the correct place for this view.
+    SDL_Rect errorLabelExtent{errorLabel.getLogicalExtent()};
+    errorLabelExtent.y = 187;
+    errorLabel.setLogicalExtent(errorLabelExtent);
 
     // Make the proper widgets visible.
     nameLabel.setIsVisible(true);
@@ -501,14 +530,18 @@ void ItemPanelContent::showDuplicateView()
     centerButton.text.setText("Duplicate");
     centerButton.setOnPressed([this]() {
         // Ask the server to create a duplicate item with the given name.
-        network.serializeAndSend(
-            ItemInitRequest{NULL_ITEM_ID, nameInput.getText(),
-                            selectedItemIconID, selectedItemInitScript});
+        network.serializeAndSend(ItemInitRequest{
+            nameInput.getText(), selectedItemIconID, selectedItemInitScript});
 
         // Track that we're requesting this item. 
         std::string stringID{ItemData::deriveStringID(nameInput.getText())};
         requestedItemStringID = stringID;
     });
+
+    // Put the error label in the correct place for this view.
+    SDL_Rect errorLabelExtent{errorLabel.getLogicalExtent()};
+    errorLabelExtent.y = 165;
+    errorLabel.setLogicalExtent(errorLabelExtent);
 
     // Make the proper widgets visible.
     nameLabel.setIsVisible(true);

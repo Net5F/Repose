@@ -7,7 +7,7 @@
 #include "UseItemOnEntityRequest.h"
 #include "CombineItemsRequest.h"
 #include "ItemInteractionRequest.h"
-#include "InventoryDeleteItem.h"
+#include "InventoryOperation.h"
 #include "DisplayStrings.h"
 #include "ItemThumbnail.h"
 #include "Log.h"
@@ -293,10 +293,11 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
             mainScreen.addRightClickMenuAction("Use", std::move(useItemOn));
         }
         else if (interactionType == ItemInteractionType::Destroy) {
-            // Tell the server to delete the items in this slot.
+            // Tell the server to remove the items in this slot.
             auto deleteItem = [&, slotIndex,
-                               count{inventory.items[slotIndex].count}]() {
-                network.serializeAndSend(InventoryDeleteItem{slotIndex, count});
+                               count{inventory.slots[slotIndex].count}]() {
+                network.serializeAndSend(
+                    InventoryOperation{InventoryRemoveItem{slotIndex, count}});
             };
             mainScreen.addRightClickMenuAction("Destroy", std::move(deleteItem));
         }

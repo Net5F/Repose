@@ -7,8 +7,6 @@
 #include "EntityInitRequest.h"
 #include "EntityNameChangeRequest.h"
 #include "AnimationStateChangeRequest.h"
-#include "ItemInitRequest.h"
-#include "InventoryAddItem.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
 #include "Log.h"
@@ -21,6 +19,7 @@ namespace Server
 SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
 : world{deps.simulation.getWorld()}
 , projectLuaBindings{deps.simulation.getEntityInitLua(),
+                     deps.simulation.getEntityItemHandlerLua(),
                      deps.simulation.getItemInitLua(), world}
 , buildModeDataSystem{world, deps.network.getEventDispatcher(), deps.network,
                       deps.spriteData}
@@ -140,20 +139,6 @@ bool SimulationExtension::isAnimationStateChangeRequestValid(
         // No restrictions, always return true;
         return true;
     }
-}
-
-bool SimulationExtension::isItemInitRequestValid(
-    const ItemInitRequest& itemInitRequest) const
-{
-    // TODO: Check permissions or something.
-    return true;
-}
-
-bool SimulationExtension::isInventoryAddItemValid(
-    const InventoryAddItem& inventoryAddItem) const
-{
-    // TODO: Check permissions or something.
-    return true;
 }
 
 } // End namespace Server

@@ -11,9 +11,11 @@ namespace Server
 {
 
 ProjectLuaBindings::ProjectLuaBindings(sol::state& inEntityInitLua,
+                                       sol::state& inEntityItemHandlerLua,
                                        sol::state& inItemInitLua,
                                        World& inWorld)
 : entityInitLua{inEntityInitLua}
+, entityItemHandlerLua{inEntityItemHandlerLua}
 , itemInitLua{inItemInitLua}
 , world{inWorld}
 {
@@ -25,6 +27,8 @@ void ProjectLuaBindings::addBindings()
     entityInitLua.set_function("addRandomWalkerAIBehavior",
                                &ProjectLuaBindings::addRandomWalkerAIBehavior,
                                this);
+
+    // Entity item handler
 
     // Item init
 }

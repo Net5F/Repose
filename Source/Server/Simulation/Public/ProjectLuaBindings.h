@@ -22,8 +22,9 @@ class World;
 class ProjectLuaBindings
 {
 public:
-    ProjectLuaBindings(sol::state& inEntityInitLua, sol::state& inItemInitLua,
-                       World& inWorld);
+    ProjectLuaBindings(sol::state& inEntityInitLua,
+                       sol::state& inEntityItemHandlerLua,
+                       sol::state& inItemInitLua, World& inWorld);
 
     /**
      * Adds our bindings to the lua object.
@@ -32,6 +33,7 @@ public:
 
 private:
     sol::state& entityInitLua;
+    sol::state& entityItemHandlerLua;
     sol::state& itemInitLua;
     World& world;
 
@@ -44,6 +46,8 @@ private:
      */
     void addRandomWalkerAIBehavior(double timeToWalk, double timeToWait,
                                    double timeTillDirectionChange);
+
+    // Entity item handler
 
     // Item init
 };
