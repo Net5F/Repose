@@ -1,4 +1,5 @@
 #include "ItemThumbnail.h"
+#include "DragDropData.h"
 #include "AUI/Screen.h"
 #include "AUI/Core.h"
 #include "Log.h"
@@ -68,11 +69,15 @@ void ItemThumbnail::setOnDeselected(std::function<void(ItemThumbnail*)> inOnDese
     onDeselected = std::move(inOnDeselected);
 }
 
+AUI::Image* ItemThumbnail::getDragDropImage()
+{
+    // Since thumbnailImage doesn't have any offsets, we can use it directly.
+    return &thumbnailImage;
+}
+
 AUI::EventResult ItemThumbnail::onMouseDown(AUI::MouseButtonType buttonType,
                                             const SDL_Point&)
 {
-    // TODO: Drag/drop
-
     // If the user set a callback for this event, call it.
     bool setMouseCapture{false};
     if (onMouseDownFunc) {
@@ -160,6 +165,23 @@ void ItemThumbnail::onFocusLost(AUI::FocusLostType focusLostType)
     if (onDeselected) {
         onDeselected(this);
     }
+}
+
+AUI::EventResult ItemThumbnail::onDrop(const AUI::DragDropData& dragDropData)
+{
+    // Cast dragDropData to our project's type.
+    // Note: If AUI ever adds support for other types, we'll need to do a check 
+    //       before making this cast.
+    const DragDropData& projectDragDropData{
+        static_cast<const DragDropData&>(dragDropData)};
+    if (const auto* inventoryItem{std::get_if<DragDropData::InventoryItem>(
+            &(projectDragDropData.dataType))}) {
+        LOG_INFO("Dropped item slot: %u", inventoryItem->sourceSlotIndex);
+
+        return AUI::EventResult{.wasHandled{true}};
+    }
+
+    return AUI::EventResult{.wasHandled{false}};
 }
 
 void ItemThumbnail::setIsHovered(bool inIsHovered)

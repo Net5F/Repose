@@ -28,6 +28,7 @@ target_sources(Client
     PUBLIC
         Public/BuildModeType.h
         Public/DisplayStrings.h
+        Public/DragDropData.h
         Public/InteractionManager.h
         Public/MainScreen.h
         Public/TitleScreen.h

@@ -7,6 +7,7 @@
 #include "Inventory.h"
 #include "ItemThumbnail.h"
 #include "ItemInteractionRequest.h"
+#include "DragDropData.h"
 #include "AUI/ScalingHelpers.h"
 #include "entt/entity/registry.hpp"
 
@@ -132,6 +133,10 @@ void InventoryWindow::refresh(const Inventory& inventory)
         thumbnail.selectedImage.setNineSliceImage(
             Paths::TEXTURE_DIR + "Thumbnail/Selected_NineSlice.png",
             {4, 4, 4, 4});
+
+        // Add the associated slot as the drag/drop payload.
+        thumbnail.setDragDropData(std::make_unique<DragDropData>(
+            DragDropData::InventoryItem{slotIndex}));
 
         // Add our callbacks.
         thumbnail.setOnHovered([&, slotIndex](ItemThumbnail* thumbnail) {

@@ -80,11 +80,11 @@ public:
 
     void setOnDeselected(std::function<void(ItemThumbnail*)> inOnDeselected);
 
-    // TODO: Drag/drop
-
     //-------------------------------------------------------------------------
     // Base class overrides
     //-------------------------------------------------------------------------
+    AUI::Image* getDragDropImage() override;
+
     AUI::EventResult onMouseDown(AUI::MouseButtonType buttonType,
                             const SDL_Point& cursorPosition) override;
 
@@ -101,6 +101,8 @@ public:
     AUI::EventResult onFocusGained();
 
     void onFocusLost(AUI::FocusLostType focusLostType);
+
+    AUI::EventResult onDrop(const AUI::DragDropData& dragDropData) override;
 
 private:
     /** Sets isHovered and updates the visibility of hoveredImage. */
