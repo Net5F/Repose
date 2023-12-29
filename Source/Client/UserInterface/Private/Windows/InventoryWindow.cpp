@@ -124,10 +124,6 @@ ItemThumbnail& InventoryWindow::addEmptyThumbnail(const Inventory& inventory,
     ItemThumbnail& thumbnail{
         static_cast<ItemThumbnail&>(*(slotContainer.back()))};
 
-    const auto* renderData = &(iconData.getRenderData(NULL_ICON_ID));
-    thumbnail.thumbnailImage.setSimpleImage(renderData->iconSheetRelPath,
-                                            renderData->textureExtent);
-
     // If an inventory item is dropped on this thumbnail, move the item into 
     // this thumbnail's slot.
     thumbnail.setOnDrop([&, slotIndex](const DragDropData& dragDropData) {
