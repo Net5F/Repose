@@ -13,6 +13,7 @@ ItemThumbnail::ItemThumbnail(const SDL_Rect& inLogicalExtent,
 : Widget(inLogicalExtent, inDebugName)
 , thumbnailImage({0, 0, logicalExtent.w, logicalExtent.h})
 , selectedImage({0, 0, logicalExtent.w, logicalExtent.h})
+, dragDropImage({0, 0, logicalExtent.w, logicalExtent.h})
 , isHoverable{true}
 , isHovered{false}
 , isSelected{false}
@@ -69,10 +70,15 @@ void ItemThumbnail::setOnDeselected(std::function<void(ItemThumbnail*)> inOnDese
     onDeselected = std::move(inOnDeselected);
 }
 
+void ItemThumbnail::setOnDrop(
+    std::function<void(const DragDropData& dragDropData)> inOnDrop)
+{
+    onDropFunc = std::move(inOnDrop);
+}
+
 AUI::Image* ItemThumbnail::getDragDropImage()
 {
-    // Since thumbnailImage doesn't have any offsets, we can use it directly.
-    return &thumbnailImage;
+    return &dragDropImage;
 }
 
 AUI::EventResult ItemThumbnail::onMouseDown(AUI::MouseButtonType buttonType,
@@ -174,9 +180,10 @@ AUI::EventResult ItemThumbnail::onDrop(const AUI::DragDropData& dragDropData)
     //       before making this cast.
     const DragDropData& projectDragDropData{
         static_cast<const DragDropData&>(dragDropData)};
-    if (const auto* inventoryItem{std::get_if<DragDropData::InventoryItem>(
-            &(projectDragDropData.dataType))}) {
-        LOG_INFO("Dropped item slot: %u", inventoryItem->sourceSlotIndex);
+
+    // If the user set a callback for this event, call it.
+    if (onDropFunc) {
+        onDropFunc(projectDragDropData);
 
         return AUI::EventResult{.wasHandled{true}};
     }

@@ -8,6 +8,8 @@ namespace AM
 {
 namespace Client
 {
+struct DragDropData;
+
 /**
  * An item thumbnail for use in the player's inventory, a paper doll equipment 
  * menu, etc.
@@ -57,6 +59,9 @@ public:
     /** Foreground highlight image, selected state. */
     AUI::Image selectedImage;
 
+    /** Drag and drop image. Follows the mouse while dragging. */
+    AUI::Image dragDropImage;
+
     //-------------------------------------------------------------------------
     // Callback registration
     //-------------------------------------------------------------------------
@@ -79,6 +84,9 @@ public:
         std::function<void(ItemThumbnail*, AUI::MouseButtonType)> inOnMouseUp);
 
     void setOnDeselected(std::function<void(ItemThumbnail*)> inOnDeselected);
+
+    void setOnDrop(
+        std::function<void(const DragDropData& dragDropData)> inOnDrop);
 
     //-------------------------------------------------------------------------
     // Base class overrides
@@ -115,6 +123,7 @@ private:
     std::function<bool(ItemThumbnail*, AUI::MouseButtonType)> onMouseDownFunc;
     std::function<void(ItemThumbnail*, AUI::MouseButtonType)> onMouseUpFunc;
     std::function<void(ItemThumbnail*)> onDeselected;
+    std::function<void(const DragDropData& dragDropData)> onDropFunc;
 
     /** If true, this widget displays hoveredImage when hovered. */
     bool isHoverable;

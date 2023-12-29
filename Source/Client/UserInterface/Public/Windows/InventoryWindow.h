@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ItemID.h"
 #include "AUI/Window.h"
 #include "AUI/Image.h"
 #include "AUI/VerticalGridContainer.h"
@@ -43,10 +44,26 @@ public:
     void updateLayout() override;
 
 private:
+    /** The height and width of our thumbnail widgets, in logical pixels. */
+    static constexpr int THUMBNAIL_SIZE{58};
+
     /**
      * Refreshes itemContainer, making it match the given inventory.
      */
     void refresh(const Inventory& inventory);
+
+    /**
+     * Adds an empty thumbnail for the given slot.
+     */
+    ItemThumbnail& addEmptyThumbnail(const Inventory& inventory,
+                                     Uint8 slotIndex);
+
+    /**
+     * Turns the given empty thumbnail into an item thumbnail.
+     * Used for non-empty slots, after first calling addEmptyThumbnail().
+     */
+    void finishItemThumbnail(ItemThumbnail& thumbnail,
+                             ItemID itemID, Uint8 slotIndex);
 
     void onInventoryUpdated(entt::registry& registry, entt::entity entity);
     void onItemUpdate(const Item& item);
@@ -69,8 +86,8 @@ private:
     //-------------------------------------------------------------------------
     AUI::Image backgroundImage;
 
-    /** Holds the inventory items. */
-    AUI::VerticalGridContainer itemContainer;
+    /** Holds the inventory slot thumbnails. */
+    AUI::VerticalGridContainer slotContainer;
 };
 
 } // End namespace Client
