@@ -34,9 +34,9 @@ void InteractionManager::entityHovered(entt::entity entity)
 
     // If we're using an item, update the text to reflect the hovered entity as
     // the target.
-    std::ostringstream stringStream{};
+    std::string newInteractionText{};
     if (usingItem) {
-        stringStream << "Use " << sourceName << " on " << name.value;
+        newInteractionText += "Use " + sourceName + " on " + name.value;
     }
     // Else, update the text to reflect the hovered entity's interactions.
     else {
@@ -48,17 +48,17 @@ void InteractionManager::entityHovered(entt::entity entity)
 
         // Update the text to reflect the hovered entity's default interaction.
         EntityInteractionType defaultInteraction{interaction->getDefault()};
-        stringStream << DisplayStrings::get(defaultInteraction) << " "
-                     << name.value;
+        newInteractionText
+            += DisplayStrings::get(defaultInteraction) + " " + name.value;
 
         std::size_t interactionCount{interaction->getCount()};
         if (interactionCount > 1) {
-            stringStream << " / " << std::to_string(interactionCount - 1)
-                         << " more options.";
+            newInteractionText += " / " + std::to_string(interactionCount - 1)
+                                  + " more options.";
         }
     }
 
-    onInteractionTextUpdated(stringStream.str());
+    onInteractionTextUpdated(newInteractionText);
 }
 
 void InteractionManager::entityLeftClicked(entt::entity entity)
@@ -132,26 +132,26 @@ void InteractionManager::itemHovered(Uint8 slotIndex)
 
     // If we're using an item, update the text to reflect the hovered item as
     // the target.
-    std::ostringstream stringStream{};
+    std::string newInteractionText{};
     if (usingItem) {
-        stringStream << "Use " << sourceName << " on "
-                     << hoveredItem->displayName;
+        newInteractionText
+            += "Use " + sourceName + " on " + hoveredItem->displayName;
     }
     // Else, update the text to reflect the hovered item's interactions.
     else {
         ItemInteractionType defaultInteraction{
             hoveredItem->getDefaultInteraction()};
-        stringStream << DisplayStrings::get(defaultInteraction) << " "
-                     << hoveredItem->displayName;
+        newInteractionText += DisplayStrings::get(defaultInteraction) + " "
+                              + hoveredItem->displayName;
 
         std::size_t interactionCount{hoveredItem->getInteractionCount()};
         if (interactionCount > 1) {
-            stringStream << " / " << std::to_string(interactionCount - 1)
-                         << " more options.";
+            newInteractionText += " / " + std::to_string(interactionCount - 1)
+                                  + " more options.";
         }
     }
 
-    onInteractionTextUpdated(stringStream.str());
+    onInteractionTextUpdated(newInteractionText);
 }
 
 bool InteractionManager::itemMouseDown(Uint8 slotIndex,
@@ -212,9 +212,8 @@ void InteractionManager::unhovered()
 {
     // If we're using an item, go back to the Use text without a target.
     if (usingItem) {
-        std::ostringstream stringStream{};
-        stringStream << "Use " << sourceName << " on";
-        onInteractionTextUpdated(stringStream.str());
+        std::string newInteractionText{"Use " + sourceName + " on"};
+        onInteractionTextUpdated(newInteractionText);
     }
     else {
         // Not using an item, reset the text.
@@ -331,9 +330,8 @@ void InteractionManager::beginUseItemOnInteraction(Uint8 slotIndex,
     itemThumbnail.setIsFocusable(true);
     mainScreen.setFocus(&itemThumbnail);
 
-    std::ostringstream stringStream{};
-    stringStream << "Use " << sourceName << " on " << sourceName;
-    onInteractionTextUpdated(stringStream.str());
+    std::string newInteractionText{"Use " + sourceName + " on " + sourceName};
+    onInteractionTextUpdated(newInteractionText);
 }
 
 } // End namespace Client

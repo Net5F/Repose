@@ -102,7 +102,7 @@ void InventoryWindow::refresh(const Inventory& inventory)
     slotContainer.clear();
     for (Uint8 slotIndex = 0; slotIndex < inventory.slots.size(); ++slotIndex) {
         // Assume that the slot is empty and add an empty thumbnail.
-        ItemThumbnail& thumbnail{addEmptyThumbnail(inventory, slotIndex)};
+        ItemThumbnail& thumbnail{addEmptyThumbnail(slotIndex)};
 
         // If the slot has an item in it, build the empty thumbnail into a
         // full item thumbnail.
@@ -115,8 +115,7 @@ void InventoryWindow::refresh(const Inventory& inventory)
     wasRefreshed = true;
 }
 
-ItemThumbnail& InventoryWindow::addEmptyThumbnail(const Inventory& inventory,
-                                                  Uint8 slotIndex)
+ItemThumbnail& InventoryWindow::addEmptyThumbnail(Uint8 slotIndex)
 {
     // Construct the new thumbnail and add it to the item container.
     std::unique_ptr<AUI::Widget> thumbnailPtr{std::make_unique<ItemThumbnail>(
@@ -165,10 +164,10 @@ void InventoryWindow::finishItemThumbnail(ItemThumbnail& thumbnail,
         std::make_unique<DragDropData>(DragDropData::InventoryItem{slotIndex}));
 
     // Add our callbacks.
-    thumbnail.setOnHovered([&, slotIndex](ItemThumbnail* thumbnail) {
+    thumbnail.setOnHovered([&, slotIndex](ItemThumbnail*) {
         interactionManager.itemHovered(slotIndex);
     });
-    thumbnail.setOnUnhovered([&, slotIndex](ItemThumbnail* thumbnail) {
+    thumbnail.setOnUnhovered([&, slotIndex](ItemThumbnail*) {
         interactionManager.unhovered();
     });
     thumbnail.setOnMouseDown([&, slotIndex](ItemThumbnail* thumbnail,

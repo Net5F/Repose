@@ -55,8 +55,7 @@ private:
     /**
      * Adds an empty thumbnail for the given slot.
      */
-    ItemThumbnail& addEmptyThumbnail(const Inventory& inventory,
-                                     Uint8 slotIndex);
+    ItemThumbnail& addEmptyThumbnail(Uint8 slotIndex);
 
     /**
      * Turns the given empty thumbnail into an item thumbnail.

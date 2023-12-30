@@ -18,8 +18,8 @@ ChatWindow::ChatWindow(Network& inNetwork, SDL_Renderer* inSdlRenderer)
 , shouldFade{false}
 , idleTimer{}
 , fadeTimer{}
-, textureExtent{0, 0, 0, 0}
 , renderTexture{nullptr}
+, textureExtent{0, 0, 0, 0}
 , systemMessageQueue{inNetwork.getEventDispatcher()}
 , messageContainer({0, 0, logicalExtent.w, logicalExtent.h}, "MessageContainer")
 {

@@ -158,7 +158,7 @@ AUI::EventResult ItemThumbnail::onFocusGained()
     return AUI::EventResult{.wasHandled{true}};
 }
 
-void ItemThumbnail::onFocusLost(AUI::FocusLostType focusLostType)
+void ItemThumbnail::onFocusLost(AUI::FocusLostType)
 {
     // When we lose focus, reset our selected state.
 
