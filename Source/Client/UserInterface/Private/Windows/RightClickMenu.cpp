@@ -1,7 +1,6 @@
 #include "RightClickMenu.h"
 #include "MainScreen.h"
 #include "Paths.h"
-#include "Ignore.h"
 
 namespace AM
 {

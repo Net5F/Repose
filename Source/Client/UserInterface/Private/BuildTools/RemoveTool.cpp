@@ -7,7 +7,6 @@
 #include "Tile.h"
 #include "EntityDeleteRequest.h"
 #include "QueuedEvents.h"
-#include "Ignore.h"
 
 namespace AM
 {
@@ -27,7 +26,6 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
                             const SDL_Point& cursorPosition)
 {
     // Note: mouseTilePosition is set in onMouseMove().
-    ignore(cursorPosition);
 
     // If this tool is active and the user left clicked.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)) {

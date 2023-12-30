@@ -4,7 +4,6 @@
 #include "TileAddLayer.h"
 #include "Transforms.h"
 #include "QueuedEvents.h"
-#include "Ignore.h"
 #include <cmath>
 
 namespace AM
@@ -26,11 +25,9 @@ void WallTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
         = static_cast<const WallSpriteSet*>(&inSelectedSpriteSet);
 }
 
-void WallTool::onMouseDown(AUI::MouseButtonType buttonType,
-                            const SDL_Point& cursorPosition)
+void WallTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
 {
     // Note: mouseTilePosition is set in onMouseMove().
-    ignore(cursorPosition);
 
     // If this tool is active, the user left clicked, and we have a selected 
     // sprite.

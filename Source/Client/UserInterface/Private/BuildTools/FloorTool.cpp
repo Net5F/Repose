@@ -3,7 +3,6 @@
 #include "Network.h"
 #include "TileAddLayer.h"
 #include "QueuedEvents.h"
-#include "Ignore.h"
 
 namespace AM
 {
@@ -22,11 +21,9 @@ void FloorTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
     selectedSpriteSet = static_cast<const FloorSpriteSet*>(&inSelectedSpriteSet);
 }
 
-void FloorTool::onMouseDown(AUI::MouseButtonType buttonType,
-                            const SDL_Point& cursorPosition)
+void FloorTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
 {
     // Note: mouseTilePosition is set in onMouseMove().
-    ignore(cursorPosition);
 
     // If this tool is active, the user left clicked, and we have a selected 
     // sprite.

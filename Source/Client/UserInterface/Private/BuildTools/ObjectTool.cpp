@@ -3,7 +3,6 @@
 #include "Network.h"
 #include "TileAddLayer.h"
 #include "QueuedEvents.h"
-#include "Ignore.h"
 #include "AMAssert.h"
 
 namespace AM
@@ -38,11 +37,9 @@ void ObjectTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
     selectedSpriteIndex = 0;
 }
 
-void ObjectTool::onMouseDown(AUI::MouseButtonType buttonType,
-                            const SDL_Point& cursorPosition)
+void ObjectTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
 {
     // Note: mouseTilePosition is set in onMouseMove().
-    ignore(cursorPosition);
 
     // If this tool is active, the user left clicked, and we have a selected 
     // sprite.

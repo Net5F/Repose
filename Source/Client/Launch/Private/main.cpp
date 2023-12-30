@@ -5,7 +5,6 @@
 #include "RendererExtension.h"
 #include "SimulationExtension.h"
 #include "UserInterfaceExtension.h"
-#include "Ignore.h"
 
 #include "SDL2pp/Exception.hh"
 
@@ -14,12 +13,9 @@
 using namespace AM;
 using namespace AM::Client;
 
-int main(int argc, char** argv)
+// Note: SDL2 needs this signature for main, but we don't use the parameters.
+int main(int, char**)
 try {
-    // SDL2 needs this signature for main, but we don't use the parameters.
-    ignore(argc);
-    ignore(argv);
-
     // Set up file logging.
     // TODO: This currently will do weird stuff if you have 2 clients open.
     //       If we need a temporary solution we can use PIDs, but the real

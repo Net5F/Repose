@@ -7,7 +7,6 @@
 #include "IsClientEntity.h"
 #include "AnimationState.h"
 #include "QueuedEvents.h"
-#include "Ignore.h"
 #include "AMAssert.h"
 #include "entt/entity/entity.hpp"
 
@@ -53,10 +52,9 @@ void EntityTool::setOnSelectionCleared(
 }
 
 void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
-                            const SDL_Point& cursorPosition)
+                             const SDL_Point& cursorPosition)
 {
     // Note: mouseTilePosition is set in onMouseMove().
-    ignore(cursorPosition);
 
     // If this tool is active and the user left clicked.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)) {

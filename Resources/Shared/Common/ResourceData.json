@@ -82,8 +82,8 @@
                     "numericID": 1,
                     "stringID": "test_0",
                     "textureExtent": {
-                        "h": 64,
-                        "w": 64,
+                        "h": 58,
+                        "w": 58,
                         "x": 0,
                         "y": 0
                     }
@@ -93,9 +93,9 @@
                     "numericID": 2,
                     "stringID": "test_1",
                     "textureExtent": {
-                        "h": 64,
-                        "w": 64,
-                        "x": 64,
+                        "h": 58,
+                        "w": 58,
+                        "x": 58,
                         "y": 0
                     }
                 },
@@ -104,10 +104,10 @@
                     "numericID": 3,
                     "stringID": "test_2",
                     "textureExtent": {
-                        "h": 64,
-                        "w": 64,
+                        "h": 58,
+                        "w": 58,
                         "x": 0,
-                        "y": 64
+                        "y": 58
                     }
                 },
                 {
@@ -115,10 +115,10 @@
                     "numericID": 4,
                     "stringID": "test_3",
                     "textureExtent": {
-                        "h": 64,
-                        "w": 64,
-                        "x": 64,
-                        "y": 64
+                        "h": 58,
+                        "w": 58,
+                        "x": 58,
+                        "y": 58
                     }
                 }
             ],

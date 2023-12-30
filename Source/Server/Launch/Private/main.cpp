@@ -3,7 +3,6 @@
 #include "ProjectUserConfig.h"
 #include "MessageProcessorExtension.h"
 #include "SimulationExtension.h"
-#include "Ignore.h"
 
 #include "SDL2pp/Exception.hh"
 
@@ -12,12 +11,9 @@
 using namespace AM;
 using namespace AM::Server;
 
-int main(int argc, char** argv)
+// Note: SDL2 needs this signature for main, but we don't use the parameters.
+int main(int, char**)
 try {
-    // SDL2 needs this signature for main, but we don't use the parameters.
-    ignore(argc);
-    ignore(argv);
-
     // Set up file logging.
     Log::enableFileLogging("Server.log");
 
