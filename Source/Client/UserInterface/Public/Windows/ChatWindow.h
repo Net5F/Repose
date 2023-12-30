@@ -51,11 +51,11 @@ private:
         As we receive more, the oldest will be erased. */
     static constexpr std::size_t MAX_MESSAGES{15};
 
-    /** How long this window should stay at full alpha after receiving a 
+    /** How long this window should stay at full alpha after receiving a
         message or being moused over, before fading to the idle alpha. */
     static constexpr double IDLE_TIME_S{5};
 
-    /** The integer value from 0 - 255 that this window should fade to when 
+    /** The integer value from 0 - 255 that this window should fade to when
         idle. */
     static constexpr int IDLE_ALPHA{100};
 
@@ -77,14 +77,14 @@ private:
     /** If true, we should be fading towards IDLE_ALPHA. */
     bool shouldFade;
 
-    /** Tracks how long its been since we've received a message or been hovered 
+    /** Tracks how long its been since we've received a message or been hovered
         by the mouse. */
     Timer idleTimer;
 
     /** Tracks how long we've been fading. */
     Timer fadeTimer;
 
-    /** The texture that we render to, so we can make the chat window 
+    /** The texture that we render to, so we can make the chat window
         transparent. */
     std::shared_ptr<SDL_Texture> renderTexture;
 

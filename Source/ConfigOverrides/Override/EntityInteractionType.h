@@ -1,7 +1,7 @@
 #pragma once
 
 ///////////////////////////////////////////////////////////////////////////////
-// Note: This file overrides the engine's default 
+// Note: This file overrides the engine's default
 //       SharedLib/EntityInteractionType.h
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -14,8 +14,7 @@ namespace AM
 /**
  * The types of interactions that a user may be able to perform on an entity.
  */
-enum class EntityInteractionType : Uint8
-{
+enum class EntityInteractionType : Uint8 {
     // Engine interactions (copied here so we can use one strongly-typed enum).
     NotSet = static_cast<Uint8>(EngineEntityInteractionType::NotSet),
 

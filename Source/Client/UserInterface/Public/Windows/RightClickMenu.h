@@ -21,7 +21,7 @@ namespace Client
 class RightClickMenu : public AUI::Window
 {
 public:
-    /** The padding to add on each side of this menu. Allows the mouse to move 
+    /** The padding to add on each side of this menu. Allows the mouse to move
         slightly outside the menu without accidentally closing it. */
     static constexpr int PADDING{20};
 
@@ -38,7 +38,7 @@ public:
     //-------------------------------------------------------------------------
     /**
      * Adds an action to this menu.
-     * 
+     *
      * @param displayText The text to display for this menu option.
      * @param onSelected The function to call when this option is selected.
      */

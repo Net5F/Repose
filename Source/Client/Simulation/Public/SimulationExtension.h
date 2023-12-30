@@ -28,7 +28,7 @@ public:
     /**
      * Initializes or re-initializes our simulation systems.
      *
-     * Used to put the systems in a consistent state, so they don't need to 
+     * Used to put the systems in a consistent state, so they don't need to
      * account for disconnects/reconnects.
      */
     void initializeSystems();
@@ -65,7 +65,7 @@ public:
 private:
     SimulationExDependencies deps;
 
-    // Note: These are pointers so that we can delete/reconstruct them when we 
+    // Note: These are pointers so that we can delete/reconstruct them when we
     //       connect to the server. This gives them a consistent starting state.
     std::unique_ptr<AnimationSystem> animationSystem;
 };

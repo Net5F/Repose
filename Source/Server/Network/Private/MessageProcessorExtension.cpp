@@ -18,7 +18,8 @@ void dispatchWithNetID(NetworkID netID, std::span<Uint8> messageBuffer,
 {
     // Deserialize the message.
     T message{};
-    Deserialize::fromBuffer(messageBuffer.data(), messageBuffer.size(), message);
+    Deserialize::fromBuffer(messageBuffer.data(), messageBuffer.size(),
+                            message);
 
     // Fill in the network ID that we assigned to this client.
     message.netID = netID;
@@ -27,16 +28,16 @@ void dispatchWithNetID(NetworkID netID, std::span<Uint8> messageBuffer,
     dispatcher.push<T>(message);
 }
 
-
 MessageProcessorExtension::MessageProcessorExtension(
     const MessageProcessorExDependencies& deps)
 : networkEventDispatcher{deps.networkEventDispatcher}
 {
 }
 
-void MessageProcessorExtension::processReceivedMessage(
-    NetworkID netID, Uint8 messageType, Uint8* messageBuffer,
-    std::size_t messageSize)
+void MessageProcessorExtension::processReceivedMessage(NetworkID netID,
+                                                       Uint8 messageType,
+                                                       Uint8* messageBuffer,
+                                                       std::size_t messageSize)
 {
     // Match the enum values to their event types.
     ProjectMessageType projectMessageType{

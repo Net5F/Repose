@@ -144,7 +144,8 @@ bool MainScreen::onKeyDown(SDL_Keycode keyCode)
     return false;
 }
 
-void MainScreen::onPositionChanged(entt::registry& registry, entt::entity entity)
+void MainScreen::onPositionChanged(entt::registry& registry,
+                                   entt::entity entity)
 {
     // We only care about updates to the player entity.
     if (entity != world.playerEntity) {

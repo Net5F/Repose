@@ -15,7 +15,8 @@ class World;
 /**
  * Makes the entity walk around randomly.
  */
-class RandomWalkerAILogic : public AILogic {
+class RandomWalkerAILogic : public AILogic
+{
 public:
     /**
      * @param inTimeToWalk How long to walk for.
@@ -29,7 +30,7 @@ public:
     /**
      * Processes one iteration of AI logic.
      *
-     * If the given entity doesn't possess any of the necessary components, 
+     * If the given entity doesn't possess any of the necessary components,
      * prints a warning and returns early.
      *
      * @param entity The entity that this AI is controlling.

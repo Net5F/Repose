@@ -10,7 +10,7 @@ namespace AM
 {
 struct ObjectSpriteSet;
 
-namespace Client 
+namespace Client
 {
 class WorldObjectLocator;
 class Network;
@@ -21,7 +21,7 @@ class SpriteData;
  *       Make highlights look better
  */
 
-// TODO: This uses object sprite sets everywhere. When we add character sprite 
+// TODO: This uses object sprite sets everywhere. When we add character sprite
 //       sets, figure out how the UI should surface them.
 /**
  * The build mode tool used for adding entities.
@@ -29,12 +29,11 @@ class SpriteData;
 class EntityTool : public BuildTool
 {
 public:
-    EntityTool(World& inWorld,
-               const WorldObjectLocator& inWorldObjectLocator,
+    EntityTool(World& inWorld, const WorldObjectLocator& inWorldObjectLocator,
                Network& inNetwork, SpriteData& inSpriteData);
 
     /**
-     * Sets the currently selected entity template. This selection will follow 
+     * Sets the currently selected entity template. This selection will follow
      * the user's mouse, and will be placed if the user left clicks.
      *
      * This is called by EntityPanelContent when a template is selected.
@@ -43,14 +42,14 @@ public:
                              const AnimationState& animationState);
 
     /**
-     * @param inOnEntitySelected  A callback for when the user clicks on a 
+     * @param inOnEntitySelected  A callback for when the user clicks on a
      *                            entity that isn't already selected.
      */
     void setOnEntitySelected(
         std::function<void(entt::entity entity)> inOnEntitySelected);
 
     /**
-     * @param inOnSelectionCleared  A callback for when the user right clicks 
+     * @param inOnSelectionCleared  A callback for when the user right clicks
      *                              or presses escape to clear the selection.
      */
     void setOnSelectionCleared(std::function<void(void)> inOnSelectionCleared);
@@ -66,7 +65,7 @@ public:
 
 private:
     /**
-     * If the given entity isn't a player entity and isn't already selected, 
+     * If the given entity isn't a player entity and isn't already selected,
      * selects it and calls onEntitySelected.
      */
     void trySelectEntity(entt::entity entity);
@@ -77,18 +76,18 @@ private:
     void onEntityDestroyed(entt::registry& registry, entt::entity entity);
 
     /**
-     * If we have an entity or template selected, clears it and calls 
+     * If we have an entity or template selected, clears it and calls
      * onSelectionCleared.
      */
     void clearCurrentSelection();
 
     /**
-     * Returns the selected template's sprite, or nullptr if there's no selected 
+     * Returns the selected template's sprite, or nullptr if there's no selected
      * template.
      */
     const Sprite* getSelectedTemplateSprite();
 
-    /** Used for finding entities that the mouse is hovering over or 
+    /** Used for finding entities that the mouse is hovering over or
         clicking. */
     const WorldObjectLocator& worldObjectLocator;
     /** Used to get sprites from AnimationStates. */

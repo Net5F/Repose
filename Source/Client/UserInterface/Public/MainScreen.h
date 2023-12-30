@@ -40,7 +40,7 @@ public:
 
     /**
      * Adds an action to the right-click menu.
-     * 
+     *
      * @param displayText The text to display for this menu option.
      * @param onSelected The function to call when this option is selected.
      */
@@ -60,7 +60,7 @@ public:
     /**
      * Sets the camera to use when rendering.
      *
-     * Called during the render pass to give us the lerped camera for the 
+     * Called during the render pass to give us the lerped camera for the
      * current frame.
      */
     void setCamera(const Camera& inCamera);
@@ -90,7 +90,7 @@ private:
     /** Used to get the player entity's ID. */
     World& world;
 
-    /** Orchestrates item and entity interactions from MainOverlay and 
+    /** Orchestrates item and entity interactions from MainOverlay and
         InventoryWindow. */
     InteractionManager interactionManager;
 
@@ -104,7 +104,7 @@ private:
         will eventually show player names, etc. */
     MainOverlay mainOverlay;
 
-    /** The chat window. Currently only shows system messages, but will 
+    /** The chat window. Currently only shows system messages, but will
         eventually show player messages and support sending messages. */
     ChatWindow chatWindow;
 
@@ -117,7 +117,7 @@ private:
     /** The build mode panel. Allows the player to select tiles. */
     BuildPanel buildPanel;
 
-    /** A general-purpose right-click menu. Used for e.g. displaying 
+    /** A general-purpose right-click menu. Used for e.g. displaying
         the supported interactions when a user right-clicks an item. */
     RightClickMenu rightClickMenu;
 };

@@ -38,7 +38,7 @@ public:
     // Base class overrides
     //-------------------------------------------------------------------------
     /**
-     * Calls Window::updateLayout() and, if itemContainer has been refreshed, 
+     * Calls Window::updateLayout() and, if itemContainer has been refreshed,
      * notifies InteractionManager.
      */
     void updateLayout() override;
@@ -62,8 +62,8 @@ private:
      * Turns the given empty thumbnail into an item thumbnail.
      * Used for non-empty slots, after first calling addEmptyThumbnail().
      */
-    void finishItemThumbnail(ItemThumbnail& thumbnail,
-                             ItemID itemID, Uint8 slotIndex);
+    void finishItemThumbnail(ItemThumbnail& thumbnail, ItemID itemID,
+                             Uint8 slotIndex);
 
     void onInventoryUpdated(entt::registry& registry, entt::entity entity);
     void onItemUpdate(const Item& item);
@@ -77,7 +77,7 @@ private:
     /** Used to orchestrate item/entity interactions. */
     InteractionManager& interactionManager;
 
-    /** If true, itemContainer has been refreshed and InteractionManager needs 
+    /** If true, itemContainer has been refreshed and InteractionManager needs
         to be notified. */
     bool wasRefreshed;
 

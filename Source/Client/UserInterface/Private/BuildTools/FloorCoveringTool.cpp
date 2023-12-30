@@ -17,9 +17,10 @@ FloorCoveringTool::FloorCoveringTool(World& inWorld, Network& inNetwork)
 {
 }
 
-void FloorCoveringTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
+void FloorCoveringTool::setSelectedSpriteSet(
+    const SpriteSet& inSelectedSpriteSet)
 {
-    // Note: This cast should be safe, since only floor covering sprite sets 
+    // Note: This cast should be safe, since only floor covering sprite sets
     //       should be clickable while this tool is alive.
     selectedSpriteSet
         = static_cast<const FloorCoveringSpriteSet*>(&inSelectedSpriteSet);
@@ -42,7 +43,7 @@ void FloorCoveringTool::onMouseDown(AUI::MouseButtonType buttonType,
 {
     // Note: mouseTilePosition is set in onMouseMove().
 
-    // If this tool is active, the user left clicked, and we have a selected 
+    // If this tool is active, the user left clicked, and we have a selected
     // sprite.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
@@ -55,7 +56,7 @@ void FloorCoveringTool::onMouseDown(AUI::MouseButtonType buttonType,
 }
 
 void FloorCoveringTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
-                                   const SDL_Point& cursorPosition)
+                                           const SDL_Point& cursorPosition)
 {
     // We treat additional clicks as regular MouseDown events.
     onMouseDown(buttonType, cursorPosition);

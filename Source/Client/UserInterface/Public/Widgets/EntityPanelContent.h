@@ -30,7 +30,7 @@ class BuildPanel;
 class EntityTool;
 struct SpriteRenderData;
 
-// TODO: This uses object sprite sets everywhere. When we add character sprite 
+// TODO: This uses object sprite sets everywhere. When we add character sprite
 //       sets, figure out how the UI should surface them.
 /**
  * Content for the BuildPanel when the entity tool is selected.
@@ -76,7 +76,7 @@ private:
     void changeView(ViewType newView);
 
     /**
-     * Adds the "refresh button", which requests the latest entity templates 
+     * Adds the "refresh button", which requests the latest entity templates
      * from the server.
      */
     void addRefreshButton();
@@ -89,8 +89,7 @@ private:
     /**
      * Fills the templates container with the given entity templates.
      */
-    void addTemplateThumbnails(
-        const EntityTemplates& entityTemplates);
+    void addTemplateThumbnails(const EntityTemplates& entityTemplates);
 
     /**
      * Fills the sprite set container with all of the entity sprite sets.
@@ -98,7 +97,8 @@ private:
     void addSpriteSetThumbnails();
 
     /**
-     * Returns a square texture extent that shows the bottom of the given sprite.
+     * Returns a square texture extent that shows the bottom of the given
+     * sprite.
      */
     SDL_Rect calcSquareTexExtent(const SpriteRenderData& renderData);
 
@@ -120,7 +120,7 @@ private:
     /** The current content view type. */
     ViewType currentView;
 
-    /** Used to tell the tool when a thumbnail is selected, and to register for 
+    /** Used to tell the tool when a thumbnail is selected, and to register for
         "a entity was clicked" callbacks. */
     EntityTool* entityTool;
 
@@ -159,7 +159,7 @@ private:
     MainButton saveTemplateButton;
 
     // SpriteSet selection view
-    /** Holds the sprite sets that are used to change a selected entity's 
+    /** Holds the sprite sets that are used to change a selected entity's
         sprite. */
     AUI::VerticalGridContainer spriteSetContainer;
 };

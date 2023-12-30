@@ -50,10 +50,10 @@ void ChatWindow::onTick(double)
     SystemMessage systemMessage{};
     while (systemMessageQueue.pop(systemMessage)) {
         // Add the new text.
-        // Note: The widget's height will be auto-adjusted to fit the given text.
+        // Note: The widget's height will be auto-adjusted to fit the given
+        // text.
         std::unique_ptr<AUI::Widget> textPtr{std::make_unique<AUI::Text>(
-            SDL_Rect{0, 0, logicalExtent.w, 0},
-            "SystemMessageText")};
+            SDL_Rect{0, 0, logicalExtent.w, 0}, "SystemMessageText")};
         AUI::Text& text{static_cast<AUI::Text&>(*textPtr)};
         text.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 20);
         text.setColor({255, 255, 255, 255});
@@ -63,7 +63,7 @@ void ChatWindow::onTick(double)
 
         messageContainer.insert(messageContainer.begin(), std::move(textPtr));
 
-        // If the container has more than our max text widgets, erase the 
+        // If the container has more than our max text widgets, erase the
         // oldest one.
         if (messageContainer.size() > MAX_MESSAGES) {
             messageContainer.erase(messageContainer.end() - 1);
@@ -118,7 +118,7 @@ void ChatWindow::updateLayout()
 
 void ChatWindow::render()
 {
-    // Note: We render to a separate texture so that we can control the whole 
+    // Note: We render to a separate texture so that we can control the whole
     //       chat window's transparency.
 
     // Save the previous renderer state so we can re-apply it after.
@@ -129,7 +129,7 @@ void ChatWindow::render()
                            &previousDrawColor.a);
 
     // Set our texture as the render target and clear it.
-    // Note: The draw color must be white even though alpha is 0, because the 
+    // Note: The draw color must be white even though alpha is 0, because the
     //       color info is retained and we'll otherwise lose color in blending.
     SDL_SetRenderTarget(sdlRenderer, renderTexture.get());
 
@@ -140,9 +140,9 @@ void ChatWindow::render()
                            previousDrawColor.a);
 
     // Render the chat window to our texture.
-    // Note: We can't use Window::render() because it passes a screen-relative 
+    // Note: We can't use Window::render() because it passes a screen-relative
     //       top left and we need it to be window-relative for our texture.
-    //       Instead, we rely on Window's clippedExtent which (because of a 
+    //       Instead, we rely on Window's clippedExtent which (because of a
     //       WidgetLocator peculiarity) has its origin at (0, 0).
     for (Widget& child : children) {
         if (child.getIsVisible()) {

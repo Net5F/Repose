@@ -12,7 +12,8 @@ namespace AM
 /**
  * Used to send the latest list of entity templates to a client.
  *
- * TODO: Once user accounts are added, templates should be made account-specific.
+ * TODO: Once user accounts are added, templates should be made
+ *       account-specific.
  */
 struct EntityTemplates {
     // The ProjectMessageType enum value that this message corresponds to.

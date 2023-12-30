@@ -31,9 +31,7 @@ std::span<const SpriteColorModInfo> BuildTool::getSpriteColorMods() const
     return spriteColorMods;
 }
 
-void BuildTool::setSelectedSpriteSet(const SpriteSet&)
-{
-}
+void BuildTool::setSelectedSpriteSet(const SpriteSet&) {}
 
 void BuildTool::setCamera(const Camera& inCamera)
 {
@@ -45,20 +43,13 @@ void BuildTool::setTileMapExtent(const TileExtent& inTileExtent)
     mapTileExtent = inTileExtent;
 }
 
-void BuildTool::onMouseDown(AUI::MouseButtonType, const SDL_Point&) {
-}
+void BuildTool::onMouseDown(AUI::MouseButtonType, const SDL_Point&) {}
 
-void BuildTool::onMouseUp(AUI::MouseButtonType, const SDL_Point&)
-{
-}
+void BuildTool::onMouseUp(AUI::MouseButtonType, const SDL_Point&) {}
 
-void BuildTool::onMouseDoubleClick(AUI::MouseButtonType, const SDL_Point&)
-{
-}
+void BuildTool::onMouseDoubleClick(AUI::MouseButtonType, const SDL_Point&) {}
 
-void BuildTool::onMouseWheel(int)
-{
-}
+void BuildTool::onMouseWheel(int) {}
 
 void BuildTool::onMouseMove(const SDL_Point& cursorPosition)
 {

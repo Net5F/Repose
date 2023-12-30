@@ -4,7 +4,7 @@
 
 namespace AM
 {
-namespace Client 
+namespace Client
 {
 class WorldObjectLocator;
 
@@ -14,8 +14,7 @@ class WorldObjectLocator;
 class RemoveTool : public BuildTool
 {
 public:
-    RemoveTool(World& inWorld,
-               const WorldObjectLocator& inWorldObjectLocator,
+    RemoveTool(World& inWorld, const WorldObjectLocator& inWorldObjectLocator,
                Network& inNetwork);
 
     void onMouseDown(AUI::MouseButtonType buttonType,
@@ -33,7 +32,7 @@ private:
     void requestRemoveTileLayer(int tileX, int tileY, TileLayer::Type layerType,
                                 Uint16 spriteSetID, Uint8 spriteIndex);
 
-    /** Used for finding tile layers or entities that the mouse is 
+    /** Used for finding tile layers or entities that the mouse is
         hovering over or clicking. */
     const WorldObjectLocator& worldObjectLocator;
 

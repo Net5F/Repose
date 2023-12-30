@@ -42,7 +42,7 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
     slotContainer.setCellWidth(THUMBNAIL_SIZE);
     slotContainer.setCellHeight(THUMBNAIL_SIZE);
 
-    // We need to update this widget when the player's inventory changes, or 
+    // We need to update this widget when the player's inventory changes, or
     // when an item definition changes.
     world.registry.on_update<Inventory>()
         .connect<&InventoryWindow::onInventoryUpdated>(*this);
@@ -55,9 +55,9 @@ void InventoryWindow::updateLayout()
     // Do the normal layout updating.
     Window::updateLayout();
 
-    // Items in the inventory may have changed. If the mouse is hovering over 
+    // Items in the inventory may have changed. If the mouse is hovering over
     // the inventory, update InteractionManager's hover state.
-    // Note: We have to wait until after layout, so the thumbnails are in their 
+    // Note: We have to wait until after layout, so the thumbnails are in their
     //       actual position.
     if (wasRefreshed) {
         wasRefreshed = false;
@@ -68,7 +68,7 @@ void InventoryWindow::updateLayout()
         cursorPosition.x -= scaledExtent.x;
         cursorPosition.y -= scaledExtent.y;
 
-        // If the mouse isn't in the inventory, no items are being hovered and 
+        // If the mouse isn't in the inventory, no items are being hovered and
         // none were being hovered before the update. Do nothing.
         if (!containsPoint(cursorPosition)) {
             return;
@@ -76,7 +76,8 @@ void InventoryWindow::updateLayout()
 
         // If we're hovering an item thumbnail, tell InteractionManager.
         bool hoveringItem{false};
-        for (Uint8 slotIndex = 0; slotIndex < slotContainer.size(); ++slotIndex) {
+        for (Uint8 slotIndex = 0; slotIndex < slotContainer.size();
+             ++slotIndex) {
             std::unique_ptr<AUI::Widget>& item{slotContainer[slotIndex]};
             if (item->getIsVisible() && item->containsPoint(cursorPosition)) {
                 interactionManager.itemHovered(slotIndex);
@@ -84,7 +85,7 @@ void InventoryWindow::updateLayout()
             }
         }
 
-        // If we aren't hovering an item, tell InteractionManager to unhover 
+        // If we aren't hovering an item, tell InteractionManager to unhover
         // since we may been hovering an item before the update.
         if (!hoveringItem) {
             interactionManager.unhovered();
@@ -103,7 +104,7 @@ void InventoryWindow::refresh(const Inventory& inventory)
         // Assume that the slot is empty and add an empty thumbnail.
         ItemThumbnail& thumbnail{addEmptyThumbnail(inventory, slotIndex)};
 
-        // If the slot has an item in it, build the empty thumbnail into a 
+        // If the slot has an item in it, build the empty thumbnail into a
         // full item thumbnail.
         ItemID itemID{inventory.slots[slotIndex].ID};
         if (itemID) {
@@ -124,11 +125,11 @@ ItemThumbnail& InventoryWindow::addEmptyThumbnail(const Inventory& inventory,
     ItemThumbnail& thumbnail{
         static_cast<ItemThumbnail&>(*(slotContainer.back()))};
 
-    // If an inventory item is dropped on this thumbnail, move the item into 
+    // If an inventory item is dropped on this thumbnail, move the item into
     // this thumbnail's slot.
     thumbnail.setOnDrop([&, slotIndex](const DragDropData& dragDropData) {
-        const auto* itemData{std::get_if<DragDropData::InventoryItem>(
-            &(dragDropData.dataType))};
+        const auto* itemData{
+            std::get_if<DragDropData::InventoryItem>(&(dragDropData.dataType))};
         if (itemData && (itemData->sourceSlotIndex != slotIndex)) {
             network.serializeAndSend(InventoryOperation{
                 InventoryMoveItem{itemData->sourceSlotIndex, slotIndex}});
@@ -157,12 +158,11 @@ void InventoryWindow::finishItemThumbnail(ItemThumbnail& thumbnail,
 
     // Load the thumbnail's selected image.
     thumbnail.selectedImage.setNineSliceImage(
-        Paths::TEXTURE_DIR + "Thumbnail/Selected_NineSlice.png",
-        {4, 4, 4, 4});
+        Paths::TEXTURE_DIR + "Thumbnail/Selected_NineSlice.png", {4, 4, 4, 4});
 
     // Add the associated slot as the drag/drop payload.
-    thumbnail.setDragDropData(std::make_unique<DragDropData>(
-        DragDropData::InventoryItem{slotIndex}));
+    thumbnail.setDragDropData(
+        std::make_unique<DragDropData>(DragDropData::InventoryItem{slotIndex}));
 
     // Add our callbacks.
     thumbnail.setOnHovered([&, slotIndex](ItemThumbnail* thumbnail) {
@@ -171,18 +171,17 @@ void InventoryWindow::finishItemThumbnail(ItemThumbnail& thumbnail,
     thumbnail.setOnUnhovered([&, slotIndex](ItemThumbnail* thumbnail) {
         interactionManager.unhovered();
     });
-    thumbnail.setOnMouseDown(
-        [&, slotIndex](ItemThumbnail* thumbnail,
-                       AUI::MouseButtonType buttonType) {
-            return interactionManager.itemMouseDown(slotIndex, buttonType,
-                                                    *thumbnail);
+    thumbnail.setOnMouseDown([&, slotIndex](ItemThumbnail* thumbnail,
+                                            AUI::MouseButtonType buttonType) {
+        return interactionManager.itemMouseDown(slotIndex, buttonType,
+                                                *thumbnail);
     });
     thumbnail.setOnMouseUp([&, slotIndex](ItemThumbnail* thumbnail,
                                           AUI::MouseButtonType buttonType) {
         interactionManager.itemMouseUp(slotIndex, buttonType, *thumbnail);
     });
     thumbnail.setOnDeselected([&, slotIndex](ItemThumbnail* thumbnail) {
-        // Note: We keep our thumbnails non-focusable by default since 
+        // Note: We keep our thumbnails non-focusable by default since
         //       we only want them focused when we Use them.
         //       InteractionManager handles setting isFocusable to true.
         thumbnail->setIsFocusable(false);

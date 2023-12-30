@@ -9,7 +9,7 @@ namespace AM
 namespace Client
 {
 ItemThumbnail::ItemThumbnail(const SDL_Rect& inLogicalExtent,
-                     const std::string& inDebugName)
+                             const std::string& inDebugName)
 : Widget(inLogicalExtent, inDebugName)
 , thumbnailImage({0, 0, logicalExtent.w, logicalExtent.h})
 , selectedImage({0, 0, logicalExtent.w, logicalExtent.h})
@@ -65,7 +65,8 @@ void ItemThumbnail::setOnMouseUp(
     onMouseUpFunc = std::move(inOnMouseUp);
 }
 
-void ItemThumbnail::setOnDeselected(std::function<void(ItemThumbnail*)> inOnDeselected)
+void ItemThumbnail::setOnDeselected(
+    std::function<void(ItemThumbnail*)> inOnDeselected)
 {
     onDeselected = std::move(inOnDeselected);
 }
@@ -90,7 +91,7 @@ AUI::EventResult ItemThumbnail::onMouseDown(AUI::MouseButtonType buttonType,
         setMouseCapture = onMouseDownFunc(this, buttonType);
     }
 
-    // If the handler says to request mouse capture, do so. This will let 
+    // If the handler says to request mouse capture, do so. This will let
     // us receive the associated MouseUp.
     Widget* mouseCaptor{setMouseCapture ? this : nullptr};
     return AUI::EventResult{.wasHandled{true}, .setMouseCapture{mouseCaptor}};
@@ -99,10 +100,10 @@ AUI::EventResult ItemThumbnail::onMouseDown(AUI::MouseButtonType buttonType,
 AUI::EventResult ItemThumbnail::onMouseUp(AUI::MouseButtonType buttonType,
                                           const SDL_Point& cursorPosition)
 {
-    // Note: We have to handle clicks on mouse up since we have a drag 
+    // Note: We have to handle clicks on mouse up since we have a drag
     //       interaction.
 
-    // Since we capture the mouse on MouseDown, we need to check if the 
+    // Since we capture the mouse on MouseDown, we need to check if the
     // cursor is actually touching this widget.
     if (!containsPoint(cursorPosition)) {
         return AUI::EventResult{.wasHandled{false}, .releaseMouseCapture{true}};
@@ -116,8 +117,9 @@ AUI::EventResult ItemThumbnail::onMouseUp(AUI::MouseButtonType buttonType,
     return AUI::EventResult{.wasHandled{false}, .releaseMouseCapture{true}};
 }
 
-AUI::EventResult ItemThumbnail::onMouseDoubleClick(AUI::MouseButtonType buttonType,
-                                          const SDL_Point& cursorPosition)
+AUI::EventResult
+    ItemThumbnail::onMouseDoubleClick(AUI::MouseButtonType buttonType,
+                                      const SDL_Point& cursorPosition)
 {
     return onMouseDown(buttonType, cursorPosition);
 }
@@ -176,7 +178,7 @@ void ItemThumbnail::onFocusLost(AUI::FocusLostType focusLostType)
 AUI::EventResult ItemThumbnail::onDrop(const AUI::DragDropData& dragDropData)
 {
     // Cast dragDropData to our project's type.
-    // Note: If AUI ever adds support for other types, we'll need to do a check 
+    // Note: If AUI ever adds support for other types, we'll need to do a check
     //       before making this cast.
     const DragDropData& projectDragDropData{
         static_cast<const DragDropData&>(dragDropData)};

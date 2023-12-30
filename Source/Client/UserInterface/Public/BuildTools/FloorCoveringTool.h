@@ -7,7 +7,7 @@ namespace AM
 {
 struct FloorCoveringSpriteSet;
 
-namespace Client 
+namespace Client
 {
 
 /**

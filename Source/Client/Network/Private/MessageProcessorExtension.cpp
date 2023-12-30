@@ -25,8 +25,8 @@ void MessageProcessorExtension::processReceivedMessage(Uint8 messageType,
         static_cast<ProjectMessageType>(messageType)};
     switch (projectMessageType) {
         case ProjectMessageType::EntityTemplates: {
-            dispatchMessage<EntityTemplates>(
-                messageBuffer, messageSize, networkEventDispatcher);
+            dispatchMessage<EntityTemplates>(messageBuffer, messageSize,
+                                             networkEventDispatcher);
             break;
         }
         default: {

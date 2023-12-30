@@ -13,9 +13,9 @@ namespace Server
 struct Plant {
     /**
      * The stages of life that a plant goes through.
-     * As the plant progresses through stages 0 - 3, it will switch to the 
+     * As the plant progresses through stages 0 - 3, it will switch to the
      * sprite at the same index within the entity's current sprite set.
-     * E.g. when a plant progress to MidGrowth, it will switch to the sprite 
+     * E.g. when a plant progress to MidGrowth, it will switch to the sprite
      * at spriteSet.sprites[1].
      */
     enum class LifeStage : unsigned int {

@@ -56,23 +56,20 @@ void BuildOverlay::setBuildMode(BuildMode::Type buildModeType)
 {
     switch (buildModeType) {
         case BuildMode::Type::Floor: {
-            currentBuildTool
-                = std::make_unique<FloorTool>(world, network);
+            currentBuildTool = std::make_unique<FloorTool>(world, network);
             break;
         }
         case BuildMode::Type::FloorCovering: {
-            currentBuildTool = std::make_unique<FloorCoveringTool>(
-                world, network);
+            currentBuildTool
+                = std::make_unique<FloorCoveringTool>(world, network);
             break;
         }
         case BuildMode::Type::Wall: {
-            currentBuildTool
-                = std::make_unique<WallTool>(world, network);
+            currentBuildTool = std::make_unique<WallTool>(world, network);
             break;
         }
         case BuildMode::Type::Object: {
-            currentBuildTool
-                = std::make_unique<ObjectTool>(world, network);
+            currentBuildTool = std::make_unique<ObjectTool>(world, network);
             break;
         }
         case BuildMode::Type::Entity: {
@@ -148,7 +145,7 @@ std::span<const SpriteColorModInfo> BuildOverlay::getSpriteColorMods() const
 
 void BuildOverlay::render()
 {
-    // TODO: This will be used to render highlight rectangles from the build 
+    // TODO: This will be used to render highlight rectangles from the build
     //       tool.
 }
 

@@ -12,7 +12,7 @@
 
 namespace AM
 {
-namespace Client 
+namespace Client
 {
 
 EntityTool::EntityTool(World& inWorld,
@@ -71,7 +71,7 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
             // to select the object and modify it.
             clearCurrentSelection();
         }
-        // Else we don't have a template selected. If we hit an entity, try 
+        // Else we don't have a template selected. If we hit an entity, try
         // to select it.
         else {
             // Get the first world object under the mouse.
@@ -89,7 +89,7 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
 }
 
 void EntityTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
-                                   const SDL_Point& cursorPosition)
+                                    const SDL_Point& cursorPosition)
 {
     // We treat additional clicks as regular MouseDown events.
     onMouseDown(buttonType, cursorPosition);

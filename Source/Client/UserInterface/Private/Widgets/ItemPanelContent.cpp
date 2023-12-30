@@ -50,7 +50,7 @@ ItemPanelContent::ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
 , rightButton3{{738, 145, 140, 36}, "", "RightButton3"}
 , itemNotFoundLabel{{464, 113, 260, 36}, "ItemNotFoundLabel"}
 , itemCacheContainer{{0, 0, logicalExtent.w, logicalExtent.h},
-                    "ItemCacheContainer"}
+                     "ItemCacheContainer"}
 , iconContainer{{0, 0, logicalExtent.w, logicalExtent.h}, "IconContainer"}
 {
     // Add our children so they're included in rendering, etc.
@@ -94,11 +94,9 @@ ItemPanelContent::ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
     nameInput.setCursorColor({255, 255, 255, 255});
 
     /* Buttons */
-    viewCacheButton.setOnPressed(
-        [this]() { changeView(ViewType::ItemCache); });
+    viewCacheButton.setOnPressed([this]() { changeView(ViewType::ItemCache); });
 
-    createNewButton.setOnPressed(
-        [this]() { changeView(ViewType::Create); });
+    createNewButton.setOnPressed([this]() { changeView(ViewType::Create); });
 
     /* Containers */
     auto setContainerStyle = [](AUI::VerticalGridContainer& container) {
@@ -116,7 +114,7 @@ ItemPanelContent::ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
     // Set up the home view.
     changeView(ViewType::Home);
 
-    // If an item that we're displaying (or trying to display) is updated, we 
+    // If an item that we're displaying (or trying to display) is updated, we
     // need to update this widget.
     inSimulation.getItemUpdateSink().connect<&ItemPanelContent::onItemUpdate>(
         *this);
@@ -156,8 +154,7 @@ void ItemPanelContent::onTick(double)
                 errorLabel.setText(
                     "Error: You don't have permission to edit this item.");
             }
-            else if (itemError.errorType
-                     == ItemError::InitScriptFailure) {
+            else if (itemError.errorType == ItemError::InitScriptFailure) {
                 errorLabel.setText(
                     "Error: Invalid script (see chat for details).");
             }
@@ -192,7 +189,7 @@ void ItemPanelContent::trySelectItem(std::string_view displayName)
     selectedItemIconID = NULL_ICON_ID;
     selectedItemInitScript = "";
 
-    // Track that we're requesting this item. 
+    // Track that we're requesting this item.
     std::string stringID{ItemData::deriveStringID(displayName)};
     requestedItemStringID = stringID;
 
@@ -202,8 +199,8 @@ void ItemPanelContent::trySelectItem(std::string_view displayName)
 
 void ItemPanelContent::onItemUpdate(const Item& item)
 {
-    // Note: We handle this signal instead of just receiving the update message  
-    //       in the UI, so that we can be sure ItemData is up-to-date before we 
+    // Note: We handle this signal instead of just receiving the update message
+    //       in the UI, so that we can be sure ItemData is up-to-date before we
     //       call getAllItems().
 
     // If we requested this item, select it.
@@ -257,7 +254,7 @@ void ItemPanelContent::onItemUpdate(const Item& item)
 
 void ItemPanelContent::sendItemChangeRequest()
 {
-    // Don't send a change request if we haven't yet received the init script, 
+    // Don't send a change request if we haven't yet received the init script,
     // since we would end up overwriting the current one.
     if (initScriptReceived) {
         // Send a re-init request with the updated name.
@@ -334,7 +331,8 @@ void ItemPanelContent::refreshItemCacheThumbnails()
         // Construct the new thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
             std::make_unique<BuildModeThumbnail>("ItemThumbnail")};
-        BuildModeThumbnail& thumbnail{static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
+        BuildModeThumbnail& thumbnail{
+            static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 
@@ -344,7 +342,7 @@ void ItemPanelContent::refreshItemCacheThumbnails()
         thumbnail.thumbnailImage.setSimpleImage(iconRenderData.iconSheetRelPath,
                                                 iconRenderData.textureExtent);
 
-        // When this thumbnail is selected, select the associated item and 
+        // When this thumbnail is selected, select the associated item and
         // switch back to the home view.
         thumbnail.setOnSelected(
             [&, itemName{item.displayName}](AUI::Thumbnail*) {
@@ -364,7 +362,8 @@ void ItemPanelContent::addIconThumbnails()
         // Construct the new thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
             std::make_unique<BuildModeThumbnail>("IconThumbnail")};
-        BuildModeThumbnail& thumbnail{static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
+        BuildModeThumbnail& thumbnail{
+            static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 
@@ -374,7 +373,7 @@ void ItemPanelContent::addIconThumbnails()
         thumbnail.thumbnailImage.setSimpleImage(iconRenderData.iconSheetRelPath,
                                                 iconRenderData.textureExtent);
 
-        // When this thumbnail is selected, select the associated icon and 
+        // When this thumbnail is selected, select the associated icon and
         // switch back to the edit view.
         thumbnail.setOnMouseDown(
             [&, iconID{icon.numericID}](AUI::Thumbnail*,
@@ -405,12 +404,10 @@ void ItemPanelContent::showHomeView()
     nameInput.setOnTextCommitted([&]() { trySelectItem(nameInput.getText()); });
 
     rightButton1.text.setText("Edit");
-    rightButton1.setOnPressed(
-        [this]() { changeView(ViewType::Edit); });
+    rightButton1.setOnPressed([this]() { changeView(ViewType::Edit); });
 
     rightButton2.text.setText("Duplicate");
-    rightButton2.setOnPressed(
-        [this]() { changeView(ViewType::Duplicate); });
+    rightButton2.setOnPressed([this]() { changeView(ViewType::Duplicate); });
 
     rightButton3.text.setText("Give");
     rightButton3.setOnPressed([this]() {
@@ -455,9 +452,9 @@ void ItemPanelContent::showCreateView()
     nameLabel.setText("Create Item");
     nameInput.setText("");
 
-    // Do nothing when text is committed (we'll read the committed name when 
+    // Do nothing when text is committed (we'll read the committed name when
     // the "Create" button is pressed).
-    nameInput.setOnTextCommitted([](){});
+    nameInput.setOnTextCommitted([]() {});
 
     centerButton.text.setText("Create");
     centerButton.setOnPressed([this]() {
@@ -465,7 +462,7 @@ void ItemPanelContent::showCreateView()
         network.serializeAndSend(
             ItemInitRequest{nameInput.getText(), NULL_ICON_ID, ""});
 
-        // Track that we're requesting this item. 
+        // Track that we're requesting this item.
         std::string stringID{ItemData::deriveStringID(nameInput.getText())};
         requestedItemStringID = stringID;
     });
@@ -523,9 +520,9 @@ void ItemPanelContent::showDuplicateView()
     nameLabel.setText("New Name");
     nameInput.setText("");
 
-    // Do nothing when text is committed (we'll read the committed name when 
+    // Do nothing when text is committed (we'll read the committed name when
     // the "Duplicate" button is pressed).
-    nameInput.setOnTextCommitted([](){});
+    nameInput.setOnTextCommitted([]() {});
 
     centerButton.text.setText("Duplicate");
     centerButton.setOnPressed([this]() {
@@ -533,7 +530,7 @@ void ItemPanelContent::showDuplicateView()
         network.serializeAndSend(ItemInitRequest{
             nameInput.getText(), selectedItemIconID, selectedItemInitScript});
 
-        // Track that we're requesting this item. 
+        // Track that we're requesting this item.
         std::string stringID{ItemData::deriveStringID(nameInput.getText())};
         requestedItemStringID = stringID;
     });

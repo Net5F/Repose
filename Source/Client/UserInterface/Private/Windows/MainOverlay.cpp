@@ -48,7 +48,7 @@ MainOverlay::MainOverlay(World& inWorld,
             else {
                 interactionText.setIsVisible(false);
             }
-    });
+        });
 }
 
 void MainOverlay::setBuildModeHintVisibility(bool isVisible)
@@ -80,7 +80,7 @@ AUI::EventResult MainOverlay::onMouseDown(AUI::MouseButtonType buttonType,
 
 AUI::EventResult
     MainOverlay::onMouseDoubleClick(AUI::MouseButtonType buttonType,
-                                     const SDL_Point& cursorPosition)
+                                    const SDL_Point& cursorPosition)
 {
     // We treat additional clicks as regular MouseDown events.
     return onMouseDown(buttonType, cursorPosition);

@@ -7,7 +7,7 @@
 
 namespace AM
 {
-namespace Client 
+namespace Client
 {
 
 ObjectTool::ObjectTool(World& inWorld, Network& inNetwork)
@@ -19,7 +19,7 @@ ObjectTool::ObjectTool(World& inWorld, Network& inNetwork)
 
 void ObjectTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
 {
-    // Note: This cast should be safe, since only object sprite sets should 
+    // Note: This cast should be safe, since only object sprite sets should
     //       be clickable while this tool is alive.
     selectedSpriteSet
         = static_cast<const ObjectSpriteSet*>(&inSelectedSpriteSet);
@@ -41,7 +41,7 @@ void ObjectTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
 {
     // Note: mouseTilePosition is set in onMouseMove().
 
-    // If this tool is active, the user left clicked, and we have a selected 
+    // If this tool is active, the user left clicked, and we have a selected
     // sprite.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
@@ -54,7 +54,7 @@ void ObjectTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
 }
 
 void ObjectTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
-                                   const SDL_Point& cursorPosition)
+                                    const SDL_Point& cursorPosition)
 {
     // We treat additional clicks as regular MouseDown events.
     onMouseDown(buttonType, cursorPosition);

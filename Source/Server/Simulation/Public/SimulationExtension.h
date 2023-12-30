@@ -69,7 +69,7 @@ public:
     // Simulation System Hooks (Hooks into engine systems)
     //-------------------------------------------------------------------------
     // TODO: Replace this with a permissions system.
-    // These functions allow the project to place constraints on various 
+    // These functions allow the project to place constraints on various
     // World state modifications.
     /** @return true if the given extent is editable, else false. */
     bool isTileExtentEditable(NetworkID netID,

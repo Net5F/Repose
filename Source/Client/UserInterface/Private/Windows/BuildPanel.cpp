@@ -64,8 +64,7 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
     children.push_back(tileLayersLabel);
     children.push_back(otherLabel);
     children.push_back(buildModeButtons[BuildMode::Type::Floor]);
-    children.push_back(
-        buildModeButtons[BuildMode::Type::FloorCovering]);
+    children.push_back(buildModeButtons[BuildMode::Type::FloorCovering]);
     children.push_back(buildModeButtons[BuildMode::Type::Wall]);
     children.push_back(buildModeButtons[BuildMode::Type::Object]);
     children.push_back(buildModeButtons[BuildMode::Type::Entity]);
@@ -117,9 +116,7 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
     buildModeButtons[BuildMode::Type::Floor].setOnPressed(
         [this]() { setBuildMode(BuildMode::Type::Floor); });
     buildModeButtons[BuildMode::Type::FloorCovering].setOnPressed(
-        [this]() {
-            setBuildMode(BuildMode::Type::FloorCovering);
-        });
+        [this]() { setBuildMode(BuildMode::Type::FloorCovering); });
     buildModeButtons[BuildMode::Type::Wall].setOnPressed(
         [this]() { setBuildMode(BuildMode::Type::Wall); });
     buildModeButtons[BuildMode::Type::Object].setOnPressed(
@@ -139,15 +136,16 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
     for (const FloorCoveringSpriteSet& spriteSet :
          spriteData.getAllFloorCoveringSpriteSets()) {
         addTileSpriteSet(TileLayer::Type::FloorCovering, spriteSet,
-                     *getFirstSprite(spriteSet));
+                         *getFirstSprite(spriteSet));
     }
     for (const WallSpriteSet& spriteSet : spriteData.getAllWallSpriteSets()) {
-        addTileSpriteSet(TileLayer::Type::Wall, spriteSet, spriteSet.sprites[0]);
+        addTileSpriteSet(TileLayer::Type::Wall, spriteSet,
+                         spriteSet.sprites[0]);
     }
     for (const ObjectSpriteSet& spriteSet :
          spriteData.getAllObjectSpriteSets()) {
         addTileSpriteSet(TileLayer::Type::Object, spriteSet,
-                     *getFirstSprite(spriteSet));
+                         *getFirstSprite(spriteSet));
     }
 }
 
@@ -169,13 +167,15 @@ void BuildPanel::clearSelectedThumbnail()
     }
 }
 
-void BuildPanel::addTileSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,
-    const Sprite& sprite)
+void BuildPanel::addTileSpriteSet(TileLayer::Type type,
+                                  const SpriteSet& spriteSet,
+                                  const Sprite& sprite)
 {
     // Construct the new sprite thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
         std::make_unique<BuildModeThumbnail>("BuildPanelThumbnail")};
-    BuildModeThumbnail& thumbnail{static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
+    BuildModeThumbnail& thumbnail{
+        static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
     thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 
@@ -218,8 +218,8 @@ void BuildPanel::addTileSpriteSet(TileLayer::Type type, const SpriteSet& spriteS
 }
 
 template<typename T>
-requires std::same_as<T, FloorCoveringSpriteSet>
-         || std::same_as<T, ObjectSpriteSet>
+requires std::same_as<T, FloorCoveringSpriteSet> || std::same_as<
+    T, ObjectSpriteSet>
 const Sprite* BuildPanel::getFirstSprite(const T& spriteSet)
 {
     for (const Sprite* sprite : spriteSet.sprites) {
@@ -228,7 +228,7 @@ const Sprite* BuildPanel::getFirstSprite(const T& spriteSet)
         }
     }
 
-    // Note: The resource importer assures that every floor covering and 
+    // Note: The resource importer assures that every floor covering and
     //       object has at least 1 sprite, so this shouldn't happen.
     LOG_FATAL("Failed to find sprite when expected.");
     return nullptr;
@@ -267,8 +267,8 @@ void BuildPanel::setBuildMode(BuildMode::Type buildModeType)
         objectContainer.setIsVisible(true);
     }
     else if (buildModeType == BuildMode::Type::Entity) {
-        entityPanelContent.setBuildTool(static_cast<EntityTool*>(
-            buildOverlay.getCurrentBuildTool()));
+        entityPanelContent.setBuildTool(
+            static_cast<EntityTool*>(buildOverlay.getCurrentBuildTool()));
         entityPanelContent.setIsVisible(true);
     }
     else if (buildModeType == BuildMode::Type::Remove) {

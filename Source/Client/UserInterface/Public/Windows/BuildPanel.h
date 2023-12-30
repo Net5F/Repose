@@ -49,15 +49,15 @@ public:
     ~BuildPanel() = default;
 
     /**
-     * Deselects the currently selected thumbnail (if there is one) and saves 
+     * Deselects the currently selected thumbnail (if there is one) and saves
      * the given thumbnail as the new selection.
-     * Used by content classes to make sure the old selection gets deselected 
+     * Used by content classes to make sure the old selection gets deselected
      * when we change tools.
      */
     void setSelectedThumbnail(AUI::Thumbnail& newSelectedThumbnail);
 
     /**
-     * Deselects the currently selected thumbnail (if there is one) without 
+     * Deselects the currently selected thumbnail (if there is one) without
      * setting a new selection.
      */
     void clearSelectedThumbnail();
@@ -67,13 +67,14 @@ private:
      * Adds a sprite set thumbnail to the appropriate tileSpriteSetContainer.
      */
     void addTileSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,
-                      const Sprite& sprite);
+                          const Sprite& sprite);
 
     /**
      * Returns the first sprite within the set.
      */
-    template<typename T> requires std::same_as<T, FloorCoveringSpriteSet>
-                                  || std::same_as<T, ObjectSpriteSet>
+    template<typename T>
+    requires std::same_as<T, FloorCoveringSpriteSet> || std::same_as<
+        T, ObjectSpriteSet>
     const Sprite* getFirstSprite(const T& spriteSet);
 
     /**
@@ -96,7 +97,7 @@ private:
     //-------------------------------------------------------------------------
     AUI::Image backgroundImage;
 
-    // Note: Since all of the tile layer tools have the same UI, we handle their 
+    // Note: Since all of the tile layer tools have the same UI, we handle their
     //       content in this class. Other tools get their own content widgets.
     // Floor tile layer tool content.
     AUI::VerticalGridContainer floorContainer;

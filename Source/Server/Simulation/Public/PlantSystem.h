@@ -48,7 +48,7 @@ private:
     void createSapling(const Position& position);
 
     /**
-     * Creates a new entity with a Plant component set to Dead, and a 
+     * Creates a new entity with a Plant component set to Dead, and a
      * "Replant" interaction.
      */
     void createDeadPlant(const Position& position);

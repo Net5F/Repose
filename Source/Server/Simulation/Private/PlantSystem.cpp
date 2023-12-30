@@ -92,7 +92,7 @@ void PlantSystem::updatePlant(entt::entity plantEntity)
             plant.timer.reset();
         }
         else {
-            // The plant is dead. Replace it with a new entity so we can add 
+            // The plant is dead. Replace it with a new entity so we can add
             // the "Replant" interaction.
             createDeadPlant(position);
             world.registry.destroy(plantEntity);

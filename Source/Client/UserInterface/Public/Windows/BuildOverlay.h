@@ -30,8 +30,8 @@ class BuildTool;
  *
  * This overlay is opened alongside BuildPanel when we enter build mode.
  *
- * Note: This overlay blocks all inputs that it receives. If this becomes 
- *       undesirable, we can change the build tool to say whether it handled 
+ * Note: This overlay blocks all inputs that it receives. If this becomes
+ *       undesirable, we can change the build tool to say whether it handled
  *       the event or not.
  */
 class BuildOverlay : public AUI::Window
@@ -54,7 +54,7 @@ public:
     /**
      * Used by the BuildPanel to tell us which build mode is currently active.
      *
-     * User interactions will be passed to the current tool, which will notify 
+     * User interactions will be passed to the current tool, which will notify
      * the sim if the tile map needs to change.
      */
     void setBuildMode(BuildMode::Type buildModeType);
@@ -67,19 +67,19 @@ public:
     /**
      * Sets the camera to use when rendering.
      *
-     * Called during the render pass to give us the lerped camera for the 
+     * Called during the render pass to give us the lerped camera for the
      * current frame.
      */
     void setCamera(const Camera& inCamera);
 
     /**
-     * Returns any phantom tile sprites that the current build tool wants to 
+     * Returns any phantom tile sprites that the current build tool wants to
      * render.
      */
     std::span<const PhantomSpriteInfo> getPhantomSprites() const;
 
     /**
-     * Returns any tile sprite color mods that the current build tool wants to 
+     * Returns any tile sprite color mods that the current build tool wants to
      * render.
      */
     std::span<const SpriteColorModInfo> getSpriteColorMods() const;

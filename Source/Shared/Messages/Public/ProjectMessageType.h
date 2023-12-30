@@ -8,7 +8,7 @@ namespace AM
 /**
  * The types of messages that we send across the network.
  *
- * This file extends SharedLib/Messages/EngineMessageType.h. That file holds 
+ * This file extends SharedLib/Messages/EngineMessageType.h. That file holds
  * engine-defined message types, this file holds project-defined message types.
  *
  * For message descriptions, see their definitions in Shared/Messages/Public.
@@ -18,7 +18,7 @@ enum class ProjectMessageType : Uint8 {
 
     // Client -> Server Messages
     EntityTemplatesRequest
-      = static_cast<Uint8>(EngineMessageType::PROJECT_START),
+    = static_cast<Uint8>(EngineMessageType::PROJECT_START),
     AddEntityTemplate,
     TemplateInitScriptRequest,
 

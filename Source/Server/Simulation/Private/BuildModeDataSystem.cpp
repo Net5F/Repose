@@ -21,17 +21,14 @@ BuildModeDataSystem::BuildModeDataSystem(
 {
     // Load our saved templates.
     // TODO: Replace this placeholder data with real data from a database.
-    Uint16 spriteSetID{
-        spriteData.getObjectSpriteSet("sunflower").numericID};
+    Uint16 spriteSetID{spriteData.getObjectSpriteSet("sunflower").numericID};
     entityTemplates.templates.emplace_back(
-        Name{"First"},
-        AnimationState{SpriteSet::Type::Object, spriteSetID, 0});
+        Name{"First"}, AnimationState{SpriteSet::Type::Object, spriteSetID, 0});
     entityTemplates.templates.emplace_back(
         Name{"Second"},
         AnimationState{SpriteSet::Type::Object, spriteSetID, 1});
     entityTemplates.templates.emplace_back(
-        Name{"Third"},
-        AnimationState{SpriteSet::Type::Object, spriteSetID, 2});
+        Name{"Third"}, AnimationState{SpriteSet::Type::Object, spriteSetID, 2});
 }
 
 void BuildModeDataSystem::processMessages()
@@ -43,14 +40,16 @@ void BuildModeDataSystem::processMessages()
         if (world.entityIDIsInUse(entity)) {
             // Collect the entity's relevant data and push it into the list.
             EntityTemplates::Data templateData{};
-            if (Name* name{world.registry.try_get<Name>(entity)}) {
+            if (Name * name{world.registry.try_get<Name>(entity)}) {
                 templateData.name = *name;
             }
-            if (AnimationState* animationState{
+            if (AnimationState
+                * animationState{
                     world.registry.try_get<AnimationState>(entity)}) {
                 templateData.animationState = *animationState;
             }
-            if (EntityInitScript* initScript{
+            if (EntityInitScript
+                * initScript{
                     world.registry.try_get<EntityInitScript>(entity)}) {
                 templateData.initScript = *initScript;
             }

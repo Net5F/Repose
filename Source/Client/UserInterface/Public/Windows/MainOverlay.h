@@ -45,10 +45,10 @@ public:
     AUI::EventResult onMouseMove(const SDL_Point& cursorPosition) override;
 
 private:
-    /** Used for getting the world state so we can make decisions and send 
+    /** Used for getting the world state so we can make decisions and send
         messages. */
     World& world;
-    /** Used to see if see if the cursor is hovering or clicking on 
+    /** Used to see if see if the cursor is hovering or clicking on
         something. */
     const WorldObjectLocator& worldObjectLocator;
     /** Used to send interaction requests. */
@@ -56,14 +56,14 @@ private:
     /** Used to orchestrate item/entity interactions. */
     InteractionManager& interactionManager;
 
-    /** If the mouse is currently hovering over an entity, this is its ID. 
+    /** If the mouse is currently hovering over an entity, this is its ID.
         Else, this will be entt::null. */
     entt::entity hoveredEntity;
 
     //-------------------------------------------------------------------------
     // Private child widgets
     //-------------------------------------------------------------------------
-    /** The text at the top of the screen that tells you what action will 
+    /** The text at the top of the screen that tells you what action will
         be performed if you click. */
     AUI::Text interactionText;
 

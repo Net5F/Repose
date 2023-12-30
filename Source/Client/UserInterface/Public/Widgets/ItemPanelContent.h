@@ -35,8 +35,7 @@ class ItemPanelContent : public AUI::Widget
 {
 public:
     ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
-                     IconData& inIconData,
-                     const SDL_Rect& inScreenExtent,
+                     IconData& inIconData, const SDL_Rect& inScreenExtent,
                      const std::string& inDebugName = "ItemPanelContent");
 
     /**
@@ -52,21 +51,21 @@ public:
 
 private:
     /**
-     * Sets the given item as our requested item and sends a request to the 
+     * Sets the given item as our requested item and sends a request to the
      * server for the item's latest definition.
      */
     void trySelectItem(std::string_view displayName);
 
     /**
-     * If we have a pending requested item and this matches it, finishes 
+     * If we have a pending requested item and this matches it, finishes
      * selecting the item and fills out the UI.
-     * 
+     *
      * Also refreshes itemCacheContainer.
      */
     void onItemUpdate(const Item& item);
 
     /**
-     * If we have a selected item and have received its init script, sends 
+     * If we have a selected item and have received its init script, sends
      * an init request to the server.
      */
     void sendItemChangeRequest();
@@ -120,7 +119,7 @@ private:
     ViewType currentView;
 
     /** The string ID of the item definition that we've requested.
-        When an item is staged to be selected and we're waiting for a response 
+        When an item is staged to be selected and we're waiting for a response
         from the server, this will be filled. */
     std::string requestedItemStringID;
 
@@ -137,7 +136,7 @@ private:
     /** The init script of the item that we currently have selected. */
     std::string selectedItemInitScript;
 
-    /** If true, we're editing an item and have received its init script (and 
+    /** If true, we're editing an item and have received its init script (and
         saved it in editinItemInitScript). */
     bool initScriptReceived;
 

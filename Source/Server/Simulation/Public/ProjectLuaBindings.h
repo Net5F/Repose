@@ -15,8 +15,8 @@ class World;
 
 /**
  * Holds any functionality that the project wants to expose to Lua.
- * 
- * Note: This is a class instead of a set of free functions, because it's more 
+ *
+ * Note: This is a class instead of a set of free functions, because it's more
  *       convenient for the bound functions to have access to some state.
  */
 class ProjectLuaBindings

@@ -44,14 +44,14 @@ public:
 
     /**
      * Returns all of the UI's phantom sprites.
-     * Phantom sprites are added by build mode when the user is trying to add 
+     * Phantom sprites are added by build mode when the user is trying to add
      * or replace a tile layer or entity.
      */
     std::vector<PhantomSpriteInfo> getPhantomSprites() const override;
 
     /**
      * Returns all of the UI's sprite color modifications.
-     * Color mods are used for things like highlighting what tile layer or 
+     * Color mods are used for things like highlighting what tile layer or
      * entity the user's mouse is hovering, or what they have selected.
      */
     std::vector<SpriteColorModInfo> getSpriteColorMods() const override;

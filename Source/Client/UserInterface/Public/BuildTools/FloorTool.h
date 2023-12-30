@@ -6,7 +6,7 @@ namespace AM
 {
 struct FloorSpriteSet;
 
-namespace Client 
+namespace Client
 {
 
 /**

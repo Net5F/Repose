@@ -19,11 +19,11 @@ class MainScreen;
 class ItemThumbnail;
 
 /**
- * Manages entity and item interactions, and the interaction text in the top 
+ * Manages entity and item interactions, and the interaction text in the top
  * left corner.
- * 
- * MainOverlay and InventoryWindow report to this class when the mouse hovers 
- * over or clicks an interactable entity or item. This class then tells 
+ *
+ * MainOverlay and InventoryWindow report to this class when the mouse hovers
+ * over or clicks an interactable entity or item. This class then tells
  * MainOverlay what to display in the interaction text, and sends an interaction
  * message if appropriate.
  */
@@ -43,7 +43,7 @@ public:
     /** @param slotIndex The inventory slot containing the relevant item.
         @param itemThumbnail The widget to focus. */
     void itemHovered(Uint8 slotIndex);
-    /** @return true if the given thumbnail should request mouse capture, else 
+    /** @return true if the given thumbnail should request mouse capture, else
                 false. */
     bool itemMouseDown(Uint8 slotIndex, AUI::MouseButtonType buttonType,
                        ItemThumbnail& itemThumbnail);
@@ -57,7 +57,7 @@ public:
     void unhovered();
 
     /**
-     * Sets a callback for when our interaction state changes and the text 
+     * Sets a callback for when our interaction state changes and the text
      * should be updated.
      */
     void setOnInteractionTextUpdated(
@@ -70,8 +70,8 @@ private:
     /**
      * Begins a "Use item on" interaction.
      * If there's an existing item being used, replaces it with the new item.
-     * 
-     * @param slotIndex The item's inventory slot containing the item that's 
+     *
+     * @param slotIndex The item's inventory slot containing the item that's
      *                  being used.
      * @param displayName The item's display name.
      * @param itemThumbnail The thumbnail of the item that's being used.
@@ -86,15 +86,15 @@ private:
     Network& network;
     /** Used to set focus to a selected item. */
     MainScreen& mainScreen;
-    
+
     /** If true, there's an ongoing "Use item on X" interaction. */
     bool usingItem;
 
-    /** If usingItem == true, this is the inventory slot of the item that is 
+    /** If usingItem == true, this is the inventory slot of the item that is
         being used. */
     Uint8 sourceSlotIndex;
 
-    /** If usingItem == true, this is the display name of the item that is 
+    /** If usingItem == true, this is the display name of the item that is
         being used. */
     std::string sourceName;
 

@@ -1,7 +1,7 @@
 #pragma once
 
 ///////////////////////////////////////////////////////////////////////////////
-// Note: This file overrides the engine's default 
+// Note: This file overrides the engine's default
 //       SharedLib/ItemProperties.h
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -12,8 +12,7 @@
 namespace AM
 {
 /** The item's description. */
-struct ItemDescription
-{
+struct ItemDescription {
     /** The max length of an item's description text. */
     static constexpr std::size_t MAX_TEXT_LENGTH{500};
 
@@ -26,13 +25,8 @@ void serialize(S& serializer, ItemDescription& itemDescription)
 }
 
 /** The type of plant that will be grown. */
-struct SeedType
-{
-    enum Value : Uint8 {
-        Sunflower,
-        Leek,
-        Pepper
-    };
+struct SeedType {
+    enum Value : Uint8 { Sunflower, Leek, Pepper };
 
     Value value{};
 };

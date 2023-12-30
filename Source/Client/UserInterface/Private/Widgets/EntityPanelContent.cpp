@@ -25,10 +25,11 @@ namespace AM
 {
 namespace Client
 {
-EntityPanelContent::EntityPanelContent(
-    World& inWorld, Network& inNetwork, SpriteData& inSpriteData,
-    BuildPanel& inBuildPanel, const SDL_Rect& inScreenExtent,
-    const std::string& inDebugName)
+EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
+                                       SpriteData& inSpriteData,
+                                       BuildPanel& inBuildPanel,
+                                       const SDL_Rect& inScreenExtent,
+                                       const std::string& inDebugName)
 : AUI::Widget(inScreenExtent, inDebugName)
 , world{inWorld}
 , network{inNetwork}
@@ -53,7 +54,7 @@ EntityPanelContent::EntityPanelContent(
                      "Save as Template",
                      "SaveTemplateButton"}
 , spriteSetContainer{{0, 0, logicalExtent.w, logicalExtent.h},
-                    "SpriteSetContainer"}
+                     "SpriteSetContainer"}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(templateContainer);
@@ -147,18 +148,16 @@ void EntityPanelContent::setBuildTool(EntityTool* inEntityTool)
 
     // Register our callbacks.
     if (entityTool != nullptr) {
-        entityTool->setOnEntitySelected(
-            [this](entt::entity entity) {
-                // Save the entity's data.
-                editingEntityID = entity;
+        entityTool->setOnEntitySelected([this](entt::entity entity) {
+            // Save the entity's data.
+            editingEntityID = entity;
 
-                // Ask the server for the entity's init script.
-                network.serializeAndSend(
-                    EntityInitScriptRequest{editingEntityID});
+            // Ask the server for the entity's init script.
+            network.serializeAndSend(EntityInitScriptRequest{editingEntityID});
 
-                // Switch to the edit view.
-                changeView(ViewType::Edit);
-            });
+            // Switch to the edit view.
+            changeView(ViewType::Edit);
+        });
 
         entityTool->setOnSelectionCleared([this]() {
             buildPanel.clearSelectedThumbnail();
@@ -171,7 +170,7 @@ void EntityPanelContent::setBuildTool(EntityTool* inEntityTool)
 
 void EntityPanelContent::setIsVisible(bool inIsVisible)
 {
-    // The first time we're made visible, request the latest entity templates 
+    // The first time we're made visible, request the latest entity templates
     // from the server.
     if (!hasRequestedTemplates && inIsVisible) {
         network.serializeAndSend<EntityTemplatesRequest>({});
@@ -187,7 +186,7 @@ void EntityPanelContent::onTick(double)
     // Process any waiting messages.
     EntityTemplates entityTemplates{};
     while (entityTemplatesQueue.pop(entityTemplates)) {
-        // Clear any existing entity templates (skipping the "refresh" and 
+        // Clear any existing entity templates (skipping the "refresh" and
         // "default entity" thumbnails).
         if (templateContainer.size() > 2) {
             templateContainer.erase(templateContainer.begin() + 2,
@@ -262,8 +261,7 @@ void EntityPanelContent::addRefreshButton()
         SDL_Rect{6, 5, 96, 96}, "RefreshTemplatesButton")};
     AUI::Button& button{static_cast<AUI::Button&>(*buttonPtr)};
 
-    button.text.setFont(
-        (Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 20);
+    button.text.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 20);
     button.text.setText("");
 
     // Load the "refresh" icon.
@@ -303,7 +301,8 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
     // Construct the new thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
         std::make_unique<BuildModeThumbnail>("EntityThumbnail")};
-    BuildModeThumbnail& thumbnail{static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
+    BuildModeThumbnail& thumbnail{
+        static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
     thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 
@@ -313,7 +312,7 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
     const Sprite* sprite{
         spriteSet.sprites[SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_INDEX]};
 
-    // Calc a square texture extent that shows the bottom of the sprite 
+    // Calc a square texture extent that shows the bottom of the sprite
     // (so we don't have to squash it).
     const SpriteRenderData& renderData{
         spriteData.getRenderData(sprite->numericID)};
@@ -330,7 +329,7 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
 
         // Tell the tool that the selection changed.
         const SpriteSet& spriteSet{spriteData.getObjectSpriteSet(
-                SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_SET)};
+            SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_SET)};
         AnimationState animationState{
             SpriteSet::Type::Object, spriteSet.numericID,
             SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_INDEX};
@@ -348,7 +347,8 @@ void EntityPanelContent::addTemplateThumbnails(
         // Construct the new thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
             std::make_unique<BuildModeThumbnail>("EntityThumbnail")};
-        BuildModeThumbnail& thumbnail{static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
+        BuildModeThumbnail& thumbnail{
+            static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 
@@ -358,7 +358,7 @@ void EntityPanelContent::addTemplateThumbnails(
         const Sprite* sprite{
             spriteSet.sprites[entityData.animationState.spriteIndex]};
 
-        // Calc a square texture extent that shows the bottom of the sprite 
+        // Calc a square texture extent that shows the bottom of the sprite
         // (so we don't have to squash it).
         const SpriteRenderData& renderData{
             spriteData.getRenderData(sprite->numericID)};
@@ -369,15 +369,15 @@ void EntityPanelContent::addTemplateThumbnails(
                                                 textureExtent);
 
         // Add the callback.
-        thumbnail.setOnSelected([this,
-                                 entityData](AUI::Thumbnail* selectedThumb) {
-            // Set this thumbnail as the new selection.
-            buildPanel.setSelectedThumbnail(*selectedThumb);
+        thumbnail.setOnSelected(
+            [this, entityData](AUI::Thumbnail* selectedThumb) {
+                // Set this thumbnail as the new selection.
+                buildPanel.setSelectedThumbnail(*selectedThumb);
 
-            // Tell the tool that the selection changed.
-            entityTool->setSelectedTemplate(
-                entityData.name, entityData.animationState);
-        });
+                // Tell the tool that the selection changed.
+                entityTool->setSelectedTemplate(entityData.name,
+                                                entityData.animationState);
+            });
 
         templateContainer.push_back(std::move(thumbnailPtr));
     }
@@ -391,7 +391,8 @@ void EntityPanelContent::addSpriteSetThumbnails()
         // Construct the new thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
             std::make_unique<BuildModeThumbnail>("EntityThumbnail")};
-        BuildModeThumbnail& thumbnail{static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
+        BuildModeThumbnail& thumbnail{
+            static_cast<BuildModeThumbnail&>(*thumbnailPtr)};
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 
@@ -404,7 +405,7 @@ void EntityPanelContent::addSpriteSetThumbnails()
         }
         AM_ASSERT(sprite != nullptr, "No valid sprite found in set.");
 
-        // Calc a square texture extent that shows the bottom of the sprite 
+        // Calc a square texture extent that shows the bottom of the sprite
         // (so we don't have to squash it).
         const SpriteRenderData& renderData{
             spriteData.getRenderData(sprite->numericID)};
@@ -425,22 +426,22 @@ void EntityPanelContent::addSpriteSetThumbnails()
                   "Set didn't contain any sprites.");
 
         // Add the callback.
-        thumbnail.setOnSelected([this, &spriteSet,
-                                 firstSpriteIndex](AUI::Thumbnail*) {
-            // This view closes immediately so we don't want to select this 
-            // thumbnail, but we should clear any existing selection.
-            buildPanel.clearSelectedThumbnail();
+        thumbnail.setOnSelected(
+            [this, &spriteSet, firstSpriteIndex](AUI::Thumbnail*) {
+                // This view closes immediately so we don't want to select this
+                // thumbnail, but we should clear any existing selection.
+                buildPanel.clearSelectedThumbnail();
 
-            // Send a request to change the entity's animation state.
-            AnimationStateChangeRequest changeRequest{
-                editingEntityID,
-                AnimationState{SpriteSet::Type::Object, spriteSet.numericID,
-                               firstSpriteIndex}};
-            network.serializeAndSend(changeRequest);
+                // Send a request to change the entity's animation state.
+                AnimationStateChangeRequest changeRequest{
+                    editingEntityID,
+                    AnimationState{SpriteSet::Type::Object, spriteSet.numericID,
+                                   firstSpriteIndex}};
+                network.serializeAndSend(changeRequest);
 
-            // Switch back to the edit view.
-            changeView(ViewType::Edit);
-        });
+                // Switch back to the edit view.
+                changeView(ViewType::Edit);
+            });
 
         spriteSetContainer.push_back(std::move(thumbnailPtr));
     }

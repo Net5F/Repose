@@ -35,7 +35,7 @@ void SimulationExtension::beforeAll() {}
 
 void SimulationExtension::afterMapAndConnectionUpdates()
 {
-    // Respond to any build mode data messages that aren't handled 
+    // Respond to any build mode data messages that aren't handled
     // by the engine.
     buildModeDataSystem.processMessages();
 

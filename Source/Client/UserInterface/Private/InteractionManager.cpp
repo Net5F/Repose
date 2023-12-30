@@ -32,12 +32,11 @@ void InteractionManager::entityHovered(entt::entity entity)
 {
     Name& name{world.registry.get<Name>(entity)};
 
-    // If we're using an item, update the text to reflect the hovered entity as 
+    // If we're using an item, update the text to reflect the hovered entity as
     // the target.
     std::ostringstream stringStream{};
     if (usingItem) {
-        stringStream << "Use " << sourceName << " on "
-                     << name.value;
+        stringStream << "Use " << sourceName << " on " << name.value;
     }
     // Else, update the text to reflect the hovered entity's interactions.
     else {
@@ -64,7 +63,7 @@ void InteractionManager::entityHovered(entt::entity entity)
 
 void InteractionManager::entityLeftClicked(entt::entity entity)
 {
-    // If we're using an item, this is the target. Send the UseOn request and 
+    // If we're using an item, this is the target. Send the UseOn request and
     // deselect the first item.
     if (usingItem) {
         network.serializeAndSend(
@@ -131,7 +130,7 @@ void InteractionManager::itemHovered(Uint8 slotIndex)
         return;
     }
 
-    // If we're using an item, update the text to reflect the hovered item as 
+    // If we're using an item, update the text to reflect the hovered item as
     // the target.
     std::ostringstream stringStream{};
     if (usingItem) {
@@ -142,8 +141,8 @@ void InteractionManager::itemHovered(Uint8 slotIndex)
     else {
         ItemInteractionType defaultInteraction{
             hoveredItem->getDefaultInteraction()};
-        stringStream << DisplayStrings::get(defaultInteraction)
-                     << " " << hoveredItem->displayName;
+        stringStream << DisplayStrings::get(defaultInteraction) << " "
+                     << hoveredItem->displayName;
 
         std::size_t interactionCount{hoveredItem->getInteractionCount()};
         if (interactionCount > 1) {
@@ -163,16 +162,16 @@ bool InteractionManager::itemMouseDown(Uint8 slotIndex,
     if (buttonType == AUI::MouseButtonType::Right) {
         itemRightClicked(slotIndex, itemThumbnail);
 
-        // Clear out the interaction text, since thumbnail interactions are 
+        // Clear out the interaction text, since thumbnail interactions are
         // blocked while the right-click menu is open.
         onInteractionTextUpdated("");
 
         return false;
     }
-    // We need to handle the 2nd click of UseOn immediately, so a drag+drop 
+    // We need to handle the 2nd click of UseOn immediately, so a drag+drop
     // doesn't get started.
     else if ((buttonType == AUI::MouseButtonType::Left) && usingItem
-        && (slotIndex != sourceSlotIndex)) {
+             && (slotIndex != sourceSlotIndex)) {
         // Send the combine request and reset our state.
         network.serializeAndSend(
             CombineItemsRequest{sourceSlotIndex, slotIndex});
@@ -192,7 +191,7 @@ void InteractionManager::itemMouseUp(Uint8 slotIndex,
                                      AUI::MouseButtonType buttonType,
                                      ItemThumbnail& itemThumbnail)
 {
-    // Note: For items, since we have drag+drop, we count MouseUp as the actual 
+    // Note: For items, since we have drag+drop, we count MouseUp as the actual
     //       click.
 
     if (buttonType == AUI::MouseButtonType::Left) {
@@ -229,7 +228,8 @@ void InteractionManager::setOnInteractionTextUpdated(
     onInteractionTextUpdated = std::move(inOnInteractionTextUpdated);
 }
 
-void InteractionManager::itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail)
+void InteractionManager::itemLeftClicked(Uint8 slotIndex,
+                                         ItemThumbnail& itemThumbnail)
 {
     // If the given slot doesn't contain an item, do nothing.
     auto& inventory{world.registry.get<Inventory>(world.playerEntity)};
@@ -283,7 +283,7 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
             auto useItemOn = [&, slotIndex, name{clickedItem->displayName},
                               thumbnail{AUI::WidgetWeakRef{itemThumbnail}}]() {
                 if (thumbnail.isValid()) {
-                    // Note: This will change focus, so we don't need to 
+                    // Note: This will change focus, so we don't need to
                     //       explicitly drop focus to close the menu.
                     auto* thumbnailPtr{
                         static_cast<ItemThumbnail*>(&(thumbnail.get()))};
@@ -299,7 +299,8 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
                 network.serializeAndSend(
                     InventoryOperation{InventoryRemoveItem{slotIndex, count}});
             };
-            mainScreen.addRightClickMenuAction("Destroy", std::move(deleteItem));
+            mainScreen.addRightClickMenuAction("Destroy",
+                                               std::move(deleteItem));
         }
         else {
             // Tell the server to process this interaction.
@@ -316,15 +317,16 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
 }
 
 void InteractionManager::beginUseItemOnInteraction(Uint8 slotIndex,
-    std::string_view displayName, ItemThumbnail& itemThumbnail)
+                                                   std::string_view displayName,
+                                                   ItemThumbnail& itemThumbnail)
 {
     sourceSlotIndex = slotIndex;
     sourceName = displayName;
     usingItem = true;
 
-    // Note: We leave thumbnails as non-focusable most of the time, since we 
+    // Note: We leave thumbnails as non-focusable most of the time, since we
     //       only want them to be focused when we Use them.
-    //       InventoryWindow handles setting isFocusable back to false when 
+    //       InventoryWindow handles setting isFocusable back to false when
     //       they lose focus.
     itemThumbnail.setIsFocusable(true);
     mainScreen.setFocus(&itemThumbnail);

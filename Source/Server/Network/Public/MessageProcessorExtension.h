@@ -26,8 +26,8 @@ public:
      * for.
      */
     void processReceivedMessage(NetworkID netID, Uint8 messageType,
-                                  Uint8* messageBuffer,
-                                  std::size_t messageSize) override;
+                                Uint8* messageBuffer,
+                                std::size_t messageSize) override;
 
 private:
     //-------------------------------------------------------------------------

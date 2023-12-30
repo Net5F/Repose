@@ -6,7 +6,7 @@ namespace AM
 {
 struct ObjectSpriteSet;
 
-namespace Client 
+namespace Client
 {
 
 /**

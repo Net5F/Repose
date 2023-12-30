@@ -14,8 +14,7 @@ namespace Client
  * Currently only used for moving items in the inventory.
  */
 struct DragDropData : public AUI::DragDropData {
-    struct InventoryItem
-    {
+    struct InventoryItem {
         /** The source inventory slot of the item that was dropped. */
         Uint8 sourceSlotIndex{0};
     };

@@ -7,7 +7,7 @@ namespace AM
 namespace Client
 {
 
-/** The default height. This should never be seen since we adjust to fit the 
+/** The default height. This should never be seen since we adjust to fit the
     content, but we need a default for textures. */
 static constexpr int DEFAULT_HEIGHT{150};
 
@@ -47,8 +47,7 @@ void RightClickMenu::addMenuAction(std::string_view displayText,
     actionContainer.push_back(std::move(newMenuAction));
 
     // Grow this menu's height to fit the new action.
-    int contentHeight{BUTTON_HEIGHT
-                      * static_cast<int>(actionContainer.size())};
+    int contentHeight{BUTTON_HEIGHT * static_cast<int>(actionContainer.size())};
     SDL_Rect newMenuExtent{logicalExtent};
     newMenuExtent.h = (PADDING * 2) + (BORDER_WIDTH * 2) + contentHeight;
     setLogicalExtent(newMenuExtent);

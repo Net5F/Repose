@@ -11,18 +11,18 @@ namespace Client
 struct DragDropData;
 
 /**
- * An item thumbnail for use in the player's inventory, a paper doll equipment 
+ * An item thumbnail for use in the player's inventory, a paper doll equipment
  * menu, etc.
  *
  * Can be left and right-clicked. Can also be dragged and dropped.
  *
- * This widget's selection state is a bit odd: to select the widget, set focus 
+ * This widget's selection state is a bit odd: to select the widget, set focus
  * to it using Screen::setFocus() (it'll update its own selection state).
- * You don't need to manually remove focus though, this widget will instead 
+ * You don't need to manually remove focus though, this widget will instead
  * drop focus and deselect itself when appropriate.
  * This was done because selection may come from other widgets (e.g. a right-
  * click menu), but deselection is easiest to detect internally.
- * 
+ *
  * The rendering order for this widget's children is:
  *   Background: backdropImage
  *   Middle-ground: thumbnailImage
@@ -37,7 +37,7 @@ public:
     // Public interface
     //-------------------------------------------------------------------------
     ItemThumbnail(const SDL_Rect& inLogicalExtent,
-              const std::string& inDebugName = "ItemThumbnail");
+                  const std::string& inDebugName = "ItemThumbnail");
 
     virtual ~ItemThumbnail() = default;
 
@@ -53,7 +53,7 @@ public:
     /** Thumbnail image. */
     AUI::Image thumbnailImage;
 
-    // Note: Hover highlight isn't needed, since we have interaction text 
+    // Note: Hover highlight isn't needed, since we have interaction text
     //       providing hover feedback.
 
     /** Foreground highlight image, selected state. */
@@ -94,13 +94,14 @@ public:
     AUI::Image* getDragDropImage() override;
 
     AUI::EventResult onMouseDown(AUI::MouseButtonType buttonType,
-                            const SDL_Point& cursorPosition) override;
+                                 const SDL_Point& cursorPosition) override;
 
     AUI::EventResult onMouseUp(AUI::MouseButtonType buttonType,
                                const SDL_Point& cursorPosition) override;
 
-    AUI::EventResult onMouseDoubleClick(AUI::MouseButtonType buttonType,
-                                   const SDL_Point& cursorPosition) override;
+    AUI::EventResult
+        onMouseDoubleClick(AUI::MouseButtonType buttonType,
+                           const SDL_Point& cursorPosition) override;
 
     void onMouseEnter() override;
 

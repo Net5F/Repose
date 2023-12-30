@@ -26,7 +26,7 @@ public:
                         Network& inNetwork, SpriteData& inSpriteData);
 
     /**
-     * Adds any waiting templates to the list, responds to entity template 
+     * Adds any waiting templates to the list, responds to entity template
      * and script data requests, and creates entities on request.
      */
     void processMessages();

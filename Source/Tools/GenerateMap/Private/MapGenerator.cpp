@@ -31,7 +31,7 @@ void MapGenerator::generateAndSave(const std::string& fileName)
     // Fill the chunks.
     tileMap.chunks.resize(mapXLength * mapYLength);
     for (ChunkSnapshot& chunk : tileMap.chunks) {
-        // Push the sprite set ID that we're filling the map with into the 
+        // Push the sprite set ID that we're filling the map with into the
         // palette.
         chunk.getPaletteIndex(TileLayer::Type::Floor, fillSpriteSetID, 0);
 

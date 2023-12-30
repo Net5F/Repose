@@ -6,7 +6,7 @@
 
 namespace AM
 {
-namespace Client 
+namespace Client
 {
 FloorTool::FloorTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
@@ -16,16 +16,17 @@ FloorTool::FloorTool(World& inWorld, Network& inNetwork)
 
 void FloorTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
 {
-    // Note: This cast should be safe, since only floor sprite sets should be 
+    // Note: This cast should be safe, since only floor sprite sets should be
     //       clickable while this tool is alive.
-    selectedSpriteSet = static_cast<const FloorSpriteSet*>(&inSelectedSpriteSet);
+    selectedSpriteSet
+        = static_cast<const FloorSpriteSet*>(&inSelectedSpriteSet);
 }
 
 void FloorTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
 {
     // Note: mouseTilePosition is set in onMouseMove().
 
-    // If this tool is active, the user left clicked, and we have a selected 
+    // If this tool is active, the user left clicked, and we have a selected
     // sprite.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedSpriteSet != nullptr)) {
@@ -38,7 +39,7 @@ void FloorTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
 
 void FloorTool::onMouseUp(AUI::MouseButtonType, const SDL_Point&)
 {
-    // TODO: Add support for click-and-drag to set an extent instead of a 
+    // TODO: Add support for click-and-drag to set an extent instead of a
     //       single tile.
 }
 
@@ -60,9 +61,9 @@ void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
     // If this tool is active and we have a selected sprite.
     if (isActive && (selectedSpriteSet != nullptr)) {
         // Set the selected sprite as a phantom at the new location.
-        phantomSprites.emplace_back(
-            mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Floor,
-            Wall::Type::None, Position{}, &(selectedSpriteSet->sprite));
+        phantomSprites.emplace_back(mouseTilePosition.x, mouseTilePosition.y,
+                                    TileLayer::Type::Floor, Wall::Type::None,
+                                    Position{}, &(selectedSpriteSet->sprite));
     }
 }
 
