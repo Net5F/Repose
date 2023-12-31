@@ -135,7 +135,7 @@ void PlantSystem::createDeadPlant(const Position& position)
 void PlantSystem::replantPlant(entt::entity oldPlant)
 {
     // Verify that the given entity is a dead plant.
-    if (!(world.entityIDIsInUse(oldPlant))
+    if (!(world.registry.valid(oldPlant))
         || !(world.registry.all_of<Plant>(oldPlant))) {
         LOG_ERROR("Tried to replant entity that isn't a plant.");
         return;

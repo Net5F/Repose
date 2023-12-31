@@ -37,7 +37,7 @@ void BuildModeDataSystem::processMessages()
     AddEntityTemplate addEntityTemplate{};
     while (addEntityTemplateQueue.pop(addEntityTemplate)) {
         entt::entity entity{addEntityTemplate.entity};
-        if (world.entityIDIsInUse(entity)) {
+        if (world.registry.valid(entity)) {
             // Collect the entity's relevant data and push it into the list.
             EntityTemplates::Data templateData{};
             if (Name * name{world.registry.try_get<Name>(entity)}) {
