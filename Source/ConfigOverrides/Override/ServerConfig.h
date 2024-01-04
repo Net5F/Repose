@@ -69,8 +69,7 @@ public:
 
     /** How often the world's data (tile map, entities, etc) should be saved, 
         in seconds. */
-    //static constexpr float SAVE_PERIOD_S{60 * 15};
-    static constexpr float SAVE_PERIOD_S{10};
+    static constexpr float SAVE_PERIOD_S{60 * 15};
 
     //-------------------------------------------------------------------------
     // Network
