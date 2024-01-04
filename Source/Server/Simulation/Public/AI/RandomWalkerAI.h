@@ -13,9 +13,9 @@ namespace Server
 class World;
 
 /**
- * Makes the entity walk around randomly.
+ * AI behavior to make the entity walk around randomly.
  */
-class RandomWalkerAILogic : public AILogic
+class RandomWalkerAI : public AILogic
 {
 public:
     /**
@@ -23,9 +23,8 @@ public:
      * @param inTimeToWait How long to wait for.
      * @param inTimeTillDirectionChange How often to change direction.
      */
-    RandomWalkerAILogic(World& inWorld, entt::entity inEntity,
-                        double inTimeToWalk, double inTimeToWait,
-                        double inTimeTillDirectionChange);
+    RandomWalkerAI(double inTimeToWalk, double inTimeToWait,
+                   double inTimeTillDirectionChange);
 
     /**
      * Processes one iteration of AI logic.
@@ -35,13 +34,13 @@ public:
      *
      * @param entity The entity that this AI is controlling.
      */
-    void tick() override;
+    void tick(World& world, entt::entity inEntity) override;
 
 private:
     /**
      * Updates the entity's Input::inputStates to match the current AI state.
      */
-    void updateInputs();
+    void updateInputs(World& world, entt::entity entity);
 
     /** How long to walk for. */
     double timeToWalk;

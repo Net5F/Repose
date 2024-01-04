@@ -1,8 +1,7 @@
 #include "ProjectLuaBindings.h"
 #include "World.h"
-#include "RandomWalkerAILogic.h"
+#include "RandomWalkerAI.h"
 #include "PreviousPosition.h"
-#include "AIBehavior.h"
 #include "sol/sol.hpp"
 
 namespace AM
@@ -43,9 +42,8 @@ void ProjectLuaBindings::addRandomWalkerAIBehavior(
     }
 
     // Add the behavior.
-    auto aiLogic{std::make_unique<RandomWalkerAILogic>(
-        world, entity, timeToWalk, timeToWait, timeTillDirectionChange)};
-    world.registry.emplace<AIBehavior>(entity, std::move(aiLogic));
+    world.registry.emplace<RandomWalkerAI>(entity, timeToWalk, timeToWait,
+                                           timeTillDirectionChange);
 }
 
 } // namespace Server
