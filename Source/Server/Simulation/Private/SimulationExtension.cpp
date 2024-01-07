@@ -3,6 +3,9 @@
 #include "Simulation.h"
 #include "Network.h"
 #include "SpriteData.h"
+#include "ComponentTypeRegistry.h"
+#include "ReplicatedComponentTypes.h"
+#include "ObservedComponentTypes.h"
 #include "TileExtent.h"
 #include "EntityInitRequest.h"
 #include "EntityNameChangeRequest.h"
@@ -27,6 +30,14 @@ SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
 , plantSystem{deps.simulation, deps.spriteData}
 , teleportSystem{deps.simulation.getWorld()}
 {
+    // Register our component types.
+    ComponentTypeRegistry& componentTypeRegistry{
+        deps.simulation.getComponentTypeRegistry()};
+    componentTypeRegistry
+        .registerReplicatedComponents<ReplicatedComponentTypes>();
+    componentTypeRegistry.registerObservedComponents<ReplicatedComponentTypes,
+                                                     ObservedComponentTypes>();
+
     // Add our Lua bindings.
     projectLuaBindings.addBindings();
 }

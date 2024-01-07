@@ -18,6 +18,9 @@ target_sources(Server
         Public/TeleportSystem.h
         Public/AI/RandomWalkerAI.h
         Public/Components/Plant.h
+        Public/TypeLists/AITypes.h
+        Public/TypeLists/ObservedComponentTypes.h
+        Public/TypeLists/PersistedComponentTypes.h
 )
 
 target_include_directories(Server
@@ -27,4 +30,5 @@ target_include_directories(Server
         ${CMAKE_CURRENT_SOURCE_DIR}/Public
         ${CMAKE_CURRENT_SOURCE_DIR}/Public/AI
         ${CMAKE_CURRENT_SOURCE_DIR}/Public/Components
+        ${CMAKE_CURRENT_SOURCE_DIR}/Public/TypeLists
 )

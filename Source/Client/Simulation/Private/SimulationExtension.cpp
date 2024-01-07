@@ -1,5 +1,7 @@
 #include "SimulationExtension.h"
 #include "SimulationExDependencies.h"
+#include "ComponentTypeRegistry.h"
+#include "ReplicatedComponentTypes.h"
 #include "AnimationSystem.h"
 #include "Simulation.h"
 #include "Camera.h"
@@ -13,6 +15,11 @@ namespace Client
 SimulationExtension::SimulationExtension(const SimulationExDependencies& inDeps)
 : deps{inDeps}
 {
+    // Register our component types.
+    ComponentTypeRegistry& componentTypeRegistry{
+        deps.simulation.getComponentTypeRegistry()};
+    componentTypeRegistry
+        .registerReplicatedComponents<ReplicatedComponentTypes>();
 }
 
 SimulationExtension::~SimulationExtension() = default;

@@ -1,14 +1,12 @@
 #pragma once
 
-///////////////////////////////////////////////////////////////////////////////
-// Note: This file overrides the engine's default
-//       SharedLib/ProjectReplicatedComponentTypes.h
-///////////////////////////////////////////////////////////////////////////////
-
+#include "EngineReplicatedComponentTypes.h"
 #include "boost/mp11/list.hpp"
+#include "boost/mp11/algorithm.hpp"
 
 namespace AM
 {
+
 /**
  * All of the project's component types that are relevant to the client.
  *
@@ -20,5 +18,12 @@ namespace AM
  * add it to ProjectObservedComponentTypes.
  */
 using ProjectReplicatedComponentTypes = boost::mp11::mp_list<>;
+
+using ReplicatedComponentTypes
+    = boost::mp11::mp_append<EngineReplicatedComponentTypes,
+                             ProjectReplicatedComponentTypes>;
+static_assert(boost::mp11::mp_size<ReplicatedComponentTypes>::value
+                  <= (SDL_MAX_UINT8 + 1),
+              "Too many types in ReplicatedComponentTypes. Max is 256");
 
 } // End namespace AM

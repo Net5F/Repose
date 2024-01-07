@@ -1,13 +1,13 @@
 #pragma once
 
-///////////////////////////////////////////////////////////////////////////////
-// Note: This file overrides the engine's default
-//       SharedLib/ProjectObservedComponentTypes.h
-///////////////////////////////////////////////////////////////////////////////
-
+#include "EngineObservedComponentTypes.h"
 #include "boost/mp11/list.hpp"
+#include "boost/mp11/algorithm.hpp"
 
 namespace AM
+{
+// Note: Observed components are server-only.
+namespace Server
 {
 /**
  * All of the engine's component types that should be observed and auto-
@@ -22,4 +22,9 @@ namespace AM
  */
 using ProjectObservedComponentTypes = boost::mp11::mp_list<>;
 
+using ObservedComponentTypes
+    = boost::mp11::mp_append<EngineObservedComponentTypes,
+                             ProjectObservedComponentTypes>;
+
+} // End namespace Server
 } // End namespace AM
