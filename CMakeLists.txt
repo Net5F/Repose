@@ -26,10 +26,6 @@ endif()
 ###############################################################################
 # Dependencies
 ###############################################################################
-# Configure Amalgam::Client and Amalgam::Server.
-set(AM_CONFIG_OVERRIDE_PATH
-    "${PROJECT_SOURCE_DIR}/Source/ConfigOverrides" CACHE PATH 
-    "Override the engine's default config files with the file at the provided path." FORCE)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Libraries/AmalgamEngine/"
                  "${PROJECT_BINARY_DIR}/Libraries/AmalgamEngine/")
 
