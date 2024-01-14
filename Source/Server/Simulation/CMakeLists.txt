@@ -16,7 +16,6 @@ target_sources(Server
         Public/ProjectLuaBindings.h
         Public/SimulationExtension.h
         Public/TeleportSystem.h
-        Public/Components/Plant.h
 )
 
 target_include_directories(Server
@@ -24,5 +23,4 @@ target_include_directories(Server
         ${CMAKE_CURRENT_SOURCE_DIR}/Private
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Public
-        ${CMAKE_CURRENT_SOURCE_DIR}/Public/Components
 )

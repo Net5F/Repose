@@ -8,6 +8,34 @@ namespace AM
 namespace Server
 {
 
+RandomWalkerAI::RandomWalkerAI()
+: timeToWalk{1}
+, timeToWait{1}
+, timeTillDirectionChange{1}
+, shouldWalk{false}
+, currentInputIndex{0}
+, walkTimer{}
+, directionTimer{}
+, randomDevice{}
+, generator{randomDevice()}
+, inputDistribution{0, Input::YDown}
+{
+}
+
+RandomWalkerAI::RandomWalkerAI(const RandomWalkerAI& other)
+: timeToWalk{other.timeToWalk}
+, timeToWait{other.timeToWait}
+, timeTillDirectionChange{other.timeTillDirectionChange}
+, shouldWalk{other.shouldWalk}
+, currentInputIndex{other.currentInputIndex}
+, walkTimer{}
+, directionTimer{}
+, randomDevice{}
+, generator{randomDevice()}
+, inputDistribution{0, Input::YDown}
+{
+}
+
 RandomWalkerAI::RandomWalkerAI(double inTimeToWalk, double inTimeToWait,
                                double inTimeTillDirectionChange)
 : timeToWalk{inTimeToWalk}
@@ -39,6 +67,19 @@ void RandomWalkerAI::tick(World& world, entt::entity entity)
         updateInputs(world, entity);
         directionTimer.reset();
     }
+}
+
+RandomWalkerAI& RandomWalkerAI::operator=(const RandomWalkerAI& other)
+{
+    timeToWalk = other.timeToWalk;
+    timeToWait = other.timeToWait;
+    timeTillDirectionChange = other.timeTillDirectionChange;
+    shouldWalk = other.shouldWalk;
+    currentInputIndex = other.currentInputIndex;
+    walkTimer.reset();
+    directionTimer.reset();
+
+    return *this;
 }
 
 void RandomWalkerAI::updateInputs(World& world, entt::entity entity)

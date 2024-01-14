@@ -21,7 +21,7 @@ PlantSystem::PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData)
 , world{inSimulation.getWorld()}
 , spriteData{inSpriteData}
 , updateTimer{}
-, plantExtent{5, 36, 9, 11}
+, plantExtent{4, 35, 9, 11}
 , sunflowerSpriteSetID{spriteData.getObjectSpriteSet("sunflower").numericID}
 {
     // Delete any existing plants.

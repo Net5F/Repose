@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Timer.h"
+#include <SDL_stdinc.h>
 
 namespace AM
 {
@@ -18,7 +19,7 @@ struct Plant {
      * E.g. when a plant progress to MidGrowth, it will switch to the sprite
      * at spriteSet.sprites[1].
      */
-    enum class LifeStage : unsigned int {
+    enum class LifeStage : Uint8 {
         Sapling,
         MidGrowth,
         FullyGrown,
@@ -35,6 +36,13 @@ struct Plant {
     /** Tracks how much time has passed since this plant's last update. */
     Timer timer{};
 };
+
+template<typename S>
+void serialize(S& serializer, Plant& plant)
+{
+    serializer.value1b(plant.lifeStage);
+    // Note: We purposely don't serialize timer, since it wouldn't make sense to.
+}
 
 } // End namespace Server
 } // End namespace AM
