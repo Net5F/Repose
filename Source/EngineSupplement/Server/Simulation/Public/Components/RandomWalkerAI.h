@@ -13,19 +13,22 @@ namespace Server
 class World;
 
 /**
- * Makes the entity walk around randomly.
+ * AI behavior to make the entity walk around randomly.
  */
-class RandomWalkerAILogic : public AILogic
+class RandomWalkerAI : public AILogic
 {
 public:
+    RandomWalkerAI();
+
+    RandomWalkerAI(const RandomWalkerAI& other);
+
     /**
      * @param inTimeToWalk How long to walk for.
      * @param inTimeToWait How long to wait for.
      * @param inTimeTillDirectionChange How often to change direction.
      */
-    RandomWalkerAILogic(World& inWorld, entt::entity inEntity,
-                        double inTimeToWalk, double inTimeToWait,
-                        double inTimeTillDirectionChange);
+    RandomWalkerAI(double inTimeToWalk, double inTimeToWait,
+                   double inTimeTillDirectionChange);
 
     /**
      * Processes one iteration of AI logic.
@@ -35,13 +38,9 @@ public:
      *
      * @param entity The entity that this AI is controlling.
      */
-    void tick() override;
+    void tick(World& world, entt::entity inEntity);
 
-private:
-    /**
-     * Updates the entity's Input::inputStates to match the current AI state.
-     */
-    void updateInputs();
+    RandomWalkerAI& operator=(const RandomWalkerAI& other);
 
     /** How long to walk for. */
     double timeToWalk;
@@ -49,6 +48,12 @@ private:
     double timeToWait;
     /** How often to change direction. */
     double timeTillDirectionChange;
+
+private:
+    /**
+     * Updates the entity's Input::inputStates to match the current AI state.
+     */
+    void updateInputs(World& world, entt::entity entity);
 
     /** If true, our entity should be walking. */
     bool shouldWalk;
@@ -64,6 +69,16 @@ private:
     std::mt19937 generator;
     std::uniform_int_distribution<> inputDistribution;
 };
+
+template<typename S>
+void serialize(S& serializer, RandomWalkerAI& randomWalkerAI)
+{
+    // Note: We only serialize the configuration variables. 
+    //       Current state variables will be defaulted.
+    serializer.value8b(randomWalkerAI.timeToWalk);
+    serializer.value8b(randomWalkerAI.timeToWait);
+    serializer.value8b(randomWalkerAI.timeTillDirectionChange);
+}
 
 } // namespace Server
 } // namespace AM

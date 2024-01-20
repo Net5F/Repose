@@ -3,13 +3,16 @@ cmake_minimum_required(VERSION 3.13)
 ###############################################################################
 # Modules
 ###############################################################################
-# Configure shared.
+# Configure EngineSupplement (directly adds to the engine's targets).
+add_subdirectory(EngineSupplement)
+
+# Configure Shared.
 add_subdirectory(Shared)
 
-# Configure client.
+# Configure Client.
 add_subdirectory(Client)
 
-# Configure server.
+# Configure Server.
 add_subdirectory(Server)
 
 # Configure tools.

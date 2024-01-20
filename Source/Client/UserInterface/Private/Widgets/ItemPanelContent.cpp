@@ -183,6 +183,11 @@ void ItemPanelContent::onTick(double)
 
 void ItemPanelContent::trySelectItem(std::string_view displayName)
 {
+    // If the given name is empty, do nothing.
+    if (displayName == "") {
+        return;
+    }
+
     // Deselect any current selection.
     selectedItemID = NULL_ITEM_ID;
     selectedItemDisplayName = "";
@@ -427,6 +432,7 @@ void ItemPanelContent::showHomeView()
     // If we have an item selected, show it.
     if (selectedItemID != NULL_ITEM_ID) {
         nameLabel.setText(selectedItemDisplayName);
+        nameInput.setText(selectedItemDisplayName);
         itemIconImage.setIsVisible(true);
         rightButton1.setIsVisible(true);
         rightButton2.setIsVisible(true);
