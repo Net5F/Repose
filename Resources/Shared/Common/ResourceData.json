@@ -1,4 +1,18 @@
 {
+    "boundingBoxes": [
+        {
+            "displayName": "Ghost",
+            "modelBounds": {
+                "maxX": 16.25,
+                "maxY": 16.75,
+                "maxZ": 28.799999237060547,
+                "minX": 8.25,
+                "minY": 7.875,
+                "minZ": 0.0
+            },
+            "numericID": 1
+        }
+    ],
     "floorCoverings": [
         {
             "displayName": "Grass",
@@ -247,6 +261,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 0,
                     "stringID": "floor0",
                     "textureExtent": {
@@ -268,6 +283,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 1,
                     "stringID": "floor1",
                     "textureExtent": {
@@ -289,6 +305,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 2,
                     "stringID": "floor2",
                     "textureExtent": {
@@ -310,6 +327,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 3,
                     "stringID": "floor3",
                     "textureExtent": {
@@ -331,6 +349,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 4,
                     "stringID": "floor4",
                     "textureExtent": {
@@ -352,6 +371,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 5,
                     "stringID": "floor5",
                     "textureExtent": {
@@ -373,6 +393,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 6,
                     "stringID": "floor6",
                     "textureExtent": {
@@ -394,6 +415,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 7,
                     "stringID": "floor7",
                     "textureExtent": {
@@ -420,6 +442,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 8,
                     "stringID": "grass0",
                     "textureExtent": {
@@ -441,6 +464,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 9,
                     "stringID": "grass1",
                     "textureExtent": {
@@ -462,6 +486,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 10,
                     "stringID": "grass2",
                     "textureExtent": {
@@ -483,6 +508,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 11,
                     "stringID": "grass3",
                     "textureExtent": {
@@ -504,6 +530,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 12,
                     "stringID": "grass4",
                     "textureExtent": {
@@ -525,6 +552,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 13,
                     "stringID": "grass_west1",
                     "textureExtent": {
@@ -546,6 +574,7 @@
                         "minY": 7.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 14,
                     "stringID": "grass_north1",
                     "textureExtent": {
@@ -567,6 +596,7 @@
                         "minY": 7.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 15,
                     "stringID": "grass_nw1",
                     "textureExtent": {
@@ -588,6 +618,7 @@
                         "minY": 7.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 16,
                     "stringID": "grass_nw2",
                     "textureExtent": {
@@ -609,6 +640,7 @@
                         "minY": 7.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 17,
                     "stringID": "grass_north2",
                     "textureExtent": {
@@ -630,6 +662,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 18,
                     "stringID": "grass_west2",
                     "textureExtent": {
@@ -651,6 +684,7 @@
                         "minY": 17.125,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 19,
                     "stringID": "sunflower_0",
                     "textureExtent": {
@@ -672,6 +706,7 @@
                         "minY": 17.125,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 20,
                     "stringID": "sunflower_1",
                     "textureExtent": {
@@ -693,6 +728,7 @@
                         "minY": 17.125,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 21,
                     "stringID": "sunflower_2",
                     "textureExtent": {
@@ -714,6 +750,7 @@
                         "minY": 17.125,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 22,
                     "stringID": "sunflower_3",
                     "textureExtent": {
@@ -735,6 +772,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 23,
                     "stringID": "grass15",
                     "textureExtent": {
@@ -756,6 +794,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 24,
                     "stringID": "grass16",
                     "textureExtent": {
@@ -777,6 +816,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 25,
                     "stringID": "grass17",
                     "textureExtent": {
@@ -803,6 +843,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 26,
                     "stringID": "fullfill1",
                     "textureExtent": {
@@ -824,6 +865,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 27,
                     "stringID": "fullfill2",
                     "textureExtent": {
@@ -845,6 +887,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 28,
                     "stringID": "fullfill3",
                     "textureExtent": {
@@ -866,6 +909,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 29,
                     "stringID": "ne_fill1",
                     "textureExtent": {
@@ -887,6 +931,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 30,
                     "stringID": "ne_fill2",
                     "textureExtent": {
@@ -908,6 +953,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 31,
                     "stringID": "ne_fill3",
                     "textureExtent": {
@@ -929,6 +975,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 32,
                     "stringID": "west3",
                     "textureExtent": {
@@ -950,6 +997,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 33,
                     "stringID": "nw_fill1",
                     "textureExtent": {
@@ -971,6 +1019,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 34,
                     "stringID": "nw_fill2",
                     "textureExtent": {
@@ -992,6 +1041,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 35,
                     "stringID": "nw_fill3",
                     "textureExtent": {
@@ -1013,6 +1063,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 36,
                     "stringID": "column",
                     "textureExtent": {
@@ -1034,6 +1085,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 37,
                     "stringID": "north1",
                     "textureExtent": {
@@ -1055,6 +1107,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 38,
                     "stringID": "north2",
                     "textureExtent": {
@@ -1076,6 +1129,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 39,
                     "stringID": "west4",
                     "textureExtent": {
@@ -1097,6 +1151,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 40,
                     "stringID": "north3",
                     "textureExtent": {
@@ -1118,6 +1173,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 41,
                     "stringID": "north4",
                     "textureExtent": {
@@ -1139,6 +1195,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 42,
                     "stringID": "north5",
                     "textureExtent": {
@@ -1160,6 +1217,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 43,
                     "stringID": "north6",
                     "textureExtent": {
@@ -1181,6 +1239,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 44,
                     "stringID": "west1",
                     "textureExtent": {
@@ -1202,6 +1261,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 45,
                     "stringID": "west2",
                     "textureExtent": {
@@ -1223,6 +1283,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 46,
                     "stringID": "west5",
                     "textureExtent": {
@@ -1244,6 +1305,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 47,
                     "stringID": "west6",
                     "textureExtent": {
@@ -1265,6 +1327,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 48,
                     "stringID": "wall22",
                     "textureExtent": {
@@ -1286,6 +1349,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 49,
                     "stringID": "wall23",
                     "textureExtent": {
@@ -1307,6 +1371,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 50,
                     "stringID": "wall24",
                     "textureExtent": {
@@ -1328,6 +1393,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 51,
                     "stringID": "wall25",
                     "textureExtent": {
@@ -1349,6 +1415,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 52,
                     "stringID": "wall26",
                     "textureExtent": {
@@ -1370,6 +1437,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 53,
                     "stringID": "wall27",
                     "textureExtent": {
@@ -1396,6 +1464,7 @@
                         "minY": 7.875,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 1,
                     "numericID": 54,
                     "stringID": "ghost_east",
                     "textureExtent": {
@@ -1417,6 +1486,7 @@
                         "minY": 7.875,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 1,
                     "numericID": 55,
                     "stringID": "ghost_north",
                     "textureExtent": {
@@ -1438,6 +1508,7 @@
                         "minY": 7.875,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 1,
                     "numericID": 56,
                     "stringID": "ghost_south",
                     "textureExtent": {
@@ -1459,6 +1530,7 @@
                         "minY": 7.875,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 1,
                     "numericID": 57,
                     "stringID": "ghost_west",
                     "textureExtent": {
@@ -1480,6 +1552,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 58,
                     "stringID": "ghost4",
                     "textureExtent": {
@@ -1501,6 +1574,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 59,
                     "stringID": "ghost5",
                     "textureExtent": {
@@ -1527,6 +1601,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 60,
                     "stringID": "template_floor",
                     "textureExtent": {
@@ -1548,6 +1623,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 61,
                     "stringID": "template_fullfill",
                     "textureExtent": {
@@ -1569,6 +1645,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 62,
                     "stringID": "template_ne_fill",
                     "textureExtent": {
@@ -1590,6 +1667,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 63,
                     "stringID": "template_nw_fill",
                     "textureExtent": {
@@ -1611,6 +1689,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 64,
                     "stringID": "template_north",
                     "textureExtent": {
@@ -1632,6 +1711,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 65,
                     "stringID": "template_west",
                     "textureExtent": {
@@ -1653,6 +1733,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 66,
                     "stringID": "template6",
                     "textureExtent": {
@@ -1674,6 +1755,7 @@
                         "minY": 0.0,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 67,
                     "stringID": "template7",
                     "textureExtent": {
@@ -1700,6 +1782,7 @@
                         "minY": 13.75,
                         "minZ": 0.0
                     },
+                    "modelBoundsID": 0,
                     "numericID": 68,
                     "stringID": "roberto",
                     "textureExtent": {
