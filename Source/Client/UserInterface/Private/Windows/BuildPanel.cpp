@@ -125,25 +125,36 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
         [this]() { setBuildMode(BuildMode::Type::Entity); });
     buildModeButtons[BuildMode::Type::Remove].setOnPressed(
         [this]() { setBuildMode(BuildMode::Type::Remove); });
-    // TODO: Segfaulting when pressing this
     buildModeButtons[BuildMode::Type::Item].setOnPressed(
         [this]() { setBuildMode(BuildMode::Type::Item); });
 
     // Fill the containers with the available sprite sets.
     for (const FloorSpriteSet& spriteSet : spriteData.getAllFloorSpriteSets()) {
+        if (!(spriteSet.numericID)) {
+            continue;
+        }
         addTileSpriteSet(TileLayer::Type::Floor, spriteSet, spriteSet.sprite);
     }
     for (const FloorCoveringSpriteSet& spriteSet :
          spriteData.getAllFloorCoveringSpriteSets()) {
+        if (!(spriteSet.numericID)) {
+            continue;
+        }
         addTileSpriteSet(TileLayer::Type::FloorCovering, spriteSet,
                          *getFirstSprite(spriteSet));
     }
     for (const WallSpriteSet& spriteSet : spriteData.getAllWallSpriteSets()) {
+        if (!(spriteSet.numericID)) {
+            continue;
+        }
         addTileSpriteSet(TileLayer::Type::Wall, spriteSet,
                          spriteSet.sprites[0]);
     }
     for (const ObjectSpriteSet& spriteSet :
          spriteData.getAllObjectSpriteSets()) {
+        if (!(spriteSet.numericID)) {
+            continue;
+        }
         addTileSpriteSet(TileLayer::Type::Object, spriteSet,
                          *getFirstSprite(spriteSet));
     }

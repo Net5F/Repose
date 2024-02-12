@@ -328,7 +328,7 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
         buildPanel.setSelectedThumbnail(*selectedThumb);
 
         // Tell the tool that the selection changed.
-        const SpriteSet& spriteSet{spriteData.getObjectSpriteSet(
+        const ObjectSpriteSet& spriteSet{spriteData.getObjectSpriteSet(
             SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_SET)};
         AnimationState animationState{
             SpriteSet::Type::Object, spriteSet.numericID,
@@ -388,6 +388,11 @@ void EntityPanelContent::addSpriteSetThumbnails()
     // Add thumbnails for all object sprite sets.
     for (const ObjectSpriteSet& spriteSet :
          spriteData.getAllObjectSpriteSets()) {
+        // Skip the null set.
+        if (!(spriteSet.numericID)) {
+            continue;
+        }
+
         // Construct the new thumbnail.
         std::unique_ptr<AUI::Widget> thumbnailPtr{
             std::make_unique<BuildModeThumbnail>("EntityThumbnail")};

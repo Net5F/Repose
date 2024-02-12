@@ -31,7 +31,7 @@ void AnimationSystem::updateAnimations()
 
         // If the new rotation includes the current-faced direction, don't
         // change the sprite.
-        int currentSpriteId{sprite.numericID};
+        SpriteID currentSpriteId{sprite.numericID};
         if (currentSpriteId == GHOST_NORTH_ID) {
             if (rotation.direction == Rotation::Direction::North
                 || rotation.direction == Rotation::Direction::NorthWest

@@ -6,7 +6,6 @@
 #include "AnimationState.h"
 #include "Interaction.h"
 #include "Plant.h"
-#include "NullSpriteID.h"
 #include "SharedConfig.h"
 #include "Log.h"
 #include "AMAssert.h"

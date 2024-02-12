@@ -1,5 +1,7 @@
 #pragma once
 
+#include "SpriteID.h"
+
 namespace AM
 {
 namespace Client
@@ -33,10 +35,10 @@ private:
     SpriteData& spriteData;
 
     /** Used for setting ghost sprites. */
-    const int GHOST_NORTH_ID;
-    const int GHOST_EAST_ID;
-    const int GHOST_SOUTH_ID;
-    const int GHOST_WEST_ID;
+    const SpriteID GHOST_NORTH_ID;
+    const SpriteID GHOST_EAST_ID;
+    const SpriteID GHOST_SOUTH_ID;
+    const SpriteID GHOST_WEST_ID;
 };
 
 } // End namespace Client
