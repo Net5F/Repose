@@ -3,7 +3,7 @@
 #include "Simulation.h"
 #include "World.h"
 #include "Network.h"
-#include "SpriteData.h"
+#include "GraphicData.h"
 #include "IconData.h"
 #include "BuildOverlay.h"
 #include "BuildModeThumbnail.h"
@@ -17,11 +17,11 @@ namespace AM
 namespace Client
 {
 BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
-                       SpriteData& inSpriteData, IconData& inIconData,
+                       GraphicData& inGraphicData, IconData& inIconData,
                        BuildOverlay& inBuildOverlay)
 : AUI::Window{{0, 761, 1920, 319}, "BuildPanel"}
 , network{inNetwork}
-, spriteData{inSpriteData}
+, graphicData{inGraphicData}
 , buildOverlay{inBuildOverlay}
 , selectedThumbnail{nullptr}
 , backgroundImage{{0, 0, 1920, 319}, "BuildPanelBackground"}
@@ -31,7 +31,7 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
 , objectContainer{{366, 91, 1188, 220}, "ObjectContainer"}
 , entityPanelContent{inSimulation.getWorld(),
                      network,
-                     spriteData,
+                     graphicData,
                      *this,
                      {366, 91, 1188, 220},
                      "EntityPanelContent"}
@@ -128,35 +128,36 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
     buildModeButtons[BuildMode::Type::Item].setOnPressed(
         [this]() { setBuildMode(BuildMode::Type::Item); });
 
-    // Fill the containers with the available sprite sets.
-    for (const FloorSpriteSet& spriteSet : spriteData.getAllFloorSpriteSets()) {
-        if (!(spriteSet.numericID)) {
+    // Fill the containers with the available graphic sets.
+    for (const FloorGraphicSet& graphicSet : graphicData.getAllFloorGraphicSets()) {
+        if (!(graphicSet.numericID)) {
             continue;
         }
-        addTileSpriteSet(TileLayer::Type::Floor, spriteSet, spriteSet.sprite);
+        addTileGraphicSet(TileLayer::Type::Floor, graphicSet,
+                          graphicSet.graphic.getFirstSprite());
     }
-    for (const FloorCoveringSpriteSet& spriteSet :
-         spriteData.getAllFloorCoveringSpriteSets()) {
-        if (!(spriteSet.numericID)) {
+    for (const FloorCoveringGraphicSet& graphicSet :
+         graphicData.getAllFloorCoveringGraphicSets()) {
+        if (!(graphicSet.numericID)) {
             continue;
         }
-        addTileSpriteSet(TileLayer::Type::FloorCovering, spriteSet,
-                         *getFirstSprite(spriteSet));
+        addTileGraphicSet(TileLayer::Type::FloorCovering, graphicSet,
+                         getFirstSprite(graphicSet));
     }
-    for (const WallSpriteSet& spriteSet : spriteData.getAllWallSpriteSets()) {
-        if (!(spriteSet.numericID)) {
+    for (const WallGraphicSet& graphicSet : graphicData.getAllWallGraphicSets()) {
+        if (!(graphicSet.numericID)) {
             continue;
         }
-        addTileSpriteSet(TileLayer::Type::Wall, spriteSet,
-                         spriteSet.sprites[0]);
+        addTileGraphicSet(TileLayer::Type::Wall, graphicSet,
+                         graphicSet.graphics[0].getFirstSprite());
     }
-    for (const ObjectSpriteSet& spriteSet :
-         spriteData.getAllObjectSpriteSets()) {
-        if (!(spriteSet.numericID)) {
+    for (const ObjectGraphicSet& graphicSet :
+         graphicData.getAllObjectGraphicSets()) {
+        if (!(graphicSet.numericID)) {
             continue;
         }
-        addTileSpriteSet(TileLayer::Type::Object, spriteSet,
-                         *getFirstSprite(spriteSet));
+        addTileGraphicSet(TileLayer::Type::Object, graphicSet,
+                         getFirstSprite(graphicSet));
     }
 }
 
@@ -178,11 +179,11 @@ void BuildPanel::clearSelectedThumbnail()
     }
 }
 
-void BuildPanel::addTileSpriteSet(TileLayer::Type type,
-                                  const SpriteSet& spriteSet,
+void BuildPanel::addTileGraphicSet(TileLayer::Type type,
+                                  const GraphicSet& graphicSet,
                                   const Sprite& sprite)
 {
-    // Construct the new sprite thumbnail.
+    // Construct the new graphic set thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
         std::make_unique<BuildModeThumbnail>("BuildPanelThumbnail")};
     BuildModeThumbnail& thumbnail{
@@ -193,7 +194,7 @@ void BuildPanel::addTileSpriteSet(TileLayer::Type type,
     // Calc a square texture extent that shows the bottom of the sprite (so we
     // don't have to squash it).
     const SpriteRenderData& renderData{
-        spriteData.getRenderData(sprite.numericID)};
+        graphicData.getRenderData(sprite.numericID)};
     SDL_Rect textureExtent{renderData.textureExtent};
     if (textureExtent.h > textureExtent.w) {
         int diff{textureExtent.h - textureExtent.w};
@@ -206,12 +207,12 @@ void BuildPanel::addTileSpriteSet(TileLayer::Type type,
                                             textureExtent);
 
     // Add a callback to deactivate all other thumbnails when one is activated.
-    thumbnail.setOnSelected([this, &spriteSet](AUI::Thumbnail* selectedThumb) {
+    thumbnail.setOnSelected([this, &graphicSet](AUI::Thumbnail* selectedThumb) {
         // Set this thumbnail as the new selection.
         setSelectedThumbnail(*selectedThumb);
 
-        // Tell the overlay that the selected sprite changed.
-        buildOverlay.setSelectedSpriteSet(spriteSet);
+        // Tell the overlay that the selected graphic set changed.
+        buildOverlay.setSelectedGraphicSet(graphicSet);
     });
 
     if (type == TileLayer::Type::Floor) {
@@ -229,20 +230,20 @@ void BuildPanel::addTileSpriteSet(TileLayer::Type type,
 }
 
 template<typename T>
-requires std::same_as<T, FloorCoveringSpriteSet> || std::same_as<
-    T, ObjectSpriteSet>
-const Sprite* BuildPanel::getFirstSprite(const T& spriteSet)
+requires std::same_as<T, FloorCoveringGraphicSet> || std::same_as<
+    T, ObjectGraphicSet>
+const Sprite& BuildPanel::getFirstSprite(const T& graphicSet)
 {
-    for (const Sprite* sprite : spriteSet.sprites) {
-        if (sprite != nullptr) {
-            return sprite;
+    for (const GraphicRef& graphic : graphicSet.graphics) {
+        if (graphic.getGraphicID() != NULL_GRAPHIC_ID) {
+            return graphic.getFirstSprite();
         }
     }
 
     // Note: The resource importer assures that every floor covering and
     //       object has at least 1 sprite, so this shouldn't happen.
     LOG_FATAL("Failed to find sprite when expected.");
-    return nullptr;
+    return graphicData.getSprite(NULL_SPRITE_ID);
 }
 
 void BuildPanel::setBuildMode(BuildMode::Type buildModeType)

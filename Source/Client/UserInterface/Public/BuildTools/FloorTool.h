@@ -4,7 +4,7 @@
 
 namespace AM
 {
-struct FloorSpriteSet;
+struct FloorGraphicSet;
 
 namespace Client
 {
@@ -17,7 +17,7 @@ class FloorTool : public BuildTool
 public:
     FloorTool(World& inWorld, Network& inNetwork);
 
-    void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
+    void setSelectedGraphicSet(const GraphicSet& inSelectedGraphicSet) override;
 
     void onMouseDown(AUI::MouseButtonType buttonType,
                      const SDL_Point& cursorPosition) override;
@@ -28,8 +28,8 @@ public:
     void onMouseMove(const SDL_Point& cursorPosition) override;
 
 private:
-    /** The currently selected sprite set. */
-    const FloorSpriteSet* selectedSpriteSet;
+    /** The currently selected graphic set. */
+    const FloorGraphicSet* selectedGraphicSet;
 };
 
 } // End namespace Client

@@ -3,7 +3,7 @@
 #include "Camera.h"
 #include "TileExtent.h"
 #include "TileLayers.h"
-#include "SpriteSets.h"
+#include "GraphicSets.h"
 #include "BuildModeType.h"
 #include "PhantomSpriteInfo.h"
 #include "SpriteColorModInfo.h"
@@ -21,7 +21,7 @@ class Simulation;
 class World;
 class WorldObjectLocator;
 class Network;
-class SpriteData;
+class GraphicData;
 class BuildTool;
 
 /**
@@ -42,14 +42,14 @@ public:
     //-------------------------------------------------------------------------
     BuildOverlay(Simulation& inSimulation,
                  const WorldObjectLocator& inWorldObjectLocator,
-                 Network& inNetwork, SpriteData& inSpriteData);
+                 Network& inNetwork, GraphicData& inGraphicData);
 
     virtual ~BuildOverlay();
 
     /**
-     * Used by the BuildPanel to tell us when a sprite set is selected.
+     * Used by the BuildPanel to tell us when a graphic set is selected.
      */
-    void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet);
+    void setSelectedGraphicSet(const GraphicSet& inSelectedGraphicSet);
 
     /**
      * Used by the BuildPanel to tell us which build mode is currently active.
@@ -112,17 +112,15 @@ private:
      */
     void onTileMapExtentChanged(TileExtent inTileExtent);
 
-    /** We hold onto this so we can pass it to the current tool. */
+    /** We hold onto these so we can pass them to the current tool. */
     World& world;
-    /** We hold onto this so we can pass it to the current tool. */
     const WorldObjectLocator& worldObjectLocator;
-    /** We hold onto this so we can pass it to the current tool. */
     Network& network;
     /** Used to get sprites from AnimationStates. */
-    SpriteData& spriteData;
+    GraphicData& graphicData;
 
-    /** The currently selected sprite set. */
-    const SpriteSet* selectedSpriteSet;
+    /** The currently selected graphic set. */
+    const GraphicSet* selectedGraphicSet;
 
     /** The current build tool. */
     std::unique_ptr<BuildTool> currentBuildTool;

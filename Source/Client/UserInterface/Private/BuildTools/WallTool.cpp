@@ -13,15 +13,15 @@ namespace Client
 
 WallTool::WallTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
-, selectedSpriteSet{nullptr}
+, selectedGraphicSet{nullptr}
 {
 }
 
-void WallTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
+void WallTool::setSelectedGraphicSet(const GraphicSet& inSelectedGraphicSet)
 {
-    // Note: This cast should be safe, since only floor covering sprite sets
+    // Note: This cast should be safe, since only floor covering graphic sets
     //       should be clickable while this tool is alive.
-    selectedSpriteSet = static_cast<const WallSpriteSet*>(&inSelectedSpriteSet);
+    selectedGraphicSet = static_cast<const WallGraphicSet*>(&inSelectedGraphicSet);
 }
 
 void WallTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
@@ -29,9 +29,9 @@ void WallTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
     // Note: mouseTilePosition is set in onMouseMove().
 
     // If this tool is active, the user left clicked, and we have a selected
-    // sprite.
+    // graphic.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
-        && (selectedSpriteSet != nullptr)) {
+        && (selectedGraphicSet != nullptr)) {
         // Iterate the phantom tiles and tell the sim to add them for real.
         for (const auto& phantomInfo : phantomSprites) {
             // Skip NorthWest gap fills since the tile map will auto-add them.
@@ -63,7 +63,7 @@ void WallTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
 
             network.serializeAndSend(TileAddLayer{
                 phantomInfo.tileX, phantomInfo.tileY, TileLayer::Type::Wall,
-                selectedSpriteSet->numericID, wallType});
+                selectedGraphicSet->numericID, wallType});
         }
     }
 }
@@ -89,8 +89,8 @@ void WallTool::onMouseMove(const SDL_Point& cursorPosition)
     // Clear any old phantoms.
     phantomSprites.clear();
 
-    // If this tool is active and we have a selected sprite.
-    if (isActive && (selectedSpriteSet != nullptr)) {
+    // If this tool is active and we have a selected graphic.
+    if (isActive && (selectedGraphicSet != nullptr)) {
         // Add the appropriate phantom walls.
         addPhantomWalls(cursorPosition);
     }
@@ -129,12 +129,12 @@ void WallTool::addNorthWallPhantom(int tileX, int tileY)
     // If the tile has a West wall, add a NE gap fill.
     if (walls[0].wallType == Wall::Type::West) {
         pushPhantomWall(tileX, tileY, Wall::Type::NorthEastGapFill,
-                        *selectedSpriteSet);
+                        *selectedGraphicSet);
     }
     else {
         // No West wall, add the North wall.
         // Note: If there's a NorthWestGapFill, this will replace it.
-        pushPhantomWall(tileX, tileY, Wall::Type::North, *selectedSpriteSet);
+        pushPhantomWall(tileX, tileY, Wall::Type::North, *selectedGraphicSet);
     }
 
     // If there's a tile to the NE that we might've formed a corner with.
@@ -153,18 +153,18 @@ void WallTool::addNorthWallPhantom(int tileX, int tileY)
                 && (eastWalls[1].wallType == Wall::Type::None)) {
                 // The tile has no walls. Add a NorthWestGapFill.
                 pushPhantomWall(tileX + 1, tileY, Wall::Type::NorthWestGapFill,
-                                *selectedSpriteSet);
+                                *selectedGraphicSet);
             }
             else if (eastWalls[1].wallType == Wall::Type::NorthWestGapFill) {
-                // The East tile has a NW gap fill. If its sprite set no longer
+                // The East tile has a NW gap fill. If its graphic set no longer
                 // matches either surrounding wall, make it match the new wall.
-                int gapFillID{eastWalls[1].spriteSet->numericID};
-                int newNorthID{selectedSpriteSet->numericID};
-                int westID{northeastWalls[0].spriteSet->numericID};
+                int gapFillID{eastWalls[1].graphicSet->numericID};
+                int newNorthID{selectedGraphicSet->numericID};
+                int westID{northeastWalls[0].graphicSet->numericID};
                 if ((gapFillID != newNorthID) && (gapFillID != westID)) {
                     pushPhantomWall(tileX + 1, tileY,
                                     Wall::Type::NorthWestGapFill,
-                                    *selectedSpriteSet);
+                                    *selectedGraphicSet);
                 }
             }
         }
@@ -179,12 +179,12 @@ void WallTool::addWestWallPhantom(int tileX, int tileY)
     // Add the West wall.
     // Note: If this tile already has a West wall or NW gap fill, this will
     //       replace it.
-    pushPhantomWall(tileX, tileY, Wall::Type::West, *selectedSpriteSet);
+    pushPhantomWall(tileX, tileY, Wall::Type::West, *selectedGraphicSet);
 
     // If the tile has a North wall, switch it to a NorthEast gap fill.
     if (walls[1].wallType == Wall::Type::North) {
         pushPhantomWall(tileX, tileY, Wall::Type::NorthEastGapFill,
-                        *(walls[1].spriteSet));
+                        *(walls[1].graphicSet));
     }
 
     // If there's a tile to the SW that we might've formed a corner with.
@@ -205,18 +205,18 @@ void WallTool::addWestWallPhantom(int tileX, int tileY)
                 && (southWalls[1].wallType == Wall::Type::None)) {
                 // The tile has no walls. Add a NorthWestGapFill.
                 pushPhantomWall(tileX, tileY + 1, Wall::Type::NorthWestGapFill,
-                                *selectedSpriteSet);
+                                *selectedGraphicSet);
             }
             else if (southWalls[1].wallType == Wall::Type::NorthWestGapFill) {
-                // The South tile has a NW gap fill. If its sprite set no longer
+                // The South tile has a NW gap fill. If its graphic set no longer
                 // matches either surrounding wall, make it match the new wall.
-                int gapFillID{southWalls[1].spriteSet->numericID};
-                int newWestID{selectedSpriteSet->numericID};
-                int northID{southwestWalls[1].spriteSet->numericID};
+                int gapFillID{southWalls[1].graphicSet->numericID};
+                int newWestID{selectedGraphicSet->numericID};
+                int northID{southwestWalls[1].graphicSet->numericID};
                 if ((gapFillID != newWestID) && (gapFillID != northID)) {
                     pushPhantomWall(tileX, tileY + 1,
                                     Wall::Type::NorthWestGapFill,
-                                    *selectedSpriteSet);
+                                    *selectedGraphicSet);
                 }
             }
         }
@@ -224,11 +224,11 @@ void WallTool::addWestWallPhantom(int tileX, int tileY)
 }
 
 void WallTool::pushPhantomWall(int tileX, int tileY, Wall::Type wallType,
-                               const WallSpriteSet& wallSpriteSet)
+                               const WallGraphicSet& wallGraphicSet)
 {
-    phantomSprites.emplace_back(tileX, tileY, TileLayer::Type::Wall, wallType,
-                                Position{},
-                                &(wallSpriteSet.sprites[wallType].get()));
+    phantomSprites.emplace_back(
+        tileX, tileY, TileLayer::Type::Wall, wallType, Position{},
+        &(wallGraphicSet.graphics[wallType].getFirstSprite()));
 }
 
 } // End namespace Client

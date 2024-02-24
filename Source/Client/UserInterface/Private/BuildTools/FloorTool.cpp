@@ -10,16 +10,16 @@ namespace Client
 {
 FloorTool::FloorTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
-, selectedSpriteSet{nullptr}
+, selectedGraphicSet{nullptr}
 {
 }
 
-void FloorTool::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
+void FloorTool::setSelectedGraphicSet(const GraphicSet& inSelectedGraphicSet)
 {
-    // Note: This cast should be safe, since only floor sprite sets should be
+    // Note: This cast should be safe, since only floor graphic sets should be
     //       clickable while this tool is alive.
-    selectedSpriteSet
-        = static_cast<const FloorSpriteSet*>(&inSelectedSpriteSet);
+    selectedGraphicSet
+        = static_cast<const FloorGraphicSet*>(&inSelectedGraphicSet);
 }
 
 void FloorTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
@@ -27,13 +27,13 @@ void FloorTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
     // Note: mouseTilePosition is set in onMouseMove().
 
     // If this tool is active, the user left clicked, and we have a selected
-    // sprite.
+    // graphic.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
-        && (selectedSpriteSet != nullptr)) {
+        && (selectedGraphicSet != nullptr)) {
         // Tell the server to add the layer.
         network.serializeAndSend(TileAddLayer{
             mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Floor,
-            selectedSpriteSet->numericID, 0});
+            selectedGraphicSet->numericID, 0});
     }
 }
 
@@ -58,12 +58,13 @@ void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
     // Clear any old phantoms.
     phantomSprites.clear();
 
-    // If this tool is active and we have a selected sprite.
-    if (isActive && (selectedSpriteSet != nullptr)) {
-        // Set the selected sprite as a phantom at the new location.
-        phantomSprites.emplace_back(mouseTilePosition.x, mouseTilePosition.y,
-                                    TileLayer::Type::Floor, Wall::Type::None,
-                                    Position{}, &(selectedSpriteSet->sprite));
+    // If this tool is active and we have a selected graphic.
+    if (isActive && (selectedGraphicSet != nullptr)) {
+        // Set the selected graphic as a phantom at the new location.
+        phantomSprites.emplace_back(
+            mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Floor,
+            Wall::Type::None, Position{},
+            &(selectedGraphicSet->graphic.getFirstSprite()));
     }
 }
 

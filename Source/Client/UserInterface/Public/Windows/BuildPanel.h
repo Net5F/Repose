@@ -26,7 +26,7 @@ namespace Client
 class Simulation;
 class World;
 class Network;
-class SpriteData;
+class GraphicData;
 class IconData;
 class BuildOverlay;
 
@@ -43,7 +43,7 @@ public:
     // Public interface
     //-------------------------------------------------------------------------
     BuildPanel(Simulation& inSimulation, Network& inNetwork,
-               SpriteData& inSpriteData, IconData& inIconData,
+               GraphicData& inGraphicData, IconData& inIconData,
                BuildOverlay& inBuildOverlay);
 
     ~BuildPanel() = default;
@@ -64,18 +64,19 @@ public:
 
 private:
     /**
-     * Adds a sprite set thumbnail to the appropriate tileSpriteSetContainer.
+     * Adds a graphic set thumbnail to the appropriate tile graphic set 
+     * container.
      */
-    void addTileSpriteSet(TileLayer::Type type, const SpriteSet& spriteSet,
+    void addTileGraphicSet(TileLayer::Type type, const GraphicSet& graphicSet,
                           const Sprite& sprite);
 
     /**
-     * Returns the first sprite within the set.
+     * Returns the first graphic within the set.
      */
     template<typename T>
-    requires std::same_as<T, FloorCoveringSpriteSet> || std::same_as<
-        T, ObjectSpriteSet>
-    const Sprite* getFirstSprite(const T& spriteSet);
+    requires std::same_as<T, FloorCoveringGraphicSet> || std::same_as<
+        T, ObjectGraphicSet>
+    const Sprite& getFirstSprite(const T& graphicSet);
 
     /**
      * Sets this panel up for the given build mode type.
@@ -84,8 +85,8 @@ private:
 
     /** Used to send and receive content-related build mode messages. */
     Network& network;
-    /** Used to get the sprite sets that we fill the panel with. */
-    SpriteData& spriteData;
+    /** Used to get the graphic sets that we fill the panel with. */
+    GraphicData& graphicData;
     /** We keep the overlay updated on which tool and sprite set is selected. */
     BuildOverlay& buildOverlay;
 

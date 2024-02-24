@@ -9,14 +9,14 @@
 namespace AM
 {
 struct Position;
-struct ObjectSpriteSet;
+struct ObjectGraphicSet;
 
 namespace Server
 {
 
 class Simulation;
 class World;
-class SpriteData;
+class GraphicData;
 
 /**
  * Takes plants through their growth, death, and replanting life cycle.
@@ -26,7 +26,7 @@ class SpriteData;
 class PlantSystem
 {
 public:
-    PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData);
+    PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData);
 
     /**
      * Iterates through the plants and updates any that need to grow or die.
@@ -62,15 +62,15 @@ private:
     Simulation& simulation;
     /** Used to modify the tile map. */
     World& world;
-    /** Used to get the plant sprites that we apply to the tile map. */
-    SpriteData& spriteData;
+    /** Used to get the plant graphics that we apply to the tile map. */
+    GraphicData& graphicData;
 
     Timer updateTimer;
 
     /** The world extent that the plants are located within. */
     TileExtent plantExtent;
 
-    Uint16 sunflowerSpriteSetID;
+    Uint16 sunflowerGraphicSetID;
 };
 
 } // End namespace Server

@@ -5,7 +5,7 @@
 
 namespace AM
 {
-struct FloorCoveringSpriteSet;
+struct FloorCoveringGraphicSet;
 
 namespace Client
 {
@@ -18,7 +18,7 @@ class FloorCoveringTool : public BuildTool
 public:
     FloorCoveringTool(World& inWorld, Network& inNetwork);
 
-    void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
+    void setSelectedGraphicSet(const GraphicSet& inSelectedGraphicSet) override;
 
     void onMouseDown(AUI::MouseButtonType buttonType,
                      const SDL_Point& cursorPosition) override;
@@ -28,14 +28,14 @@ public:
     void onMouseMove(const SDL_Point& cursorPosition) override;
 
 private:
-    /** The currently selected sprite set. */
-    const FloorCoveringSpriteSet* selectedSpriteSet;
+    /** The currently selected graphic set. */
+    const FloorCoveringGraphicSet* selectedGraphicSet;
 
-    /** The indices within selectedSpriteSet->sprites that contain a sprite. */
-    std::vector<std::size_t> validSpriteIndices;
+    /** The indices within selectedGraphicSet->graphic that contain a graphic. */
+    std::vector<std::size_t> validGraphicIndices;
 
-    /** The index within validSpriteIndices that is currently selected. */
-    std::size_t selectedSpriteIndex;
+    /** The index within validGraphicIndices that is currently selected. */
+    std::size_t selectedGraphicIndex;
 };
 
 } // End namespace Client

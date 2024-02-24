@@ -10,7 +10,7 @@
 
 namespace AM
 {
-struct SpriteSet;
+struct GraphicSet;
 
 namespace Client
 {
@@ -42,9 +42,9 @@ public:
     std::span<const SpriteColorModInfo> getSpriteColorMods() const;
 
     /**
-     * Used by the BuildPanel to tell us when a new sprite set is selected.
+     * Used by the BuildPanel to tell us when a new graphic set is selected.
      */
-    virtual void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet);
+    virtual void setSelectedGraphicSet(const GraphicSet& inSelectedGraphicSet);
 
     /**
      * Sets the camera to use when doing screen -> world calcs.

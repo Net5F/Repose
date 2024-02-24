@@ -2,7 +2,7 @@
 
 #include "ProjectMessageType.h"
 #include "Name.h"
-#include "AnimationState.h"
+#include "GraphicState.h"
 #include "EntityInitScript.h"
 #include <vector>
 
@@ -30,7 +30,7 @@ struct EntityTemplates {
      */
     struct Data {
         Name name{};
-        AnimationState animationState{};
+        GraphicState graphicState{};
         EntityInitScript initScript{};
     };
 
@@ -41,7 +41,7 @@ template<typename S>
 void serialize(S& serializer, EntityTemplates::Data& data)
 {
     serializer.object(data.name);
-    serializer.object(data.animationState);
+    serializer.object(data.graphicState);
     serializer.object(data.initScript);
 }
 

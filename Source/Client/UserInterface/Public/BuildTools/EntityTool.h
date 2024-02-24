@@ -3,18 +3,18 @@
 #include "BuildTool.h"
 #include "QueuedEvents.h"
 #include "Name.h"
-#include "AnimationState.h"
+#include "GraphicState.h"
 #include "entt/fwd.hpp"
 
 namespace AM
 {
-struct ObjectSpriteSet;
+struct ObjectGraphicSet;
 
 namespace Client
 {
 class WorldObjectLocator;
 class Network;
-class SpriteData;
+class GraphicData;
 
 /**
  * TODO: Add Change Position button
@@ -30,7 +30,7 @@ class EntityTool : public BuildTool
 {
 public:
     EntityTool(World& inWorld, const WorldObjectLocator& inWorldObjectLocator,
-               Network& inNetwork, SpriteData& inSpriteData);
+               Network& inNetwork, GraphicData& inGraphicData);
 
     /**
      * Sets the currently selected entity template. This selection will follow
@@ -39,7 +39,7 @@ public:
      * This is called by EntityPanelContent when a template is selected.
      */
     void setSelectedTemplate(const Name& name,
-                             const AnimationState& animationState);
+                             const GraphicState& graphicState);
 
     /**
      * @param inOnEntitySelected  A callback for when the user clicks on a
@@ -90,8 +90,8 @@ private:
     /** Used for finding entities that the mouse is hovering over or
         clicking. */
     const WorldObjectLocator& worldObjectLocator;
-    /** Used to get sprites from AnimationStates. */
-    SpriteData& spriteData;
+    /** Used to get graphics from AnimationStates. */
+    GraphicData& graphicData;
 
     /** The color used to highlight the hovered entity. */
     const SDL_Color highlightColor;
@@ -103,8 +103,8 @@ private:
     /** The selected template's name. */
     Name selectedTemplateName;
 
-    /** The selected template's sprite set and sprite index. */
-    AnimationState selectedTemplateAnimationState;
+    /** The selected template's graphic set and graphic index. */
+    GraphicState selectedTemplateGraphicState;
 
     std::function<void(entt::entity entity)> onEntitySelected;
 

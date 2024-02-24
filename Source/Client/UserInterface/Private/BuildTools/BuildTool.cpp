@@ -31,7 +31,7 @@ std::span<const SpriteColorModInfo> BuildTool::getSpriteColorMods() const
     return spriteColorMods;
 }
 
-void BuildTool::setSelectedSpriteSet(const SpriteSet&) {}
+void BuildTool::setSelectedGraphicSet(const GraphicSet&) {}
 
 void BuildTool::setCamera(const Camera& inCamera)
 {

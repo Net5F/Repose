@@ -15,7 +15,7 @@ namespace Server
 {
 
 class World;
-class SpriteData;
+class GraphicData;
 struct MazeTopology;
 struct MazeCell;
 
@@ -29,7 +29,7 @@ struct MazeCell;
 class MazeGenerationSystem
 {
 public:
-    MazeGenerationSystem(World& inWorld, SpriteData& inSpriteData);
+    MazeGenerationSystem(World& inWorld, GraphicData& inGraphicData);
 
     /**
      * If MAZE_REGENERATION_PERIOD_S seconds have passed, regenerates the maze.
@@ -156,8 +156,8 @@ private:
     /** Used to get entity positions and modify the tile map. */
     World& world;
 
-    /** Used to get the wall sprites that we apply to the tile map. */
-    SpriteData& spriteData;
+    /** Used to get the wall graphics that we apply to the tile map. */
+    GraphicData& graphicData;
 
     /** Used to track how much time has passed since the last maze
         regeneration. */

@@ -16,8 +16,7 @@
     "floorCoverings": [
         {
             "displayName": "Grass",
-            "numericID": 1,
-            "spriteIDs": [
+            "graphicIDs": [
                 9,
                 10,
                 11,
@@ -27,64 +26,65 @@
                 0,
                 0
             ],
+            "numericID": 1,
             "stringID": "grass"
         }
     ],
     "floors": [
         {
             "displayName": "Grass0",
-            "numericID": 1,
-            "spriteIDs": [
+            "graphicIDs": [
                 1
             ],
+            "numericID": 1,
             "stringID": "grass0"
         },
         {
             "displayName": "Grass1",
-            "numericID": 2,
-            "spriteIDs": [
+            "graphicIDs": [
                 2
             ],
+            "numericID": 2,
             "stringID": "grass1"
         },
         {
             "displayName": "Grass2",
-            "numericID": 3,
-            "spriteIDs": [
+            "graphicIDs": [
                 3
             ],
+            "numericID": 3,
             "stringID": "grass2"
         },
         {
             "displayName": "Grass3",
-            "numericID": 4,
-            "spriteIDs": [
+            "graphicIDs": [
                 4
             ],
+            "numericID": 4,
             "stringID": "grass3"
         },
         {
             "displayName": "Grass4",
-            "numericID": 5,
-            "spriteIDs": [
+            "graphicIDs": [
                 5
             ],
+            "numericID": 5,
             "stringID": "grass4"
         },
         {
             "displayName": "Grass5",
-            "numericID": 6,
-            "spriteIDs": [
+            "graphicIDs": [
                 6
             ],
+            "numericID": 6,
             "stringID": "grass5"
         },
         {
             "displayName": "Template",
-            "numericID": 7,
-            "spriteIDs": [
+            "graphicIDs": [
                 61
             ],
+            "numericID": 7,
             "stringID": "template"
         }
     ],
@@ -142,8 +142,7 @@
     "objects": [
         {
             "displayName": "Sunflower",
-            "numericID": 1,
-            "spriteIDs": [
+            "graphicIDs": [
                 20,
                 21,
                 22,
@@ -153,12 +152,12 @@
                 0,
                 0
             ],
+            "numericID": 1,
             "stringID": "sunflower"
         },
         {
             "displayName": "Grass",
-            "numericID": 2,
-            "spriteIDs": [
+            "graphicIDs": [
                 14,
                 19,
                 15,
@@ -168,12 +167,12 @@
                 0,
                 0
             ],
+            "numericID": 2,
             "stringID": "grass"
         },
         {
             "displayName": "TemplateFullFill",
-            "numericID": 3,
-            "spriteIDs": [
+            "graphicIDs": [
                 62,
                 0,
                 0,
@@ -183,12 +182,12 @@
                 0,
                 0
             ],
+            "numericID": 3,
             "stringID": "templatefullfill"
         },
         {
             "displayName": "HedgeFullFill",
-            "numericID": 4,
-            "spriteIDs": [
+            "graphicIDs": [
                 27,
                 28,
                 29,
@@ -198,12 +197,12 @@
                 0,
                 0
             ],
+            "numericID": 4,
             "stringID": "hedgefullfill"
         },
         {
             "displayName": "Roberto",
-            "numericID": 5,
-            "spriteIDs": [
+            "graphicIDs": [
                 69,
                 0,
                 0,
@@ -213,12 +212,12 @@
                 0,
                 0
             ],
+            "numericID": 5,
             "stringID": "roberto"
         },
         {
             "displayName": "Ghost",
-            "numericID": 6,
-            "spriteIDs": [
+            "graphicIDs": [
                 57,
                 0,
                 58,
@@ -228,12 +227,12 @@
                 55,
                 0
             ],
+            "numericID": 6,
             "stringID": "ghost"
         },
         {
             "displayName": "Column",
-            "numericID": 7,
-            "spriteIDs": [
+            "graphicIDs": [
                 37,
                 0,
                 0,
@@ -243,6 +242,7 @@
                 0,
                 0
             ],
+            "numericID": 7,
             "stringID": "column"
         }
     ],
@@ -1799,79 +1799,79 @@
     "walls": [
         {
             "displayName": "Template",
-            "numericID": 1,
-            "spriteIDs": [
+            "graphicIDs": [
                 66,
                 65,
                 64,
                 63
             ],
+            "numericID": 1,
             "stringID": "template"
         },
         {
             "displayName": "Hedge",
-            "numericID": 2,
-            "spriteIDs": [
+            "graphicIDs": [
                 33,
                 41,
                 34,
                 30
             ],
+            "numericID": 2,
             "stringID": "hedge"
         },
         {
             "displayName": "HedgeFlower",
-            "numericID": 3,
-            "spriteIDs": [
+            "graphicIDs": [
                 40,
                 42,
                 36,
                 32
             ],
+            "numericID": 3,
             "stringID": "hedgeflower"
         },
         {
             "displayName": "RoundedHedge",
-            "numericID": 4,
-            "spriteIDs": [
+            "graphicIDs": [
                 45,
                 38,
                 34,
                 30
             ],
+            "numericID": 4,
             "stringID": "roundedhedge"
         },
         {
             "displayName": "RoundedHedgeFlower",
-            "numericID": 5,
-            "spriteIDs": [
+            "graphicIDs": [
                 46,
                 39,
                 35,
                 31
             ],
+            "numericID": 5,
             "stringID": "roundedhedgeflower"
         },
         {
             "displayName": "SquaredHedge",
-            "numericID": 6,
-            "spriteIDs": [
+            "graphicIDs": [
                 47,
                 43,
                 34,
                 30
             ],
+            "numericID": 6,
             "stringID": "squaredhedge"
         },
         {
             "displayName": "SquaredHedgeFlower",
-            "numericID": 7,
-            "spriteIDs": [
+            "graphicIDs": [
                 48,
                 44,
                 36,
                 31
             ],
+            "numericID": 7,
             "stringID": "squaredhedgeflower"
         }
     ]

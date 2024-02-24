@@ -4,7 +4,7 @@
 
 namespace AM
 {
-struct WallSpriteSet;
+struct WallGraphicSet;
 
 namespace Client
 {
@@ -17,7 +17,7 @@ class WallTool : public BuildTool
 public:
     WallTool(World& inWorld, Network& inNetwork);
 
-    void setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet) override;
+    void setSelectedGraphicSet(const GraphicSet& inSelectedGraphicSet) override;
 
     void onMouseDown(AUI::MouseButtonType buttonType,
                      const SDL_Point& cursorPosition) override;
@@ -52,10 +52,10 @@ private:
      * of the given wall type
      */
     void pushPhantomWall(int tileX, int tileY, Wall::Type wallType,
-                         const WallSpriteSet& wallSpriteSet);
+                         const WallGraphicSet& wallGraphicSet);
 
     /** The currently selected sprite set. */
-    const WallSpriteSet* selectedSpriteSet;
+    const WallGraphicSet* selectedGraphicSet;
 };
 
 } // End namespace Client

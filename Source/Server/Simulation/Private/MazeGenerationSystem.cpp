@@ -1,6 +1,6 @@
 #include "MazeGenerationSystem.h"
 #include "World.h"
-#include "SpriteData.h"
+#include "GraphicData.h"
 #include "MazeTopology.h"
 #include "Position.h"
 #include "Collision.h"
@@ -14,9 +14,9 @@ namespace Server
 {
 
 MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
-                                           SpriteData& inSpriteData)
+                                           GraphicData& inGraphicData)
 : world{inWorld}
-, spriteData{inSpriteData}
+, graphicData{inGraphicData}
 , regenerationTimer{}
 , mazeExtent{MAZE_ORIGIN_TILE.x, MAZE_ORIGIN_TILE.y, MAZE_WIDTH, MAZE_HEIGHT}
 , abstractMazeExtent{0, 0, (mazeExtent.xLength / 2), (mazeExtent.yLength / 2)}
@@ -27,13 +27,13 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
 , randGenerator{std::random_device()()}
 {
     // Fill in the sprite set ID's.
-    wallIDs[0] = spriteData.getWallSpriteSet("hedge").numericID;
-    wallIDs[1] = spriteData.getWallSpriteSet("hedgeflower").numericID;
-    wallIDs[2] = spriteData.getWallSpriteSet("roundedhedge").numericID;
-    wallIDs[3] = spriteData.getWallSpriteSet("roundedhedgeflower").numericID;
-    wallIDs[4] = spriteData.getWallSpriteSet("squaredhedge").numericID;
-    wallIDs[5] = spriteData.getWallSpriteSet("squaredhedgeflower").numericID;
-    fullFillID = spriteData.getObjectSpriteSet("hedgefullfill").numericID;
+    wallIDs[0] = graphicData.getWallGraphicSet("hedge").numericID;
+    wallIDs[1] = graphicData.getWallGraphicSet("hedgeflower").numericID;
+    wallIDs[2] = graphicData.getWallGraphicSet("roundedhedge").numericID;
+    wallIDs[3] = graphicData.getWallGraphicSet("roundedhedgeflower").numericID;
+    wallIDs[4] = graphicData.getWallGraphicSet("squaredhedge").numericID;
+    wallIDs[5] = graphicData.getWallGraphicSet("squaredhedgeflower").numericID;
+    fullFillID = graphicData.getObjectGraphicSet("hedgefullfill").numericID;
 
     // Prime a timer.
     Timer timer;

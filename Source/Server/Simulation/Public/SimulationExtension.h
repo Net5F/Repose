@@ -81,8 +81,8 @@ public:
         const EntityDeleteRequest& entityDeleteRequest) const;
     bool isEntityNameChangeRequestValid(
         const EntityNameChangeRequest& nameChangeRequest) const;
-    bool isAnimationStateChangeRequestValid(
-        const AnimationStateChangeRequest& animationStateChangeRequest) const;
+    bool isGraphicStateChangeRequestValid(
+        const GraphicStateChangeRequest& graphicStateChangeRequest) const;
 
 private:
     /** Used to validate change requests. */

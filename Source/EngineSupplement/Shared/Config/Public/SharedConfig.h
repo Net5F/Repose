@@ -60,9 +60,10 @@ public:
     static constexpr Uint8 DEFAULT_CHARACTER_SPRITE_INDEX{0};
 
     /** The string ID of the default sprite set for dynamic objects. */
-    static constexpr const char* DEFAULT_DYNAMIC_OBJECT_SPRITE_SET{"sunflower"};
+    static constexpr const char* DEFAULT_DYNAMIC_OBJECT_GRAPHIC_SET{
+        "sunflower"};
     /** The index of the default sprite for dynamic objects. */
-    static constexpr Uint8 DEFAULT_DYNAMIC_OBJECT_SPRITE_INDEX{2};
+    static constexpr Uint8 DEFAULT_DYNAMIC_OBJECT_GRAPHIC_INDEX{2};
 
     /** The speed that entities will move at. Eventually we'll support
         dynamically setting this based on stats, for now it's a constant. */

@@ -1,9 +1,9 @@
 #include "PlantSystem.h"
 #include "Simulation.h"
-#include "SpriteData.h"
+#include "GraphicData.h"
 #include "EntityInteractionType.h"
 #include "Name.h"
-#include "AnimationState.h"
+#include "GraphicState.h"
 #include "Interaction.h"
 #include "Plant.h"
 #include "SharedConfig.h"
@@ -15,13 +15,13 @@ namespace AM
 namespace Server
 {
 
-PlantSystem::PlantSystem(Simulation& inSimulation, SpriteData& inSpriteData)
+PlantSystem::PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData)
 : simulation{inSimulation}
 , world{inSimulation.getWorld()}
-, spriteData{inSpriteData}
+, graphicData{inGraphicData}
 , updateTimer{}
 , plantExtent{4, 35, 9, 11}
-, sunflowerSpriteSetID{spriteData.getObjectSpriteSet("sunflower").numericID}
+, sunflowerGraphicSetID{graphicData.getObjectGraphicSet("sunflower").numericID}
 {
     // Delete any existing plants.
     auto& entitiesInPlantExtent{world.entityLocator.getEntities(plantExtent)};
@@ -82,11 +82,11 @@ void PlantSystem::updatePlant(entt::entity plantEntity)
         Uint8 newStage{static_cast<Uint8>(oldStage + 1)};
         plant.lifeStage = static_cast<Plant::LifeStage>(newStage);
 
-        // If the plant is still alive, update its sprite.
+        // If the plant is still alive, update its graphic.
         if (plant.lifeStage != Plant::LifeStage::Dead) {
-            world.registry.patch<AnimationState>(
-                plantEntity, [&](auto& animationState) {
-                    animationState.spriteIndex = newStage;
+            world.registry.patch<GraphicState>(
+                plantEntity, [&](auto& graphicState) {
+                    graphicState.graphicIndex = newStage;
                 });
             plant.timer.reset();
         }
@@ -102,11 +102,11 @@ void PlantSystem::updatePlant(entt::entity plantEntity)
 
 void PlantSystem::createSapling(const Position& position)
 {
-    AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
+    GraphicState graphicState{GraphicSet::Type::Object, sunflowerGraphicSetID,
                                   0};
     entt::entity newEntity{world.createEntity(position)};
     world.registry.emplace<Name>(newEntity, "Sunflower");
-    world.addGraphicsComponents(newEntity, animationState);
+    world.addGraphicsComponents(newEntity, graphicState);
 
     // Tag it as a Sapling.
     Plant plant{Plant::LifeStage::Sapling};
@@ -115,11 +115,11 @@ void PlantSystem::createSapling(const Position& position)
 
 void PlantSystem::createDeadPlant(const Position& position)
 {
-    AnimationState animationState{SpriteSet::Type::Object, sunflowerSpriteSetID,
+    GraphicState graphicState{GraphicSet::Type::Object, sunflowerGraphicSetID,
                                   3};
     entt::entity newEntity{world.createEntity(position)};
     world.registry.emplace<Name>(newEntity, "Dead Sunflower");
-    world.addGraphicsComponents(newEntity, animationState);
+    world.addGraphicsComponents(newEntity, graphicState);
 
     // Tag it as Dead.
     Plant plant{Plant::LifeStage::Dead};

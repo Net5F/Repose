@@ -36,7 +36,7 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
         // If we hit a removable object, tell the sim to remove it.
         if (TileLayerID* layer = std::get_if<TileLayerID>(&objectID)) {
             requestRemoveTileLayer(layer->x, layer->y, layer->type,
-                                   layer->spriteSetID, layer->spriteIndex);
+                                   layer->graphicSetID, layer->graphicIndex);
         }
         else if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
             network.serializeAndSend(EntityDeleteRequest{*entity});
@@ -83,7 +83,7 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
             // walls instead).
             TileLayerID* layer{std::get_if<TileLayerID>(&objectID)};
             if ((layer != nullptr) && (layer->type == TileLayer::Type::Wall)
-                && (layer->spriteIndex == Wall::Type::NorthWestGapFill)) {
+                && (layer->graphicIndex == Wall::Type::NorthWestGapFill)) {
                 return;
             }
 
@@ -96,10 +96,10 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
             const Tile& tile{world.tileMap.getTile(mouseTilePosition.x,
                                                    mouseTilePosition.y)};
             const FloorTileLayer& floor{tile.getFloor()};
-            if (floor.spriteSet != nullptr) {
+            if (floor.graphicSet != nullptr) {
                 TileLayerID layerID{mouseTilePosition.x, mouseTilePosition.y,
                                     TileLayer::Type::Floor,
-                                    tile.getFloor().spriteSet->numericID, 0};
+                                    tile.getFloor().graphicSet->numericID, 0};
                 spriteColorMods.emplace_back(layerID, highlightColor);
             }
         }
@@ -108,10 +108,10 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
 
 void RemoveTool::requestRemoveTileLayer(int tileX, int tileY,
                                         TileLayer::Type layerType,
-                                        Uint16 spriteSetID, Uint8 spriteIndex)
+                                        Uint16 graphicSetID, Uint8 graphicIndex)
 {
     if (layerType == TileLayer::Type::Wall) {
-        Wall::Type wallType{spriteIndex};
+        Wall::Type wallType{graphicIndex};
 
         // Ignore NW gap fills (they'll be removed when one of the adjoined
         // walls is removed.
@@ -126,11 +126,11 @@ void RemoveTool::requestRemoveTileLayer(int tileX, int tileY,
         }
 
         network.serializeAndSend(
-            TileRemoveLayer{tileX, tileY, layerType, spriteSetID, wallType});
+            TileRemoveLayer{tileX, tileY, layerType, graphicSetID, wallType});
     }
     else {
         network.serializeAndSend(
-            TileRemoveLayer{tileX, tileY, layerType, spriteSetID, spriteIndex});
+            TileRemoveLayer{tileX, tileY, layerType, graphicSetID, graphicIndex});
     }
 }
 

@@ -20,7 +20,7 @@ SimulationExtension::~SimulationExtension() = default;
 void SimulationExtension::initializeSystems()
 {
     animationSystem = std::make_unique<AnimationSystem>(
-        deps.simulation.getWorld(), deps.spriteData);
+        deps.simulation.getWorld(), deps.graphicData);
 }
 
 void SimulationExtension::beforeAll() {}

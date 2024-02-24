@@ -2,7 +2,7 @@
 #include "Simulation.h"
 #include "WorldObjectLocator.h"
 #include "Network.h"
-#include "SpriteData.h"
+#include "GraphicData.h"
 #include "Sprite.h"
 #include "BuildTool.h"
 #include "FloorTool.h"
@@ -23,13 +23,13 @@ namespace Client
 {
 BuildOverlay::BuildOverlay(Simulation& inSimulation,
                            const WorldObjectLocator& inWorldObjectLocator,
-                           Network& inNetwork, SpriteData& inSpriteData)
+                           Network& inNetwork, GraphicData& inGraphicData)
 : AUI::Window({0, 0, 1920, 744}, "BuildOverlay")
 , world{inSimulation.getWorld()}
 , worldObjectLocator{inWorldObjectLocator}
 , network{inNetwork}
-, spriteData{inSpriteData}
-, selectedSpriteSet{nullptr}
+, graphicData{inGraphicData}
+, selectedGraphicSet{nullptr}
 , currentBuildTool{nullptr}
 , camera{}
 , mapTileExtent{}
@@ -43,12 +43,12 @@ BuildOverlay::BuildOverlay(Simulation& inSimulation,
 
 BuildOverlay::~BuildOverlay() = default;
 
-void BuildOverlay::setSelectedSpriteSet(const SpriteSet& inSelectedSpriteSet)
+void BuildOverlay::setSelectedGraphicSet(const GraphicSet& inSelectedGraphicSet)
 {
-    selectedSpriteSet = &inSelectedSpriteSet;
+    selectedGraphicSet = &inSelectedGraphicSet;
 
     if (currentBuildTool != nullptr) {
-        currentBuildTool->setSelectedSpriteSet(*selectedSpriteSet);
+        currentBuildTool->setSelectedGraphicSet(*selectedGraphicSet);
     }
 }
 
@@ -74,7 +74,7 @@ void BuildOverlay::setBuildMode(BuildMode::Type buildModeType)
         }
         case BuildMode::Type::Entity: {
             currentBuildTool = std::make_unique<EntityTool>(
-                world, worldObjectLocator, network, spriteData);
+                world, worldObjectLocator, network, graphicData);
             break;
         }
         case BuildMode::Type::Remove: {

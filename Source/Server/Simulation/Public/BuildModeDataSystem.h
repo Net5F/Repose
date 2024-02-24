@@ -12,7 +12,7 @@ namespace Server
 
 class World;
 class Network;
-class SpriteData;
+class GraphicData;
 
 /**
  * Responds to requests for template and script data, for use in a client's
@@ -23,7 +23,7 @@ class BuildModeDataSystem
 public:
     BuildModeDataSystem(World& inWorld,
                         EventDispatcher& inNetworkEventDispatcher,
-                        Network& inNetwork, SpriteData& inSpriteData);
+                        Network& inNetwork, GraphicData& inGraphicData);
 
     /**
      * Adds any waiting templates to the list, responds to entity template
@@ -39,7 +39,7 @@ private:
     Network& network;
 
     // TODO: Remove when we remove the placeholder data?
-    SpriteData& spriteData;
+    GraphicData& graphicData;
 
     /** Our current list of entity templates. */
     EntityTemplates entityTemplates;

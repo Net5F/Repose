@@ -12,30 +12,30 @@ namespace Client
 
 FloorCoveringTool::FloorCoveringTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
-, selectedSpriteSet{nullptr}
-, selectedSpriteIndex{0}
+, selectedGraphicSet{nullptr}
+, selectedGraphicIndex{0}
 {
 }
 
-void FloorCoveringTool::setSelectedSpriteSet(
-    const SpriteSet& inSelectedSpriteSet)
+void FloorCoveringTool::setSelectedGraphicSet(
+    const GraphicSet& inSelectedGraphicSet)
 {
-    // Note: This cast should be safe, since only floor covering sprite sets
+    // Note: This cast should be safe, since only floor covering graphic sets
     //       should be clickable while this tool is alive.
-    selectedSpriteSet
-        = static_cast<const FloorCoveringSpriteSet*>(&inSelectedSpriteSet);
+    selectedGraphicSet
+        = static_cast<const FloorCoveringGraphicSet*>(&inSelectedGraphicSet);
 
-    // Iterate the set and track which indices contain a sprite.
-    validSpriteIndices.clear();
-    for (std::size_t i = 0; i < selectedSpriteSet->sprites.size(); ++i) {
-        if (selectedSpriteSet->sprites[i] != nullptr) {
-            validSpriteIndices.emplace_back(i);
+    // Iterate the set and track which indices contain a graphic.
+    validGraphicIndices.clear();
+    for (std::size_t i = 0; i < selectedGraphicSet->graphics.size(); ++i) {
+        if (selectedGraphicSet->graphics[i].getGraphicID() != NULL_GRAPHIC_ID) {
+            validGraphicIndices.emplace_back(i);
         }
     }
-    AM_ASSERT(validSpriteIndices.size() > 0, "Set didn't contain any sprites.");
+    AM_ASSERT(validGraphicIndices.size() > 0, "Set didn't contain any graphics.");
 
-    // Select the first sprite within validSpriteIndices.
-    selectedSpriteIndex = 0;
+    // Select the first graphic within validGraphicIndices.
+    selectedGraphicIndex = 0;
 }
 
 void FloorCoveringTool::onMouseDown(AUI::MouseButtonType buttonType,
@@ -44,14 +44,14 @@ void FloorCoveringTool::onMouseDown(AUI::MouseButtonType buttonType,
     // Note: mouseTilePosition is set in onMouseMove().
 
     // If this tool is active, the user left clicked, and we have a selected
-    // sprite.
+    // graphic.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
-        && (selectedSpriteSet != nullptr)) {
+        && (selectedGraphicSet != nullptr)) {
         // Tell the sim to add the layer.
         network.serializeAndSend(TileAddLayer{
             mouseTilePosition.x, mouseTilePosition.y,
-            TileLayer::Type::FloorCovering, selectedSpriteSet->numericID,
-            static_cast<Uint8>(validSpriteIndices[selectedSpriteIndex])});
+            TileLayer::Type::FloorCovering, selectedGraphicSet->numericID,
+            static_cast<Uint8>(validGraphicIndices[selectedGraphicIndex])});
     }
 }
 
@@ -69,17 +69,20 @@ void FloorCoveringTool::onMouseWheel(int amountScrolled)
         return;
     }
 
-    // Select the next sprite within the set, accounting for negative values.
-    selectedSpriteIndex
-        = (selectedSpriteIndex + amountScrolled + validSpriteIndices.size())
-          % validSpriteIndices.size();
+    // Select the next graphic within the set, accounting for negative values.
+    selectedGraphicIndex
+        = (selectedGraphicIndex + amountScrolled + validGraphicIndices.size())
+          % validGraphicIndices.size();
 
-    // Set the newly selected sprite as a phantom at the current location.
+    // Set the newly selected graphic as a phantom at the current location.
+    const GraphicRef& graphic{
+        selectedGraphicSet
+            ->graphics[validGraphicIndices[selectedGraphicIndex]]};
     phantomSprites.clear();
-    phantomSprites.emplace_back(
-        mouseTilePosition.x, mouseTilePosition.y,
-        TileLayer::Type::FloorCovering, Wall::Type::None, Position{},
-        selectedSpriteSet->sprites[validSpriteIndices[selectedSpriteIndex]]);
+    phantomSprites.emplace_back(mouseTilePosition.x, mouseTilePosition.y,
+                                TileLayer::Type::FloorCovering,
+                                Wall::Type::None, Position{},
+                                &(graphic.getFirstSprite()));
 }
 
 void FloorCoveringTool::onMouseMove(const SDL_Point& cursorPosition)
@@ -91,13 +94,15 @@ void FloorCoveringTool::onMouseMove(const SDL_Point& cursorPosition)
     phantomSprites.clear();
 
     // If this tool is active and we have a selected sprite.
-    if (isActive && (selectedSpriteSet != nullptr)) {
-        // Set the selected sprite as a phantom at the new location.
-        phantomSprites.emplace_back(
-            mouseTilePosition.x, mouseTilePosition.y,
-            TileLayer::Type::FloorCovering, Wall::Type::None, Position{},
-            selectedSpriteSet
-                ->sprites[validSpriteIndices[selectedSpriteIndex]]);
+    if (isActive && (selectedGraphicSet != nullptr)) {
+        // Set the selected graphic as a phantom at the new location.
+        const GraphicRef& graphic{
+            selectedGraphicSet
+                ->graphics[validGraphicIndices[selectedGraphicIndex]]};
+        phantomSprites.emplace_back(mouseTilePosition.x, mouseTilePosition.y,
+                                    TileLayer::Type::FloorCovering,
+                                    Wall::Type::None, Position{},
+                                    &(graphic.getFirstSprite()));
     }
 }
 

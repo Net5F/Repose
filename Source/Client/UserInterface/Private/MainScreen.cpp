@@ -4,7 +4,7 @@
 #include "World.h"
 #include "WorldObjectLocator.h"
 #include "Network.h"
-#include "SpriteData.h"
+#include "GraphicData.h"
 #include "Paths.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
@@ -27,8 +27,8 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 , inventoryWindow{deps.simulation, deps.network, deps.iconData,
                   interactionManager}
 , buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
-               deps.spriteData}
-, buildPanel{deps.simulation, deps.network, deps.spriteData, deps.iconData,
+               deps.graphicData}
+, buildPanel{deps.simulation, deps.network, deps.graphicData, deps.iconData,
              buildOverlay}
 , rightClickMenu{}
 {

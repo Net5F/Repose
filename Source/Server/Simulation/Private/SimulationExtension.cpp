@@ -2,11 +2,11 @@
 #include "SimulationExDependencies.h"
 #include "Simulation.h"
 #include "Network.h"
-#include "SpriteData.h"
+#include "GraphicData.h"
 #include "TileExtent.h"
 #include "EntityInitRequest.h"
 #include "EntityNameChangeRequest.h"
-#include "AnimationStateChangeRequest.h"
+#include "GraphicStateChangeRequest.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
 #include "Log.h"
@@ -22,9 +22,9 @@ SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
                      deps.simulation.getEntityItemHandlerLua(),
                      deps.simulation.getItemInitLua(), world}
 , buildModeDataSystem{world, deps.network.getEventDispatcher(), deps.network,
-                      deps.spriteData}
-, mazeGenerationSystem{world, deps.spriteData}
-, plantSystem{deps.simulation, deps.spriteData}
+                      deps.graphicData}
+, mazeGenerationSystem{world, deps.graphicData}
+, plantSystem{deps.simulation, deps.graphicData}
 , teleportSystem{deps.simulation.getWorld()}
 {
     // Add our Lua bindings.
@@ -124,10 +124,10 @@ bool SimulationExtension::isEntityNameChangeRequestValid(
     }
 }
 
-bool SimulationExtension::isAnimationStateChangeRequestValid(
-    const AnimationStateChangeRequest& animationStateChangeRequest) const
+bool SimulationExtension::isGraphicStateChangeRequestValid(
+    const GraphicStateChangeRequest& graphicStateChangeRequest) const
 {
-    entt::entity entity{animationStateChangeRequest.entity};
+    entt::entity entity{graphicStateChangeRequest.entity};
 
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
         // Only return true if the entity is within the build area.

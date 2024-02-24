@@ -17,15 +17,15 @@ class Thumbnail;
 
 namespace AM
 {
-struct SpriteSet;
-struct ObjectSpriteSet;
+struct GraphicSet;
+struct ObjectGraphicSet;
 struct Sprite;
 
 namespace Client
 {
 class World;
 class Network;
-class SpriteData;
+class GraphicData;
 class BuildPanel;
 class EntityTool;
 struct SpriteRenderData;
@@ -39,7 +39,7 @@ class EntityPanelContent : public AUI::Widget
 {
 public:
     EntityPanelContent(World& inWorld, Network& inNetwork,
-                       SpriteData& inSpriteData, BuildPanel& inBuildPanel,
+                       GraphicData& inGraphicData, BuildPanel& inBuildPanel,
                        const SDL_Rect& inScreenExtent,
                        const std::string& inDebugName = "EntityPanelContent");
 
@@ -108,8 +108,8 @@ private:
     /** Used for sending entity init requests to the server. */
     Network& network;
 
-    /** Used to get the sprite sets that we fill the panel with. */
-    SpriteData& spriteData;
+    /** Used to get the graphic sets that we fill the panel with. */
+    GraphicData& graphicData;
 
     /** Used to properly deselect thumbnails when a new one is selected. */
     BuildPanel& buildPanel;
@@ -158,10 +158,10 @@ private:
 
     MainButton saveTemplateButton;
 
-    // SpriteSet selection view
-    /** Holds the sprite sets that are used to change a selected entity's
-        sprite. */
-    AUI::VerticalGridContainer spriteSetContainer;
+    // GraphicSet selection view
+    /** Holds the graphic sets that are used to change a selected entity's
+        graphics. */
+    AUI::VerticalGridContainer graphicSetContainer;
 };
 
 } // End namespace Client

@@ -1,11 +1,11 @@
 #include "EntityTool.h"
 #include "World.h"
 #include "Network.h"
-#include "SpriteData.h"
+#include "GraphicData.h"
 #include "WorldObjectLocator.h"
 #include "EntityInitRequest.h"
 #include "IsClientEntity.h"
-#include "AnimationState.h"
+#include "GraphicState.h"
 #include "QueuedEvents.h"
 #include "AMAssert.h"
 #include "entt/entity/entity.hpp"
@@ -17,14 +17,14 @@ namespace Client
 
 EntityTool::EntityTool(World& inWorld,
                        const WorldObjectLocator& inWorldObjectLocator,
-                       Network& inNetwork, SpriteData& inSpriteData)
+                       Network& inNetwork, GraphicData& inGraphicData)
 : BuildTool(inWorld, inNetwork)
 , worldObjectLocator{inWorldObjectLocator}
-, spriteData{inSpriteData}
+, graphicData{inGraphicData}
 , highlightColor{255, 255, 255, 255}
 , selectedEntityID{entt::null}
 , selectedTemplateName{""}
-, selectedTemplateAnimationState{}
+, selectedTemplateGraphicState{}
 {
     // Listen for destruction events for the current selected object.
     world.registry.on_destroy<entt::entity>()
@@ -32,11 +32,11 @@ EntityTool::EntityTool(World& inWorld,
 }
 
 void EntityTool::setSelectedTemplate(const Name& name,
-                                     const AnimationState& animationState)
+                                     const GraphicState& graphicState)
 {
-    // Save the name and animation state.
+    // Save the name and graphic state.
     selectedTemplateName = name;
-    selectedTemplateAnimationState = animationState;
+    selectedTemplateGraphicState = graphicState;
 }
 
 void EntityTool::setOnEntitySelected(
@@ -59,12 +59,12 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
     // If this tool is active and the user left clicked.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)) {
         // If a template is selected in the content panel.
-        if (selectedTemplateAnimationState.spriteSetType
-            != SpriteSet::Type::None) {
+        if (selectedTemplateGraphicState.graphicSetType
+            != GraphicSet::Type::None) {
             // Tell the sim to create an object based on the template.
             network.serializeAndSend(EntityInitRequest{
                 entt::null, selectedTemplateName, mouseWorldPosition,
-                selectedTemplateAnimationState});
+                selectedTemplateGraphicState});
 
             // To deter users from placing a million entities, we deselect after
             // placement. This also makes it faster if the user's next goal is
@@ -99,30 +99,30 @@ void EntityTool::onMouseWheel(int amountScrolled)
 {
     // If this tool isn't active or there isn't a template selected, do nothing.
     if (!isActive
-        || (selectedTemplateAnimationState.spriteSetType
-            == SpriteSet::Type::None)) {
+        || (selectedTemplateGraphicState.graphicSetType
+            == GraphicSet::Type::None)) {
         return;
     }
 
-    const ObjectSpriteSet& spriteSet{spriteData.getObjectSpriteSet(
-        selectedTemplateAnimationState.spriteSetID)};
-    const auto& sprites{spriteSet.sprites};
+    const ObjectGraphicSet& graphicSet{graphicData.getObjectGraphicSet(
+        selectedTemplateGraphicState.graphicSetID)};
+    const auto& graphics{graphicSet.graphics};
 
     // Scroll the desired amount of times, skipping empty slots.
     int stepsRemaining{std::abs(amountScrolled)};
     int stepSize{amountScrolled / std::abs(amountScrolled)};
     while (stepsRemaining > 0) {
         // Find the next non-empty index, accounting for negative values.
-        int nextIndex{selectedTemplateAnimationState.spriteIndex};
-        nextIndex = static_cast<int>(nextIndex + stepSize + sprites.size())
-                    % sprites.size();
+        int nextIndex{selectedTemplateGraphicState.graphicIndex};
+        nextIndex = static_cast<int>(nextIndex + stepSize + graphics.size())
+                    % graphics.size();
 
-        while (sprites[nextIndex] == nullptr) {
-            nextIndex = static_cast<int>(nextIndex + stepSize + sprites.size())
-                        % sprites.size();
+        while (!(graphics[nextIndex].getGraphicID())) {
+            nextIndex = static_cast<int>(nextIndex + stepSize + graphics.size())
+                        % graphics.size();
         }
 
-        selectedTemplateAnimationState.spriteIndex = nextIndex;
+        selectedTemplateGraphicState.graphicIndex = nextIndex;
         stepsRemaining--;
     }
 
@@ -152,8 +152,8 @@ void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
     if (isActive) {
         // If we have a template selected, set the selected sprite as a phantom
         // at the new location.
-        if (selectedTemplateAnimationState.spriteSetType
-            != SpriteSet::Type::None) {
+        if (selectedTemplateGraphicState.graphicSetType
+            != GraphicSet::Type::None) {
             PhantomSpriteInfo phantomInfo{};
             phantomInfo.position = mouseWorldPosition;
             phantomInfo.sprite = getSelectedTemplateSprite();
@@ -215,11 +215,11 @@ void EntityTool::clearCurrentSelection()
 {
     // If we have an entity or template selected, clear everything.
     if ((selectedEntityID != entt::null)
-        || (selectedTemplateAnimationState.spriteSetType
-            != SpriteSet::Type::None)) {
+        || (selectedTemplateGraphicState.graphicSetType
+            != GraphicSet::Type::None)) {
         selectedEntityID = entt::null;
         selectedTemplateName = {};
-        selectedTemplateAnimationState = {};
+        selectedTemplateGraphicState = {};
         phantomSprites.clear();
         spriteColorMods.clear();
 
@@ -231,13 +231,15 @@ void EntityTool::clearCurrentSelection()
 
 const Sprite* EntityTool::getSelectedTemplateSprite()
 {
-    if (selectedTemplateAnimationState.spriteSetType == SpriteSet::Type::None) {
+    if (selectedTemplateGraphicState.graphicSetType == GraphicSet::Type::None) {
         return nullptr;
     }
 
-    const ObjectSpriteSet& spriteSet{spriteData.getObjectSpriteSet(
-        selectedTemplateAnimationState.spriteSetID)};
-    return spriteSet.sprites[selectedTemplateAnimationState.spriteIndex];
+    const ObjectGraphicSet& graphicSet{graphicData.getObjectGraphicSet(
+        selectedTemplateGraphicState.graphicSetID)};
+    const GraphicRef& graphic{
+        graphicSet.graphics[selectedTemplateGraphicState.graphicIndex]};
+    return &(graphic.getFirstSprite());
 }
 
 } // End namespace Client

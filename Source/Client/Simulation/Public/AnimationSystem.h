@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SpriteID.h"
+#include "GraphicID.h"
 
 namespace AM
 {
@@ -8,7 +8,7 @@ namespace Client
 {
 
 class World;
-class SpriteData;
+class GraphicData;
 
 /**
  * Handles updating entity sprites to reflect their current state.
@@ -20,7 +20,7 @@ class SpriteData;
 class AnimationSystem
 {
 public:
-    AnimationSystem(World& inWorld, SpriteData& inSpriteData);
+    AnimationSystem(World& inWorld, GraphicData& inGraphicData);
 
     /**
      * Updates each entity's sprite to reflect their current rotation.
@@ -28,17 +28,17 @@ public:
     void updateAnimations();
 
 private:
-    /** Used to get entity Sprite components. */
+    /** Used to get entity GraphicState components. */
     World& world;
 
-    /** Used to get character sprites. */
-    SpriteData& spriteData;
+    /** Used to get entity graphics. */
+    GraphicData& graphicData;
 
-    /** Used for setting ghost sprites. */
-    const SpriteID GHOST_NORTH_ID;
-    const SpriteID GHOST_EAST_ID;
-    const SpriteID GHOST_SOUTH_ID;
-    const SpriteID GHOST_WEST_ID;
+    /** Used for setting ghost graphics. */
+    const GraphicID GHOST_NORTH_ID;
+    const GraphicID GHOST_EAST_ID;
+    const GraphicID GHOST_SOUTH_ID;
+    const GraphicID GHOST_WEST_ID;
 };
 
 } // End namespace Client

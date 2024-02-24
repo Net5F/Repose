@@ -1,18 +1,18 @@
 #include "EntityPanelContent.h"
 #include "World.h"
 #include "Network.h"
-#include "SpriteData.h"
+#include "GraphicData.h"
 #include "BuildPanel.h"
 #include "BuildModeThumbnail.h"
 #include "EntityTool.h"
 #include "Name.h"
 #include "Position.h"
 #include "Rotation.h"
-#include "AnimationState.h"
+#include "GraphicState.h"
 #include "EntityTemplatesRequest.h"
 #include "EntityInitRequest.h"
 #include "EntityNameChangeRequest.h"
-#include "AnimationStateChangeRequest.h"
+#include "GraphicStateChangeRequest.h"
 #include "EntityInitScriptRequest.h"
 #include "AddEntityTemplate.h"
 #include "Paths.h"
@@ -26,14 +26,14 @@ namespace AM
 namespace Client
 {
 EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
-                                       SpriteData& inSpriteData,
+                                       GraphicData& inGraphicData,
                                        BuildPanel& inBuildPanel,
                                        const SDL_Rect& inScreenExtent,
                                        const std::string& inDebugName)
 : AUI::Widget(inScreenExtent, inDebugName)
 , world{inWorld}
 , network{inNetwork}
-, spriteData{inSpriteData}
+, graphicData{inGraphicData}
 , buildPanel{inBuildPanel}
 , hasRequestedTemplates{false}
 , currentView{ViewType::Template}
@@ -53,8 +53,8 @@ EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
 , saveTemplateButton{{686, 117, 188, 36},
                      "Save as Template",
                      "SaveTemplateButton"}
-, spriteSetContainer{{0, 0, logicalExtent.w, logicalExtent.h},
-                     "SpriteSetContainer"}
+, graphicSetContainer{{0, 0, logicalExtent.w, logicalExtent.h},
+                     "GraphicSetContainer"}
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(templateContainer);
@@ -63,7 +63,7 @@ EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
     children.push_back(changeSpriteButton);
     children.push_back(editScriptButton);
     children.push_back(saveTemplateButton);
-    children.push_back(spriteSetContainer);
+    children.push_back(graphicSetContainer);
 
     /* Label */
     auto setTextStyle = [](AUI::Text& text) {
@@ -82,7 +82,7 @@ EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
         container.setCellHeight(109 + 1);
     };
     setContainerStyle(templateContainer);
-    setContainerStyle(spriteSetContainer);
+    setContainerStyle(graphicSetContainer);
 
     /* Text input */
     nameInput.normalImage.setNineSliceImage(
@@ -123,7 +123,7 @@ EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
         network.serializeAndSend(EntityInitRequest{
             editingEntityID, registry.get<Name>(editingEntityID),
             registry.get<Position>(editingEntityID),
-            registry.get<AnimationState>(editingEntityID), initScript});
+            registry.get<GraphicState>(editingEntityID), initScript});
     });
 
     saveTemplateButton.setOnPressed([this]() {
@@ -229,7 +229,7 @@ void EntityPanelContent::changeView(ViewType newView)
     changeSpriteButton.setIsVisible(false);
     editScriptButton.setIsVisible(false);
     saveTemplateButton.setIsVisible(false);
-    spriteSetContainer.setIsVisible(false);
+    graphicSetContainer.setIsVisible(false);
 
     // Show the new view's widgets.
     if (newView == ViewType::Template) {
@@ -248,7 +248,7 @@ void EntityPanelContent::changeView(ViewType newView)
     }
     else if (newView == ViewType::SpriteSet) {
         // TODO: Select the correct thumbnail
-        spriteSetContainer.setIsVisible(true);
+        graphicSetContainer.setIsVisible(true);
     }
 
     currentView = newView;
@@ -306,16 +306,17 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
     thumbnail.setText("");
     thumbnail.setIsActivateable(false);
 
-    // Get the sprite.
-    const ObjectSpriteSet& spriteSet{spriteData.getObjectSpriteSet(
-        SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_SET)};
-    const Sprite* sprite{
-        spriteSet.sprites[SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_INDEX]};
+    // Get the default graphic.
+    const ObjectGraphicSet& graphicSet{graphicData.getObjectGraphicSet(
+        SharedConfig::DEFAULT_DYNAMIC_OBJECT_GRAPHIC_SET)};
+    GraphicRef graphic{
+        graphicSet
+            .graphics[SharedConfig::DEFAULT_DYNAMIC_OBJECT_GRAPHIC_INDEX]};
 
     // Calc a square texture extent that shows the bottom of the sprite
     // (so we don't have to squash it).
     const SpriteRenderData& renderData{
-        spriteData.getRenderData(sprite->numericID)};
+        graphicData.getRenderData(graphic.getFirstSprite().numericID)};
     SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
 
     // Load the sprite's image.
@@ -328,12 +329,12 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
         buildPanel.setSelectedThumbnail(*selectedThumb);
 
         // Tell the tool that the selection changed.
-        const ObjectSpriteSet& spriteSet{spriteData.getObjectSpriteSet(
-            SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_SET)};
-        AnimationState animationState{
-            SpriteSet::Type::Object, spriteSet.numericID,
-            SharedConfig::DEFAULT_DYNAMIC_OBJECT_SPRITE_INDEX};
-        entityTool->setSelectedTemplate({"Default"}, animationState);
+        const ObjectGraphicSet& graphicSet{graphicData.getObjectGraphicSet(
+            SharedConfig::DEFAULT_DYNAMIC_OBJECT_GRAPHIC_SET)};
+        GraphicState graphicState{
+            GraphicSet::Type::Object, graphicSet.numericID,
+            SharedConfig::DEFAULT_DYNAMIC_OBJECT_GRAPHIC_INDEX};
+        entityTool->setSelectedTemplate({"Default"}, graphicState);
     });
 
     templateContainer.push_back(std::move(thumbnailPtr));
@@ -352,16 +353,16 @@ void EntityPanelContent::addTemplateThumbnails(
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 
-        // Get the sprite.
-        const ObjectSpriteSet& spriteSet{spriteData.getObjectSpriteSet(
-            entityData.animationState.spriteSetID)};
-        const Sprite* sprite{
-            spriteSet.sprites[entityData.animationState.spriteIndex]};
+        // Get the graphic.
+        const ObjectGraphicSet& graphicSet{graphicData.getObjectGraphicSet(
+            entityData.graphicState.graphicSetID)};
+        GraphicRef graphic{
+            graphicSet.graphics[entityData.graphicState.graphicIndex]};
 
         // Calc a square texture extent that shows the bottom of the sprite
         // (so we don't have to squash it).
         const SpriteRenderData& renderData{
-            spriteData.getRenderData(sprite->numericID)};
+            graphicData.getRenderData(graphic.getFirstSprite().numericID)};
         SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
 
         // Load the sprite's image.
@@ -376,7 +377,7 @@ void EntityPanelContent::addTemplateThumbnails(
 
                 // Tell the tool that the selection changed.
                 entityTool->setSelectedTemplate(entityData.name,
-                                                entityData.animationState);
+                                                entityData.graphicState);
             });
 
         templateContainer.push_back(std::move(thumbnailPtr));
@@ -385,11 +386,11 @@ void EntityPanelContent::addTemplateThumbnails(
 
 void EntityPanelContent::addSpriteSetThumbnails()
 {
-    // Add thumbnails for all object sprite sets.
-    for (const ObjectSpriteSet& spriteSet :
-         spriteData.getAllObjectSpriteSets()) {
+    // Add thumbnails for all object graphic sets.
+    for (const ObjectGraphicSet& graphicSet :
+         graphicData.getAllObjectGraphicSets()) {
         // Skip the null set.
-        if (!(spriteSet.numericID)) {
+        if (!(graphicSet.numericID)) {
             continue;
         }
 
@@ -401,54 +402,47 @@ void EntityPanelContent::addSpriteSetThumbnails()
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 
-        // Find the first sprite in the set.
-        const Sprite* sprite{nullptr};
-        for (const Sprite* spritePtr : spriteSet.sprites) {
-            if (spritePtr != nullptr) {
-                sprite = spritePtr;
+        // Find the first non-empty slot in the graphic set.
+        Uint8 firstGraphicIndex{SDL_MAX_UINT8};
+        for (std::size_t i = 0; i < graphicSet.graphics.size(); ++i) {
+            if (graphicSet.graphics[i].getGraphicID()) {
+                firstGraphicIndex = static_cast<Uint8>(i);
             }
         }
-        AM_ASSERT(sprite != nullptr, "No valid sprite found in set.");
+        AM_ASSERT(firstGraphicIndex != SDL_MAX_UINT8,
+                  "Set didn't contain any graphics.");
 
-        // Calc a square texture extent that shows the bottom of the sprite
+        // Calc a square texture extent that shows the bottom of the graphic
         // (so we don't have to squash it).
+        const Sprite& sprite{
+            graphicSet.graphics[firstGraphicIndex].getFirstSprite()};
         const SpriteRenderData& renderData{
-            spriteData.getRenderData(sprite->numericID)};
+            graphicData.getRenderData(sprite.numericID)};
         SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
 
         // Load the sprite's image.
         thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath,
                                                 textureExtent);
 
-        // Find the first non-empty slot in the sprite set.
-        Uint8 firstSpriteIndex{SDL_MAX_UINT8};
-        for (std::size_t i = 0; i < spriteSet.sprites.size(); ++i) {
-            if (spriteSet.sprites[i] != nullptr) {
-                firstSpriteIndex = static_cast<Uint8>(i);
-            }
-        }
-        AM_ASSERT(firstSpriteIndex != SDL_MAX_UINT8,
-                  "Set didn't contain any sprites.");
-
         // Add the callback.
         thumbnail.setOnSelected(
-            [this, &spriteSet, firstSpriteIndex](AUI::Thumbnail*) {
+            [this, &graphicSet, firstGraphicIndex](AUI::Thumbnail*) {
                 // This view closes immediately so we don't want to select this
                 // thumbnail, but we should clear any existing selection.
                 buildPanel.clearSelectedThumbnail();
 
                 // Send a request to change the entity's animation state.
-                AnimationStateChangeRequest changeRequest{
+                GraphicStateChangeRequest changeRequest{
                     editingEntityID,
-                    AnimationState{SpriteSet::Type::Object, spriteSet.numericID,
-                                   firstSpriteIndex}};
+                    GraphicState{GraphicSet::Type::Object, graphicSet.numericID,
+                                 firstGraphicIndex}};
                 network.serializeAndSend(changeRequest);
 
                 // Switch back to the edit view.
                 changeView(ViewType::Edit);
             });
 
-        spriteSetContainer.push_back(std::move(thumbnailPtr));
+        graphicSetContainer.push_back(std::move(thumbnailPtr));
     }
 }
 

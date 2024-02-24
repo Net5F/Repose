@@ -1,9 +1,9 @@
 #include "AnimationSystem.h"
 #include "World.h"
-#include "SpriteData.h"
+#include "GraphicData.h"
 #include "IsClientEntity.h"
 #include "Rotation.h"
-#include "Sprite.h"
+#include "GraphicState.h"
 #include "Log.h"
 #include "AMAssert.h"
 
@@ -12,48 +12,50 @@ namespace AM
 namespace Client
 {
 
-AnimationSystem::AnimationSystem(World& inWorld, SpriteData& inSpriteData)
+AnimationSystem::AnimationSystem(World& inWorld, GraphicData& inGraphicData)
 : world{inWorld}
-, spriteData{inSpriteData}
-, GHOST_NORTH_ID{spriteData.getSprite("ghost_north").numericID}
-, GHOST_EAST_ID{spriteData.getSprite("ghost_east").numericID}
-, GHOST_SOUTH_ID{spriteData.getSprite("ghost_south").numericID}
-, GHOST_WEST_ID{spriteData.getSprite("ghost_west").numericID}
+, graphicData{inGraphicData}
+, GHOST_NORTH_ID{toGraphicID(graphicData.getSprite("ghost_north").numericID)}
+, GHOST_EAST_ID{toGraphicID(graphicData.getSprite("ghost_east").numericID)}
+, GHOST_SOUTH_ID{toGraphicID(graphicData.getSprite("ghost_south").numericID)}
+, GHOST_WEST_ID{toGraphicID(graphicData.getSprite("ghost_west").numericID)}
 {
 }
 
 void AnimationSystem::updateAnimations()
 {
     // Update all client entity sprites to match current rotation.
-    auto view{world.registry.view<IsClientEntity, Rotation, Sprite>()};
-    for (auto [entity, rotation, sprite] : view.each()) {
+    auto view{world.registry.view<IsClientEntity, Rotation, GraphicState>()};
+    for (auto [entity, rotation, graphicState] : view.each()) {
         // TODO: Remove ghost-specific logic and add support for NPCs.
 
         // If the new rotation includes the current-faced direction, don't
         // change the sprite.
-        SpriteID currentSpriteId{sprite.numericID};
-        if (currentSpriteId == GHOST_NORTH_ID) {
+        const GraphicRef& graphic{
+            graphicData.getGraphic(graphicState.graphicSetID)};
+        GraphicID currentGraphicID{graphic.getGraphicID()};
+        if (currentGraphicID == GHOST_NORTH_ID) {
             if (rotation.direction == Rotation::Direction::North
                 || rotation.direction == Rotation::Direction::NorthWest
                 || rotation.direction == Rotation::Direction::NorthEast) {
                 continue;
             }
         }
-        else if (currentSpriteId == GHOST_EAST_ID) {
+        else if (currentGraphicID == GHOST_EAST_ID) {
             if (rotation.direction == Rotation::Direction::East
                 || rotation.direction == Rotation::Direction::NorthEast
                 || rotation.direction == Rotation::Direction::SouthEast) {
                 continue;
             }
         }
-        else if (currentSpriteId == GHOST_SOUTH_ID) {
+        else if (currentGraphicID == GHOST_SOUTH_ID) {
             if (rotation.direction == Rotation::Direction::South
                 || rotation.direction == Rotation::Direction::SouthWest
                 || rotation.direction == Rotation::Direction::SouthEast) {
                 continue;
             }
         }
-        else if (currentSpriteId == GHOST_WEST_ID) {
+        else if (currentGraphicID == GHOST_WEST_ID) {
             if (rotation.direction == Rotation::Direction::West
                 || rotation.direction == Rotation::Direction::NorthWest
                 || rotation.direction == Rotation::Direction::SouthWest) {
@@ -64,23 +66,23 @@ void AnimationSystem::updateAnimations()
         // Update the sprite to match the rotation.
         switch (rotation.direction) {
             case Rotation::Direction::North: {
-                sprite.numericID = GHOST_NORTH_ID;
+                graphicState.graphicIndex = Rotation::Direction::North;
                 break;
             }
             case Rotation::Direction::NorthEast:
             case Rotation::Direction::SouthEast:
             case Rotation::Direction::East: {
-                sprite.numericID = GHOST_EAST_ID;
+                graphicState.graphicIndex = Rotation::Direction::East;
                 break;
             }
             case Rotation::Direction::South: {
-                sprite.numericID = GHOST_SOUTH_ID;
+                graphicState.graphicIndex = Rotation::Direction::South;
                 break;
             }
             case Rotation::Direction::NorthWest:
             case Rotation::Direction::SouthWest:
             case Rotation::Direction::West: {
-                sprite.numericID = GHOST_WEST_ID;
+                graphicState.graphicIndex = Rotation::Direction::West;
                 break;
             }
             default: {

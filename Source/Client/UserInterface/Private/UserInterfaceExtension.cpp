@@ -4,7 +4,6 @@
 #include "World.h"
 #include "Network.h"
 #include "AssetCache.h"
-#include "SpriteData.h"
 #include "Camera.h"
 #include "SharedConfig.h"
 #include "UserConfig.h"
