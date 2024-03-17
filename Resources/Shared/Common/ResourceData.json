@@ -1,5 +1,64 @@
 {
     "animations": [
+        {
+            "collisionEnabled": false,
+            "displayName": "RobertoRun",
+            "fps": 12,
+            "frameCount": 10,
+            "frames": [
+                {
+                    "frameNumber": 0,
+                    "spriteID": 70
+                },
+                {
+                    "frameNumber": 1,
+                    "spriteID": 71
+                },
+                {
+                    "frameNumber": 2,
+                    "spriteID": 72
+                },
+                {
+                    "frameNumber": 3,
+                    "spriteID": 73
+                },
+                {
+                    "frameNumber": 4,
+                    "spriteID": 75
+                },
+                {
+                    "frameNumber": 5,
+                    "spriteID": 76
+                },
+                {
+                    "frameNumber": 6,
+                    "spriteID": 77
+                },
+                {
+                    "frameNumber": 7,
+                    "spriteID": 78
+                },
+                {
+                    "frameNumber": 8,
+                    "spriteID": 74
+                },
+                {
+                    "frameNumber": 9,
+                    "spriteID": 79
+                }
+            ],
+            "modelBounds": {
+                "maxX": 20.5,
+                "maxY": 22.0,
+                "maxZ": 45.599998474121094,
+                "minX": 13.625,
+                "minY": 14.5,
+                "minZ": 0.0
+            },
+            "modelBoundsID": 0,
+            "numericID": 1,
+            "stringID": "robertorun"
+        }
     ],
     "boundingBoxes": [
         {
@@ -1792,6 +1851,231 @@
                         "w": 256,
                         "x": 0,
                         "y": 0
+                    },
+                    "yOffset": 374
+                }
+            ]
+        },
+        {
+            "relPath": "RobertoRun.png",
+            "sprites": [
+                {
+                    "collisionEnabled": true,
+                    "displayName": "RobertoRun0",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 70,
+                    "stringID": "robertorun0",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "RobertoRun1",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 71,
+                    "stringID": "robertorun1",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "RobertoRun2",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 72,
+                    "stringID": "robertorun2",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "RobertoRun3",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 73,
+                    "stringID": "robertorun3",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "RobertoRun4",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 74,
+                    "stringID": "robertorun4",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "RobertoRun5",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 75,
+                    "stringID": "robertorun5",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "RobertoRun6",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 76,
+                    "stringID": "robertorun6",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "RobertoRun7",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 77,
+                    "stringID": "robertorun7",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "RobertoRun8",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 78,
+                    "stringID": "robertorun8",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "RobertoRun9",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 79,
+                    "stringID": "robertorun9",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 512
                     },
                     "yOffset": 374
                 }
