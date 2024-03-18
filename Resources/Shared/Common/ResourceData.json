@@ -305,6 +305,21 @@
             ],
             "numericID": 7,
             "stringID": "column"
+        },
+        {
+            "displayName": "RobertoRun",
+            "graphicIDs": [
+                2147483649,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "numericID": 8,
+            "stringID": "robertorun"
         }
     ],
     "spriteSheets": [
