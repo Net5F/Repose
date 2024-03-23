@@ -27,7 +27,6 @@ target_sources(Client
         Private/Windows/TitleWindow.cpp
     PUBLIC
         Public/BuildModeType.h
-        Public/DisplayStrings.h
         Public/DragDropData.h
         Public/InteractionManager.h
         Public/MainScreen.h

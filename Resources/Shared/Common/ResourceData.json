@@ -5,47 +5,17 @@
             "displayName": "RobertoRun",
             "fps": 12,
             "frameCount": 10,
-            "frames": [
-                {
-                    "frameNumber": 0,
-                    "spriteID": 70
-                },
-                {
-                    "frameNumber": 1,
-                    "spriteID": 71
-                },
-                {
-                    "frameNumber": 2,
-                    "spriteID": 72
-                },
-                {
-                    "frameNumber": 3,
-                    "spriteID": 73
-                },
-                {
-                    "frameNumber": 4,
-                    "spriteID": 75
-                },
-                {
-                    "frameNumber": 5,
-                    "spriteID": 76
-                },
-                {
-                    "frameNumber": 6,
-                    "spriteID": 77
-                },
-                {
-                    "frameNumber": 7,
-                    "spriteID": 78
-                },
-                {
-                    "frameNumber": 8,
-                    "spriteID": 74
-                },
-                {
-                    "frameNumber": 9,
-                    "spriteID": 79
-                }
+            "frameNumbers": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
             ],
             "modelBounds": {
                 "maxX": 20.5,
@@ -57,6 +27,18 @@
             },
             "modelBoundsID": 0,
             "numericID": 1,
+            "spriteIDs": [
+                70,
+                71,
+                72,
+                73,
+                75,
+                76,
+                77,
+                78,
+                74,
+                79
+            ],
             "stringID": "robertorun"
         }
     ],
@@ -72,6 +54,27 @@
                 "minZ": 0.0
             },
             "numericID": 1
+        }
+    ],
+    "entities": [
+        {
+            "displayName": "Ghost",
+            "graphicIDTypes": [
+                9,
+                1,
+                7,
+                5,
+                3
+            ],
+            "graphicIDValues": [
+                2147483649,
+                57,
+                55,
+                56,
+                58
+            ],
+            "numericID": 1,
+            "stringID": "ghost"
         }
     ],
     "floorCoverings": [

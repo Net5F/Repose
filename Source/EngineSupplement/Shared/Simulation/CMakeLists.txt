@@ -1,5 +1,6 @@
 target_sources(SharedLib
     PUBLIC
+        Public/EntityGraphicType.h
         Public/EntityInteractionType.h
         Public/ItemInteractionType.h
         Public/ItemProperties.h
