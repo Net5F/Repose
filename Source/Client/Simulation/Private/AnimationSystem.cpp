@@ -24,6 +24,8 @@ AnimationSystem::AnimationSystem(World& inWorld, GraphicData& inGraphicData)
 
 void AnimationSystem::updateAnimations()
 {
+    // TODO: Move this to engine and make it generic
+    /*
     // Update all client entity sprites to match current rotation.
     auto view{world.registry.view<IsClientEntity, Rotation, GraphicState>()};
     for (auto [entity, rotation, graphicState] : view.each()) {
@@ -90,6 +92,7 @@ void AnimationSystem::updateAnimations()
             }
         }
     }
+    */
 }
 
 } // End namespace Client

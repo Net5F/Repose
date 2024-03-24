@@ -1,10 +1,12 @@
 #pragma once
 
 #include "EntityInteractionRequest.h"
+#include "GraphicSetIDs.h"
 #include "TileExtent.h"
 #include "Timer.h"
 #include "entt/fwd.hpp"
 #include <random>
+#include <array>
 
 namespace AM
 {
@@ -70,7 +72,9 @@ private:
     /** The world extent that the plants are located within. */
     TileExtent plantExtent;
 
-    Uint16 sunflowerGraphicSetID;
+    /** IDs for: Sapling, MidGrowth, FullyGrown, and Dead sunflower states.
+        Indices match LifeStage enum. */
+    std::array<EntityGraphicSetID, 4> sunflowerGraphicSetIDs;
 };
 
 } // End namespace Server

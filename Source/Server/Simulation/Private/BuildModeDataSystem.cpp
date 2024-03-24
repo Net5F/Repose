@@ -21,14 +21,10 @@ BuildModeDataSystem::BuildModeDataSystem(
 {
     // Load our saved templates.
     // TODO: Replace this placeholder data with real data from a database.
-    Uint16 graphicSetID{graphicData.getObjectGraphicSet("sunflower").numericID};
-    entityTemplates.templates.emplace_back(
-        Name{"First"}, GraphicState{GraphicSet::Type::Object, graphicSetID, 0});
-    entityTemplates.templates.emplace_back(
-        Name{"Second"},
-        GraphicState{GraphicSet::Type::Object, graphicSetID, 1});
-    entityTemplates.templates.emplace_back(
-        Name{"Third"}, GraphicState{GraphicSet::Type::Object, graphicSetID, 2});
+    EntityGraphicSetID graphicSetID{
+        graphicData.getEntityGraphicSet("ghost").numericID};
+    entityTemplates.templates.emplace_back(Name{"First"},
+                                           GraphicState{graphicSetID});
 }
 
 void BuildModeDataSystem::processMessages()

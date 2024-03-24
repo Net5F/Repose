@@ -86,6 +86,38 @@ public:
                 return "Run E";
             case EntityGraphicType::RunSouthEast:
                 return "Run SE";
+            case EntityGraphicType::CrouchSouth:
+                return "Crouch S";
+            case EntityGraphicType::CrouchSouthWest:
+                return "Crouch SW";
+            case EntityGraphicType::CrouchWest:
+                return "Crouch W";
+            case EntityGraphicType::CrouchNorthWest:
+                return "Crouch NW";
+            case EntityGraphicType::CrouchNorth:
+                return "Crouch N";
+            case EntityGraphicType::CrouchNorthEast:
+                return "Crouch NE";
+            case EntityGraphicType::CrouchEast:
+                return "Crouch E";
+            case EntityGraphicType::CrouchSouthEast:
+                return "Crouch SE";
+            case EntityGraphicType::JumpSouth:
+                return "Jump S";
+            case EntityGraphicType::JumpSouthWest:
+                return "Jump SW";
+            case EntityGraphicType::JumpWest:
+                return "Jump W";
+            case EntityGraphicType::JumpNorthWest:
+                return "Jump NW";
+            case EntityGraphicType::JumpNorth:
+                return "Jump N";
+            case EntityGraphicType::JumpNorthEast:
+                return "Jump NE";
+            case EntityGraphicType::JumpEast:
+                return "Jump E";
+            case EntityGraphicType::JumpSouthEast:
+                return "Jump SE";
             // Project graphic types.
             default:
                 break;

@@ -75,6 +75,50 @@
             ],
             "numericID": 1,
             "stringID": "ghost"
+        },
+        {
+            "displayName": "sunflowerSapling",
+            "graphicIDTypes": [
+                1
+            ],
+            "graphicIDValues": [
+                20
+            ],
+            "numericID": 2,
+            "stringID": "sunflowersapling"
+        },
+        {
+            "displayName": "sunflowerMidGrowth",
+            "graphicIDTypes": [
+                1
+            ],
+            "graphicIDValues": [
+                21
+            ],
+            "numericID": 3,
+            "stringID": "sunflowermidgrowth"
+        },
+        {
+            "displayName": "sunflowerFullyGrown",
+            "graphicIDTypes": [
+                1
+            ],
+            "graphicIDValues": [
+                22
+            ],
+            "numericID": 4,
+            "stringID": "sunflowerfullygrown"
+        },
+        {
+            "displayName": "sunflowerDead",
+            "graphicIDTypes": [
+                1
+            ],
+            "graphicIDValues": [
+                23
+            ],
+            "numericID": 5,
+            "stringID": "sunflowerdead"
         }
     ],
     "floorCoverings": [

@@ -21,8 +21,6 @@ class GraphicData;
  *       Make highlights look better
  */
 
-// TODO: This uses object sprite sets everywhere. When we add character sprite
-//       sets, figure out how the UI should surface them.
 /**
  * The build mode tool used for adding entities.
  */
@@ -58,7 +56,6 @@ public:
                      const SDL_Point& cursorPosition) override;
     void onMouseDoubleClick(AUI::MouseButtonType buttonType,
                             const SDL_Point& cursorPosition) override;
-    void onMouseWheel(int amountScrolled) override;
     void onMouseMove(const SDL_Point& cursorPosition) override;
     // Note: This is called when the cursor leaves the BuildOverlay.
     void onMouseLeave() override;

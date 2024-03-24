@@ -18,7 +18,6 @@ class Thumbnail;
 namespace AM
 {
 struct GraphicSet;
-struct ObjectGraphicSet;
 struct Sprite;
 
 namespace Client
@@ -30,8 +29,6 @@ class BuildPanel;
 class EntityTool;
 struct SpriteRenderData;
 
-// TODO: This uses object sprite sets everywhere. When we add character sprite
-//       sets, figure out how the UI should surface them.
 /**
  * Content for the BuildPanel when the entity tool is selected.
  */

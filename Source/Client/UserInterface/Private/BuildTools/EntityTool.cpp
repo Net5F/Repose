@@ -59,8 +59,8 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
     // If this tool is active and the user left clicked.
     if (isActive && (buttonType == AUI::MouseButtonType::Left)) {
         // If a template is selected in the content panel.
-        if (selectedTemplateGraphicState.graphicSetType
-            != GraphicSet::Type::None) {
+        if (selectedTemplateGraphicState.graphicSetID
+            != NULL_ENTITY_GRAPHIC_SET_ID) {
             // Tell the sim to create an object based on the template.
             network.serializeAndSend(EntityInitRequest{
                 entt::null, selectedTemplateName, mouseWorldPosition,
@@ -95,45 +95,6 @@ void EntityTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
     onMouseDown(buttonType, cursorPosition);
 }
 
-void EntityTool::onMouseWheel(int amountScrolled)
-{
-    // If this tool isn't active or there isn't a template selected, do nothing.
-    if (!isActive
-        || (selectedTemplateGraphicState.graphicSetType
-            == GraphicSet::Type::None)) {
-        return;
-    }
-
-    const ObjectGraphicSet& graphicSet{graphicData.getObjectGraphicSet(
-        selectedTemplateGraphicState.graphicSetID)};
-    const auto& graphics{graphicSet.graphics};
-
-    // Scroll the desired amount of times, skipping empty slots.
-    int stepsRemaining{std::abs(amountScrolled)};
-    int stepSize{amountScrolled / std::abs(amountScrolled)};
-    while (stepsRemaining > 0) {
-        // Find the next non-empty index, accounting for negative values.
-        int nextIndex{selectedTemplateGraphicState.graphicIndex};
-        nextIndex = static_cast<int>(nextIndex + stepSize + graphics.size())
-                    % graphics.size();
-
-        while (!(graphics[nextIndex].getGraphicID())) {
-            nextIndex = static_cast<int>(nextIndex + stepSize + graphics.size())
-                        % graphics.size();
-        }
-
-        selectedTemplateGraphicState.graphicIndex = nextIndex;
-        stepsRemaining--;
-    }
-
-    // Set the newly selected sprite as a phantom at the current location.
-    phantomSprites.clear();
-    PhantomSpriteInfo phantomInfo{};
-    phantomInfo.position = mouseWorldPosition;
-    phantomInfo.sprite = getSelectedTemplateSprite();
-    phantomSprites.push_back(phantomInfo);
-}
-
 void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
 {
     // Call the parent function to update mouse position and isActive.
@@ -152,8 +113,8 @@ void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
     if (isActive) {
         // If we have a template selected, set the selected sprite as a phantom
         // at the new location.
-        if (selectedTemplateGraphicState.graphicSetType
-            != GraphicSet::Type::None) {
+        if (selectedTemplateGraphicState.graphicSetID
+            != NULL_ENTITY_GRAPHIC_SET_ID) {
             PhantomSpriteInfo phantomInfo{};
             phantomInfo.position = mouseWorldPosition;
             phantomInfo.sprite = getSelectedTemplateSprite();
@@ -215,8 +176,8 @@ void EntityTool::clearCurrentSelection()
 {
     // If we have an entity or template selected, clear everything.
     if ((selectedEntityID != entt::null)
-        || (selectedTemplateGraphicState.graphicSetType
-            != GraphicSet::Type::None)) {
+        || (selectedTemplateGraphicState.graphicSetID
+            != NULL_ENTITY_GRAPHIC_SET_ID)) {
         selectedEntityID = entt::null;
         selectedTemplateName = {};
         selectedTemplateGraphicState = {};
@@ -231,14 +192,16 @@ void EntityTool::clearCurrentSelection()
 
 const Sprite* EntityTool::getSelectedTemplateSprite()
 {
-    if (selectedTemplateGraphicState.graphicSetType == GraphicSet::Type::None) {
+    if (selectedTemplateGraphicState.graphicSetID
+        == NULL_ENTITY_GRAPHIC_SET_ID) {
         return nullptr;
     }
 
-    const ObjectGraphicSet& graphicSet{graphicData.getObjectGraphicSet(
+    // Note: IdleSouth is guaranteed to be present in every entity graphic set.
+    const EntityGraphicSet& graphicSet{graphicData.getEntityGraphicSet(
         selectedTemplateGraphicState.graphicSetID)};
     const GraphicRef& graphic{
-        graphicSet.graphics[selectedTemplateGraphicState.graphicIndex]};
+        graphicSet.graphics.at(EntityGraphicType::IdleSouth)};
     return &(graphic.getFirstSprite());
 }
 

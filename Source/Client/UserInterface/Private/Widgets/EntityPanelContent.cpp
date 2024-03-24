@@ -307,11 +307,11 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
     thumbnail.setIsActivateable(false);
 
     // Get the default graphic.
-    const ObjectGraphicSet& graphicSet{graphicData.getObjectGraphicSet(
-        SharedConfig::DEFAULT_DYNAMIC_OBJECT_GRAPHIC_SET)};
-    GraphicRef graphic{
-        graphicSet
-            .graphics[SharedConfig::DEFAULT_DYNAMIC_OBJECT_GRAPHIC_INDEX]};
+    // Note: IdleSouth is guaranteed to be present in every entity graphic set.
+    const EntityGraphicSet& graphicSet{graphicData.getEntityGraphicSet(
+        SharedConfig::DEFAULT_ENTITY_GRAPHIC_SET)};
+    const GraphicRef& graphic{
+        graphicSet.graphics.at(EntityGraphicType::IdleSouth)};
 
     // Calc a square texture extent that shows the bottom of the sprite
     // (so we don't have to squash it).
@@ -329,11 +329,9 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
         buildPanel.setSelectedThumbnail(*selectedThumb);
 
         // Tell the tool that the selection changed.
-        const ObjectGraphicSet& graphicSet{graphicData.getObjectGraphicSet(
-            SharedConfig::DEFAULT_DYNAMIC_OBJECT_GRAPHIC_SET)};
-        GraphicState graphicState{
-            GraphicSet::Type::Object, graphicSet.numericID,
-            SharedConfig::DEFAULT_DYNAMIC_OBJECT_GRAPHIC_INDEX};
+        const EntityGraphicSet& graphicSet{graphicData.getEntityGraphicSet(
+            SharedConfig::DEFAULT_ENTITY_GRAPHIC_SET)};
+        GraphicState graphicState{graphicSet.numericID};
         entityTool->setSelectedTemplate({"Default"}, graphicState);
     });
 
@@ -354,10 +352,11 @@ void EntityPanelContent::addTemplateThumbnails(
         thumbnail.setIsActivateable(false);
 
         // Get the graphic.
-        const ObjectGraphicSet& graphicSet{graphicData.getObjectGraphicSet(
+        // Note: IdleSouth is guaranteed to be present in every entity set.
+        const EntityGraphicSet& graphicSet{graphicData.getEntityGraphicSet(
             entityData.graphicState.graphicSetID)};
-        GraphicRef graphic{
-            graphicSet.graphics[entityData.graphicState.graphicIndex]};
+        const GraphicRef& graphic{
+            graphicSet.graphics.at(EntityGraphicType::IdleSouth)};
 
         // Calc a square texture extent that shows the bottom of the sprite
         // (so we don't have to squash it).
@@ -386,9 +385,9 @@ void EntityPanelContent::addTemplateThumbnails(
 
 void EntityPanelContent::addSpriteSetThumbnails()
 {
-    // Add thumbnails for all object graphic sets.
-    for (const ObjectGraphicSet& graphicSet :
-         graphicData.getAllObjectGraphicSets()) {
+    // Add thumbnails for all entity graphic sets.
+    for (const EntityGraphicSet& graphicSet :
+         graphicData.getAllEntityGraphicSets()) {
         // Skip the null set.
         if (!(graphicSet.numericID)) {
             continue;
@@ -402,20 +401,12 @@ void EntityPanelContent::addSpriteSetThumbnails()
         thumbnail.setText("");
         thumbnail.setIsActivateable(false);
 
-        // Find the first non-empty slot in the graphic set.
-        Uint8 firstGraphicIndex{SDL_MAX_UINT8};
-        for (std::size_t i = 0; i < graphicSet.graphics.size(); ++i) {
-            if (graphicSet.graphics[i].getGraphicID()) {
-                firstGraphicIndex = static_cast<Uint8>(i);
-            }
-        }
-        AM_ASSERT(firstGraphicIndex != SDL_MAX_UINT8,
-                  "Set didn't contain any graphics.");
-
         // Calc a square texture extent that shows the bottom of the graphic
         // (so we don't have to squash it).
+        // Note: IdleSouth is guaranteed to be present in every entity set.
         const Sprite& sprite{
-            graphicSet.graphics[firstGraphicIndex].getFirstSprite()};
+            graphicSet.graphics.at(EntityGraphicType::IdleSouth)
+                .getFirstSprite()};
         const SpriteRenderData& renderData{
             graphicData.getRenderData(sprite.numericID)};
         SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
@@ -426,16 +417,14 @@ void EntityPanelContent::addSpriteSetThumbnails()
 
         // Add the callback.
         thumbnail.setOnSelected(
-            [this, &graphicSet, firstGraphicIndex](AUI::Thumbnail*) {
+            [this, &graphicSet](AUI::Thumbnail*) {
                 // This view closes immediately so we don't want to select this
                 // thumbnail, but we should clear any existing selection.
                 buildPanel.clearSelectedThumbnail();
 
                 // Send a request to change the entity's animation state.
                 GraphicStateChangeRequest changeRequest{
-                    editingEntityID,
-                    GraphicState{GraphicSet::Type::Object, graphicSet.numericID,
-                                 firstGraphicIndex}};
+                    editingEntityID, GraphicState{graphicSet.numericID}};
                 network.serializeAndSend(changeRequest);
 
                 // Switch back to the edit view.

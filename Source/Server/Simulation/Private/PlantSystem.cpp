@@ -21,7 +21,11 @@ PlantSystem::PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData)
 , graphicData{inGraphicData}
 , updateTimer{}
 , plantExtent{4, 35, 9, 11}
-, sunflowerGraphicSetID{graphicData.getObjectGraphicSet("sunflower").numericID}
+, sunflowerGraphicSetIDs{
+      graphicData.getEntityGraphicSet("sunflowersapling").numericID,
+      graphicData.getEntityGraphicSet("sunflowermidgrowth").numericID,
+      graphicData.getEntityGraphicSet("sunflowerfullygrown").numericID,
+      graphicData.getEntityGraphicSet("sunflowerdead").numericID}
 {
     // Delete any existing plants.
     auto& entitiesInPlantExtent{world.entityLocator.getEntities(plantExtent)};
@@ -86,7 +90,8 @@ void PlantSystem::updatePlant(entt::entity plantEntity)
         if (plant.lifeStage != Plant::LifeStage::Dead) {
             world.registry.patch<GraphicState>(
                 plantEntity, [&](auto& graphicState) {
-                    graphicState.graphicIndex = newStage;
+                    graphicState.graphicSetID
+                        = sunflowerGraphicSetIDs[newStage];
                 });
             plant.timer.reset();
         }
@@ -102,10 +107,10 @@ void PlantSystem::updatePlant(entt::entity plantEntity)
 
 void PlantSystem::createSapling(const Position& position)
 {
-    GraphicState graphicState{GraphicSet::Type::Object, sunflowerGraphicSetID,
-                                  0};
     entt::entity newEntity{world.createEntity(position)};
     world.registry.emplace<Name>(newEntity, "Sunflower");
+    GraphicState graphicState{
+        sunflowerGraphicSetIDs[static_cast<Uint8>(Plant::LifeStage::Sapling)]};
     world.addGraphicsComponents(newEntity, graphicState);
 
     // Tag it as a Sapling.
@@ -115,10 +120,10 @@ void PlantSystem::createSapling(const Position& position)
 
 void PlantSystem::createDeadPlant(const Position& position)
 {
-    GraphicState graphicState{GraphicSet::Type::Object, sunflowerGraphicSetID,
-                                  3};
     entt::entity newEntity{world.createEntity(position)};
     world.registry.emplace<Name>(newEntity, "Dead Sunflower");
+    GraphicState graphicState{
+        sunflowerGraphicSetIDs[static_cast<Uint8>(Plant::LifeStage::Dead)]};
     world.addGraphicsComponents(newEntity, graphicState);
 
     // Tag it as Dead.

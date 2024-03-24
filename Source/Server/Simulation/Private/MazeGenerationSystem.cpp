@@ -26,7 +26,7 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
 , workingNeighbors{}
 , randGenerator{std::random_device()()}
 {
-    // Fill in the sprite set ID's.
+    // Fill in the graphic set ID's.
     wallIDs[0] = graphicData.getWallGraphicSet("hedge").numericID;
     wallIDs[1] = graphicData.getWallGraphicSet("hedgeflower").numericID;
     wallIDs[2] = graphicData.getWallGraphicSet("roundedhedge").numericID;
