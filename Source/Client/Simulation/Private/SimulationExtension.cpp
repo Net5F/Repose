@@ -1,6 +1,5 @@
 #include "SimulationExtension.h"
 #include "SimulationExDependencies.h"
-#include "AnimationSystem.h"
 #include "Simulation.h"
 #include "Camera.h"
 #include "Log.h"
@@ -17,26 +16,25 @@ SimulationExtension::SimulationExtension(const SimulationExDependencies& inDeps)
 
 SimulationExtension::~SimulationExtension() = default;
 
-void SimulationExtension::initializeSystems()
-{
-    animationSystem = std::make_unique<AnimationSystem>(
-        deps.simulation.getWorld(), deps.graphicData);
-}
+void SimulationExtension::initializeSystems() {}
 
 void SimulationExtension::beforeAll() {}
 
 void SimulationExtension::afterMapAndConnectionUpdates() {}
 
-void SimulationExtension::afterSimUpdate()
-{
-    animationSystem->updateAnimations();
-}
+void SimulationExtension::afterSimUpdate() {}
 
 void SimulationExtension::afterAll() {}
 
-bool SimulationExtension::handleOSEvent([[maybe_unused]] SDL_Event& event)
+bool SimulationExtension::handleOSEvent(SDL_Event&)
 {
     return false;
+}
+
+EntityGraphicType
+    SimulationExtension::getUpdatedGraphicType(entt::entity)
+{
+    return EntityGraphicType::NotSet;
 }
 
 } // End namespace Client

@@ -33,29 +33,29 @@ public:
     /**
      * Called before any systems are ran.
      */
-    void beforeAll();
+    void beforeAll() override;
 
     /**
      * Called after the tile map is updated and client entities are
      * added/removed.
      */
-    void afterMapAndConnectionUpdates();
+    void afterMapAndConnectionUpdates() override;
 
     /**
      * Called after the general simulation update logic (movement, interactions,
      * etc.)
      */
-    void afterSimUpdate();
+    void afterSimUpdate() override;
 
     /**
      * Called after all relevant state has been sent to the clients.
      */
-    void afterClientSync();
+    void afterClientSync() override;
 
     /**
      * Called after all other systems.
      */
-    void afterAll();
+    void afterAll() override;
 
     /**
      * See OSEventHandler for details.
@@ -68,21 +68,23 @@ public:
     //-------------------------------------------------------------------------
     // Simulation System Hooks (Hooks into engine systems)
     //-------------------------------------------------------------------------
-    // TODO: Replace this with a permissions system.
-    // These functions allow the project to place constraints on various
-    // World state modifications.
+    // These functions allow the project to affect various World state 
+    // modifications.
+
+    // TODO: Replace these with a permissions system.
     /** @return true if the given extent is editable, else false. */
     bool isTileExtentEditable(NetworkID netID,
-                              const TileExtent& tileExtent) const;
+                              const TileExtent& tileExtent) const override;
     /** @return true if the given request is valid, else false. */
     bool isEntityInitRequestValid(
-        const EntityInitRequest& entityInitRequest) const;
+        const EntityInitRequest& entityInitRequest) const override;
     bool isEntityDeleteRequestValid(
-        const EntityDeleteRequest& entityDeleteRequest) const;
+        const EntityDeleteRequest& entityDeleteRequest) const override;
     bool isEntityNameChangeRequestValid(
-        const EntityNameChangeRequest& nameChangeRequest) const;
+        const EntityNameChangeRequest& nameChangeRequest) const override;
     bool isGraphicStateChangeRequestValid(
-        const GraphicStateChangeRequest& graphicStateChangeRequest) const;
+        const GraphicStateChangeRequest& graphicStateChangeRequest)
+        const override;
 
 private:
     /** Used to validate change requests. */
