@@ -62,7 +62,7 @@ private:
      * Used for non-empty slots, after first calling addEmptyThumbnail().
      */
     void finishItemThumbnail(ItemThumbnail& thumbnail, ItemID itemID,
-                             Uint8 slotIndex);
+                             Uint8 itemCount, Uint8 slotIndex);
 
     void onInventoryUpdated(entt::registry& registry, entt::entity entity);
     void onItemUpdate(const Item& item);

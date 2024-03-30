@@ -2,6 +2,7 @@
 #include "DragDropData.h"
 #include "AUI/Screen.h"
 #include "AUI/Core.h"
+#include "Paths.h"
 #include "Log.h"
 
 namespace AM
@@ -17,13 +18,30 @@ ItemThumbnail::ItemThumbnail(const SDL_Rect& inLogicalExtent,
 , isHoverable{true}
 , isHovered{false}
 , isSelected{false}
+, countText({0, 0, logicalExtent.w, 20})
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(thumbnailImage);
     children.push_back(selectedImage);
+    children.push_back(countText);
+
+    // Set our text properties.
+    countText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 16, 2);
+    countText.setColor({255, 255, 255, 255});
+    countText.setText("");
 
     // Make the images we aren't using invisible.
     selectedImage.setIsVisible(false);
+}
+
+void ItemThumbnail::setItemCount(Uint8 itemCount)
+{
+    if (itemCount == 0) {
+        countText.setText("");
+    }
+    else {
+        countText.setText(std::to_string(itemCount));
+    }
 }
 
 bool ItemThumbnail::getIsHovered()

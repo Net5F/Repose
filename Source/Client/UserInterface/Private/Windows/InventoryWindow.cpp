@@ -106,9 +106,9 @@ void InventoryWindow::refresh(const Inventory& inventory)
 
         // If the slot has an item in it, build the empty thumbnail into a
         // full item thumbnail.
-        ItemID itemID{inventory.slots[slotIndex].ID};
-        if (itemID) {
-            finishItemThumbnail(thumbnail, itemID, slotIndex);
+        const Inventory::ItemSlot& slot{inventory.slots[slotIndex]};
+        if (slot.ID) {
+            finishItemThumbnail(thumbnail, slot.ID, slot.count, slotIndex);
         }
     }
 
@@ -139,7 +139,8 @@ ItemThumbnail& InventoryWindow::addEmptyThumbnail(Uint8 slotIndex)
 }
 
 void InventoryWindow::finishItemThumbnail(ItemThumbnail& thumbnail,
-                                          ItemID itemID, Uint8 slotIndex)
+                                          ItemID itemID, Uint8 itemCount,
+                                          Uint8 slotIndex)
 {
     // Load the item's icon.
     const IconRenderData* renderData{nullptr};
@@ -154,6 +155,11 @@ void InventoryWindow::finishItemThumbnail(ItemThumbnail& thumbnail,
                                             renderData->textureExtent);
     thumbnail.dragDropImage.setSimpleImage(renderData->iconSheetRelPath,
                                            renderData->textureExtent);
+
+    // If the slot is holding a stack of items, show the count text.
+    if (itemCount > 1) {
+        thumbnail.setItemCount(itemCount);
+    }
 
     // Load the thumbnail's selected image.
     thumbnail.selectedImage.setNineSliceImage(

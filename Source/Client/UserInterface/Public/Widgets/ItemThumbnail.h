@@ -41,10 +41,15 @@ public:
 
     virtual ~ItemThumbnail() = default;
 
+    /**
+     * Sets the number text in the top left to itemCount.
+     */
+    void setItemCount(Uint8 itemCount);
+
     bool getIsHovered();
     bool getIsSelected();
 
-    /** If true, this widget displays hoveredImage when hovered. */
+    /** If true, this widget will respond to MouseEnter events. */
     void setIsHoverable(bool inIsHoverable);
 
     //-------------------------------------------------------------------------
@@ -134,6 +139,13 @@ private:
 
     /** Tracks whether this widget is currently selected. */
     bool isSelected;
+
+    //-------------------------------------------------------------------------
+    // Private child widgets
+    //-------------------------------------------------------------------------
+    /** "Count" text. Shows how many of an item this thumbnail represents. */
+    AUI::Text countText;
+
 };
 
 } // namespace Client
