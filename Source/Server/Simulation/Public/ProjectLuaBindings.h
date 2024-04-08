@@ -2,16 +2,14 @@
 
 #include "entt/fwd.hpp"
 
-namespace sol
-{
-class state;
-}
-
 namespace AM
 {
 namespace Server
 {
 class World;
+struct EntityInitLua;
+struct EntityItemHandlerLua;
+struct ItemInitLua;
 
 /**
  * Holds any functionality that the project wants to expose to Lua.
@@ -22,9 +20,9 @@ class World;
 class ProjectLuaBindings
 {
 public:
-    ProjectLuaBindings(sol::state& inEntityInitLua,
-                       sol::state& inEntityItemHandlerLua,
-                       sol::state& inItemInitLua, World& inWorld);
+    ProjectLuaBindings(EntityInitLua& inEntityInitLua,
+                       EntityItemHandlerLua& inEntityItemHandlerLua,
+                       ItemInitLua& inItemInitLua, World& inWorld);
 
     /**
      * Adds our bindings to the lua object.
@@ -32,11 +30,6 @@ public:
     void addBindings();
 
 private:
-    sol::state& entityInitLua;
-    sol::state& entityItemHandlerLua;
-    sol::state& itemInitLua;
-    World& world;
-
     // Entity init
     /**
      * Makes the entity walk around randomly.
@@ -50,6 +43,11 @@ private:
     // Entity item handler
 
     // Item init
+
+    EntityInitLua& entityInitLua;
+    EntityItemHandlerLua& entityItemHandlerLua;
+    ItemInitLua& itemInitLua;
+    World& world;
 };
 
 } // namespace Server
