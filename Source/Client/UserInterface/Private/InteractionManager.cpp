@@ -42,7 +42,7 @@ void InteractionManager::entityHovered(entt::entity entity)
     else {
         // If this entity has no interactions, return early.
         auto* interaction{world.registry.try_get<Interaction>(entity)};
-        if (!interaction || interaction->isEmpty()) {
+        if (!interaction || interaction->supportedInteractions.empty()) {
             return;
         }
 
@@ -51,7 +51,7 @@ void InteractionManager::entityHovered(entt::entity entity)
         newInteractionText
             += DisplayStrings::get(defaultInteraction) + " " + name.value;
 
-        std::size_t interactionCount{interaction->getCount()};
+        std::size_t interactionCount{interaction->supportedInteractions.size()};
         if (interactionCount > 1) {
             newInteractionText += " / " + std::to_string(interactionCount - 1)
                                   + " more options.";
@@ -77,7 +77,7 @@ void InteractionManager::entityLeftClicked(entt::entity entity)
     else {
         // If this entity has no interactions, return early.
         auto* interaction{world.registry.try_get<Interaction>(entity)};
-        if (!interaction || interaction->isEmpty()) {
+        if (!interaction || interaction->supportedInteractions.empty()) {
             return;
         }
 
@@ -89,7 +89,7 @@ void InteractionManager::entityLeftClicked(entt::entity entity)
 void InteractionManager::entityRightClicked(entt::entity entity)
 {
     auto* interaction{world.registry.try_get<Interaction>(entity)};
-    if (!interaction || interaction->isEmpty()) {
+    if (!interaction || interaction->supportedInteractions.empty()) {
         return;
     }
 
@@ -103,19 +103,13 @@ void InteractionManager::entityRightClicked(entt::entity entity)
     mainScreen.clearRightClickMenu();
     for (EntityInteractionType interactionType :
          interaction->supportedInteractions) {
-        if (interactionType == EntityInteractionType::NotSet) {
-            // No more interactions in this list.
-            break;
-        }
-        else {
-            // Tell the server to process this interaction.
-            auto interactWith = [&, entity, interactionType]() {
-                network.serializeAndSend(
-                    EntityInteractionRequest{entity, interactionType});
-            };
-            mainScreen.addRightClickMenuAction(
-                DisplayStrings::get(interactionType), std::move(interactWith));
-        }
+        // Tell the server to process this interaction.
+        auto interactWith = [&, entity, interactionType]() {
+            network.serializeAndSend(
+                EntityInteractionRequest{entity, interactionType});
+        };
+        mainScreen.addRightClickMenuAction(DisplayStrings::get(interactionType),
+                                           std::move(interactWith));
     }
 
     mainScreen.openRightClickMenu();
@@ -273,11 +267,7 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
     mainScreen.clearRightClickMenu();
     auto interactionList{clickedItem->getInteractionList()};
     for (ItemInteractionType interactionType : interactionList) {
-        if (interactionType == ItemInteractionType::NotSet) {
-            // No more interactions in this list.
-            break;
-        }
-        else if (interactionType == ItemInteractionType::UseOn) {
+        if (interactionType == ItemInteractionType::UseOn) {
             // If the item is still in the inventory, begin using it.
             auto useItemOn = [&, slotIndex, name{clickedItem->displayName},
                               thumbnail{AUI::WidgetWeakRef{itemThumbnail}}]() {

@@ -133,7 +133,9 @@ void PlantSystem::createDeadPlant(const Position& position)
     // Give it a Replant interaction.
     Interaction& interaction{
         world.registry.get_or_emplace<Interaction>(newEntity)};
-    interaction.add(EntityInteractionType::Replant);
+    if (!(interaction.add(EntityInteractionType::Replant))) {
+        LOG_ERROR("Failed to add replant interaction.");
+    }
 }
 
 void PlantSystem::replantPlant(entt::entity oldPlant)

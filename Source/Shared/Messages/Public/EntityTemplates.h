@@ -22,7 +22,7 @@ struct EntityTemplates {
         ProjectMessageType::EntityTemplates};
 
     /** Used as a "we should never hit this" cap on the number of templates that
-        we send at once. Only checked in debug builds. */
+        we send at once. */
     static constexpr std::size_t MAX_TEMPLATES{1000};
 
     /**
