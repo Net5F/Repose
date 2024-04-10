@@ -6,10 +6,12 @@ namespace AM
 {
 namespace Server
 {
-class World;
 struct EntityInitLua;
 struct EntityItemHandlerLua;
 struct ItemInitLua;
+struct DialogueLua;
+struct DialogueChoiceConditionLua;
+class World;
 
 /**
  * Holds any functionality that the project wants to expose to Lua.
@@ -22,7 +24,9 @@ class ProjectLuaBindings
 public:
     ProjectLuaBindings(EntityInitLua& inEntityInitLua,
                        EntityItemHandlerLua& inEntityItemHandlerLua,
-                       ItemInitLua& inItemInitLua, World& inWorld);
+                       ItemInitLua& inItemInitLua, DialogueLua& inDialogueLua,
+                       DialogueChoiceConditionLua& inDialogueChoiceConditionLua,
+                       World& inWorld);
 
     /**
      * Adds our bindings to the lua object.
@@ -47,6 +51,8 @@ private:
     EntityInitLua& entityInitLua;
     EntityItemHandlerLua& entityItemHandlerLua;
     ItemInitLua& itemInitLua;
+    DialogueLua& dialogueLua;
+    DialogueChoiceConditionLua& dialogueChoiceConditionLua;
     World& world;
 };
 

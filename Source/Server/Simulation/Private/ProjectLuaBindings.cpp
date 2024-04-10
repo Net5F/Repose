@@ -2,6 +2,8 @@
 #include "EntityInitLua.h"
 #include "EntityItemHandlerLua.h"
 #include "ItemInitLua.h"
+#include "DialogueLua.h"
+#include "DialogueChoiceConditionLua.h"
 #include "World.h"
 #include "RandomWalkerAI.h"
 #include "PreviousPosition.h"
@@ -14,10 +16,13 @@ namespace Server
 ProjectLuaBindings::ProjectLuaBindings(
     EntityInitLua& inEntityInitLua,
     EntityItemHandlerLua& inEntityItemHandlerLua, ItemInitLua& inItemInitLua,
-    World& inWorld)
+    DialogueLua& inDialogueLua,
+    DialogueChoiceConditionLua& inDialogueChoiceConditionLua, World& inWorld)
 : entityInitLua{inEntityInitLua}
 , entityItemHandlerLua{inEntityItemHandlerLua}
 , itemInitLua{inItemInitLua}
+, dialogueLua{inDialogueLua}
+, dialogueChoiceConditionLua{inDialogueChoiceConditionLua}
 , world{inWorld}
 {
 }

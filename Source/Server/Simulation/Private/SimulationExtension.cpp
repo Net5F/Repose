@@ -20,7 +20,10 @@ SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
 : world{deps.simulation.getWorld()}
 , projectLuaBindings{deps.simulation.getEntityInitLua(),
                      deps.simulation.getEntityItemHandlerLua(),
-                     deps.simulation.getItemInitLua(), world}
+                     deps.simulation.getItemInitLua(),
+                     deps.simulation.getDialogueLua(),
+                     deps.simulation.getDialogueChoiceConditionLua(),
+                     world}
 , buildModeDataSystem{world, deps.network.getEventDispatcher(), deps.network,
                       deps.graphicData}
 , mazeGenerationSystem{world, deps.graphicData}
