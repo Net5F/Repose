@@ -151,7 +151,9 @@ private:
 
     MainButton changeSpriteButton;
 
-    MainButton editScriptButton;
+    MainButton openScriptButton;
+
+    MainButton commitScriptButton;
 
     MainButton saveTemplateButton;
 

@@ -13,6 +13,7 @@
 #include "ItemChangeRequest.h"
 #include "InventoryOperation.h"
 #include "Paths.h"
+#include <SDL.h>
 #include <fstream>
 #include <sstream>
 
@@ -169,12 +170,10 @@ void ItemPanelContent::onTick(double)
             selectedItemInitScript = initScriptResponse.initScript.script;
             initScriptReceived = true;
 
-            // TEMP
             // Write to InitScript.lua
             std::ofstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
             scriptFile << initScriptResponse.initScript.script;
             LOG_INFO("Received item script. Saved to InitScript.lua");
-            // TEMP
         }
     }
 }
@@ -261,19 +260,19 @@ void ItemPanelContent::sendItemChangeRequest()
     // since we would end up overwriting the current one.
     if (initScriptReceived) {
         // Send a re-init request with the updated name.
-        std::string initScript{""};
-        // TEMP - Replace this when we add a text editor UI.
         std::ifstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
         if (scriptFile.is_open()) {
             std::stringstream buffer;
             buffer << scriptFile.rdbuf();
-            initScript = buffer.str();
-        }
-        // TEMP
 
-        network.serializeAndSend(
-            ItemChangeRequest{selectedItemID, nameInput.getText(),
-                              selectedItemIconID, initScript});
+            const std::string& initScript{buffer.str()};
+            network.serializeAndSend(
+                ItemChangeRequest{selectedItemID, nameInput.getText(),
+                                  selectedItemIconID, initScript});
+        }
+        else {
+            LOG_INFO("Failed to open InitScript.lua");
+        }
     }
 }
 
@@ -496,11 +495,17 @@ void ItemPanelContent::showEditView()
         }
     });
 
-    rightButton1.text.setText("Edit Script");
-    rightButton1.setOnPressed([this]() { sendItemChangeRequest(); });
+    rightButton1.text.setText("Open Script");
+    rightButton1.setOnPressed([this]() {
+        std::string path{Paths::BASE_PATH + "InitScript.lua"};
+        SDL_OpenURL(path.c_str());
+    });
 
-    rightButton2.text.setText("Select Icon");
-    rightButton2.setOnPressed([this]() { changeView(ViewType::IconList); });
+    rightButton2.text.setText("Commit Script");
+    rightButton2.setOnPressed([this]() { sendItemChangeRequest(); });
+
+    rightButton3.text.setText("Select Icon");
+    rightButton3.setOnPressed([this]() { changeView(ViewType::IconList); });
 
     // Put the error label in the correct place for this view.
     SDL_Rect errorLabelExtent{errorLabel.getLogicalExtent()};
@@ -513,6 +518,7 @@ void ItemPanelContent::showEditView()
     itemIconImage.setIsVisible(true);
     rightButton1.setIsVisible(true);
     rightButton2.setIsVisible(true);
+    rightButton3.setIsVisible(true);
 }
 
 void ItemPanelContent::showDuplicateView()

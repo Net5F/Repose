@@ -18,6 +18,7 @@
 #include "Paths.h"
 #include "AMAssert.h"
 #include "entt/entity/entity.hpp"
+#include <SDL.h>
 #include <fstream>
 #include <sstream>
 
@@ -49,7 +50,8 @@ EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
 , nameLabel{{464, 8, 260, 36}, "NameLabel"}
 , nameInput{{464, 53, 260, 42}, "NameInput"}
 , changeSpriteButton{{342, 117, 160, 36}, "Change Sprite", "ChangeSpriteButton"}
-, editScriptButton{{516, 117, 156, 36}, "Edit Script", "EditScriptButton"}
+, openScriptButton{{516, 117, 156, 36}, "Open Script", "OpenScriptButton"}
+, commitScriptButton{{516, 165, 156, 36}, "Commit Script", "CommitScriptButton"}
 , saveTemplateButton{{686, 117, 188, 36},
                      "Save as Template",
                      "SaveTemplateButton"}
@@ -61,7 +63,8 @@ EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
     children.push_back(nameLabel);
     children.push_back(nameInput);
     children.push_back(changeSpriteButton);
-    children.push_back(editScriptButton);
+    children.push_back(openScriptButton);
+    children.push_back(commitScriptButton);
     children.push_back(saveTemplateButton);
     children.push_back(graphicSetContainer);
 
@@ -108,22 +111,28 @@ EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
     changeSpriteButton.setOnPressed(
         [this]() { changeView(ViewType::SpriteSet); });
 
-    editScriptButton.setOnPressed([this]() {
+    openScriptButton.setOnPressed([this]() {
+        std::string path{Paths::BASE_PATH + "InitScript.lua"};
+        SDL_OpenURL(path.c_str());
+    });
+
+    commitScriptButton.setOnPressed([this]() {
         // Send a re-init request with the updated script.
         const entt::registry& registry{world.registry};
-        std::string initScript{""};
-        // TEMP - Replace this when we add a text editor UI.
         std::ifstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
         if (scriptFile.is_open()) {
             std::stringstream buffer;
             buffer << scriptFile.rdbuf();
-            initScript = buffer.str();
+
+            const std::string& initScript{buffer.str()};
+            network.serializeAndSend(EntityInitRequest{
+                editingEntityID, registry.get<Name>(editingEntityID),
+                registry.get<Position>(editingEntityID),
+                registry.get<GraphicState>(editingEntityID), initScript});
         }
-        // TEMP
-        network.serializeAndSend(EntityInitRequest{
-            editingEntityID, registry.get<Name>(editingEntityID),
-            registry.get<Position>(editingEntityID),
-            registry.get<GraphicState>(editingEntityID), initScript});
+        else {
+            LOG_INFO("Failed to open InitScript.lua");
+        }
     });
 
     saveTemplateButton.setOnPressed([this]() {
@@ -202,12 +211,10 @@ void EntityPanelContent::onTick(double)
         if (initScriptResponse.entity == editingEntityID) {
             editingEntityInitScript = initScriptResponse.initScript.script;
 
-            // TEMP
             // Write to InitScript.lua
             std::ofstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
             scriptFile << initScriptResponse.initScript.script;
             LOG_INFO("Received entity script. Saved to InitScript.lua");
-            // TEMP
         }
     }
 }
@@ -227,7 +234,8 @@ void EntityPanelContent::changeView(ViewType newView)
     nameLabel.setIsVisible(false);
     nameInput.setIsVisible(false);
     changeSpriteButton.setIsVisible(false);
-    editScriptButton.setIsVisible(false);
+    openScriptButton.setIsVisible(false);
+    commitScriptButton.setIsVisible(false);
     saveTemplateButton.setIsVisible(false);
     graphicSetContainer.setIsVisible(false);
 
@@ -243,7 +251,8 @@ void EntityPanelContent::changeView(ViewType newView)
         nameLabel.setIsVisible(true);
         nameInput.setIsVisible(true);
         changeSpriteButton.setIsVisible(true);
-        editScriptButton.setIsVisible(true);
+        openScriptButton.setIsVisible(true);
+        commitScriptButton.setIsVisible(true);
         saveTemplateButton.setIsVisible(true);
     }
     else if (newView == ViewType::SpriteSet) {

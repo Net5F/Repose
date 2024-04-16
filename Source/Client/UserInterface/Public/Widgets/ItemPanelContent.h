@@ -165,11 +165,11 @@ private:
     // Home view
     MainButton viewCacheButton;
     MainButton createNewButton;
-    /** Used for "Edit" in Home view, and "Edit Script" in Edit view. */
+    /** Used for "Edit" in Home view, and "Open Script" in Edit view. */
     MainButton rightButton1;
-    /** Used for "Duplicate" in Home view, and "Select Icon" in Edit view. */
+    /** Used for "Duplicate" in Home view, and "Commit Script" in Edit view. */
     MainButton rightButton2;
-    /** Used for "Give" in Home view. */
+    /** Used for "Give" in Home view, and "Select Icon" in Edit view. */
     MainButton rightButton3;
 
     AUI::Text itemNotFoundLabel;
