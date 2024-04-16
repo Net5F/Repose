@@ -22,8 +22,10 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 , world{deps.simulation.getWorld()}
 , interactionManager{deps.simulation.getWorld(), deps.network, *this}
 , playerIsInBuildArea{false}
+, dialogueResponseQueue{deps.network.getEventDispatcher()}
 , mainOverlay{world, deps.worldObjectLocator, deps.network, interactionManager}
 , chatWindow{deps.network, deps.sdlRenderer}
+, dialogueWindow{world, deps.network}
 , inventoryWindow{deps.simulation, deps.network, deps.iconData,
                   interactionManager}
 , buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
@@ -35,6 +37,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
     // Add our windows so they're included in rendering, etc.
     windows.push_back(mainOverlay);
     windows.push_back(chatWindow);
+    windows.push_back(dialogueWindow);
     windows.push_back(inventoryWindow);
     windows.push_back(buildOverlay);
     windows.push_back(buildPanel);
@@ -43,6 +46,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
     // Hide the windows that aren't always open.
     buildOverlay.setIsVisible(false);
     buildPanel.setIsVisible(false);
+    dialogueWindow.setIsVisible(false);
     inventoryWindow.setIsVisible(false);
     rightClickMenu.setIsVisible(false);
 
@@ -142,6 +146,25 @@ bool MainScreen::onKeyDown(SDL_Keycode keyCode)
     }
 
     return false;
+}
+
+void MainScreen::tick(double timestepS)
+{
+    // Do the normal tick processing.
+    Screen::tick(timestepS);
+
+    // Pass any waiting dialogue messages to DialogueWindow for processing.
+    DialogueResponse dialogueResponse{};
+    while (dialogueResponseQueue.pop(dialogueResponse)) {
+        // If the window is closed, we've started a new dialogue. Clear the 
+        // old text and make the window visible.
+        if (!(dialogueWindow.getIsVisible())) {
+            dialogueWindow.clear();
+            dialogueWindow.setIsVisible(true);
+        }
+
+        dialogueWindow.processDialogueResponse(dialogueResponse);
+    }
 }
 
 void MainScreen::onPositionChanged(entt::registry& registry,

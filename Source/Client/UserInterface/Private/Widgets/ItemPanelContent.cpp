@@ -127,9 +127,7 @@ void ItemPanelContent::reset()
 
 void ItemPanelContent::onTick(double)
 {
-    // Process any waiting messages.
-
-    // Display any errors appropriately.
+    // Process any waiting messages, displaying any errors appropriately.
     ItemError itemError{};
     while (itemErrorQueue.pop(itemError)) {
         if ((currentView == ViewType::Home)

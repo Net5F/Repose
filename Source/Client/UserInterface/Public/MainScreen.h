@@ -7,16 +7,18 @@
 #include "InteractionManager.h"
 #include "MainOverlay.h"
 #include "ChatWindow.h"
+#include "DialogueWindow.h"
 #include "InventoryWindow.h"
 #include "BuildPanel.h"
 #include "BuildOverlay.h"
 #include "RightClickMenu.h"
+#include "DialogueResponse.h"
+#include "QueuedEvents.h"
 #include <string_view>
 #include <functional>
 
 namespace AM
 {
-class EventDispatcher;
 struct Position;
 
 namespace Client
@@ -80,6 +82,8 @@ public:
     //-------------------------------------------------------------------------
     bool onKeyDown(SDL_Keycode keyCode) override;
 
+    void tick(double timestepS) override;
+
 private:
     /**
      * If the player enters or exits the build area, performs the necessary UI
@@ -97,6 +101,8 @@ private:
     /** If true, the player is currently in the build area. */
     bool playerIsInBuildArea;
 
+    EventQueue<DialogueResponse> dialogueResponseQueue;
+
     //-------------------------------------------------------------------------
     // Windows
     //-------------------------------------------------------------------------
@@ -107,6 +113,9 @@ private:
     /** The chat window. Currently only shows system messages, but will
         eventually show player messages and support sending messages. */
     ChatWindow chatWindow;
+
+    /** The dialogue window that pops up when you talk to an entity. */
+    DialogueWindow dialogueWindow;
 
     /** The player's inventory window. */
     InventoryWindow inventoryWindow;

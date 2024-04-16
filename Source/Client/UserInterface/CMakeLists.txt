@@ -21,6 +21,7 @@ target_sources(Client
         Private/Windows/BuildOverlay.cpp
         Private/Windows/BuildPanel.cpp
         Private/Windows/ChatWindow.cpp
+        Private/Windows/DialogueWindow.cpp
         Private/Windows/InventoryWindow.cpp
         Private/Windows/MainOverlay.cpp
         Private/Windows/RightClickMenu.cpp
@@ -49,6 +50,7 @@ target_sources(Client
         Public/Windows/BuildOverlay.h
         Public/Windows/BuildPanel.h
         Public/Windows/ChatWindow.h
+        Public/Windows/DialogueWindow.h
         Public/Windows/InventoryWindow.h
         Public/Windows/MainOverlay.h
         Public/Windows/RightClickMenu.h
