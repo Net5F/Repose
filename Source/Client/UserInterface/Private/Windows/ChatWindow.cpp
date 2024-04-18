@@ -89,10 +89,10 @@ void ChatWindow::onTick(double)
     }
 }
 
-void ChatWindow::updateLayout()
+void ChatWindow::arrange()
 {
-    // Run the normal layout step.
-    Window::updateLayout();
+    // Run the normal arrange step.
+    Window::arrange();
 
     // If we haven't created our texture or our size has changed, create it.
     if (!renderTexture

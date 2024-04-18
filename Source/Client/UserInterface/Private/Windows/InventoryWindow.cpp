@@ -50,10 +50,10 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
         *this);
 }
 
-void InventoryWindow::updateLayout()
+void InventoryWindow::arrange()
 {
-    // Do the normal layout updating.
-    Window::updateLayout();
+    // Run the normal arrange step.
+    Window::arrange();
 
     // Items in the inventory may have changed. If the mouse is hovering over
     // the inventory, update InteractionManager's hover state.

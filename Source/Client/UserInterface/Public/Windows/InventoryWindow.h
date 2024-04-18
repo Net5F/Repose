@@ -38,10 +38,10 @@ public:
     // Base class overrides
     //-------------------------------------------------------------------------
     /**
-     * Calls Window::updateLayout() and, if itemContainer has been refreshed,
+     * Calls Window::arrange() and, if itemContainer has been refreshed,
      * notifies InteractionManager.
      */
-    void updateLayout() override;
+    void arrange() override;
 
 private:
     /** The height and width of our thumbnail widgets, in logical pixels. */
