@@ -149,11 +149,11 @@ void DialogueWindow::addChoices()
     // Add all of the staged choices.
     const Name& playerName{world.registry.get<Name>(world.playerEntity)};
     for (const auto& choice : choices) {
-        AUI::TextButton& choiceWidget{addChoiceText(choice.displayText)};
+        AUI::TextButton& choiceButton{addChoiceText(choice.displayText)};
 
         // When pressed, send the choice request and add the selected text 
         // to the dialogue.
-        choiceWidget.setOnPressed([&]() {
+        choiceButton.setOnPressed([&]() {
             network.serializeAndSend(DialogueChoiceRequest{
                 currentTargetEntity, currentTopicIndex, choice.index});
 
@@ -163,8 +163,8 @@ void DialogueWindow::addChoices()
     }
     
     // Add the "End conversation." choice.
-    AUI::TextButton& choiceWidget{addChoiceText("End conversation.")};
-    choiceWidget.setOnPressed([&]() { setIsVisible(false); });
+    AUI::TextButton& choiceButton{addChoiceText("End conversation.")};
+    choiceButton.setOnPressed([&]() { setIsVisible(false); });
 }
 
 void DialogueWindow::addDialogueText(std::string_view textString,
@@ -193,8 +193,6 @@ void DialogueWindow::addDialogueText(std::string_view textString,
 
 AUI::TextButton& DialogueWindow::addChoiceText(std::string_view textString)
 {
-    // TODO: TextButton height doesn't auto-adjust.
-
     // Add the new text button.
     // Note: The widget's height will be auto-adjusted to fit the given
     // text.
@@ -207,6 +205,7 @@ AUI::TextButton& DialogueWindow::addChoiceText(std::string_view textString)
     textButton.setHoveredColor({210, 210, 210, 255});
     textButton.setPressedColor({168, 168, 168, 255});
     textButton.setDisabledColor({133, 133, 133, 255});
+    textButton.setAutoHeightEnabled(true);
     textButton.text.setText(textString);
     textButton.text.setAutoHeightEnabled(true);
     textButton.text.refreshTexture();

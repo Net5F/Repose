@@ -89,10 +89,10 @@ void ChatWindow::onTick(double)
     }
 }
 
-void ChatWindow::arrange()
+void ChatWindow::measure()
 {
-    // Run the normal arrange step.
-    Window::arrange();
+    // Run the normal measure step.
+    Window::measure();
 
     // If we haven't created our texture or our size has changed, create it.
     if (!renderTexture

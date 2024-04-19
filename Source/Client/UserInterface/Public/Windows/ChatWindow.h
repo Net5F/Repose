@@ -37,7 +37,7 @@ public:
 
     void onTick(double timestepS) override;
 
-    void arrange() override;
+    void measure() override;
 
     void render() override;
 
