@@ -12,6 +12,7 @@
 #include "ItemInitRequest.h"
 #include "ItemChangeRequest.h"
 #include "InventoryOperation.h"
+#include "StringTools.h"
 #include "Paths.h"
 #include <SDL.h>
 #include <fstream>
@@ -192,7 +193,8 @@ void ItemPanelContent::trySelectItem(std::string_view displayName)
     selectedItemInitScript = "";
 
     // Track that we're requesting this item.
-    std::string stringID{ItemData::deriveStringID(displayName)};
+    std::string stringID{};
+    StringTools::deriveStringID(displayName, stringID);
     requestedItemStringID = stringID;
 
     // Ask the server for the latest definition for this item.
@@ -466,7 +468,8 @@ void ItemPanelContent::showCreateView()
             ItemInitRequest{nameInput.getText(), NULL_ICON_ID, ""});
 
         // Track that we're requesting this item.
-        std::string stringID{ItemData::deriveStringID(nameInput.getText())};
+        std::string stringID{};
+        StringTools::deriveStringID(nameInput.getText(), stringID);
         requestedItemStringID = stringID;
     });
 
@@ -541,7 +544,8 @@ void ItemPanelContent::showDuplicateView()
             nameInput.getText(), selectedItemIconID, selectedItemInitScript});
 
         // Track that we're requesting this item.
-        std::string stringID{ItemData::deriveStringID(nameInput.getText())};
+        std::string stringID{};
+        StringTools::deriveStringID(nameInput.getText(), stringID);
         requestedItemStringID = stringID;
     });
 
