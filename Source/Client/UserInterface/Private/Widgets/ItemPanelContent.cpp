@@ -171,10 +171,10 @@ void ItemPanelContent::onTick(double)
             selectedItemInitScript = initScriptResponse.initScript.script;
             initScriptReceived = true;
 
-            // Write to InitScript.lua
-            std::ofstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
+            // Write to ItemInitScript.lua
+            std::ofstream scriptFile{Paths::BASE_PATH + "ItemInitScript.lua"};
             scriptFile << initScriptResponse.initScript.script;
-            LOG_INFO("Received item script. Saved to InitScript.lua");
+            LOG_INFO("Received item script. Saved to ItemInitScript.lua");
         }
     }
 }
@@ -262,7 +262,7 @@ void ItemPanelContent::sendItemChangeRequest()
     // since we would end up overwriting the current one.
     if (initScriptReceived) {
         // Send a re-init request with the updated name.
-        std::ifstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
+        std::ifstream scriptFile{Paths::BASE_PATH + "ItemInitScript.lua"};
         if (scriptFile.is_open()) {
             std::stringstream buffer;
             buffer << scriptFile.rdbuf();
@@ -273,7 +273,7 @@ void ItemPanelContent::sendItemChangeRequest()
                                   selectedItemIconID, initScript});
         }
         else {
-            LOG_INFO("Failed to open InitScript.lua");
+            LOG_INFO("Failed to open ItemInitScript.lua");
         }
     }
 }
@@ -500,7 +500,7 @@ void ItemPanelContent::showEditView()
 
     rightButton1.text.setText("Open Script");
     rightButton1.setOnPressed([this]() {
-        std::string path{Paths::BASE_PATH + "InitScript.lua"};
+        std::string path{Paths::BASE_PATH + "ItemInitScript.lua"};
         SDL_OpenURL(path.c_str());
     });
 

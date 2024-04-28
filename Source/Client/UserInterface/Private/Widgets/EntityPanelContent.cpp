@@ -112,14 +112,14 @@ EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
         [this]() { changeView(ViewType::SpriteSet); });
 
     openScriptButton.setOnPressed([this]() {
-        std::string path{Paths::BASE_PATH + "InitScript.lua"};
+        std::string path{Paths::BASE_PATH + "EntityInitScript.lua"};
         SDL_OpenURL(path.c_str());
     });
 
     commitScriptButton.setOnPressed([this]() {
         // Send a re-init request with the updated script.
         const entt::registry& registry{world.registry};
-        std::ifstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
+        std::ifstream scriptFile{Paths::BASE_PATH + "EntityInitScript.lua"};
         if (scriptFile.is_open()) {
             std::stringstream buffer;
             buffer << scriptFile.rdbuf();
@@ -131,7 +131,7 @@ EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
                 registry.get<GraphicState>(editingEntityID), initScript});
         }
         else {
-            LOG_INFO("Failed to open InitScript.lua");
+            LOG_INFO("Failed to open EntityInitScript.lua");
         }
     });
 
@@ -211,10 +211,10 @@ void EntityPanelContent::onTick(double)
         if (initScriptResponse.entity == editingEntityID) {
             editingEntityInitScript = initScriptResponse.initScript.script;
 
-            // Write to InitScript.lua
-            std::ofstream scriptFile{Paths::BASE_PATH + "InitScript.lua"};
+            // Write to EntityInitScript.lua
+            std::ofstream scriptFile{Paths::BASE_PATH + "EntityInitScript.lua"};
             scriptFile << initScriptResponse.initScript.script;
-            LOG_INFO("Received entity script. Saved to InitScript.lua");
+            LOG_INFO("Received entity script. Saved to EntityInitScript.lua");
         }
     }
 }
