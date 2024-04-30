@@ -53,7 +53,7 @@ void MazeGenerationSystem::regenerateMazeIfNecessary()
         LOG_INFO("Generating maze...");
 
         // Prime a timer.
-        Timer timer;
+        Timer timer{};
 
         // Generate the maze topology.
         MazeTopology maze{};
@@ -404,8 +404,8 @@ void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
                                     ObjectTileLayer>(mazeExtent);
 
     // Apply the maze to the tile map.
-    for (int mazeX = 0; mazeX <= abstractMazeExtent.xMax(); ++mazeX) {
-        for (int mazeY = 0; mazeY <= abstractMazeExtent.yMax(); ++mazeY) {
+    for (int mazeX{0}; mazeX <= abstractMazeExtent.xMax(); ++mazeX) {
+        for (int mazeY{0}; mazeY <= abstractMazeExtent.yMax(); ++mazeY) {
             const MazeCell& cell{maze.cells[linearizeCellIndex(mazeX, mazeY)]};
 
             // Apply this cell's walls to the corresponding 2x2 map area.
