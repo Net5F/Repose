@@ -124,10 +124,9 @@ void WallTool::addPhantomWalls(const SDL_Point& cursorPosition)
 void WallTool::addNorthWallPhantom(int tileX, int tileY)
 {
     const Tile& tile{world.tileMap.getTile(tileX, tileY)};
-    const std::array<WallTileLayer, 2>& walls{tile.getWalls()};
 
     // If the tile has a West wall, add a NE gap fill.
-    if (walls[0].wallType == Wall::Type::West) {
+    if (tile.findLayer(TileLayer::Type::Wall, Wall::Type::West)) {
         pushPhantomWall(tileX, tileY, Wall::Type::NorthEastGapFill,
                         *selectedGraphicSet);
     }
@@ -141,26 +140,26 @@ void WallTool::addNorthWallPhantom(int tileX, int tileY)
     const TileExtent& mapTileExtent{world.tileMap.getTileExtent()};
     if (mapTileExtent.containsPosition({tileX + 1, tileY - 1})) {
         const Tile& northeastTile{world.tileMap.getTile(tileX + 1, tileY - 1)};
-        const auto& northeastWalls{northeastTile.getWalls()};
 
         // If the NorthEast tile has a West wall.
-        if (northeastWalls[0].wallType == Wall::Type::West) {
+        if (auto* northeastWestWall{northeastTile.findLayer(
+                TileLayer::Type::Wall, Wall::Type::West)}) {
             // We formed a corner. Check if the tile to the east has a wall.
             // Note: We know this tile is valid cause there's a NorthEast tile.
             const Tile& eastTile{world.tileMap.getTile(tileX + 1, tileY)};
-            const std::array<WallTileLayer, 2>& eastWalls{eastTile.getWalls()};
-            if ((eastWalls[0].wallType == Wall::Type::None)
-                && (eastWalls[1].wallType == Wall::Type::None)) {
+            if (eastTile.getLayers(TileLayer::Type::Wall).size() == 0) {
                 // The tile has no walls. Add a NorthWestGapFill.
                 pushPhantomWall(tileX + 1, tileY, Wall::Type::NorthWestGapFill,
                                 *selectedGraphicSet);
             }
-            else if (eastWalls[1].wallType == Wall::Type::NorthWestGapFill) {
+            else if (auto* eastNorthWestGapFill{
+                         eastTile.findLayer(TileLayer::Type::Wall,
+                                            Wall::Type::NorthWestGapFill)}) {
                 // The East tile has a NW gap fill. If its graphic set no longer
                 // matches either surrounding wall, make it match the new wall.
-                int gapFillID{eastWalls[1].graphicSet->numericID};
+                int gapFillID{eastNorthWestGapFill->graphicSet.get().numericID};
                 int newNorthID{selectedGraphicSet->numericID};
-                int westID{northeastWalls[0].graphicSet->numericID};
+                int westID{northeastWestWall->graphicSet.get().numericID};
                 if ((gapFillID != newNorthID) && (gapFillID != westID)) {
                     pushPhantomWall(tileX + 1, tileY,
                                     Wall::Type::NorthWestGapFill,
@@ -174,7 +173,6 @@ void WallTool::addNorthWallPhantom(int tileX, int tileY)
 void WallTool::addWestWallPhantom(int tileX, int tileY)
 {
     const Tile& tile{world.tileMap.getTile(tileX, tileY)};
-    const std::array<WallTileLayer, 2>& walls{tile.getWalls()};
 
     // Add the West wall.
     // Note: If this tile already has a West wall or NW gap fill, this will
@@ -182,37 +180,43 @@ void WallTool::addWestWallPhantom(int tileX, int tileY)
     pushPhantomWall(tileX, tileY, Wall::Type::West, *selectedGraphicSet);
 
     // If the tile has a North wall, switch it to a NorthEast gap fill.
-    if (walls[1].wallType == Wall::Type::North) {
-        pushPhantomWall(tileX, tileY, Wall::Type::NorthEastGapFill,
-                        *(walls[1].graphicSet));
+    if (auto* northWall{
+            tile.findLayer(TileLayer::Type::Wall, Wall::Type::North)}) {
+        pushPhantomWall(
+            tileX, tileY, Wall::Type::NorthEastGapFill,
+            static_cast<const WallGraphicSet&>(northWall->graphicSet.get()));
     }
 
     // If there's a tile to the SW that we might've formed a corner with.
     const TileExtent& mapTileExtent{world.tileMap.getTileExtent()};
     if (mapTileExtent.containsPosition({tileX - 1, tileY + 1})) {
         const Tile& southwestTile{world.tileMap.getTile(tileX - 1, tileY + 1)};
-        const auto& southwestWalls{southwestTile.getWalls()};
 
         // If the SouthWest tile has a North wall or a NE gap fill.
-        if ((southwestWalls[1].wallType == Wall::Type::North)
-            || (southwestWalls[1].wallType == Wall::Type::NorthEastGapFill)) {
+        auto* southwestNorthWall{
+            southwestTile.findLayer(TileLayer::Type::Wall, Wall::Type::North)};
+        auto* southwestNorthEastGapFill{southwestTile.findLayer(
+            TileLayer::Type::Wall, Wall::Type::NorthEastGapFill)};
+        if (southwestNorthWall || southwestNorthEastGapFill) {
             // We formed a corner. Check if the tile to the South has a wall.
             // Note: We know this tile is valid cause there's a SouthWest tile.
             const Tile& southTile{world.tileMap.getTile(tileX, tileY + 1)};
-            const std::array<WallTileLayer, 2>& southWalls{
-                southTile.getWalls()};
-            if ((southWalls[0].wallType == Wall::Type::None)
-                && (southWalls[1].wallType == Wall::Type::None)) {
+            if (southTile.getLayers(TileLayer::Type::Wall).size() == 0) {
                 // The tile has no walls. Add a NorthWestGapFill.
                 pushPhantomWall(tileX, tileY + 1, Wall::Type::NorthWestGapFill,
                                 *selectedGraphicSet);
             }
-            else if (southWalls[1].wallType == Wall::Type::NorthWestGapFill) {
+            else if (auto* southNorthWestGapFill{
+                         southTile.findLayer(TileLayer::Type::Wall,
+                                             Wall::Type::NorthWestGapFill)}) {
                 // The South tile has a NW gap fill. If its graphic set no longer
                 // matches either surrounding wall, make it match the new wall.
-                int gapFillID{southWalls[1].graphicSet->numericID};
+                int gapFillID{southNorthWestGapFill->graphicSet.get().numericID};
                 int newWestID{selectedGraphicSet->numericID};
-                int northID{southwestWalls[1].graphicSet->numericID};
+                int northID{southwestNorthWall
+                                ? southwestNorthWall->graphicSet.get().numericID
+                                : southwestNorthEastGapFill->graphicSet.get()
+                                      .numericID};
                 if ((gapFillID != newWestID) && (gapFillID != northID)) {
                     pushPhantomWall(tileX, tileY + 1,
                                     Wall::Type::NorthWestGapFill,

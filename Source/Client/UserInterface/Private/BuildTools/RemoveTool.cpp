@@ -95,11 +95,11 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
             // Didn't hit an object. If the floor still exists, highlight it.
             const Tile& tile{world.tileMap.getTile(mouseTilePosition.x,
                                                    mouseTilePosition.y)};
-            const FloorTileLayer& floor{tile.getFloor()};
-            if (floor.graphicSet != nullptr) {
+            auto floors{tile.getLayers(TileLayer::Type::Floor)};
+            if (floors.size() > 0) {
                 TileLayerID layerID{mouseTilePosition.x, mouseTilePosition.y,
                                     TileLayer::Type::Floor,
-                                    tile.getFloor().graphicSet->numericID, 0};
+                                    floors[0].graphicSet.get().numericID, 0};
                 spriteColorMods.emplace_back(layerID, highlightColor);
             }
         }

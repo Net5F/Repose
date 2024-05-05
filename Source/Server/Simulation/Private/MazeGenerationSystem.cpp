@@ -399,9 +399,13 @@ void MazeGenerationSystem::fillEnclosedCells(MazeTopology& maze)
 
 void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
 {
+    // Disable auto collision rebuild (it's more efficient to do it all after).
+    world.tileMap.setAutoRebuildCollision(false);
+
     // Clear the maze area in the tile map.
-    world.tileMap.clearExtentLayers<FloorCoveringTileLayer, WallTileLayer,
-                                    ObjectTileLayer>(mazeExtent);
+    world.tileMap.clearExtentLayers(mazeExtent, {TileLayer::Type::FloorCovering,
+                                                 TileLayer::Type::Wall,
+                                                 TileLayer::Type::Object});
 
     // Apply the maze to the tile map.
     for (int mazeX{0}; mazeX <= abstractMazeExtent.xMax(); ++mazeX) {
@@ -414,6 +418,9 @@ void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
             applyCellToMap(mapX, mapY, cell);
         }
     }
+
+    // Re-enable auto collision rebuild (rebuilds any dirty tiles).
+    world.tileMap.setAutoRebuildCollision(true);
 }
 
 void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,

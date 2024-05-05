@@ -2,7 +2,6 @@
 
 #include "Camera.h"
 #include "TileExtent.h"
-#include "TileLayers.h"
 #include "GraphicSets.h"
 #include "BuildModeType.h"
 #include "PhantomSpriteInfo.h"

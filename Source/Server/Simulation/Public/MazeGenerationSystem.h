@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include "TileExtent.h"
 #include "TilePosition.h"
+#include "Rotation.h"
 #include "entt/fwd.hpp"
 #include <SDL_rect.h>
 #include <random>
@@ -78,8 +79,6 @@ private:
     void clearToVisitedOrExit(MazeTopology& maze,
                               const TilePosition& startPosition,
                               int passNumber);
-
-    void clearFromPlayersToExit();
 
     /**
      * Fills outNeighbors with the given position's neighbors.
