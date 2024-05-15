@@ -34,8 +34,8 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
             worldObjectLocator.getObjectUnderPoint(cursorPosition)};
 
         // If we hit a removable object, tell the sim to remove it.
-        if (TileLayerID* layer = std::get_if<TileLayerID>(&objectID)) {
-            requestRemoveTileLayer(layer->x, layer->y, layer->type,
+        if (TileLayerID* layer{std::get_if<TileLayerID>(&objectID)}) {
+            requestRemoveTileLayer(layer->tilePosition, layer->type,
                                    layer->graphicSetID, layer->graphicIndex);
         }
         else if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
@@ -43,9 +43,8 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
         }
         else {
             // Didn't hit a removable object. Tell the sim to remove the floor.
-            network.serializeAndSend(
-                TileRemoveLayer{mouseTilePosition.x, mouseTilePosition.y,
-                                TileLayer::Type::Floor, 0, 0});
+            network.serializeAndSend(TileRemoveLayer{
+                mouseTilePosition, TileLayer::Type::Floor, 0, 0});
         }
     }
 }
@@ -82,7 +81,7 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
             // Ignore NW gap fills (the user has to remove one of the adjoining
             // walls instead).
             TileLayerID* layer{std::get_if<TileLayerID>(&objectID)};
-            if ((layer != nullptr) && (layer->type == TileLayer::Type::Wall)
+            if (layer && (layer->type == TileLayer::Type::Wall)
                 && (layer->graphicIndex == Wall::Type::NorthWestGapFill)) {
                 return;
             }
@@ -93,12 +92,10 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
         }
         else {
             // Didn't hit an object. If the floor still exists, highlight it.
-            const Tile& tile{world.tileMap.getTile(mouseTilePosition.x,
-                                                   mouseTilePosition.y)};
+            const Tile& tile{world.tileMap.cgetTile(mouseTilePosition)};
             auto floors{tile.getLayers(TileLayer::Type::Floor)};
             if (floors.size() > 0) {
-                TileLayerID layerID{mouseTilePosition.x, mouseTilePosition.y,
-                                    TileLayer::Type::Floor,
+                TileLayerID layerID{mouseTilePosition, TileLayer::Type::Floor,
                                     floors[0].graphicSet.get().numericID, 0};
                 spriteColorMods.emplace_back(layerID, highlightColor);
             }
@@ -106,7 +103,7 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
     }
 }
 
-void RemoveTool::requestRemoveTileLayer(int tileX, int tileY,
+void RemoveTool::requestRemoveTileLayer(const TilePosition& tilePosition,
                                         TileLayer::Type layerType,
                                         Uint16 graphicSetID, Uint8 graphicIndex)
 {
@@ -126,11 +123,11 @@ void RemoveTool::requestRemoveTileLayer(int tileX, int tileY,
         }
 
         network.serializeAndSend(
-            TileRemoveLayer{tileX, tileY, layerType, graphicSetID, wallType});
+            TileRemoveLayer{tilePosition, layerType, graphicSetID, wallType});
     }
     else {
         network.serializeAndSend(
-            TileRemoveLayer{tileX, tileY, layerType, graphicSetID, graphicIndex});
+            TileRemoveLayer{tilePosition, layerType, graphicSetID, graphicIndex});
     }
 }
 

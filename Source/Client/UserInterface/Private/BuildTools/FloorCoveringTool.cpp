@@ -49,8 +49,8 @@ void FloorCoveringTool::onMouseDown(AUI::MouseButtonType buttonType,
         && (selectedGraphicSet != nullptr)) {
         // Tell the sim to add the layer.
         network.serializeAndSend(TileAddLayer{
-            mouseTilePosition.x, mouseTilePosition.y,
-            TileLayer::Type::FloorCovering, selectedGraphicSet->numericID,
+            mouseTilePosition, TileLayer::Type::FloorCovering,
+            selectedGraphicSet->numericID,
             static_cast<Uint8>(validGraphicIndices[selectedGraphicIndex])});
     }
 }
@@ -79,10 +79,9 @@ void FloorCoveringTool::onMouseWheel(int amountScrolled)
         selectedGraphicSet
             ->graphics[validGraphicIndices[selectedGraphicIndex]]};
     phantomSprites.clear();
-    phantomSprites.emplace_back(mouseTilePosition.x, mouseTilePosition.y,
-                                TileLayer::Type::FloorCovering,
-                                Wall::Type::None, Position{},
-                                &(graphic.getFirstSprite()));
+    phantomSprites.emplace_back(
+        mouseTilePosition, TileLayer::Type::FloorCovering, Wall::Type::None,
+        Position{}, &(graphic.getFirstSprite()));
 }
 
 void FloorCoveringTool::onMouseMove(const SDL_Point& cursorPosition)
@@ -99,10 +98,9 @@ void FloorCoveringTool::onMouseMove(const SDL_Point& cursorPosition)
         const GraphicRef& graphic{
             selectedGraphicSet
                 ->graphics[validGraphicIndices[selectedGraphicIndex]]};
-        phantomSprites.emplace_back(mouseTilePosition.x, mouseTilePosition.y,
-                                    TileLayer::Type::FloorCovering,
-                                    Wall::Type::None, Position{},
-                                    &(graphic.getFirstSprite()));
+        phantomSprites.emplace_back(
+            mouseTilePosition, TileLayer::Type::FloorCovering, Wall::Type::None,
+            Position{}, &(graphic.getFirstSprite()));
     }
 }
 

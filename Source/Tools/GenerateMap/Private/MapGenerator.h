@@ -1,9 +1,7 @@
 #pragma once
 
-#include "NetworkDefs.h"
 #include <string>
 #include <cstdint>
-#include <vector>
 
 namespace AM
 {
@@ -15,8 +13,10 @@ namespace MG
 class MapGenerator
 {
 public:
-    MapGenerator(uint32_t inMapLengthX, uint32_t inMapLengthY,
-                 const std::string& inFillSpriteSetId);
+    MapGenerator(uint16_t inMapLengthX, uint16_t inMapLengthY,
+                 uint16_t inMapLengthZ, uint16_t inGroundLevel,
+                 const std::string& inFillGraphicSetID,
+                 uint8_t inFillGraphicIndex);
 
     /**
      * Generates the map and saves it to a file with the given name, placed in
@@ -30,13 +30,22 @@ private:
     static constexpr uint16_t MAP_FORMAT_VERSION{1};
 
     /** The length, in chunks, of the map's X axis. */
-    uint32_t mapXLength;
+    uint16_t mapXLength;
 
     /** The length, in chunks, of the map's Y axis. */
-    uint32_t mapYLength;
+    uint16_t mapYLength;
 
-    /** The ID of the sprite to fill the map with. */
-    std::string fillSpriteSetID;
+    /** The length, in chunks, of the map's Z axis. */
+    uint16_t mapZLength;
+
+    /** The Z axis value where the ground should be placed. */
+    uint16_t groundLevel;
+
+    /** The ID of the graphic set to fill the map with. */
+    std::string fillGraphicSetID;
+
+    /** The index within the graphic set to fill the map with. */
+    uint8_t fillGraphicIndex;
 };
 
 } // End namespace MG

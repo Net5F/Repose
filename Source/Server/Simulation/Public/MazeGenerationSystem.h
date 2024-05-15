@@ -51,7 +51,7 @@ private:
     static constexpr float MAZE_REGENERATION_PERIOD_S{60 * 5};
 
     /** The top left tile of the maze. */
-    static constexpr SDL_Point MAZE_ORIGIN_TILE{16, 18};
+    static const TilePosition MAZE_ORIGIN_TILE;
 
     /** The width of the maze, in tiles. */
     static constexpr unsigned int MAZE_WIDTH{36};

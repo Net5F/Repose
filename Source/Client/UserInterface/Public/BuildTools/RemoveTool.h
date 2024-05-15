@@ -29,8 +29,9 @@ private:
     /**
      * Tells the sim to remove the given tile layer.
      */
-    void requestRemoveTileLayer(int tileX, int tileY, TileLayer::Type layerType,
-                                Uint16 graphicSetID, Uint8 graphicIndex);
+    void requestRemoveTileLayer(const TilePosition& tilePosition,
+                                TileLayer::Type layerType, Uint16 graphicSetID,
+                                Uint8 graphicIndex);
 
     /** Used for finding tile layers or entities that the mouse is
         hovering over or clicking. */

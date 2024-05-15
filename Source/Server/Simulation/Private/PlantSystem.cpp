@@ -20,7 +20,7 @@ PlantSystem::PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData)
 , world{inSimulation.getWorld()}
 , graphicData{inGraphicData}
 , updateTimer{}
-, plantExtent{4, 35, 9, 11}
+, plantExtent{4, 35, 0, 9, 11, 1}
 , sunflowerGraphicSetIDs{
       graphicData.getEntityGraphicSet("sunflowersapling").numericID,
       graphicData.getEntityGraphicSet("sunflowermidgrowth").numericID,
@@ -38,7 +38,8 @@ PlantSystem::PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData)
     // Create all the sunflower entities.
     for (int x{plantExtent.x}; x <= plantExtent.xMax(); ++x) {
         for (int y{plantExtent.y}; y <= plantExtent.yMax(); y += 2) {
-            Position tileCenter{TilePosition{x, y}.getCenterPosition()};
+            Position tileCenter{
+                TilePosition{x, y, 0}.getCenteredBottomPosition()};
             createSapling(tileCenter);
         }
     }

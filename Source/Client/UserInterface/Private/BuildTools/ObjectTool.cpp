@@ -47,7 +47,7 @@ void ObjectTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
         && (selectedGraphicSet != nullptr)) {
         // Tell the sim to add the layer.
         network.serializeAndSend(TileAddLayer{
-            mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Object,
+            mouseTilePosition, TileLayer::Type::Object,
             selectedGraphicSet->numericID,
             static_cast<Uint8>(validGraphicIndices[selectedGraphicIndex])});
     }
@@ -77,9 +77,9 @@ void ObjectTool::onMouseWheel(int amountScrolled)
         selectedGraphicSet
             ->graphics[validGraphicIndices[selectedGraphicIndex]]};
     phantomSprites.clear();
-    phantomSprites.emplace_back(mouseTilePosition.x, mouseTilePosition.y,
-                                TileLayer::Type::Object, Wall::Type::None,
-                                Position{}, &(graphic.getFirstSprite()));
+    phantomSprites.emplace_back(mouseTilePosition, TileLayer::Type::Object,
+                                Wall::Type::None, Position{},
+                                &(graphic.getFirstSprite()));
 }
 
 void ObjectTool::onMouseMove(const SDL_Point& cursorPosition)
@@ -96,9 +96,9 @@ void ObjectTool::onMouseMove(const SDL_Point& cursorPosition)
         const GraphicRef& graphic{
             selectedGraphicSet
                 ->graphics[validGraphicIndices[selectedGraphicIndex]]};
-        phantomSprites.emplace_back(mouseTilePosition.x, mouseTilePosition.y,
-                                    TileLayer::Type::Object, Wall::Type::None,
-                                    Position{}, &(graphic.getFirstSprite()));
+        phantomSprites.emplace_back(mouseTilePosition, TileLayer::Type::Object,
+                                    Wall::Type::None, Position{},
+                                    &(graphic.getFirstSprite()));
     }
 }
 

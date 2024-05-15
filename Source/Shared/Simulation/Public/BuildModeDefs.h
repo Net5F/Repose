@@ -15,12 +15,12 @@ namespace AM
  * We keep this slightly larger than the actual build area, so a bad actor
  * can't wall-off the build area.
  */
-const TileExtent BUILD_MODE_AREA_EXTENT{54, 17, 8, 12};
+const TileExtent BUILD_MODE_AREA_EXTENT{54, 17, 0, 8, 12, 1};
 
 /**
  * The extent of the "valid build area": the room where we allow clients to
  * modify tiles.
  */
-const TileExtent VALID_BUILD_AREA_EXTENT{55, 17, 7, 12};
+const TileExtent VALID_BUILD_AREA_EXTENT{55, 17, 0, 7, 12, 1};
 
 } // End namespace AM

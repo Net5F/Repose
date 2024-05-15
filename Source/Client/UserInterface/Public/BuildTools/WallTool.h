@@ -39,19 +39,19 @@ private:
      * Adds a North wall phantom to the given tile and adds gap fills if
      * necessary.
      */
-    void addNorthWallPhantom(int tileX, int tileY);
+    void addNorthWallPhantom(const TilePosition& tilePosition);
 
     /**
      * Adds a West wall phantom to the given tile and adds gap fills if
      * necessary.
      */
-    void addWestWallPhantom(int tileX, int tileY);
+    void addWestWallPhantom(const TilePosition& tilePosition);
 
     /**
      * Pushes the given sprite into the phantomTileSprites vector as a phantom
      * of the given wall type
      */
-    void pushPhantomWall(int tileX, int tileY, Wall::Type wallType,
+    void pushPhantomWall(const TilePosition& tilePosition, Wall::Type wallType,
                          const WallGraphicSet& wallGraphicSet);
 
     /** The currently selected sprite set. */

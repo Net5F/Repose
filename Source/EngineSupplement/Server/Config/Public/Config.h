@@ -27,8 +27,10 @@ public:
 
     // SpawnPoint::Fixed Config
     /** Fixed spawn position. */
-    static constexpr float SPAWN_POINT_FIXED_X{1060};
-    static constexpr float SPAWN_POINT_FIXED_Y{1788};
+    //static constexpr float SPAWN_POINT_FIXED_X{1060};
+    //static constexpr float SPAWN_POINT_FIXED_Y{1788};
+    static constexpr float SPAWN_POINT_FIXED_X{0};
+    static constexpr float SPAWN_POINT_FIXED_Y{0};
 
     // SpawnPoint::Random Config
     // Note: We offset these positions to keep entities in bounds while moving.

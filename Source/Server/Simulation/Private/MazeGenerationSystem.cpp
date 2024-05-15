@@ -12,16 +12,23 @@ namespace AM
 {
 namespace Server
 {
+const TilePosition MazeGenerationSystem::MAZE_ORIGIN_TILE{16, 18, 0};
 
 MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
                                            GraphicData& inGraphicData)
 : world{inWorld}
 , graphicData{inGraphicData}
 , regenerationTimer{}
-, mazeExtent{MAZE_ORIGIN_TILE.x, MAZE_ORIGIN_TILE.y, MAZE_WIDTH, MAZE_HEIGHT}
-, abstractMazeExtent{0, 0, (mazeExtent.xLength / 2), (mazeExtent.yLength / 2)}
-, entranceTile{8, 17}
-, exitTiles{{1, 0}, {0, 11}, {17, 2}}
+, mazeExtent{MAZE_ORIGIN_TILE.x, MAZE_ORIGIN_TILE.y, MAZE_ORIGIN_TILE.z,
+             MAZE_WIDTH,         MAZE_HEIGHT,        1}
+, abstractMazeExtent{0,
+                     0,
+                     0,
+                     (mazeExtent.xLength / 2),
+                     (mazeExtent.yLength / 2),
+                     1}
+, entranceTile{8, 17, 0}
+, exitTiles{{1, 0, 0}, {0, 11, 0}, {17, 2, 0}}
 , workingPath{}
 , workingNeighbors{}
 , randGenerator{std::random_device()()}
@@ -99,7 +106,8 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
         const Position& position{world.registry.get<Position>(entity)};
         TilePosition tilePosition{position.asTilePosition()};
         TilePosition abstractTilePosition{(tilePosition.x - mazeExtent.x) / 2,
-                                          (tilePosition.y - mazeExtent.y) / 2};
+                                          (tilePosition.y - mazeExtent.y) / 2,
+                                          0};
 
         // Clear a path to the existing path or another exit.
         clearToVisitedOrExit(outMaze, abstractTilePosition, passNumber++);
@@ -198,10 +206,10 @@ void MazeGenerationSystem::getNeighboringTiles(
 {
     // Add the coordinates that are directly N,S,E,W of the given position.
     const TilePosition& currentPosition{path.back()};
-    outNeighbors.emplace_back(currentPosition.x + 1, currentPosition.y);
-    outNeighbors.emplace_back(currentPosition.x - 1, currentPosition.y);
-    outNeighbors.emplace_back(currentPosition.x, currentPosition.y + 1);
-    outNeighbors.emplace_back(currentPosition.x, currentPosition.y - 1);
+    outNeighbors.emplace_back(currentPosition.x + 1, currentPosition.y, 0);
+    outNeighbors.emplace_back(currentPosition.x - 1, currentPosition.y, 0);
+    outNeighbors.emplace_back(currentPosition.x, currentPosition.y + 1, 0);
+    outNeighbors.emplace_back(currentPosition.x, currentPosition.y - 1, 0);
 
     // Remove any invalid neighbors.
     std::erase_if(outNeighbors, [&](const TilePosition& position) {
@@ -429,33 +437,38 @@ void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
     // Determine which walls this cell has and apply them to the map.
     if (cell.fullFill) {
         // Fully-filled cell. Place the 4 fills.
-        world.tileMap.addObject(mapX, mapY, fullFillID, getRandomFullFill());
-        world.tileMap.addObject((mapX + 1), mapY, fullFillID,
+        world.tileMap.addObject({mapX, mapY, 0}, fullFillID,
                                 getRandomFullFill());
-        world.tileMap.addObject(mapX, (mapY + 1), fullFillID,
+        world.tileMap.addObject({(mapX + 1), mapY, 0}, fullFillID,
                                 getRandomFullFill());
-        world.tileMap.addObject((mapX + 1), (mapY + 1), fullFillID,
+        world.tileMap.addObject({mapX, (mapY + 1), 0}, fullFillID,
+                                getRandomFullFill());
+        world.tileMap.addObject({(mapX + 1), (mapY + 1), 0}, fullFillID,
                                 getRandomFullFill());
     }
     else if (cell.northWall && cell.westWall) {
         // Northwest corner, place the 2 west walls and 2 north walls.
-        world.tileMap.addWall(mapX, mapY, getRandomWall(), Wall::Type::West);
-        world.tileMap.addWall(mapX, (mapY + 1), getRandomWall(),
+        world.tileMap.addWall({mapX, mapY, 0}, getRandomWall(),
                               Wall::Type::West);
-        world.tileMap.addWall(mapX, mapY, getRandomWall(), Wall::Type::North);
-        world.tileMap.addWall((mapX + 1), mapY, getRandomWall(),
+        world.tileMap.addWall({mapX, (mapY + 1), 0}, getRandomWall(),
+                              Wall::Type::West);
+        world.tileMap.addWall({mapX, mapY, 0}, getRandomWall(),
+                              Wall::Type::North);
+        world.tileMap.addWall({(mapX + 1), mapY, 0}, getRandomWall(),
                               Wall::Type::North);
     }
     else if (cell.northWall) {
         // North only, place the 2 north walls.
-        world.tileMap.addWall(mapX, mapY, getRandomWall(), Wall::Type::North);
-        world.tileMap.addWall((mapX + 1), mapY, getRandomWall(),
+        world.tileMap.addWall({mapX, mapY, 0}, getRandomWall(),
+                              Wall::Type::North);
+        world.tileMap.addWall({(mapX + 1), mapY, 0}, getRandomWall(),
                               Wall::Type::North);
     }
     else if (cell.westWall) {
         // West only, place the 2 west walls.
-        world.tileMap.addWall(mapX, mapY, getRandomWall(), Wall::Type::West);
-        world.tileMap.addWall(mapX, (mapY + 1), getRandomWall(),
+        world.tileMap.addWall({mapX, mapY, 0}, getRandomWall(),
+                              Wall::Type::West);
+        world.tileMap.addWall({mapX, (mapY + 1), 0}, getRandomWall(),
                               Wall::Type::West);
     }
 }
@@ -482,9 +495,12 @@ void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
     bottomRight.y = static_cast<int>(
         std::ceil((tileExtent.y + tileExtent.yLength) / 2.f));
 
-    const TileExtent abstractTileExtent{topLeft.x, topLeft.y,
+    const TileExtent abstractTileExtent{topLeft.x,
+                                        topLeft.y,
+                                        0,
                                         (bottomRight.x - topLeft.x),
-                                        (bottomRight.y - topLeft.y)};
+                                        (bottomRight.y - topLeft.y),
+                                        1};
 
     // Clear all walls from any tiles that the entity is touching.
     for (int x = abstractTileExtent.x; x <= abstractTileExtent.xMax(); ++x) {

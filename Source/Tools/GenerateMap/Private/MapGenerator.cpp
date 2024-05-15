@@ -1,43 +1,50 @@
 #include "MapGenerator.h"
-#include "ByteTools.h"
 #include "Paths.h"
-#include "SharedConfig.h"
 #include "TileMapSnapshot.h"
 #include "Serialize.h"
-#include <iostream>
-#include <cstring>
-#include <fstream>
+#include "Log.h"
 
 namespace AM
 {
 namespace MG
 {
-MapGenerator::MapGenerator(uint32_t inMapLengthX, uint32_t inMapLengthY,
-                           const std::string& inFillSpriteSetID)
+MapGenerator::MapGenerator(uint16_t inMapLengthX, uint16_t inMapLengthY,
+                           uint16_t inMapLengthZ, uint16_t inGroundLevel,
+                           const std::string& inFillGraphicSetID,
+                           uint8_t inFillGraphicIndex)
 : mapXLength{inMapLengthX}
 , mapYLength{inMapLengthY}
-, fillSpriteSetID{inFillSpriteSetID}
+, mapZLength{inMapLengthZ}
+, groundLevel{inGroundLevel}
+, fillGraphicSetID{inFillGraphicSetID}
+, fillGraphicIndex{inFillGraphicIndex}
 {
 }
 
 void MapGenerator::generateAndSave(const std::string& fileName)
 {
     // Fill the map's version and size.
-    TileMapSnapshot tileMap;
+    TileMapSnapshot tileMap{};
     tileMap.version = MAP_FORMAT_VERSION;
     tileMap.xLengthChunks = mapXLength;
     tileMap.yLengthChunks = mapYLength;
+    tileMap.zLengthChunks = mapZLength;
+    tileMap.chunks.resize(mapXLength * mapYLength * mapZLength);
 
-    // Fill the chunks.
-    tileMap.chunks.resize(mapXLength * mapYLength);
-    for (ChunkSnapshot& chunk : tileMap.chunks) {
-        // Push the sprite set ID that we're filling the map with into the
+    // Fill in the ground tiles.
+    std::size_t groundLevelStartIndex{
+        static_cast<std::size_t>(mapXLength * mapYLength * groundLevel)};
+    for (std::size_t i{0}; i < (mapXLength * mapYLength); ++i) {
+        ChunkSnapshot& chunk{tileMap.chunks[groundLevelStartIndex + i]};
+
+        // Push the graphic that we're filling the map with into this chunk's 
         // palette.
-        chunk.getPaletteIndex(TileLayer::Type::Floor, fillSpriteSetID, 0);
+        chunk.getPaletteIndex(TileLayer::Type::Floor, fillGraphicSetID,
+                              fillGraphicIndex);
 
-        // Push the palette index of the sprite into each tile.
-        for (std::size_t i = 0; i < SharedConfig::CHUNK_TILE_COUNT; ++i) {
-            chunk.tiles[i].layers.push_back(0);
+        // Push the palette index of the graphic into each tile.
+        for (std::size_t j{0}; j < SharedConfig::CHUNK_TILE_COUNT; ++j) {
+            chunk.tiles[j].layers.push_back(0);
         }
     }
 

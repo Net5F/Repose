@@ -31,9 +31,9 @@ void FloorTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedGraphicSet != nullptr)) {
         // Tell the server to add the layer.
-        network.serializeAndSend(TileAddLayer{
-            mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Floor,
-            selectedGraphicSet->numericID, 0});
+        network.serializeAndSend(
+            TileAddLayer{mouseTilePosition, TileLayer::Type::Floor,
+                         selectedGraphicSet->numericID, 0});
     }
 }
 
@@ -62,9 +62,8 @@ void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
     if (isActive && (selectedGraphicSet != nullptr)) {
         // Set the selected graphic as a phantom at the new location.
         phantomSprites.emplace_back(
-            mouseTilePosition.x, mouseTilePosition.y, TileLayer::Type::Floor,
-            Wall::Type::None, Position{},
-            &(selectedGraphicSet->graphic.getFirstSprite()));
+            mouseTilePosition, TileLayer::Type::Floor, Wall::Type::None,
+            Position{}, &(selectedGraphicSet->graphic.getFirstSprite()));
     }
 }
 
