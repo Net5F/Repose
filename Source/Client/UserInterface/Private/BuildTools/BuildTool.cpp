@@ -56,12 +56,13 @@ void BuildTool::onMouseMove(const SDL_Point& cursorPosition)
     // Get the tile coordinate that the mouse is hovering over.
     SDL_FPoint screenPoint{static_cast<float>(cursorPosition.x),
                            static_cast<float>(cursorPosition.y)};
-    Position newWorldPosition{Transforms::screenToWorld(screenPoint, camera)};
-    TilePosition newTilePosition{newWorldPosition.asTilePosition()};
+    Position newWorldPosition{
+        Transforms::screenToWorldTarget(screenPoint, camera)};
+    TilePosition newTilePosition{
+        Transforms::screenToWorldTile(screenPoint, camera)};
 
     // If the mouse is within the world bounds, save the new tile position.
     if (mapTileExtent.containsPosition(newTilePosition)) {
-        mouseWorldPosition = newWorldPosition;
         mouseTilePosition = newTilePosition;
         isActive = true;
     }

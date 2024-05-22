@@ -102,9 +102,11 @@ void WallTool::addPhantomWalls(const SDL_Point& cursorPosition)
     // that it's on.
     SDL_FPoint screenPoint{static_cast<float>(cursorPosition.x),
                            static_cast<float>(cursorPosition.y)};
-    TilePosition tilePosition{Transforms::screenToTile(screenPoint, camera)};
+    TilePosition tilePosition{
+        Transforms::screenToWorldTile(screenPoint, camera)};
     Position tileOrigin{tilePosition.getOriginPosition()};
-    Position worldPosition{Transforms::screenToWorld(screenPoint, camera)};
+    Position worldPosition{
+        Transforms::screenToWorldRay(screenPoint, camera).origin};
 
     float relativeX{std::abs(worldPosition.x - tileOrigin.x)};
     float relativeY{std::abs(worldPosition.y - tileOrigin.y)};
