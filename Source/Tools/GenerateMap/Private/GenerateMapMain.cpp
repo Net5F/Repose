@@ -7,6 +7,10 @@
 using namespace AM;
 using namespace AM::MG;
 
+const int MAX_X_LENGTH{64};
+const int MAX_Y_LENGTH{64};
+const int MAX_Z_LENGTH{10};
+
 int main(int, char*)
 {
     std::printf("##################################\n");
@@ -17,13 +21,13 @@ int main(int, char*)
     int mapLengthX{};
     while (1) {
         std::printf("\nX axis length? (chunks)\n");
-        std::printf("Valid values: 1 - 1000, whole numbers\n");
+        std::printf("Valid values: 1 - %d, whole numbers\n", MAX_X_LENGTH);
         inputBuffer.clear();
         std::cin >> inputBuffer;
 
         char* end;
         mapLengthX = std::strtol(inputBuffer.c_str(), &end, 10);
-        if ((*end != '\0') || (mapLengthX < 1) || (mapLengthX > 1000)) {
+        if ((*end != '\0') || (mapLengthX < 1) || (mapLengthX > MAX_X_LENGTH)) {
             std::printf( "Invalid value.\n");
         }
         else {
@@ -34,13 +38,13 @@ int main(int, char*)
     int mapLengthY{};
     while (1) {
         std::printf("\nY axis length? (chunks)\n");
-        std::printf("Valid values: 1 - 1000, whole numbers\n");
+        std::printf("Valid values: 1 - %d, whole numbers\n", MAX_Y_LENGTH);
         inputBuffer.clear();
         std::cin >> inputBuffer;
 
         char* end;
         mapLengthY = std::strtol(inputBuffer.c_str(), &end, 10);
-        if ((*end != '\0') || (mapLengthY < 1) || (mapLengthY > 1000)) {
+        if ((*end != '\0') || (mapLengthY < 1) || (mapLengthY > MAX_Y_LENGTH)) {
             std::printf("Invalid value.\n");
         }
         else {
@@ -51,13 +55,13 @@ int main(int, char*)
     int mapLengthZ{};
     while (1) {
         std::printf("\nZ axis length? (chunks)\n");
-        std::printf("Valid values: 1 - 100, whole numbers\n");
+        std::printf("Valid values: 1 - %d, whole numbers\n", MAX_Z_LENGTH);
         inputBuffer.clear();
         std::cin >> inputBuffer;
 
         char* end;
         mapLengthZ = std::strtol(inputBuffer.c_str(), &end, 10);
-        if ((*end != '\0') || (mapLengthZ < 1) || (mapLengthZ > 100)) {
+        if ((*end != '\0') || (mapLengthZ < 1) || (mapLengthZ > MAX_Z_LENGTH)) {
             std::printf("Invalid value.\n");
         }
         else {
