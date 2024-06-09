@@ -11,6 +11,7 @@ namespace Client
 FloorTool::FloorTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , selectedGraphicSet{nullptr}
+, selectedGraphicIndex{0}
 {
 }
 
@@ -20,6 +21,18 @@ void FloorTool::setSelectedGraphicSet(const GraphicSet& inSelectedGraphicSet)
     //       clickable while this tool is alive.
     selectedGraphicSet
         = static_cast<const FloorGraphicSet*>(&inSelectedGraphicSet);
+
+    // Iterate the set and track which indices contain a graphic.
+    validGraphicIndices.clear();
+    for (std::size_t i = 0; i < selectedGraphicSet->graphics.size(); ++i) {
+        if (selectedGraphicSet->graphics[i].getGraphicID() != NULL_GRAPHIC_ID) {
+            validGraphicIndices.emplace_back(i);
+        }
+    }
+    AM_ASSERT(validGraphicIndices.size() > 0, "Set didn't contain any graphics.");
+
+    // Select the first graphic within validGraphicIndices.
+    selectedGraphicIndex = 0;
 }
 
 void FloorTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
@@ -31,16 +44,11 @@ void FloorTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedGraphicSet != nullptr)) {
         // Tell the server to add the layer.
-        network.serializeAndSend(
-            TileAddLayer{mouseTilePosition, TileLayer::Type::Floor,
-                         selectedGraphicSet->numericID, 0});
+        network.serializeAndSend(TileAddLayer{
+            mouseTilePosition, TileLayer::Type::Floor,
+            selectedGraphicSet->numericID,
+            static_cast<Uint8>(validGraphicIndices[selectedGraphicIndex])});
     }
-}
-
-void FloorTool::onMouseUp(AUI::MouseButtonType, const SDL_Point&)
-{
-    // TODO: Add support for click-and-drag to set an extent instead of a
-    //       single tile.
 }
 
 void FloorTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
@@ -48,6 +56,28 @@ void FloorTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
 {
     // We treat additional clicks as regular MouseDown events.
     onMouseDown(buttonType, cursorPosition);
+}
+
+void FloorTool::onMouseWheel(int amountScrolled)
+{
+    // If this tool isn't active, do nothing.
+    if (!isActive) {
+        return;
+    }
+
+    // Select the next graphic within the set, accounting for negative values.
+    selectedGraphicIndex
+        = (selectedGraphicIndex + amountScrolled + validGraphicIndices.size())
+          % validGraphicIndices.size();
+
+    // Set the newly selected graphic as a phantom at the current location.
+    const GraphicRef& graphic{
+        selectedGraphicSet
+            ->graphics[validGraphicIndices[selectedGraphicIndex]]};
+    phantomSprites.clear();
+    phantomSprites.emplace_back(mouseTilePosition, TileLayer::Type::Floor,
+                                Wall::Type::None, Position{},
+                                &(graphic.getFirstSprite()));
 }
 
 void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
@@ -61,9 +91,12 @@ void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
     // If this tool is active and we have a selected graphic.
     if (isActive && (selectedGraphicSet != nullptr)) {
         // Set the selected graphic as a phantom at the new location.
-        phantomSprites.emplace_back(
-            mouseTilePosition, TileLayer::Type::Floor, Wall::Type::None,
-            Position{}, &(selectedGraphicSet->graphic.getFirstSprite()));
+        const GraphicRef& graphic{
+            selectedGraphicSet
+                ->graphics[validGraphicIndices[selectedGraphicIndex]]};
+        phantomSprites.emplace_back(mouseTilePosition, TileLayer::Type::Floor,
+                                    Wall::Type::None, Position{},
+                                    &(graphic.getFirstSprite()));
     }
 }
 

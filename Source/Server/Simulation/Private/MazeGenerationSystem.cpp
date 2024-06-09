@@ -411,7 +411,7 @@ void MazeGenerationSystem::applyMazeToMap(const MazeTopology& maze)
     world.tileMap.setAutoRebuildCollision(false);
 
     // Clear the maze area in the tile map.
-    world.tileMap.clearExtentLayers(mazeExtent, {TileLayer::Type::FloorCovering,
+    world.tileMap.clearExtentLayers(mazeExtent, {TileLayer::Type::Floor,
                                                  TileLayer::Type::Wall,
                                                  TileLayer::Type::Object});
 

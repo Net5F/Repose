@@ -5,8 +5,8 @@
 #include "GraphicData.h"
 #include "Sprite.h"
 #include "BuildTool.h"
+#include "TerrainTool.h"
 #include "FloorTool.h"
-#include "FloorCoveringTool.h"
 #include "WallTool.h"
 #include "ObjectTool.h"
 #include "EntityTool.h"
@@ -55,13 +55,13 @@ void BuildOverlay::setSelectedGraphicSet(const GraphicSet& inSelectedGraphicSet)
 void BuildOverlay::setBuildMode(BuildMode::Type buildModeType)
 {
     switch (buildModeType) {
-        case BuildMode::Type::Floor: {
-            currentBuildTool = std::make_unique<FloorTool>(world, network);
+        case BuildMode::Type::Terrain: {
+            currentBuildTool
+                = std::make_unique<TerrainTool>(world, network);
             break;
         }
-        case BuildMode::Type::FloorCovering: {
-            currentBuildTool
-                = std::make_unique<FloorCoveringTool>(world, network);
+        case BuildMode::Type::Floor: {
+            currentBuildTool = std::make_unique<FloorTool>(world, network);
             break;
         }
         case BuildMode::Type::Wall: {

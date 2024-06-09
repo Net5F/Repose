@@ -6,10 +6,10 @@ target_sources(Client
         Private/UserInterfaceExtension.cpp
         Private/BuildTools/BuildTool.cpp
         Private/BuildTools/EntityTool.cpp
-        Private/BuildTools/FloorCoveringTool.cpp
         Private/BuildTools/FloorTool.cpp
         Private/BuildTools/ObjectTool.cpp
         Private/BuildTools/RemoveTool.cpp
+        Private/BuildTools/TerrainTool.cpp
         Private/BuildTools/WallTool.cpp
         Private/Widgets/BuildModeThumbnail.cpp
         Private/Widgets/EntityPanelContent.cpp
@@ -35,10 +35,10 @@ target_sources(Client
         Public/UserInterfaceExtension.h
         Public/BuildTools/BuildTool.h
         Public/BuildTools/EntityTool.h
-        Public/BuildTools/FloorCoveringTool.h
         Public/BuildTools/FloorTool.h
         Public/BuildTools/ObjectTool.h
         Public/BuildTools/RemoveTool.h
+        Public/BuildTools/TerrainTool.h
         Public/BuildTools/WallTool.h
         Public/Widgets/BuildModeThumbnail.h
         Public/Widgets/EntityPanelContent.h

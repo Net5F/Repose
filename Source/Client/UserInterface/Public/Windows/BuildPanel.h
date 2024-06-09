@@ -74,8 +74,9 @@ private:
      * Returns the first graphic within the set.
      */
     template<typename T>
-    requires std::same_as<T, FloorCoveringGraphicSet> || std::same_as<
-        T, ObjectGraphicSet>
+        requires std::same_as<T, TerrainGraphicSet>
+                 || std::same_as<T, FloorGraphicSet>
+                 || std::same_as<T, ObjectGraphicSet>
     const Sprite& getFirstSprite(const T& graphicSet);
 
     /**
@@ -100,11 +101,11 @@ private:
 
     // Note: Since all of the tile layer tools have the same UI, we handle their
     //       content in this class. Other tools get their own content widgets.
+    // Terrain tile layer tool content.
+    AUI::VerticalGridContainer terrainContainer;
+
     // Floor tile layer tool content.
     AUI::VerticalGridContainer floorContainer;
-
-    // Floor covering tile layer tool content.
-    AUI::VerticalGridContainer floorCoveringContainer;
 
     // Wall tile layer tool content.
     AUI::VerticalGridContainer wallContainer;

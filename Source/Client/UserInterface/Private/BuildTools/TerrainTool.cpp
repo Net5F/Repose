@@ -1,4 +1,4 @@
-#include "FloorCoveringTool.h"
+#include "TerrainTool.h"
 #include "World.h"
 #include "Network.h"
 #include "TileAddLayer.h"
@@ -10,20 +10,20 @@ namespace AM
 namespace Client
 {
 
-FloorCoveringTool::FloorCoveringTool(World& inWorld, Network& inNetwork)
+TerrainTool::TerrainTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , selectedGraphicSet{nullptr}
 , selectedGraphicIndex{0}
 {
 }
 
-void FloorCoveringTool::setSelectedGraphicSet(
+void TerrainTool::setSelectedGraphicSet(
     const GraphicSet& inSelectedGraphicSet)
 {
-    // Note: This cast should be safe, since only floor covering graphic sets
-    //       should be clickable while this tool is alive.
+    // Note: This cast should be safe, since only terrain graphic sets should 
+    //       be clickable while this tool is alive.
     selectedGraphicSet
-        = static_cast<const FloorCoveringGraphicSet*>(&inSelectedGraphicSet);
+        = static_cast<const TerrainGraphicSet*>(&inSelectedGraphicSet);
 
     // Iterate the set and track which indices contain a graphic.
     validGraphicIndices.clear();
@@ -38,7 +38,7 @@ void FloorCoveringTool::setSelectedGraphicSet(
     selectedGraphicIndex = 0;
 }
 
-void FloorCoveringTool::onMouseDown(AUI::MouseButtonType buttonType,
+void TerrainTool::onMouseDown(AUI::MouseButtonType buttonType,
                                     const SDL_Point&)
 {
     // Note: mouseTilePosition is set in onMouseMove().
@@ -49,20 +49,20 @@ void FloorCoveringTool::onMouseDown(AUI::MouseButtonType buttonType,
         && (selectedGraphicSet != nullptr)) {
         // Tell the sim to add the layer.
         network.serializeAndSend(TileAddLayer{
-            mouseTilePosition, TileLayer::Type::FloorCovering,
+            mouseTilePosition, TileLayer::Type::Terrain,
             selectedGraphicSet->numericID,
             static_cast<Uint8>(validGraphicIndices[selectedGraphicIndex])});
     }
 }
 
-void FloorCoveringTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
+void TerrainTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
                                            const SDL_Point& cursorPosition)
 {
     // We treat additional clicks as regular MouseDown events.
     onMouseDown(buttonType, cursorPosition);
 }
 
-void FloorCoveringTool::onMouseWheel(int amountScrolled)
+void TerrainTool::onMouseWheel(int amountScrolled)
 {
     // If this tool isn't active, do nothing.
     if (!isActive) {
@@ -80,11 +80,11 @@ void FloorCoveringTool::onMouseWheel(int amountScrolled)
             ->graphics[validGraphicIndices[selectedGraphicIndex]]};
     phantomSprites.clear();
     phantomSprites.emplace_back(
-        mouseTilePosition, TileLayer::Type::FloorCovering, Wall::Type::None,
+        mouseTilePosition, TileLayer::Type::Terrain, Wall::Type::None,
         Position{}, &(graphic.getFirstSprite()));
 }
 
-void FloorCoveringTool::onMouseMove(const SDL_Point& cursorPosition)
+void TerrainTool::onMouseMove(const SDL_Point& cursorPosition)
 {
     // Call the parent function to update mouseTilePosition and isActive.
     BuildTool::onMouseMove(cursorPosition);
@@ -99,7 +99,7 @@ void FloorCoveringTool::onMouseMove(const SDL_Point& cursorPosition)
             selectedGraphicSet
                 ->graphics[validGraphicIndices[selectedGraphicIndex]]};
         phantomSprites.emplace_back(
-            mouseTilePosition, TileLayer::Type::FloorCovering, Wall::Type::None,
+            mouseTilePosition, TileLayer::Type::Terrain, Wall::Type::None,
             Position{}, &(graphic.getFirstSprite()));
     }
 }

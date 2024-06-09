@@ -9,8 +9,8 @@ namespace Client
 /** The types of build modes that we support. */
 struct BuildMode {
     enum Type : Uint8 {
+        Terrain,
         Floor,
-        FloorCovering,
         Wall,
         Object,
         Entity,

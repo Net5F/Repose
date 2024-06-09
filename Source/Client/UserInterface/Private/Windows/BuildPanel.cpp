@@ -25,8 +25,8 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
 , buildOverlay{inBuildOverlay}
 , selectedThumbnail{nullptr}
 , backgroundImage{{0, 0, 1920, 319}, "BuildPanelBackground"}
-, floorContainer{{366, 91, 1188, 220}, "FloorContainer"}
-, floorCoveringContainer{{366 - 2, 91, 1188, 220}, "FloorCoveringContainer"}
+, terrainContainer{{366, 91, 1188, 220}, "TerrainContainer"}
+, floorContainer{{366 - 2, 91, 1188, 220}, "FloorContainer"}
 , wallContainer{{366, 91, 1188, 220}, "WallContainer"}
 , objectContainer{{366, 91, 1188, 220}, "ObjectContainer"}
 , entityPanelContent{inSimulation.getWorld(),
@@ -44,8 +44,8 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
 , tileLayersLabel{{152, 92, 138, 36}, "TileLayersLabel"}
 , otherLabel{{1630, 92, 138, 36}, "OtherLabel"}
 , buildModeButtons{
-      MainButton{{164, 132, 114, 32}, "Floor", "FloorToolButton"},
-      MainButton{{164, 168, 114, 32}, "Floor Cover", "FloorCoveringToolButton"},
+      MainButton{{164, 132, 114, 32}, "Terrain", "TerrainToolButton"},
+      MainButton{{164, 168, 114, 32}, "Floor", "FloorToolButton"},
       MainButton{{164, 204, 114, 32}, "Wall", "WallToolButton"},
       MainButton{{164, 240, 114, 32}, "Object", "ObjectToolButton"},
       MainButton{{1642, 132, 114, 32}, "Entity", "EntityToolButton"},
@@ -54,8 +54,8 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
 {
     // Add our children so they're included in rendering, etc.
     children.push_back(backgroundImage);
+    children.push_back(terrainContainer);
     children.push_back(floorContainer);
-    children.push_back(floorCoveringContainer);
     children.push_back(wallContainer);
     children.push_back(objectContainer);
     children.push_back(entityPanelContent);
@@ -63,8 +63,8 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
     children.push_back(itemPanelContent);
     children.push_back(tileLayersLabel);
     children.push_back(otherLabel);
+    children.push_back(buildModeButtons[BuildMode::Type::Terrain]);
     children.push_back(buildModeButtons[BuildMode::Type::Floor]);
-    children.push_back(buildModeButtons[BuildMode::Type::FloorCovering]);
     children.push_back(buildModeButtons[BuildMode::Type::Wall]);
     children.push_back(buildModeButtons[BuildMode::Type::Object]);
     children.push_back(buildModeButtons[BuildMode::Type::Entity]);
@@ -85,8 +85,8 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
         container.setCellHeight(109 + 1);
         container.setIsVisible(false);
     };
+    setContainerStyle(terrainContainer);
     setContainerStyle(floorContainer);
-    setContainerStyle(floorCoveringContainer);
     setContainerStyle(wallContainer);
     setContainerStyle(objectContainer);
     entityPanelContent.setIsVisible(false);
@@ -110,13 +110,13 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
     removeHintText.setIsVisible(false);
 
     /* Build tool buttons. */
-    buildModeButtons[BuildMode::Type::FloorCovering].text.setFont(
+    buildModeButtons[BuildMode::Type::Terrain].text.setFont(
         (Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 18);
 
+    buildModeButtons[BuildMode::Type::Terrain].setOnPressed(
+        [this]() { setBuildMode(BuildMode::Type::Terrain); });
     buildModeButtons[BuildMode::Type::Floor].setOnPressed(
         [this]() { setBuildMode(BuildMode::Type::Floor); });
-    buildModeButtons[BuildMode::Type::FloorCovering].setOnPressed(
-        [this]() { setBuildMode(BuildMode::Type::FloorCovering); });
     buildModeButtons[BuildMode::Type::Wall].setOnPressed(
         [this]() { setBuildMode(BuildMode::Type::Wall); });
     buildModeButtons[BuildMode::Type::Object].setOnPressed(
@@ -129,20 +129,20 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
         [this]() { setBuildMode(BuildMode::Type::Item); });
 
     // Fill the containers with the available graphic sets.
+    for (const TerrainGraphicSet& graphicSet :
+         graphicData.getAllTerrainGraphicSets()) {
+        if (!(graphicSet.numericID)) {
+            continue;
+        }
+        addTileGraphicSet(TileLayer::Type::Terrain, graphicSet,
+                         getFirstSprite(graphicSet));
+    }
     for (const FloorGraphicSet& graphicSet : graphicData.getAllFloorGraphicSets()) {
         if (!(graphicSet.numericID)) {
             continue;
         }
         addTileGraphicSet(TileLayer::Type::Floor, graphicSet,
-                          graphicSet.graphic.getFirstSprite());
-    }
-    for (const FloorCoveringGraphicSet& graphicSet :
-         graphicData.getAllFloorCoveringGraphicSets()) {
-        if (!(graphicSet.numericID)) {
-            continue;
-        }
-        addTileGraphicSet(TileLayer::Type::FloorCovering, graphicSet,
-                         getFirstSprite(graphicSet));
+                          getFirstSprite(graphicSet));
     }
     for (const WallGraphicSet& graphicSet : graphicData.getAllWallGraphicSets()) {
         if (!(graphicSet.numericID)) {
@@ -215,11 +215,11 @@ void BuildPanel::addTileGraphicSet(TileLayer::Type type,
         buildOverlay.setSelectedGraphicSet(graphicSet);
     });
 
-    if (type == TileLayer::Type::Floor) {
-        floorContainer.push_back(std::move(thumbnailPtr));
+    if (type == TileLayer::Type::Terrain) {
+        terrainContainer.push_back(std::move(thumbnailPtr));
     }
-    else if (type == TileLayer::Type::FloorCovering) {
-        floorCoveringContainer.push_back(std::move(thumbnailPtr));
+    else if (type == TileLayer::Type::Floor) {
+        floorContainer.push_back(std::move(thumbnailPtr));
     }
     else if (type == TileLayer::Type::Wall) {
         wallContainer.push_back(std::move(thumbnailPtr));
@@ -230,8 +230,9 @@ void BuildPanel::addTileGraphicSet(TileLayer::Type type,
 }
 
 template<typename T>
-requires std::same_as<T, FloorCoveringGraphicSet> || std::same_as<
-    T, ObjectGraphicSet>
+    requires std::same_as<T, TerrainGraphicSet>
+             || std::same_as<T, FloorGraphicSet>
+             || std::same_as<T, ObjectGraphicSet>
 const Sprite& BuildPanel::getFirstSprite(const T& graphicSet)
 {
     for (const GraphicRef& graphic : graphicSet.graphics) {
@@ -240,9 +241,6 @@ const Sprite& BuildPanel::getFirstSprite(const T& graphicSet)
         }
     }
 
-    // Note: The resource importer assures that every floor covering and
-    //       object has at least 1 sprite, so this shouldn't happen.
-    LOG_FATAL("Failed to find sprite when expected.");
     return graphicData.getSprite(NULL_SPRITE_ID);
 }
 
@@ -258,19 +256,19 @@ void BuildPanel::setBuildMode(BuildMode::Type buildModeType)
     buildOverlay.setBuildMode(buildModeType);
 
     // Make all the content invisible, then show the correct content.
+    terrainContainer.setIsVisible(false);
     floorContainer.setIsVisible(false);
-    floorCoveringContainer.setIsVisible(false);
     wallContainer.setIsVisible(false);
     objectContainer.setIsVisible(false);
     entityPanelContent.setIsVisible(false);
     removeHintText.setIsVisible(false);
     itemPanelContent.setIsVisible(false);
 
-    if (buildModeType == BuildMode::Type::Floor) {
-        floorContainer.setIsVisible(true);
+    if (buildModeType == BuildMode::Type::Terrain) {
+        terrainContainer.setIsVisible(true);
     }
-    else if (buildModeType == BuildMode::Type::FloorCovering) {
-        floorCoveringContainer.setIsVisible(true);
+    else if (buildModeType == BuildMode::Type::Floor) {
+        floorContainer.setIsVisible(true);
     }
     else if (buildModeType == BuildMode::Type::Wall) {
         wallContainer.setIsVisible(true);
