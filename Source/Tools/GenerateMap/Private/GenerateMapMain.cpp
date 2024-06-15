@@ -93,30 +93,12 @@ int main(int, char*)
     inputBuffer.clear();
     std::cin >> fillGraphicSetID;
 
-    int fillGraphicIndex{};
-    while (1) {
-        std::printf("\nWhich index within the graphic set should be used?\n");
-        std::printf("Valid values: 0 - 7, whole numbers\n");
-        inputBuffer.clear();
-        std::cin >> inputBuffer;
-
-        char* end;
-        fillGraphicIndex = std::strtol(inputBuffer.c_str(), &end, 10);
-        if ((*end != '\0') || (fillGraphicIndex < 0)
-            || (fillGraphicIndex > 7)) {
-            std::printf("Invalid value.\n");
-        }
-        else {
-            break;
-        }
-    }
-
     // Generate the map and save it.
     Timer timer{};
     MapGenerator mapGenerator(
         static_cast<uint16_t>(mapLengthX), static_cast<uint16_t>(mapLengthY),
         static_cast<uint16_t>(mapLengthZ), static_cast<uint16_t>(groundLevel),
-        fillGraphicSetID, static_cast<uint8_t>(fillGraphicIndex));
+        fillGraphicSetID);
     mapGenerator.generateAndSave("TileMap.bin");
 
     double timeTaken{timer.getTime()};

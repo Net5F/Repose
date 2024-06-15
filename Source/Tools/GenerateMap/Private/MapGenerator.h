@@ -15,8 +15,7 @@ class MapGenerator
 public:
     MapGenerator(uint16_t inMapLengthX, uint16_t inMapLengthY,
                  uint16_t inMapLengthZ, uint16_t inGroundLevel,
-                 const std::string& inFillGraphicSetID,
-                 uint8_t inFillGraphicIndex);
+                 const std::string& inFillGraphicSetID);
 
     /**
      * Generates the map and saves it to a file with the given name, placed in
@@ -43,9 +42,6 @@ private:
 
     /** The ID of the graphic set to fill the map with. */
     std::string fillGraphicSetID;
-
-    /** The index within the graphic set to fill the map with. */
-    uint8_t fillGraphicIndex;
 };
 
 } // End namespace MG

@@ -28,16 +28,16 @@
             "modelBoundsID": 0,
             "numericID": 1,
             "spriteIDs": [
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
                 70,
-                71,
-                72,
-                73,
-                75,
-                76,
-                77,
-                78,
-                74,
-                79
+                71
             ],
             "stringID": "robertorun"
         }
@@ -127,28 +127,18 @@
             "stringID": "sunflowerdead"
         }
     ],
-    "floorCoverings": [
-        {
-            "displayName": "Grass",
-            "graphicIDs": [
-                9,
-                10,
-                11,
-                12,
-                13,
-                0,
-                0,
-                0
-            ],
-            "numericID": 1,
-            "stringID": "grass"
-        }
-    ],
     "floors": [
         {
             "displayName": "Grass0",
             "graphicIDs": [
-                1
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             "numericID": 1,
             "stringID": "grass0"
@@ -156,7 +146,14 @@
         {
             "displayName": "Grass1",
             "graphicIDs": [
-                2
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             "numericID": 2,
             "stringID": "grass1"
@@ -164,7 +161,14 @@
         {
             "displayName": "Grass2",
             "graphicIDs": [
-                3
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             "numericID": 3,
             "stringID": "grass2"
@@ -172,7 +176,14 @@
         {
             "displayName": "Grass3",
             "graphicIDs": [
-                4
+                4,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             "numericID": 4,
             "stringID": "grass3"
@@ -180,7 +191,14 @@
         {
             "displayName": "Grass4",
             "graphicIDs": [
-                5
+                5,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             "numericID": 5,
             "stringID": "grass4"
@@ -188,7 +206,14 @@
         {
             "displayName": "Grass5",
             "graphicIDs": [
-                6
+                6,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             "numericID": 6,
             "stringID": "grass5"
@@ -196,7 +221,14 @@
         {
             "displayName": "Template",
             "graphicIDs": [
-                61
+                75,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             "numericID": 7,
             "stringID": "template"
@@ -287,7 +319,7 @@
         {
             "displayName": "TemplateFullFill",
             "graphicIDs": [
-                62,
+                77,
                 0,
                 0,
                 0,
@@ -358,21 +390,6 @@
             ],
             "numericID": 7,
             "stringID": "column"
-        },
-        {
-            "displayName": "RobertoRun",
-            "graphicIDs": [
-                2147483649,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 8,
-            "stringID": "robertorun"
         }
     ],
     "spriteSheets": [
@@ -1717,187 +1734,6 @@
             ]
         },
         {
-            "relPath": "Templates.png",
-            "sprites": [
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Template_Floor",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 61,
-                    "stringID": "template_floor",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 0
-                    },
-                    "yOffset": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_FullFill",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 62,
-                    "stringID": "template_fullfill",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 0
-                    },
-                    "yOffset": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_NE_Fill",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 7.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 63,
-                    "stringID": "template_ne_fill",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 0
-                    },
-                    "yOffset": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_NW_Fill",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 64,
-                    "stringID": "template_nw_fill",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 0
-                    },
-                    "yOffset": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_North",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 65,
-                    "stringID": "template_north",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 512
-                    },
-                    "yOffset": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_West",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 66,
-                    "stringID": "template_west",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 512
-                    },
-                    "yOffset": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Template6",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 67,
-                    "stringID": "template6",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 512
-                    },
-                    "yOffset": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Template7",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 68,
-                    "stringID": "template7",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 512
-                    },
-                    "yOffset": 374
-                }
-            ]
-        },
-        {
             "relPath": "Roberto.png",
             "sprites": [
                 {
@@ -1912,7 +1748,7 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 69,
+                    "numericID": 61,
                     "stringID": "roberto",
                     "textureExtent": {
                         "h": 512,
@@ -1939,7 +1775,7 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 70,
+                    "numericID": 62,
                     "stringID": "robertorun0",
                     "textureExtent": {
                         "h": 512,
@@ -1961,7 +1797,7 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 71,
+                    "numericID": 63,
                     "stringID": "robertorun1",
                     "textureExtent": {
                         "h": 512,
@@ -1983,7 +1819,7 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 72,
+                    "numericID": 64,
                     "stringID": "robertorun2",
                     "textureExtent": {
                         "h": 512,
@@ -2005,7 +1841,7 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 73,
+                    "numericID": 65,
                     "stringID": "robertorun3",
                     "textureExtent": {
                         "h": 512,
@@ -2027,7 +1863,7 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 74,
+                    "numericID": 66,
                     "stringID": "robertorun4",
                     "textureExtent": {
                         "h": 512,
@@ -2049,7 +1885,7 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 75,
+                    "numericID": 67,
                     "stringID": "robertorun5",
                     "textureExtent": {
                         "h": 512,
@@ -2071,7 +1907,7 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 76,
+                    "numericID": 68,
                     "stringID": "robertorun6",
                     "textureExtent": {
                         "h": 512,
@@ -2093,7 +1929,7 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 77,
+                    "numericID": 69,
                     "stringID": "robertorun7",
                     "textureExtent": {
                         "h": 512,
@@ -2115,7 +1951,7 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 78,
+                    "numericID": 70,
                     "stringID": "robertorun8",
                     "textureExtent": {
                         "h": 512,
@@ -2137,8 +1973,233 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 79,
+                    "numericID": 71,
                     "stringID": "robertorun9",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                }
+            ]
+        },
+        {
+            "relPath": "Templates.png",
+            "sprites": [
+                {
+                    "collisionEnabled": true,
+                    "displayName": "Template_NE_Fill",
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 72,
+                    "stringID": "template_ne_fill",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "Template_NW_Fill",
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 73,
+                    "stringID": "template_nw_fill",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "Template_North",
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 74,
+                    "stringID": "template_north",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "Template_Terrain_Flat",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 75,
+                    "stringID": "template_terrain_flat",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "Template_Terrain_TwoThird",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 76,
+                    "stringID": "template_terrain_twothird",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 1024,
+                        "y": 0
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "Template_Terrain_Full",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 77,
+                    "stringID": "template_terrain_full",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "Template_Terrain_OneThird",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 78,
+                    "stringID": "template_terrain_onethird",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "Template_West",
+                    "modelBounds": {
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 79,
+                    "stringID": "template_west",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "Template_8",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 80,
+                    "stringID": "template_8",
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 512
+                    },
+                    "yOffset": 374
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "Template_9",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 81,
+                    "stringID": "template_9",
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
@@ -2150,14 +2211,27 @@
             ]
         }
     ],
+    "terrain": [
+        {
+            "displayName": "Template",
+            "graphicIDs": [
+                75,
+                78,
+                76,
+                77
+            ],
+            "numericID": 1,
+            "stringID": "template"
+        }
+    ],
     "walls": [
         {
             "displayName": "Template",
             "graphicIDs": [
-                66,
-                65,
-                64,
-                63
+                79,
+                74,
+                73,
+                72
             ],
             "numericID": 1,
             "stringID": "template"

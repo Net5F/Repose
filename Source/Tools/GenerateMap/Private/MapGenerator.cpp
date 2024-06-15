@@ -11,14 +11,12 @@ namespace MG
 {
 MapGenerator::MapGenerator(uint16_t inMapLengthX, uint16_t inMapLengthY,
                            uint16_t inMapLengthZ, uint16_t inGroundLevel,
-                           const std::string& inFillGraphicSetID,
-                           uint8_t inFillGraphicIndex)
+                           const std::string& inFillGraphicSetID)
 : mapXLength{inMapLengthX}
 , mapYLength{inMapLengthY}
 , mapZLength{inMapLengthZ}
 , groundLevel{inGroundLevel}
 , fillGraphicSetID{inFillGraphicSetID}
-, fillGraphicIndex{inFillGraphicIndex}
 {
 }
 
@@ -41,8 +39,8 @@ void MapGenerator::generateAndSave(const std::string& fileName)
 
             // Push the graphic that we're filling the map with into this chunk's 
             // palette.
-            chunkSnapshot.getPaletteIndex(
-                TileLayer::Type::Floor, fillGraphicSetID, fillGraphicIndex);
+            chunkSnapshot.getPaletteIndex(TileLayer::Type::Terrain,
+                                          fillGraphicSetID, 0);
 
             // Push the palette index of the graphic into each tile.
             for (std::size_t i{0}; i < SharedConfig::CHUNK_TILE_COUNT;

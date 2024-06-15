@@ -36,7 +36,7 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
         // If we hit a removable object, tell the sim to remove it.
         if (TileLayerID* layer{std::get_if<TileLayerID>(&objectID)}) {
             requestRemoveTileLayer(layer->tilePosition, layer->type,
-                                   layer->graphicSetID, layer->graphicIndex);
+                                   layer->graphicSetID, layer->graphicValue);
         }
         else if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
             network.serializeAndSend(EntityDeleteRequest{*entity});
@@ -82,7 +82,7 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
             // walls instead).
             TileLayerID* layer{std::get_if<TileLayerID>(&objectID)};
             if (layer && (layer->type == TileLayer::Type::Wall)
-                && (layer->graphicIndex == Wall::Type::NorthWestGapFill)) {
+                && (layer->graphicValue == Wall::Type::NorthWestGapFill)) {
                 return;
             }
 

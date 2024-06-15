@@ -180,8 +180,8 @@ void BuildPanel::clearSelectedThumbnail()
 }
 
 void BuildPanel::addTileGraphicSet(TileLayer::Type type,
-                                  const GraphicSet& graphicSet,
-                                  const Sprite& sprite)
+                                   const GraphicSet& graphicSet,
+                                   const Sprite& sprite)
 {
     // Construct the new graphic set thumbnail.
     std::unique_ptr<AUI::Widget> thumbnailPtr{
