@@ -2008,7 +2008,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "yOffset": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2030,7 +2030,7 @@
                         "x": 256,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "yOffset": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2052,7 +2052,7 @@
                         "x": 512,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "yOffset": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2074,7 +2074,7 @@
                         "x": 768,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "yOffset": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2096,7 +2096,7 @@
                         "x": 1024,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "yOffset": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2118,7 +2118,7 @@
                         "x": 0,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "yOffset": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2140,7 +2140,7 @@
                         "x": 256,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "yOffset": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2162,7 +2162,7 @@
                         "x": 512,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "yOffset": 384
                 },
                 {
                     "collisionEnabled": true,

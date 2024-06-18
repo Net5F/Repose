@@ -76,8 +76,8 @@ void FloorTool::onMouseWheel(int amountScrolled)
             ->graphics[validGraphicIndices[selectedGraphicIndex]]};
     phantomSprites.clear();
     phantomSprites.emplace_back(mouseTilePosition, TileLayer::Type::Floor,
-                                Wall::Type::None, Position{},
-                                &(graphic.getFirstSprite()));
+                                Wall::Type::None, Terrain::Height::Flat,
+                                Position{}, &(graphic.getFirstSprite()));
 }
 
 void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
@@ -95,8 +95,8 @@ void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
             selectedGraphicSet
                 ->graphics[validGraphicIndices[selectedGraphicIndex]]};
         phantomSprites.emplace_back(mouseTilePosition, TileLayer::Type::Floor,
-                                    Wall::Type::None, Position{},
-                                    &(graphic.getFirstSprite()));
+                                    Wall::Type::None, Terrain::Height::Flat,
+                                    Position{}, &(graphic.getFirstSprite()));
     }
 }
 

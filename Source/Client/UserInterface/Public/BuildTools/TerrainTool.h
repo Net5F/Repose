@@ -2,6 +2,7 @@
 
 #include "BuildTool.h"
 #include "TilePosition.h"
+#include "Terrain.h"
 
 namespace AM
 {
@@ -31,12 +32,15 @@ private:
     /** The currently selected graphic set. */
     const TerrainGraphicSet* selectedGraphicSet;
 
-    /** The indices within selectedGraphicSet->graphics that contain a 
+    /** The terrain heights within selectedGraphicSet->graphics that contain a 
         graphic. */
-    std::vector<std::size_t> validGraphicIndices;
+    std::vector<std::size_t> validHeights;
 
-    /** The index within validGraphicIndices that is currently selected. */
-    std::size_t selectedGraphicIndex;
+    /** The index within validHeightIndices that is currently selected. */
+    std::size_t selectedHeightIndex;
+
+    /** The current terrain start height. */
+    Terrain::Height selectedStartHeight;
 };
 
 } // End namespace Client

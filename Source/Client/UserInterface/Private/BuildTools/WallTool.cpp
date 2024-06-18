@@ -245,8 +245,8 @@ void WallTool::pushPhantomWall(const TilePosition& tilePosition, Wall::Type wall
                                const WallGraphicSet& wallGraphicSet)
 {
     phantomSprites.emplace_back(
-        tilePosition, TileLayer::Type::Wall, wallType, Position{},
-        &(wallGraphicSet.graphics[wallType].getFirstSprite()));
+        tilePosition, TileLayer::Type::Wall, wallType, Terrain::Height::Flat,
+        Position{}, &(wallGraphicSet.graphics[wallType].getFirstSprite()));
 }
 
 } // End namespace Client

@@ -13,7 +13,8 @@ namespace Client
 TerrainTool::TerrainTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , selectedGraphicSet{nullptr}
-, selectedGraphicIndex{0}
+, selectedHeightIndex{0}
+, selectedStartHeight{0}
 {
 }
 
@@ -26,16 +27,16 @@ void TerrainTool::setSelectedGraphicSet(
         = static_cast<const TerrainGraphicSet*>(&inSelectedGraphicSet);
 
     // Iterate the set and track which indices contain a graphic.
-    validGraphicIndices.clear();
+    validHeights.clear();
     for (std::size_t i = 0; i < selectedGraphicSet->graphics.size(); ++i) {
         if (selectedGraphicSet->graphics[i].getGraphicID() != NULL_GRAPHIC_ID) {
-            validGraphicIndices.emplace_back(i);
+            validHeights.emplace_back(i);
         }
     }
-    AM_ASSERT(validGraphicIndices.size() > 0, "Set didn't contain any graphics.");
+    AM_ASSERT(validHeights.size() > 0, "Set didn't contain any graphics.");
 
-    // Select the first graphic within validGraphicIndices.
-    selectedGraphicIndex = 0;
+    // Select the first height within validHeight.
+    selectedHeightIndex = 0;
 }
 
 void TerrainTool::onMouseDown(AUI::MouseButtonType buttonType,
@@ -48,10 +49,12 @@ void TerrainTool::onMouseDown(AUI::MouseButtonType buttonType,
     if (isActive && (buttonType == AUI::MouseButtonType::Left)
         && (selectedGraphicSet != nullptr)) {
         // Tell the sim to add the layer.
-        network.serializeAndSend(TileAddLayer{
-            mouseTilePosition, TileLayer::Type::Terrain,
-            selectedGraphicSet->numericID,
-            static_cast<Uint8>(validGraphicIndices[selectedGraphicIndex])});
+        Terrain::Height height{
+            static_cast<Terrain::Height>(validHeights[selectedHeightIndex])};
+        network.serializeAndSend(
+            TileAddLayer{mouseTilePosition, TileLayer::Type::Terrain,
+                         selectedGraphicSet->numericID,
+                         Terrain::toValue(height, selectedStartHeight)});
     }
 }
 
@@ -69,19 +72,44 @@ void TerrainTool::onMouseWheel(int amountScrolled)
         return;
     }
 
-    // Select the next graphic within the set, accounting for negative values.
-    selectedGraphicIndex
-        = (selectedGraphicIndex + amountScrolled + validGraphicIndices.size())
-          % validGraphicIndices.size();
+    // If ctrl is held, update selectedStartHeight.
+    if (SDL_GetModState() & KMOD_CTRL) {
+        int newStartHeight{
+            static_cast<int>(selectedStartHeight + amountScrolled)};
+        newStartHeight = std::clamp(
+            newStartHeight, 0, static_cast<int>(Terrain::Height::TwoThird));
+
+        // If the new height would push us too high, return early.
+        if ((validHeights[selectedHeightIndex] + newStartHeight)
+            >= static_cast<int>(Terrain::MAX_COMBINED_HEIGHT)) {
+            return;
+        }
+        selectedStartHeight = static_cast<Terrain::Height>(newStartHeight);
+    }
+    else {
+        // Ctrl isn't held. Select the next graphic within the set.
+        int newSelectedHeightIndex{
+            static_cast<int>(selectedHeightIndex + amountScrolled)};
+        newSelectedHeightIndex
+            = std::clamp(newSelectedHeightIndex, 0,
+                         static_cast<int>((validHeights.size() - 1)));
+
+        // If the new height would push us too high, return early.
+        if ((validHeights[newSelectedHeightIndex] + selectedStartHeight)
+            >= static_cast<int>(Terrain::MAX_COMBINED_HEIGHT)) {
+            return;
+        }
+        selectedHeightIndex = newSelectedHeightIndex;
+    }
 
     // Set the newly selected graphic as a phantom at the current location.
     const GraphicRef& graphic{
         selectedGraphicSet
-            ->graphics[validGraphicIndices[selectedGraphicIndex]]};
+            ->graphics[validHeights[selectedHeightIndex]]};
     phantomSprites.clear();
-    phantomSprites.emplace_back(
-        mouseTilePosition, TileLayer::Type::Terrain, Wall::Type::None,
-        Position{}, &(graphic.getFirstSprite()));
+    phantomSprites.emplace_back(mouseTilePosition, TileLayer::Type::Terrain,
+                                Wall::Type::None, selectedStartHeight,
+                                Position{}, &(graphic.getFirstSprite()));
 }
 
 void TerrainTool::onMouseMove(const SDL_Point& cursorPosition)
@@ -97,10 +125,10 @@ void TerrainTool::onMouseMove(const SDL_Point& cursorPosition)
         // Set the selected graphic as a phantom at the new location.
         const GraphicRef& graphic{
             selectedGraphicSet
-                ->graphics[validGraphicIndices[selectedGraphicIndex]]};
-        phantomSprites.emplace_back(
-            mouseTilePosition, TileLayer::Type::Terrain, Wall::Type::None,
-            Position{}, &(graphic.getFirstSprite()));
+                ->graphics[validHeights[selectedHeightIndex]]};
+        phantomSprites.emplace_back(mouseTilePosition, TileLayer::Type::Terrain,
+                                    Wall::Type::None, selectedStartHeight,
+                                    Position{}, &(graphic.getFirstSprite()));
     }
 }
 
