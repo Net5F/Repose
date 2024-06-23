@@ -400,9 +400,9 @@
                     "collisionEnabled": false,
                     "displayName": "Floor0",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -422,9 +422,9 @@
                     "collisionEnabled": false,
                     "displayName": "Floor1",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -444,9 +444,9 @@
                     "collisionEnabled": false,
                     "displayName": "Floor2",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -466,9 +466,9 @@
                     "collisionEnabled": false,
                     "displayName": "Floor3",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -488,9 +488,9 @@
                     "collisionEnabled": false,
                     "displayName": "Floor4",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -510,9 +510,9 @@
                     "collisionEnabled": false,
                     "displayName": "Floor5",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -532,9 +532,9 @@
                     "collisionEnabled": false,
                     "displayName": "Floor6",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -554,9 +554,9 @@
                     "collisionEnabled": false,
                     "displayName": "Floor7",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -2008,7 +2008,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "yOffset": 384
+                    "yOffset": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -2030,7 +2030,7 @@
                         "x": 256,
                         "y": 0
                     },
-                    "yOffset": 384
+                    "yOffset": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -2052,7 +2052,7 @@
                         "x": 512,
                         "y": 0
                     },
-                    "yOffset": 384
+                    "yOffset": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -2162,7 +2162,7 @@
                         "x": 512,
                         "y": 512
                     },
-                    "yOffset": 384
+                    "yOffset": 374
                 },
                 {
                     "collisionEnabled": true,

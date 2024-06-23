@@ -36,6 +36,16 @@ private:
 
     /** The index within validGraphicIndices that is currently selected. */
     std::size_t selectedGraphicIndex;
+
+    /** The currently selected tile offset. */
+    TileOffset selectedTileOffset;
+
+    /** If true, the user is currently adjusting the X/Y offset. */
+    bool adjustingXYOffset;
+
+    /** If adjustingXYOffset == true, this is the position where the adjustment 
+        started. */
+    Position xyOffsetAdjustmentOrigin;
 };
 
 } // End namespace Client

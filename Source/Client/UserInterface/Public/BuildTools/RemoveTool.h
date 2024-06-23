@@ -30,6 +30,7 @@ private:
      * Tells the sim to remove the given tile layer.
      */
     void requestRemoveTileLayer(const TilePosition& tilePosition,
+                                const TileOffset& tileOffset,
                                 TileLayer::Type layerType, Uint16 graphicSetID,
                                 Uint8 graphicIndex);
 

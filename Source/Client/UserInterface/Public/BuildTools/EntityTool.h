@@ -79,10 +79,10 @@ private:
     void clearCurrentSelection();
 
     /**
-     * Returns the selected template's sprite, or nullptr if there's no selected
-     * template.
+     * Sets the graphicSet and graphicValue fields in the given struct, based 
+     * on our current selected sprite.
      */
-    const Sprite* getSelectedTemplateSprite();
+    void setSelectedTemplateSprite(PhantomSpriteInfo& phantomSpriteInfo);
 
     /** Used for finding entities that the mouse is hovering over or
         clicking. */

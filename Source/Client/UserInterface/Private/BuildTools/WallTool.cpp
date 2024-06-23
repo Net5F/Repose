@@ -61,9 +61,9 @@ void WallTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
                 }
             }
 
-            network.serializeAndSend(
-                TileAddLayer{phantomInfo.tilePosition, TileLayer::Type::Wall,
-                             selectedGraphicSet->numericID, wallType});
+            network.serializeAndSend(TileAddLayer{
+                phantomInfo.tilePosition, TileOffset{}, TileLayer::Type::Wall,
+                selectedGraphicSet->numericID, wallType});
         }
     }
 }
@@ -90,7 +90,7 @@ void WallTool::onMouseMove(const SDL_Point& cursorPosition)
     phantomSprites.clear();
 
     // If this tool is active and we have a selected graphic.
-    if (isActive && (selectedGraphicSet != nullptr)) {
+    if (isActive && selectedGraphicSet) {
         // Add the appropriate phantom walls.
         addPhantomWalls(cursorPosition);
     }
@@ -143,11 +143,9 @@ void WallTool::addNorthWallPhantom(const TilePosition& tilePosition)
     // If there's a tile to the NE that we might've formed a corner with.
     TilePosition northeastPos{tilePosition.x + 1, tilePosition.y - 1,
                               tilePosition.z};
-    if (world.tileMap.getTileExtent().containsPosition(northeastPos)) {
-        const Tile& northeastTile{*(world.tileMap.cgetTile(northeastPos))};
-
+    if (const Tile* northeastTile{world.tileMap.cgetTile(northeastPos)}) {
         // If the NorthEast tile has a West wall.
-        if (auto* northeastWestWall{northeastTile.findLayer(
+        if (auto* northeastWestWall{northeastTile->findLayer(
                 TileLayer::Type::Wall, Wall::Type::West)}) {
             // We formed a corner. Check if the tile to the east has a wall.
             // Note: We know this tile is valid cause there's a NorthEast tile.
@@ -200,13 +198,11 @@ void WallTool::addWestWallPhantom(const TilePosition& tilePosition)
     // If there's a tile to the SW that we might've formed a corner with.
     TilePosition southwestPos{tilePosition.x - 1, tilePosition.y + 1,
                               tilePosition.z};
-    if (world.tileMap.getTileExtent().containsPosition(southwestPos)) {
-        const Tile& southwestTile{*(world.tileMap.cgetTile(southwestPos))};
-
+    if (const Tile* southwestTile{world.tileMap.cgetTile(southwestPos)}) {
         // If the SouthWest tile has a North wall or a NE gap fill.
         auto* southwestNorthWall{
-            southwestTile.findLayer(TileLayer::Type::Wall, Wall::Type::North)};
-        auto* southwestNorthEastGapFill{southwestTile.findLayer(
+            southwestTile->findLayer(TileLayer::Type::Wall, Wall::Type::North)};
+        auto* southwestNorthEastGapFill{southwestTile->findLayer(
             TileLayer::Type::Wall, Wall::Type::NorthEastGapFill)};
         if (southwestNorthWall || southwestNorthEastGapFill) {
             // We formed a corner. Check if the tile to the South has a wall.
@@ -244,9 +240,9 @@ void WallTool::addWestWallPhantom(const TilePosition& tilePosition)
 void WallTool::pushPhantomWall(const TilePosition& tilePosition, Wall::Type wallType,
                                const WallGraphicSet& wallGraphicSet)
 {
-    phantomSprites.emplace_back(
-        tilePosition, TileLayer::Type::Wall, wallType, Terrain::Height::Flat,
-        Position{}, &(wallGraphicSet.graphics[wallType].getFirstSprite()));
+    phantomSprites.emplace_back(tilePosition, TileOffset{},
+                                TileLayer::Type::Wall, wallType, Position{},
+                                &wallGraphicSet, static_cast<Uint8>(wallType));
 }
 
 } // End namespace Client

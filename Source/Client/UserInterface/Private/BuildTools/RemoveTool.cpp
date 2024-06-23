@@ -35,16 +35,18 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
 
         // If we hit a removable object, tell the sim to remove it.
         if (TileLayerID* layer{std::get_if<TileLayerID>(&objectID)}) {
-            requestRemoveTileLayer(layer->tilePosition, layer->type,
-                                   layer->graphicSetID, layer->graphicValue);
+            requestRemoveTileLayer(layer->tilePosition, layer->tileOffset,
+                                   layer->type, layer->graphicSetID,
+                                   layer->graphicValue);
         }
-        else if (entt::entity* entity = std::get_if<entt::entity>(&objectID)) {
+        else if (entt::entity* entity{std::get_if<entt::entity>(&objectID)}) {
             network.serializeAndSend(EntityDeleteRequest{*entity});
         }
         else {
-            // Didn't hit a removable object. Tell the sim to remove the floor.
-            network.serializeAndSend(TileRemoveLayer{
-                mouseTilePosition, TileLayer::Type::Floor, 0, 0});
+            // Didn't hit a removable object. Tell the sim to remove the terrain.
+            network.serializeAndSend(
+                TileRemoveLayer{mouseTilePosition, TileOffset{},
+                                TileLayer::Type::Terrain, 0, 0});
         }
     }
 }
@@ -94,6 +96,7 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
 }
 
 void RemoveTool::requestRemoveTileLayer(const TilePosition& tilePosition,
+                                        const TileOffset& tileOffset,
                                         TileLayer::Type layerType,
                                         Uint16 graphicSetID, Uint8 graphicIndex)
 {
@@ -112,12 +115,12 @@ void RemoveTool::requestRemoveTileLayer(const TilePosition& tilePosition,
             wallType = Wall::Type::North;
         }
 
-        network.serializeAndSend(
-            TileRemoveLayer{tilePosition, layerType, graphicSetID, wallType});
+        network.serializeAndSend(TileRemoveLayer{
+            tilePosition, tileOffset, layerType, graphicSetID, wallType});
     }
     else {
-        network.serializeAndSend(
-            TileRemoveLayer{tilePosition, layerType, graphicSetID, graphicIndex});
+        network.serializeAndSend(TileRemoveLayer{
+            tilePosition, tileOffset, layerType, graphicSetID, graphicIndex});
     }
 }
 

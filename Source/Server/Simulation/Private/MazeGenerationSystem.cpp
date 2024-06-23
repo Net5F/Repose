@@ -437,13 +437,13 @@ void MazeGenerationSystem::applyCellToMap(int mapX, int mapY,
     // Determine which walls this cell has and apply them to the map.
     if (cell.fullFill) {
         // Fully-filled cell. Place the 4 fills.
-        world.tileMap.addObject({mapX, mapY, 0}, fullFillID,
+        world.tileMap.addObject({mapX, mapY, 0}, {}, fullFillID,
                                 getRandomFullFill());
-        world.tileMap.addObject({(mapX + 1), mapY, 0}, fullFillID,
+        world.tileMap.addObject({(mapX + 1), mapY, 0}, {}, fullFillID,
                                 getRandomFullFill());
-        world.tileMap.addObject({mapX, (mapY + 1), 0}, fullFillID,
+        world.tileMap.addObject({mapX, (mapY + 1), 0}, {}, fullFillID,
                                 getRandomFullFill());
-        world.tileMap.addObject({(mapX + 1), (mapY + 1), 0}, fullFillID,
+        world.tileMap.addObject({(mapX + 1), (mapY + 1), 0}, {}, fullFillID,
                                 getRandomFullFill());
     }
     else if (cell.northWall && cell.westWall) {

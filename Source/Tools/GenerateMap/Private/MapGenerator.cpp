@@ -45,7 +45,8 @@ void MapGenerator::generateAndSave(const std::string& fileName)
             // Push the palette index of the graphic into each tile.
             for (std::size_t i{0}; i < SharedConfig::CHUNK_TILE_COUNT;
                  ++i) {
-                chunkSnapshot.tiles[i].layers.push_back(0);
+                chunkSnapshot.tileLayerCounts[i] = 1;
+                chunkSnapshot.tileLayers.push_back(0);
             }
         }
     }

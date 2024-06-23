@@ -12,6 +12,9 @@ FloorTool::FloorTool(World& inWorld, Network& inNetwork)
 : BuildTool(inWorld, inNetwork)
 , selectedGraphicSet{nullptr}
 , selectedGraphicIndex{0}
+, selectedTileOffset{}
+, adjustingXYOffset{false}
+, xyOffsetAdjustmentOrigin{}
 {
 }
 
@@ -45,7 +48,7 @@ void FloorTool::onMouseDown(AUI::MouseButtonType buttonType, const SDL_Point&)
         && (selectedGraphicSet != nullptr)) {
         // Tell the server to add the layer.
         network.serializeAndSend(TileAddLayer{
-            mouseTilePosition, TileLayer::Type::Floor,
+            mouseTilePosition, selectedTileOffset, TileLayer::Type::Floor,
             selectedGraphicSet->numericID,
             static_cast<Uint8>(validGraphicIndices[selectedGraphicIndex])});
     }
@@ -60,44 +63,99 @@ void FloorTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
 
 void FloorTool::onMouseWheel(int amountScrolled)
 {
-    // If this tool isn't active, do nothing.
-    if (!isActive) {
+    // If this tool isn't active or we don't have a selection, do nothing.
+    if (!isActive || !selectedGraphicSet) {
         return;
     }
 
-    // Select the next graphic within the set, accounting for negative values.
-    selectedGraphicIndex
-        = (selectedGraphicIndex + amountScrolled + validGraphicIndices.size())
-          % validGraphicIndices.size();
+    // If ctrl is held, update selectedTileOffset's Z value.
+    if (SDL_GetModState() & KMOD_CTRL) {
+        int newOffset{
+            std::clamp(selectedTileOffset.z + amountScrolled, 0,
+                       static_cast<int>(SharedConfig::TILE_WORLD_HEIGHT))};
+        selectedTileOffset.z = static_cast<Uint8>(newOffset);
+    }
+    else {
+        // Ctrl isn't held. Select the next graphic within the set, accounting 
+        // for negative values.
+        selectedGraphicIndex = (selectedGraphicIndex + amountScrolled
+                                + validGraphicIndices.size())
+                               % validGraphicIndices.size();
+    }
 
     // Set the newly selected graphic as a phantom at the current location.
-    const GraphicRef& graphic{
-        selectedGraphicSet
-            ->graphics[validGraphicIndices[selectedGraphicIndex]]};
     phantomSprites.clear();
-    phantomSprites.emplace_back(mouseTilePosition, TileLayer::Type::Floor,
-                                Wall::Type::None, Terrain::Height::Flat,
-                                Position{}, &(graphic.getFirstSprite()));
+    phantomSprites.emplace_back(
+        mouseTilePosition, selectedTileOffset, TileLayer::Type::Floor,
+        Wall::Type::None, Position{}, selectedGraphicSet,
+        static_cast<Uint8>(validGraphicIndices[selectedGraphicIndex]));
 }
 
 void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
 {
     // Call the parent function to update mouseTilePosition and isActive.
+    TilePosition oldMouseTilePosition{mouseTilePosition};
     BuildTool::onMouseMove(cursorPosition);
 
     // Clear any old phantoms.
     phantomSprites.clear();
 
-    // If this tool is active and we have a selected graphic.
-    if (isActive && (selectedGraphicSet != nullptr)) {
-        // Set the selected graphic as a phantom at the new location.
-        const GraphicRef& graphic{
-            selectedGraphicSet
-                ->graphics[validGraphicIndices[selectedGraphicIndex]]};
-        phantomSprites.emplace_back(mouseTilePosition, TileLayer::Type::Floor,
-                                    Wall::Type::None, Terrain::Height::Flat,
-                                    Position{}, &(graphic.getFirstSprite()));
+    // If this tool isn't active or we don't have a selection, do nothing.
+    if (!isActive || !selectedGraphicSet) {
+        return;
     }
+
+    // If ctrl is held, update our x/y offset.
+    if (SDL_GetModState() & KMOD_CTRL) {
+        // If we're starting an adjustment, save the current mouse position.
+        if (!adjustingXYOffset) {
+            xyOffsetAdjustmentOrigin = mouseWorldPosition;
+            adjustingXYOffset = true;
+        }
+        else {
+            // We're continuing an adjustment. Keep the mouse in the same tile.
+            mouseTilePosition = oldMouseTilePosition;
+        }
+
+        // Calc the new offset, relative to the origin position.
+        float newOffsetX{mouseWorldPosition.x - xyOffsetAdjustmentOrigin.x};
+        float newOffsetY{mouseWorldPosition.y - xyOffsetAdjustmentOrigin.y};
+
+        // Clamp the offset to the tile bounds.
+        selectedTileOffset.x = static_cast<Uint8>(
+            std::clamp(newOffsetX, 0.f,
+                       static_cast<float>(SharedConfig::TILE_WORLD_WIDTH)));
+        selectedTileOffset.y = static_cast<Uint8>(
+            std::clamp(newOffsetY, 0.f,
+                       static_cast<float>(SharedConfig::TILE_WORLD_WIDTH)));
+    }
+    else {
+        // If we just stopped adjusting, reset our adjustment state.
+        if (adjustingXYOffset) {
+            adjustingXYOffset = false;
+            selectedTileOffset = {};
+        }
+
+        // If our tile position changed, default our Z offset to line up with 
+        // the new tile.
+        if (mouseTilePosition != oldMouseTilePosition) {
+            if (const Tile* tile{world.tileMap.cgetTile(mouseTilePosition)}) {
+                if (const TileLayer*
+                     terrain{tile->findLayer(TileLayer::Type::Terrain)}) {
+                    Terrain::Height totalHeight{
+                        Terrain::getTotalHeight(terrain->graphicValue)};
+                    selectedTileOffset.z = static_cast<Uint8>(
+                        Terrain::getHeightWorldValue(totalHeight));
+                }
+            }
+        }
+    }
+
+    // Set the selected sprite as a phantom at the new location.
+    phantomSprites.emplace_back(
+        mouseTilePosition, selectedTileOffset, TileLayer::Type::Floor,
+        Wall::Type::None, Position{}, selectedGraphicSet,
+        static_cast<Uint8>(validGraphicIndices[selectedGraphicIndex]));
 }
 
 } // End namespace Client
