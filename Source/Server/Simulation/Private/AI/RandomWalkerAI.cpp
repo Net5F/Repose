@@ -84,11 +84,9 @@ RandomWalkerAI& RandomWalkerAI::operator=(const RandomWalkerAI& other)
 
 void RandomWalkerAI::updateInputs(World& world, entt::entity entity)
 {
-    world.registry.patch<Input>(entity, [&](auto& input) {
+    world.registry.patch<Input>(entity, [&](Input& input) {
         // Release all of the inputs.
-        for (Input::State& state : input.inputStates) {
-            state = Input::State::Released;
-        }
+        input.inputStates.reset();
 
         // If we should be walking, press the input at the current index.
         if (shouldWalk) {

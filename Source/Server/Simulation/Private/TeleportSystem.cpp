@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Position.h"
 #include "PreviousPosition.h"
+#include "Movement.h"
 #include "Rotation.h"
 #include "Collision.h"
 #include "Transforms.h"
@@ -31,8 +32,8 @@ void TeleportSystem::teleportPlayers()
 {
     if (updateTimer.getTime() >= UPDATE_TIMESTEP_S) {
         auto movementGroup
-            = world.registry.group<Input, Position, PreviousPosition, Rotation,
-                                   Collision>();
+            = world.registry.group<Input, Position, PreviousPosition, Movement,
+                                   Rotation, Collision>();
 
         // For each teleport volume.
         for (std::size_t i = 0; i < teleportVolumes.size(); ++i) {
