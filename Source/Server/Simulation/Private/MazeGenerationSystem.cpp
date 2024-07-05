@@ -104,7 +104,7 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
     for (const entt::entity entity : entitiesInMaze) {
         // Calc the tile that the entity's center is on.
         const Position& position{world.registry.get<Position>(entity)};
-        TilePosition tilePosition{position.asTilePosition()};
+        TilePosition tilePosition(position);
         TilePosition abstractTilePosition{(tilePosition.x - mazeExtent.x) / 2,
                                           (tilePosition.y - mazeExtent.y) / 2,
                                           0};

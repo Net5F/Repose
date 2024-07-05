@@ -63,7 +63,7 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
             != NULL_ENTITY_GRAPHIC_SET_ID) {
             // Tell the sim to create an object based on the template.
             network.serializeAndSend(EntityInitRequest{
-                entt::null, selectedTemplateName, mouseWorldPosition,
+                entt::null, selectedTemplateName, mouseWorldPoint,
                 selectedTemplateGraphicState});
 
             // To deter users from placing a million entities, we deselect after

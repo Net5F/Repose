@@ -88,8 +88,8 @@ protected:
         requesting changes to tiles that are out of bounds. */
     TileExtent mapTileExtent;
 
-    /** The world position that the mouse is hovering over. */
-    Position mouseWorldPosition;
+    /** The world point that the mouse is hovering over. */
+    Position mouseWorldPoint;
 
     /** The tile that the mouse is hovering over. */
     TilePosition mouseTilePosition;

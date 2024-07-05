@@ -83,6 +83,7 @@ void RemoveTool::onMouseMove(const SDL_Point& cursorPosition)
             // Ignore NW gap fills (the user has to remove one of the adjoining
             // walls instead).
             TileLayerID* layer{std::get_if<TileLayerID>(&objectID)};
+
             if (layer && (layer->type == TileLayer::Type::Wall)
                 && (layer->graphicValue == Wall::Type::NorthWestGapFill)) {
                 return;

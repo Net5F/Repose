@@ -109,7 +109,7 @@ void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
     if (SDL_GetModState() & KMOD_CTRL) {
         // If we're starting an adjustment, save the current mouse position.
         if (!adjustingXYOffset) {
-            xyOffsetAdjustmentOrigin = mouseWorldPosition;
+            xyOffsetAdjustmentOrigin = mouseWorldPoint;
             adjustingXYOffset = true;
         }
         else {
@@ -118,8 +118,8 @@ void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
         }
 
         // Calc the new offset, relative to the origin position.
-        float newOffsetX{mouseWorldPosition.x - xyOffsetAdjustmentOrigin.x};
-        float newOffsetY{mouseWorldPosition.y - xyOffsetAdjustmentOrigin.y};
+        float newOffsetX{mouseWorldPoint.x - xyOffsetAdjustmentOrigin.x};
+        float newOffsetY{mouseWorldPoint.y - xyOffsetAdjustmentOrigin.y};
 
         // Clamp the offset to the tile bounds.
         selectedTileOffset.x = static_cast<Uint8>(

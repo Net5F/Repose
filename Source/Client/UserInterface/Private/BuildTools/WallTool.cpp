@@ -104,12 +104,12 @@ void WallTool::addPhantomWalls(const SDL_Point& cursorPosition)
                            static_cast<float>(cursorPosition.y)};
     TilePosition tilePosition{
         Transforms::screenToWorldTile(screenPoint, camera)};
-    Position tileOrigin{tilePosition.getOriginPosition()};
-    Position worldPosition{
+    Vector3 tileOrigin{tilePosition.getOriginPoint()};
+    Vector3 worldPoint{
         Transforms::screenToWorldRay(screenPoint, camera).origin};
 
-    float relativeX{std::abs(worldPosition.x - tileOrigin.x)};
-    float relativeY{std::abs(worldPosition.y - tileOrigin.y)};
+    float relativeX{std::abs(worldPoint.x - tileOrigin.x)};
+    float relativeY{std::abs(worldPoint.y - tileOrigin.y)};
 
     // If the mouse is closer to the top of the tile.
     if (relativeY < relativeX) {

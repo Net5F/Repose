@@ -1,8 +1,9 @@
 #pragma once
 
 #include "BoundingBox.h"
-#include "Position.h"
+#include "Vector3.h"
 #include "Timer.h"
+#include <vector>
 
 namespace AM
 {
@@ -40,7 +41,7 @@ private:
         Elements are index-matched with teleportVolumes, e.g. a player
         who enters the volume at teleportVolumes[0] should be teleported to the
         position at teleportDestinations[0]. */
-    std::vector<Position> teleportDestinations;
+    std::vector<Vector3> teleportDestinations;
 };
 
 } // End namespace Server

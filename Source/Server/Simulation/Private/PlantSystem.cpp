@@ -39,7 +39,7 @@ PlantSystem::PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData)
     for (int x{plantExtent.x}; x <= plantExtent.xMax(); ++x) {
         for (int y{plantExtent.y}; y <= plantExtent.yMax(); y += 2) {
             Position tileCenter{
-                TilePosition{x, y, 0}.getCenteredBottomPosition()};
+                TilePosition{x, y, 0}.getCenteredBottomPoint()};
             createSapling(tileCenter);
         }
     }
