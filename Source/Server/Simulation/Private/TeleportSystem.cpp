@@ -1,12 +1,7 @@
 #include "TeleportSystem.h"
 #include "World.h"
 #include "BoundingBox.h"
-#include "Input.h"
-#include "Position.h"
-#include "PreviousPosition.h"
-#include "Movement.h"
-#include "Rotation.h"
-#include "Collision.h"
+#include "EnttGroups.h"
 #include "MinMaxBox.h"
 #include "Transforms.h"
 #include "Log.h"
@@ -34,9 +29,7 @@ TeleportSystem::TeleportSystem(World& inWorld)
 void TeleportSystem::teleportPlayers()
 {
     if (updateTimer.getTime() >= UPDATE_TIMESTEP_S) {
-        auto movementGroup
-            = world.registry.group<Input, Position, PreviousPosition, Movement,
-                                   Rotation, Collision>();
+        auto movementGroup{EnttGroups::getMovementGroup(world.registry)};
 
         // For each teleport volume.
         for (std::size_t i = 0; i < teleportVolumes.size(); ++i) {
