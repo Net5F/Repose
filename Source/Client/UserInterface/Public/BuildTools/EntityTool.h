@@ -79,10 +79,10 @@ private:
     void clearCurrentSelection();
 
     /**
-     * Sets the graphicSet and graphicValue fields in the given struct, based 
-     * on our current selected sprite.
+     * Returns a PhantomSpriteInfo, based on our current selection state and 
+     * mouse position.
      */
-    void setSelectedTemplateSprite(PhantomSpriteInfo& phantomSpriteInfo);
+    PhantomSpriteInfo getSelectedTemplatePhantomInfo();
 
     /** Used for finding entities that the mouse is hovering over or
         clicking. */

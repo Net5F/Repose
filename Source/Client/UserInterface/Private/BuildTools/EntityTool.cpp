@@ -115,9 +115,7 @@ void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
         // at the new location.
         if (selectedTemplateGraphicState.graphicSetID
             != NULL_ENTITY_GRAPHIC_SET_ID) {
-            PhantomSpriteInfo phantomInfo{};
-            setSelectedTemplateSprite(phantomInfo);
-            phantomSprites.push_back(phantomInfo);
+            phantomSprites.push_back(getSelectedTemplatePhantomInfo());
         }
         // Else we don't have a selection. Check if we're hovering an entity.
         else {
@@ -189,20 +187,25 @@ void EntityTool::clearCurrentSelection()
     }
 }
 
-void EntityTool::setSelectedTemplateSprite(PhantomSpriteInfo& phantomSpriteInfo)
+PhantomSpriteInfo EntityTool::getSelectedTemplatePhantomInfo()
 {
+    // If we don't have a selected graphic set, return early.
     if (!(selectedTemplateGraphicState.graphicSetID)) {
-        phantomSpriteInfo.graphicSet = nullptr;
-        phantomSpriteInfo.graphicValue = 0;
-        return;
+        return {};
     }
+
+    // Set the world position to display the sprite phantom at.
+    PhantomSpriteInfo selectedPhantomInfo{};
+    selectedPhantomInfo.position = mouseWorldPoint;
 
     // Note: IdleSouth is guaranteed to be present in every entity graphic set.
     const EntityGraphicSet& graphicSet{graphicData.getEntityGraphicSet(
         selectedTemplateGraphicState.graphicSetID)};
-    phantomSpriteInfo.graphicSet = &graphicSet;
-    phantomSpriteInfo.graphicValue
+    selectedPhantomInfo.graphicSet = &graphicSet;
+    selectedPhantomInfo.graphicValue
         = static_cast<Uint8>(EntityGraphicType::IdleSouth);
+
+    return selectedPhantomInfo;
 }
 
 } // End namespace Client

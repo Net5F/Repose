@@ -33,6 +33,9 @@ public:
     /** The max number of non-built-in interactions that an item can support. */
     static constexpr std::size_t MAX_ITEM_CUSTOM_INTERACTIONS{64};
 
+    /** The maximum map size that we'll load, in tiles. */
+    static constexpr std::size_t MAX_MAP_WIDTH_TILES{1'000};
+
     /** The x and y axis width, in world units, of our tiles. */
     static constexpr std::size_t TILE_WORLD_WIDTH{32};
 
@@ -59,6 +62,10 @@ public:
         Used in the simulation to tell if data is relevant to a client. */
     static constexpr float AOI_RADIUS{TILE_WORLD_WIDTH * 8};
 
+    /** The number of world units above and below an entity that are considered
+        to be within the entity's "Area of Interest". */
+    static constexpr float AOI_HALF_HEIGHT{TILE_WORLD_HEIGHT * 3};
+
     /** How close you need to be to an entity, in world units, to interact
         with it. */
     static constexpr float INTERACTION_DISTANCE{TILE_WORLD_WIDTH * 1};
@@ -69,10 +76,16 @@ public:
     static constexpr const char* DEFAULT_ENTITY_GRAPHIC_SET{"ghost"};
 
     /** The force of gravity in world units per second. */
-    static constexpr float FORCE_OF_GRAVITY{15};
+    static constexpr float FORCE_OF_GRAVITY{20};
 
     /** The maximum negative Z velocity that entities can reach. */
-    static constexpr float TERMINAL_VELOCITY{-125};
+    static constexpr float TERMINAL_VELOCITY{-300};
+
+    /** The amount of velocity that's added to the player if they try to move 
+        while falling straight through the air, e.g. after jumping straight up.
+        This is a constant instead of being affected by runspeed, because it's 
+        intended to be a consistent, small movement. */
+    static constexpr float VERTICAL_FALL_MOVE_VELOCITY{15};
 
     //-------------------------------------------------------------------------
     // Network

@@ -67,8 +67,8 @@ void TerrainTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
 
 void TerrainTool::onMouseWheel(int amountScrolled)
 {
-    // If this tool isn't active, do nothing.
-    if (!isActive) {
+    // If this tool isn't active or we don't have a selection, do nothing.
+    if (!isActive || !selectedGraphicSet) {
         return;
     }
 
