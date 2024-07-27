@@ -214,7 +214,7 @@ void MazeGenerationSystem::getNeighboringTiles(
     // Remove any invalid neighbors.
     std::erase_if(outNeighbors, [&](const TilePosition& position) {
         // If this neighbor is out of bounds, remove it.
-        if (!(abstractMazeExtent.containsPosition(position))) {
+        if (!(abstractMazeExtent.contains(position))) {
             return true;
         }
         // Else if we're including visited tiles.

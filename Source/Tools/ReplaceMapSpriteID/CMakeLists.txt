@@ -17,8 +17,8 @@ target_link_libraries(ReplaceMapSpriteID
         AmalgamEngine::SharedLib
 )
 
-# Compile with C++20.
-target_compile_features(ReplaceMapSpriteID PRIVATE cxx_std_20)
+# Compile with C++23.
+target_compile_features(ReplaceMapSpriteID PRIVATE cxx_std_23)
 set_target_properties(ReplaceMapSpriteID PROPERTIES CXX_EXTENSIONS OFF)
 
 # Enable compile warnings.

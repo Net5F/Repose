@@ -69,7 +69,7 @@ bool SimulationExtension::isTileExtentEditable(
 {
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
         // Only return true for updates within the build area.
-        return VALID_BUILD_AREA_EXTENT.containsExtent(tileExtent);
+        return VALID_BUILD_AREA_EXTENT.contains(tileExtent);
     }
     else {
         // No restrictions, always return true;
@@ -82,7 +82,7 @@ bool SimulationExtension::isEntityInitRequestValid(
 {
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
         // Only return true if the new entity is within the build area.
-        return VALID_BUILD_AREA_EXTENT.containsPosition(
+        return VALID_BUILD_AREA_EXTENT.contains(
             TilePosition(entityInitRequest.position));
     }
     else {
@@ -99,7 +99,7 @@ bool SimulationExtension::isEntityDeleteRequestValid(
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
         // Only return true if the entity is within the build area.
         const auto& position{world.registry.get<Position>(entity)};
-        return VALID_BUILD_AREA_EXTENT.containsPosition(TilePosition(position));
+        return VALID_BUILD_AREA_EXTENT.contains(TilePosition(position));
 
         return false;
     }
@@ -117,7 +117,7 @@ bool SimulationExtension::isEntityNameChangeRequestValid(
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
         // Only return true if the entity is within the build area.
         const auto& position{world.registry.get<Position>(entity)};
-        return VALID_BUILD_AREA_EXTENT.containsPosition(TilePosition(position));
+        return VALID_BUILD_AREA_EXTENT.contains(TilePosition(position));
     }
     else {
         // No restrictions, always return true;
@@ -133,7 +133,7 @@ bool SimulationExtension::isGraphicStateChangeRequestValid(
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
         // Only return true if the entity is within the build area.
         const auto& position{world.registry.get<Position>(entity)};
-        return VALID_BUILD_AREA_EXTENT.containsPosition(TilePosition(position));
+        return VALID_BUILD_AREA_EXTENT.contains(TilePosition(position));
     }
     else {
         // No restrictions, always return true;

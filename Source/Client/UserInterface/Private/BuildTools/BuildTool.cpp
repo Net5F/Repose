@@ -62,7 +62,7 @@ void BuildTool::onMouseMove(const SDL_Point& cursorPosition)
         Transforms::screenToWorldTile(screenPoint, camera)};
 
     // If the mouse is within the world bounds, save the new positions.
-    if (mapTileExtent.containsPosition(newTilePosition)) {
+    if (mapTileExtent.contains(newTilePosition)) {
         mouseWorldPoint = newWorldPoint;
         mouseTilePosition = newTilePosition;
         isActive = true;

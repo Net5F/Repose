@@ -15,7 +15,7 @@ add_library(Shared INTERFACE)
 #        AmalgamEngine::SharedLib
 #)
 
-# Compile with C++20.
+# Compile with C++23.
 #target_compile_features(Shared PRIVATE cxx_std_23)
 #set_target_properties(Shared PROPERTIES CXX_EXTENSIONS OFF)
 

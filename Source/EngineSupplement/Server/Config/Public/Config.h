@@ -23,7 +23,7 @@ public:
     // Simulation
     //-------------------------------------------------------------------------
     /** The strategy that we'll use when spawning entities. */
-    static constexpr SpawnStrategy SPAWN_STRATEGY{SpawnStrategy::Fixed};
+    static constexpr SpawnStrategy SPAWN_STRATEGY{SpawnStrategy::Grouped};
 
     // SpawnPoint::Fixed Config
     /** Fixed spawn position. */
@@ -49,10 +49,7 @@ public:
         - SharedConfig::TILE_WORLD_WIDTH};
 
     // SpawnPoint::Grouped Config
-    /** The starting position of the first group. */
-    static constexpr float SPAWN_POINT_GROUP_MIN_X{SPAWN_POINT_RANDOM_MIN_X};
-    static constexpr float SPAWN_POINT_GROUP_MIN_Y{SPAWN_POINT_RANDOM_MIN_Y};
-
+    // Note: Spawns will start at the NW corner of the map, at Z==0.
     /** The number of columns and rows that a group consists of. */
     static constexpr unsigned int SPAWN_POINT_GROUP_COLUMNS{5};
     static constexpr unsigned int SPAWN_POINT_GROUP_ROWS{2};
@@ -62,7 +59,7 @@ public:
     static constexpr float SPAWN_POINT_GROUP_PADDING_Y{32};
 
     /** The offset between groups. */
-    static constexpr float SPAWN_POINT_GROUP_OFFSET_X{0};
+    static constexpr float SPAWN_POINT_GROUP_OFFSET_X{400};
     static constexpr float SPAWN_POINT_GROUP_OFFSET_Y{400};
 
     /** How often the world's data (tile map, entities, etc) should be saved, 

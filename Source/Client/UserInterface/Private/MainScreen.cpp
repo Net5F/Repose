@@ -177,7 +177,7 @@ void MainScreen::onPositionChanged(entt::registry& registry,
 
     // If the new position is within the build area, make the hint text visible.
     const Position& position{registry.get<Position>(entity)};
-    if (BUILD_MODE_AREA_EXTENT.containsPosition(TilePosition(position))) {
+    if (BUILD_MODE_AREA_EXTENT.contains(TilePosition(position))) {
         if (!playerIsInBuildArea) {
             // The player just entered the build area.
             mainOverlay.setBuildModeHintVisibility(true);

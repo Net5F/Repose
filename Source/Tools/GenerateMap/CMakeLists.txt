@@ -19,8 +19,8 @@ target_link_libraries(GenerateMap
         AmalgamEngine::SharedLib
 )
 
-# Compile with C++20.
-target_compile_features(GenerateMap PRIVATE cxx_std_20)
+# Compile with C++23.
+target_compile_features(GenerateMap PRIVATE cxx_std_23)
 set_target_properties(GenerateMap PROPERTIES CXX_EXTENSIONS OFF)
 
 # Enable compile warnings.
