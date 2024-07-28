@@ -3,6 +3,7 @@
 #include "Network.h"
 #include "MainScreen.h"
 #include "Inventory.h"
+#include "Interaction.h"
 #include "EntityInteractionRequest.h"
 #include "UseItemOnEntityRequest.h"
 #include "CombineItemsRequest.h"

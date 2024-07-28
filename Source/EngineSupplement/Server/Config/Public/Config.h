@@ -27,10 +27,8 @@ public:
 
     // SpawnPoint::Fixed Config
     /** Fixed spawn position. */
-    //static constexpr float SPAWN_POINT_FIXED_X{1060};
-    //static constexpr float SPAWN_POINT_FIXED_Y{1788};
-    static constexpr float SPAWN_POINT_FIXED_X{0};
-    static constexpr float SPAWN_POINT_FIXED_Y{0};
+    static constexpr float SPAWN_POINT_FIXED_X{1060};
+    static constexpr float SPAWN_POINT_FIXED_Y{1788};
 
     // SpawnPoint::Random Config
     // Note: We offset these positions to keep entities in bounds while moving.
@@ -59,8 +57,8 @@ public:
     static constexpr float SPAWN_POINT_GROUP_PADDING_Y{32};
 
     /** The offset between groups. */
-    static constexpr float SPAWN_POINT_GROUP_OFFSET_X{400};
-    static constexpr float SPAWN_POINT_GROUP_OFFSET_Y{400};
+    static constexpr float SPAWN_POINT_GROUP_OFFSET_X{500};
+    static constexpr float SPAWN_POINT_GROUP_OFFSET_Y{500};
 
     /** How often the world's data (tile map, entities, etc) should be saved, 
         in seconds. */
@@ -88,7 +86,7 @@ public:
     static constexpr unsigned int SERVER_PORT{41499};
 
     /** The maximum number of clients that we will allow. */
-    static constexpr unsigned int MAX_CLIENTS{200};
+    static constexpr unsigned int MAX_CLIENTS{1001};
 
     /** How long we should wait before considering the client to be timed out.
         Arbitrarily chosen. If too high, we set ourselves up to take a huge
