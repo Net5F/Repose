@@ -18,7 +18,8 @@ void printUsage()
     std::fflush(stdout);
 }
 
-int main(int argc, char* argv[])
+//int main(int argc, char** argv)
+int main(int, char**)
 {
     // if (argc != 4) {
     //     std::printf("Too few arguments.\n");

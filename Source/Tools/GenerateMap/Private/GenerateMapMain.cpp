@@ -11,7 +11,7 @@ const int MAX_X_LENGTH{64};
 const int MAX_Y_LENGTH{64};
 const int MAX_Z_LENGTH{10};
 
-int main(int, char*)
+int main(int, char**)
 {
     std::printf("##################################\n");
     std::printf("## Amalgam Engine Map Generator ##\n");

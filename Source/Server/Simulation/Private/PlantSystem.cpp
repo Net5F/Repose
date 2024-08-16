@@ -36,13 +36,13 @@ PlantSystem::PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData)
     }
 
     // Create all the sunflower entities.
-    for (int x{plantExtent.x}; x <= plantExtent.xMax(); ++x) {
-        for (int y{plantExtent.y}; y <= plantExtent.yMax(); y += 2) {
-            Position tileCenter{
-                TilePosition{x, y, 0}.getCenteredBottomPoint()};
-            createSapling(tileCenter);
-        }
-    }
+    //for (int x{plantExtent.x}; x <= plantExtent.xMax(); ++x) {
+    //    for (int y{plantExtent.y}; y <= plantExtent.yMax(); y += 2) {
+    //        Position tileCenter{
+    //            TilePosition{x, y, 0}.getCenteredBottomPoint()};
+    //        createSapling(tileCenter);
+    //    }
+    //}
 }
 
 void PlantSystem::updatePlants()

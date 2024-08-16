@@ -46,33 +46,33 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
     Timer timer;
 
     // Generate the initial maze state.
-    MazeTopology maze{};
-    generateMaze(maze);
-    applyMazeToMap(maze);
+    //MazeTopology maze{};
+    //generateMaze(maze);
+    //applyMazeToMap(maze);
 
     LOG_INFO("Maze generated in %.8fs", timer.getTime());
 }
 
 void MazeGenerationSystem::regenerateMazeIfNecessary()
 {
-    // If enough time has passed, regenerate the maze.
-    if (regenerationTimer.getTime() >= MAZE_REGENERATION_PERIOD_S) {
-        LOG_INFO("Generating maze...");
+    //// If enough time has passed, regenerate the maze.
+    //if (regenerationTimer.getTime() >= MAZE_REGENERATION_PERIOD_S) {
+    //    LOG_INFO("Generating maze...");
 
-        // Prime a timer.
-        Timer timer{};
+    //    // Prime a timer.
+    //    Timer timer{};
 
-        // Generate the maze topology.
-        MazeTopology maze{};
-        generateMaze(maze);
+    //    // Generate the maze topology.
+    //    MazeTopology maze{};
+    //    generateMaze(maze);
 
-        // Apply the generated maze to the map.
-        applyMazeToMap(maze);
+    //    // Apply the generated maze to the map.
+    //    applyMazeToMap(maze);
 
-        LOG_INFO("Maze generated in %.8fs", timer.getTime());
+    //    LOG_INFO("Maze generated in %.8fs", timer.getTime());
 
-        regenerationTimer.reset();
-    }
+    //    regenerationTimer.reset();
+    //}
 }
 
 void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
@@ -99,12 +99,13 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
     }
 
     // For each entity in the maze, clear to the existing path or an exit.
-    const std::vector<entt::entity>& entitiesInMaze{
-        world.entityLocator.getCollisions(mazeExtent)};
-    for (const entt::entity entity : entitiesInMaze) {
+    const std::vector<BoundingBox>& entitiesInMaze{
+        world.collisionLocator.getCollisions(
+            mazeExtent, (CollisionObjectType::ClientEntity
+                         | CollisionObjectType::NonClientEntity))};
+    for (const BoundingBox& entityBounds : entitiesInMaze) {
         // Calc the tile that the entity's center is on.
-        const Position& position{world.registry.get<Position>(entity)};
-        TilePosition tilePosition(position);
+        TilePosition tilePosition(entityBounds.getBottomCenterPoint());
         TilePosition abstractTilePosition{(tilePosition.x - mazeExtent.x) / 2,
                                           (tilePosition.y - mazeExtent.y) / 2,
                                           0};
@@ -113,7 +114,7 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
         clearToVisitedOrExit(outMaze, abstractTilePosition, passNumber++);
 
         // Clear any tiles that the entity is touching.
-        clearTilesTouchingEntity(outMaze, entity);
+        //clearTilesTouchingEntity(outMaze, entity);
     }
 
     // Flag any fully-enclosed cells to use the "full fill" sprite.
