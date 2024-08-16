@@ -99,13 +99,13 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
     }
 
     // For each entity in the maze, clear to the existing path or an exit.
-    const std::vector<BoundingBox>& entitiesInMaze{
-        world.collisionLocator.getCollisions(
-            mazeExtent, (CollisionObjectType::ClientEntity
-                         | CollisionObjectType::NonClientEntity))};
-    for (const BoundingBox& entityBounds : entitiesInMaze) {
+    const auto& collisionResult{world.collisionLocator.getCollisions(
+        mazeExtent, (CollisionObjectType::ClientEntity
+                     | CollisionObjectType::NonClientEntity))};
+    for (const auto* collisionInfo : collisionResult) {
         // Calc the tile that the entity's center is on.
-        TilePosition tilePosition(entityBounds.getBottomCenterPoint());
+        TilePosition tilePosition(
+            collisionInfo->collisionVolume.getBottomCenterPoint());
         TilePosition abstractTilePosition{(tilePosition.x - mazeExtent.x) / 2,
                                           (tilePosition.y - mazeExtent.y) / 2,
                                           0};
@@ -114,7 +114,7 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
         clearToVisitedOrExit(outMaze, abstractTilePosition, passNumber++);
 
         // Clear any tiles that the entity is touching.
-        //clearTilesTouchingEntity(outMaze, entity);
+        clearTilesTouchingEntity(outMaze, collisionInfo->entity);
     }
 
     // Flag any fully-enclosed cells to use the "full fill" sprite.
