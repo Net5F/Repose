@@ -18,12 +18,12 @@
                 9
             ],
             "modelBounds": {
-                "centerX": 17.0625,
-                "centerY": 18.25,
-                "centerZ": 22.799999237060547,
-                "halfX": 3.4375,
-                "halfY": 3.75,
-                "halfZ": 22.799999237060547
+                "maxX": 20.5,
+                "maxY": 22.0,
+                "maxZ": 45.599998474121094,
+                "minX": 13.625,
+                "minY": 14.5,
+                "minZ": 0.0
             },
             "modelBoundsID": 0,
             "numericID": 1,
@@ -46,12 +46,12 @@
         {
             "displayName": "Ghost",
             "modelBounds": {
-                "centerX": 12.25,
-                "centerY": 12.3125,
-                "centerZ": 14.399999618530273,
-                "halfX": 4.0,
-                "halfY": 4.4375,
-                "halfZ": 14.399999618530273
+                "maxX": 16.25,
+                "maxY": 16.75,
+                "maxZ": 28.799999237060547,
+                "minX": 8.25,
+                "minY": 7.875,
+                "minZ": 0.0
             },
             "numericID": 1
         }
@@ -400,12 +400,12 @@
                     "collisionEnabled": false,
                     "displayName": "Floor0",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 0.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 0.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 1,
@@ -422,12 +422,12 @@
                     "collisionEnabled": false,
                     "displayName": "Floor1",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 0.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 0.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 2,
@@ -444,12 +444,12 @@
                     "collisionEnabled": false,
                     "displayName": "Floor2",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 0.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 0.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 3,
@@ -466,12 +466,12 @@
                     "collisionEnabled": false,
                     "displayName": "Floor3",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 0.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 0.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 4,
@@ -488,12 +488,12 @@
                     "collisionEnabled": false,
                     "displayName": "Floor4",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 0.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 0.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 5,
@@ -510,12 +510,12 @@
                     "collisionEnabled": false,
                     "displayName": "Floor5",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 0.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 0.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 6,
@@ -532,12 +532,12 @@
                     "collisionEnabled": false,
                     "displayName": "Floor6",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 0.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 0.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 7,
@@ -554,12 +554,12 @@
                     "collisionEnabled": false,
                     "displayName": "Floor7",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 0.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 0.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 8,
@@ -581,12 +581,12 @@
                     "collisionEnabled": false,
                     "displayName": "Grass0",
                     "modelBounds": {
-                        "centerX": 15.125,
-                        "centerY": 14.875,
-                        "centerZ": 9.600000381469727,
-                        "halfX": 15.125,
-                        "halfY": 14.875,
-                        "halfZ": 9.600000381469727
+                        "maxX": 30.25,
+                        "maxY": 29.75,
+                        "maxZ": 19.200000762939453,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 9,
@@ -603,12 +603,12 @@
                     "collisionEnabled": false,
                     "displayName": "Grass1",
                     "modelBounds": {
-                        "centerX": 15.125,
-                        "centerY": 14.875,
-                        "centerZ": 9.600000381469727,
-                        "halfX": 15.125,
-                        "halfY": 14.875,
-                        "halfZ": 9.600000381469727
+                        "maxX": 30.25,
+                        "maxY": 29.75,
+                        "maxZ": 19.200000762939453,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 10,
@@ -625,12 +625,12 @@
                     "collisionEnabled": false,
                     "displayName": "Grass2",
                     "modelBounds": {
-                        "centerX": 15.125,
-                        "centerY": 14.875,
-                        "centerZ": 9.600000381469727,
-                        "halfX": 15.125,
-                        "halfY": 14.875,
-                        "halfZ": 9.600000381469727
+                        "maxX": 30.25,
+                        "maxY": 29.75,
+                        "maxZ": 19.200000762939453,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 11,
@@ -647,12 +647,12 @@
                     "collisionEnabled": false,
                     "displayName": "Grass3",
                     "modelBounds": {
-                        "centerX": 15.125,
-                        "centerY": 14.875,
-                        "centerZ": 6.0,
-                        "halfX": 15.125,
-                        "halfY": 14.875,
-                        "halfZ": 6.0
+                        "maxX": 30.25,
+                        "maxY": 29.75,
+                        "maxZ": 12.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 12,
@@ -669,12 +669,12 @@
                     "collisionEnabled": false,
                     "displayName": "Grass4",
                     "modelBounds": {
-                        "centerX": 15.125,
-                        "centerY": 14.875,
-                        "centerZ": 6.0,
-                        "halfX": 15.125,
-                        "halfY": 14.875,
-                        "halfZ": 6.0
+                        "maxX": 30.25,
+                        "maxY": 29.75,
+                        "maxZ": 12.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 13,
@@ -691,12 +691,12 @@
                     "collisionEnabled": true,
                     "displayName": "Grass_West1",
                     "modelBounds": {
-                        "centerX": 7.050000190734863,
-                        "centerY": 16.0,
-                        "centerZ": 2.5,
-                        "halfX": 0.04999995231628418,
-                        "halfY": 16.0,
-                        "halfZ": 2.5
+                        "maxX": 7.099999904632568,
+                        "maxY": 32.0,
+                        "maxZ": 5.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 14,
@@ -713,12 +713,12 @@
                     "collisionEnabled": true,
                     "displayName": "Grass_North1",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 7.050000190734863,
-                        "centerZ": 2.5,
-                        "halfX": 16.0,
-                        "halfY": 0.04999995231628418,
-                        "halfZ": 2.5
+                        "maxX": 32.0,
+                        "maxY": 7.099999904632568,
+                        "maxZ": 5.0,
+                        "minX": 0.0,
+                        "minY": 7.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 15,
@@ -735,12 +735,12 @@
                     "collisionEnabled": true,
                     "displayName": "Grass_NW1",
                     "modelBounds": {
-                        "centerX": 7.050000190734863,
-                        "centerY": 7.050000190734863,
-                        "centerZ": 2.5,
-                        "halfX": 0.04999995231628418,
-                        "halfY": 0.04999995231628418,
-                        "halfZ": 2.5
+                        "maxX": 7.099999904632568,
+                        "maxY": 7.099999904632568,
+                        "maxZ": 5.0,
+                        "minX": 7.0,
+                        "minY": 7.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 16,
@@ -757,12 +757,12 @@
                     "collisionEnabled": true,
                     "displayName": "Grass_NW2",
                     "modelBounds": {
-                        "centerX": 7.050000190734863,
-                        "centerY": 7.050000190734863,
-                        "centerZ": 2.5,
-                        "halfX": 0.04999995231628418,
-                        "halfY": 0.04999995231628418,
-                        "halfZ": 2.5
+                        "maxX": 7.099999904632568,
+                        "maxY": 7.099999904632568,
+                        "maxZ": 5.0,
+                        "minX": 7.0,
+                        "minY": 7.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 17,
@@ -779,12 +779,12 @@
                     "collisionEnabled": true,
                     "displayName": "Grass_North2",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 7.050000190734863,
-                        "centerZ": 2.5,
-                        "halfX": 16.0,
-                        "halfY": 0.04999995231628418,
-                        "halfZ": 2.5
+                        "maxX": 32.0,
+                        "maxY": 7.099999904632568,
+                        "maxZ": 5.0,
+                        "minX": 0.0,
+                        "minY": 7.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 18,
@@ -801,12 +801,12 @@
                     "collisionEnabled": true,
                     "displayName": "Grass_West2",
                     "modelBounds": {
-                        "centerX": 7.050000190734863,
-                        "centerY": 16.0,
-                        "centerZ": 2.5,
-                        "halfX": 0.04999995231628418,
-                        "halfY": 16.0,
-                        "halfZ": 2.5
+                        "maxX": 7.099999904632568,
+                        "maxY": 32.0,
+                        "maxZ": 5.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 19,
@@ -823,12 +823,12 @@
                     "collisionEnabled": true,
                     "displayName": "Sunflower_0",
                     "modelBounds": {
-                        "centerX": 17.3125,
-                        "centerY": 17.6875,
-                        "centerZ": 13.5,
-                        "halfX": 0.9375,
-                        "halfY": 0.5625,
-                        "halfZ": 13.5
+                        "maxX": 18.25,
+                        "maxY": 18.25,
+                        "maxZ": 27.0,
+                        "minX": 16.375,
+                        "minY": 17.125,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 20,
@@ -845,12 +845,12 @@
                     "collisionEnabled": true,
                     "displayName": "Sunflower_1",
                     "modelBounds": {
-                        "centerX": 17.3125,
-                        "centerY": 17.6875,
-                        "centerZ": 23.700000762939453,
-                        "halfX": 0.9375,
-                        "halfY": 0.5625,
-                        "halfZ": 23.700000762939453
+                        "maxX": 18.25,
+                        "maxY": 18.25,
+                        "maxZ": 47.400001525878906,
+                        "minX": 16.375,
+                        "minY": 17.125,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 21,
@@ -867,12 +867,12 @@
                     "collisionEnabled": true,
                     "displayName": "Sunflower_2",
                     "modelBounds": {
-                        "centerX": 17.3125,
-                        "centerY": 17.6875,
-                        "centerZ": 38.099998474121094,
-                        "halfX": 0.9375,
-                        "halfY": 0.5625,
-                        "halfZ": 38.099998474121094
+                        "maxX": 18.25,
+                        "maxY": 18.25,
+                        "maxZ": 76.19999694824219,
+                        "minX": 16.375,
+                        "minY": 17.125,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 22,
@@ -889,12 +889,12 @@
                     "collisionEnabled": true,
                     "displayName": "Sunflower_3",
                     "modelBounds": {
-                        "centerX": 17.3125,
-                        "centerY": 17.6875,
-                        "centerZ": 24.600000381469727,
-                        "halfX": 0.9375,
-                        "halfY": 0.5625,
-                        "halfZ": 24.600000381469727
+                        "maxX": 18.25,
+                        "maxY": 18.25,
+                        "maxZ": 49.20000076293945,
+                        "minX": 16.375,
+                        "minY": 17.125,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 23,
@@ -911,12 +911,12 @@
                     "collisionEnabled": false,
                     "displayName": "Grass15",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 24,
@@ -933,12 +933,12 @@
                     "collisionEnabled": false,
                     "displayName": "Grass16",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 25,
@@ -955,12 +955,12 @@
                     "collisionEnabled": false,
                     "displayName": "Grass17",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 26,
@@ -982,12 +982,12 @@
                     "collisionEnabled": true,
                     "displayName": "FullFill1",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 39.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 27,
@@ -1004,12 +1004,12 @@
                     "collisionEnabled": true,
                     "displayName": "FullFill2",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 39.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 28,
@@ -1026,12 +1026,12 @@
                     "collisionEnabled": true,
                     "displayName": "FullFill3",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 16.0,
-                        "centerZ": 39.0,
-                        "halfX": 16.0,
-                        "halfY": 16.0,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 29,
@@ -1048,12 +1048,12 @@
                     "collisionEnabled": true,
                     "displayName": "NE_Fill1",
                     "modelBounds": {
-                        "centerX": 19.5,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 12.5,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 30,
@@ -1070,12 +1070,12 @@
                     "collisionEnabled": true,
                     "displayName": "NE_Fill2",
                     "modelBounds": {
-                        "centerX": 19.5,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 12.5,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 31,
@@ -1092,12 +1092,12 @@
                     "collisionEnabled": true,
                     "displayName": "NE_Fill3",
                     "modelBounds": {
-                        "centerX": 19.5,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 12.5,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 32,
@@ -1114,12 +1114,12 @@
                     "collisionEnabled": true,
                     "displayName": "West3",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 16.0,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 16.0,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 33,
@@ -1136,12 +1136,12 @@
                     "collisionEnabled": true,
                     "displayName": "NW_Fill1",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 34,
@@ -1158,12 +1158,12 @@
                     "collisionEnabled": true,
                     "displayName": "NW_Fill2",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 35,
@@ -1180,12 +1180,12 @@
                     "collisionEnabled": true,
                     "displayName": "NW_Fill3",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 36,
@@ -1202,12 +1202,12 @@
                     "collisionEnabled": true,
                     "displayName": "Column",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 37,
@@ -1224,12 +1224,12 @@
                     "collisionEnabled": true,
                     "displayName": "North1",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 16.0,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 38,
@@ -1246,12 +1246,12 @@
                     "collisionEnabled": true,
                     "displayName": "North2",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 16.0,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 39,
@@ -1268,12 +1268,12 @@
                     "collisionEnabled": true,
                     "displayName": "West4",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 16.0,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 16.0,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 40,
@@ -1290,12 +1290,12 @@
                     "collisionEnabled": true,
                     "displayName": "North3",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 16.0,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 41,
@@ -1312,12 +1312,12 @@
                     "collisionEnabled": true,
                     "displayName": "North4",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 16.0,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 42,
@@ -1334,12 +1334,12 @@
                     "collisionEnabled": true,
                     "displayName": "North5",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 16.0,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 43,
@@ -1356,12 +1356,12 @@
                     "collisionEnabled": true,
                     "displayName": "North6",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 16.0,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 44,
@@ -1378,12 +1378,12 @@
                     "collisionEnabled": true,
                     "displayName": "West1",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 16.0,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 16.0,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 45,
@@ -1400,12 +1400,12 @@
                     "collisionEnabled": true,
                     "displayName": "West2",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 16.0,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 16.0,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 46,
@@ -1422,12 +1422,12 @@
                     "collisionEnabled": true,
                     "displayName": "West5",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 16.0,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 16.0,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 47,
@@ -1444,12 +1444,12 @@
                     "collisionEnabled": true,
                     "displayName": "West6",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 16.0,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 16.0,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 48,
@@ -1466,12 +1466,12 @@
                     "collisionEnabled": false,
                     "displayName": "Wall22",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 49,
@@ -1488,12 +1488,12 @@
                     "collisionEnabled": false,
                     "displayName": "Wall23",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 50,
@@ -1510,12 +1510,12 @@
                     "collisionEnabled": false,
                     "displayName": "Wall24",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 51,
@@ -1532,12 +1532,12 @@
                     "collisionEnabled": false,
                     "displayName": "Wall25",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 52,
@@ -1554,12 +1554,12 @@
                     "collisionEnabled": false,
                     "displayName": "Wall26",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 53,
@@ -1576,12 +1576,12 @@
                     "collisionEnabled": false,
                     "displayName": "Wall27",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 54,
@@ -1603,12 +1603,12 @@
                     "collisionEnabled": true,
                     "displayName": "Ghost_East",
                     "modelBounds": {
-                        "centerX": 12.25,
-                        "centerY": 12.3125,
-                        "centerZ": 14.399999618530273,
-                        "halfX": 4.0,
-                        "halfY": 4.4375,
-                        "halfZ": 14.399999618530273
+                        "maxX": 16.25,
+                        "maxY": 16.75,
+                        "maxZ": 28.799999237060547,
+                        "minX": 8.25,
+                        "minY": 7.875,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 1,
                     "numericID": 55,
@@ -1625,12 +1625,12 @@
                     "collisionEnabled": true,
                     "displayName": "Ghost_North",
                     "modelBounds": {
-                        "centerX": 12.25,
-                        "centerY": 12.3125,
-                        "centerZ": 14.399999618530273,
-                        "halfX": 4.0,
-                        "halfY": 4.4375,
-                        "halfZ": 14.399999618530273
+                        "maxX": 16.25,
+                        "maxY": 16.75,
+                        "maxZ": 28.799999237060547,
+                        "minX": 8.25,
+                        "minY": 7.875,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 1,
                     "numericID": 56,
@@ -1647,12 +1647,12 @@
                     "collisionEnabled": true,
                     "displayName": "Ghost_South",
                     "modelBounds": {
-                        "centerX": 12.25,
-                        "centerY": 12.3125,
-                        "centerZ": 14.399999618530273,
-                        "halfX": 4.0,
-                        "halfY": 4.4375,
-                        "halfZ": 14.399999618530273
+                        "maxX": 16.25,
+                        "maxY": 16.75,
+                        "maxZ": 28.799999237060547,
+                        "minX": 8.25,
+                        "minY": 7.875,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 1,
                     "numericID": 57,
@@ -1669,12 +1669,12 @@
                     "collisionEnabled": true,
                     "displayName": "Ghost_West",
                     "modelBounds": {
-                        "centerX": 12.25,
-                        "centerY": 12.3125,
-                        "centerZ": 14.399999618530273,
-                        "halfX": 4.0,
-                        "halfY": 4.4375,
-                        "halfZ": 14.399999618530273
+                        "maxX": 16.25,
+                        "maxY": 16.75,
+                        "maxZ": 28.799999237060547,
+                        "minX": 8.25,
+                        "minY": 7.875,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 1,
                     "numericID": 58,
@@ -1691,12 +1691,12 @@
                     "collisionEnabled": false,
                     "displayName": "Ghost4",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 59,
@@ -1713,12 +1713,12 @@
                     "collisionEnabled": false,
                     "displayName": "Ghost5",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 60,
@@ -1740,12 +1740,12 @@
                     "collisionEnabled": true,
                     "displayName": "Roberto",
                     "modelBounds": {
-                        "centerX": 15.25,
-                        "centerY": 15.75,
-                        "centerZ": 29.100000381469727,
-                        "halfX": 4.0,
-                        "halfY": 2.0,
-                        "halfZ": 29.100000381469727
+                        "maxX": 19.25,
+                        "maxY": 17.75,
+                        "maxZ": 58.20000076293945,
+                        "minX": 11.25,
+                        "minY": 13.75,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 61,
@@ -1767,12 +1767,12 @@
                     "collisionEnabled": true,
                     "displayName": "RobertoRun0",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 62,
@@ -1789,12 +1789,12 @@
                     "collisionEnabled": true,
                     "displayName": "RobertoRun1",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 63,
@@ -1811,12 +1811,12 @@
                     "collisionEnabled": true,
                     "displayName": "RobertoRun2",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 64,
@@ -1833,12 +1833,12 @@
                     "collisionEnabled": true,
                     "displayName": "RobertoRun3",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 65,
@@ -1855,12 +1855,12 @@
                     "collisionEnabled": true,
                     "displayName": "RobertoRun4",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 66,
@@ -1877,12 +1877,12 @@
                     "collisionEnabled": true,
                     "displayName": "RobertoRun5",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 67,
@@ -1899,12 +1899,12 @@
                     "collisionEnabled": true,
                     "displayName": "RobertoRun6",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 68,
@@ -1921,12 +1921,12 @@
                     "collisionEnabled": true,
                     "displayName": "RobertoRun7",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 69,
@@ -1943,12 +1943,12 @@
                     "collisionEnabled": true,
                     "displayName": "RobertoRun8",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 70,
@@ -1965,12 +1965,12 @@
                     "collisionEnabled": true,
                     "displayName": "RobertoRun9",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 71,
@@ -1992,12 +1992,12 @@
                     "collisionEnabled": true,
                     "displayName": "Template_NE_Fill",
                     "modelBounds": {
-                        "centerX": 19.5,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 12.5,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 7.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 72,
@@ -2014,12 +2014,12 @@
                     "collisionEnabled": true,
                     "displayName": "Template_NW_Fill",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 73,
@@ -2036,12 +2036,12 @@
                     "collisionEnabled": true,
                     "displayName": "Template_North",
                     "modelBounds": {
-                        "centerX": 16.0,
-                        "centerY": 3.5,
-                        "centerZ": 39.0,
-                        "halfX": 16.0,
-                        "halfY": 3.5,
-                        "halfZ": 39.0
+                        "maxX": 32.0,
+                        "maxY": 7.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 74,
@@ -2058,12 +2058,12 @@
                     "collisionEnabled": true,
                     "displayName": "Template_Terrain_Flat",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 75,
@@ -2080,12 +2080,12 @@
                     "collisionEnabled": true,
                     "displayName": "Template_Terrain_TwoThird",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 76,
@@ -2102,12 +2102,12 @@
                     "collisionEnabled": true,
                     "displayName": "Template_Terrain_Full",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 77,
@@ -2124,12 +2124,12 @@
                     "collisionEnabled": true,
                     "displayName": "Template_Terrain_OneThird",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 78,
@@ -2146,12 +2146,12 @@
                     "collisionEnabled": true,
                     "displayName": "Template_West",
                     "modelBounds": {
-                        "centerX": 3.5,
-                        "centerY": 16.0,
-                        "centerZ": 39.0,
-                        "halfX": 3.5,
-                        "halfY": 16.0,
-                        "halfZ": 39.0
+                        "maxX": 7.0,
+                        "maxY": 32.0,
+                        "maxZ": 78.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 79,
@@ -2168,12 +2168,12 @@
                     "collisionEnabled": true,
                     "displayName": "Template_8",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 80,
@@ -2190,12 +2190,12 @@
                     "collisionEnabled": true,
                     "displayName": "Template_9",
                     "modelBounds": {
-                        "centerX": 10.0,
-                        "centerY": 10.0,
-                        "centerZ": 10.0,
-                        "halfX": 10.0,
-                        "halfY": 10.0,
-                        "halfZ": 10.0
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 81,

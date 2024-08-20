@@ -481,7 +481,7 @@ void MazeGenerationSystem::clearTilesTouchingEntity(MazeTopology& maze,
     // maze bounds, and make it relative to the maze origin.
     const Collision& collision{world.registry.get<Collision>(entity)};
     TileExtent tileExtent(collision.worldBounds);
-    tileExtent.intersectWith(mazeExtent);
+    tileExtent = tileExtent.intersectWith(mazeExtent);
     tileExtent.x -= mazeExtent.x;
     tileExtent.y -= mazeExtent.y;
 

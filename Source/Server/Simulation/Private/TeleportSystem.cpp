@@ -2,7 +2,6 @@
 #include "World.h"
 #include "BoundingBox.h"
 #include "EnttGroups.h"
-#include "MinMaxBox.h"
 #include "Transforms.h"
 #include "Log.h"
 
@@ -16,7 +15,7 @@ TeleportSystem::TeleportSystem(World& inWorld)
 , updateTimer{}
 {
     // Maze -> dev room.
-    MinMaxBox box{{445.0f, 478.0f, 41.0f}, {44.0f, 0.0f, 1.0f}};
+    BoundingBox box{{445.0f, 478.0f, 41.0f}, {44.0f, 0.0f, 1.0f}};
     teleportVolumes.emplace_back(BoundingBox(box));
     teleportDestinations.emplace_back(52.0f, 1973.0f, 0.f);
 
