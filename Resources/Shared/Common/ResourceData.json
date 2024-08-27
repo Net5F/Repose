@@ -416,7 +416,8 @@
                         "x": 0,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -438,7 +439,8 @@
                         "x": 256,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -460,7 +462,8 @@
                         "x": 512,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -482,7 +485,8 @@
                         "x": 768,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -504,7 +508,8 @@
                         "x": 0,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -526,7 +531,8 @@
                         "x": 256,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -548,7 +554,8 @@
                         "x": 512,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -570,7 +577,8 @@
                         "x": 768,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 }
             ]
         },
@@ -597,7 +605,8 @@
                         "x": 0,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -619,7 +628,8 @@
                         "x": 256,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -641,7 +651,8 @@
                         "x": 512,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -663,7 +674,8 @@
                         "x": 768,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -685,7 +697,8 @@
                         "x": 1024,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -707,7 +720,8 @@
                         "x": 1280,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -729,7 +743,8 @@
                         "x": 0,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -751,7 +766,8 @@
                         "x": 256,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -773,7 +789,8 @@
                         "x": 512,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -795,7 +812,8 @@
                         "x": 768,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -817,7 +835,8 @@
                         "x": 1024,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -839,7 +858,8 @@
                         "x": 1280,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -861,7 +881,8 @@
                         "x": 0,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -883,7 +904,8 @@
                         "x": 256,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -905,7 +927,8 @@
                         "x": 512,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -927,7 +950,8 @@
                         "x": 768,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -949,7 +973,8 @@
                         "x": 1024,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -971,7 +996,8 @@
                         "x": 1280,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 }
             ]
         },
@@ -998,7 +1024,8 @@
                         "x": 0,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1020,7 +1047,8 @@
                         "x": 256,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1042,7 +1070,8 @@
                         "x": 512,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1064,7 +1093,8 @@
                         "x": 768,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1086,7 +1116,8 @@
                         "x": 1024,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1108,7 +1139,8 @@
                         "x": 1280,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1130,7 +1162,8 @@
                         "x": 1536,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1152,7 +1185,8 @@
                         "x": 0,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1174,7 +1208,8 @@
                         "x": 256,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1196,7 +1231,8 @@
                         "x": 512,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1218,7 +1254,8 @@
                         "x": 768,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1240,7 +1277,8 @@
                         "x": 1024,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1262,7 +1300,8 @@
                         "x": 1280,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1284,7 +1323,8 @@
                         "x": 1536,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1306,7 +1346,8 @@
                         "x": 0,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1328,7 +1369,8 @@
                         "x": 256,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1350,7 +1392,8 @@
                         "x": 512,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1372,7 +1415,8 @@
                         "x": 768,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1394,7 +1438,8 @@
                         "x": 1024,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1416,7 +1461,8 @@
                         "x": 1280,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1438,7 +1484,8 @@
                         "x": 1536,
                         "y": 1024
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1460,7 +1507,8 @@
                         "x": 0,
                         "y": 1536
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -1482,7 +1530,8 @@
                         "x": 256,
                         "y": 1536
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -1504,7 +1553,8 @@
                         "x": 512,
                         "y": 1536
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -1526,7 +1576,8 @@
                         "x": 768,
                         "y": 1536
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -1548,7 +1599,8 @@
                         "x": 1024,
                         "y": 1536
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -1570,7 +1622,8 @@
                         "x": 1280,
                         "y": 1536
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -1592,7 +1645,8 @@
                         "x": 1536,
                         "y": 1536
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 }
             ]
         },
@@ -1619,7 +1673,8 @@
                         "x": 0,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1641,7 +1696,8 @@
                         "x": 256,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1663,7 +1719,8 @@
                         "x": 512,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1685,7 +1742,8 @@
                         "x": 0,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -1707,7 +1765,8 @@
                         "x": 256,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": false,
@@ -1729,7 +1788,8 @@
                         "x": 512,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 }
             ]
         },
@@ -1756,7 +1816,8 @@
                         "x": 0,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 }
             ]
         },
@@ -1783,7 +1844,8 @@
                         "x": 0,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1805,7 +1867,8 @@
                         "x": 256,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1827,7 +1890,8 @@
                         "x": 512,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1849,7 +1913,8 @@
                         "x": 768,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1871,7 +1936,8 @@
                         "x": 1024,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1893,7 +1959,8 @@
                         "x": 0,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1915,7 +1982,8 @@
                         "x": 256,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1937,7 +2005,8 @@
                         "x": 512,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1959,7 +2028,8 @@
                         "x": 768,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -1981,7 +2051,8 @@
                         "x": 1024,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 }
             ]
         },
@@ -2008,7 +2079,8 @@
                         "x": 0,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -2030,7 +2102,8 @@
                         "x": 256,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -2052,7 +2125,8 @@
                         "x": 512,
                         "y": 0
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -2074,7 +2148,8 @@
                         "x": 768,
                         "y": 0
                     },
-                    "yOffset": 384
+                    "stageX": 128,
+                    "stageY": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2096,7 +2171,8 @@
                         "x": 1024,
                         "y": 0
                     },
-                    "yOffset": 384
+                    "stageX": 128,
+                    "stageY": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2118,7 +2194,8 @@
                         "x": 0,
                         "y": 512
                     },
-                    "yOffset": 384
+                    "stageX": 128,
+                    "stageY": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2140,7 +2217,8 @@
                         "x": 256,
                         "y": 512
                     },
-                    "yOffset": 384
+                    "stageX": 128,
+                    "stageY": 384
                 },
                 {
                     "collisionEnabled": true,
@@ -2162,7 +2240,8 @@
                         "x": 512,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -2184,7 +2263,8 @@
                         "x": 768,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 },
                 {
                     "collisionEnabled": true,
@@ -2206,7 +2286,8 @@
                         "x": 1024,
                         "y": 512
                     },
-                    "yOffset": 374
+                    "stageX": 128,
+                    "stageY": 374
                 }
             ]
         }
