@@ -20,13 +20,13 @@ namespace Client
 UserInterfaceExtension::UserInterfaceExtension(
     const UserInterfaceExDependencies& deps)
 : auiInitializer{deps.sdlRenderer,
-                 {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT}}
+                 {Config::LOGICAL_SCREEN_WIDTH, Config::LOGICAL_SCREEN_HEIGHT},
+                 {UserConfig::get().getWindowSize().w,
+                  UserConfig::get().getWindowSize().h}}
 , titleScreen{*this, deps.simulation, deps.uiEventDispatcher}
 , mainScreen{deps}
 , currentScreen{&titleScreen}
 {
-    SDL_Rect windowSize{UserConfig::get().getWindowSize()};
-    AUI::Core::setActualScreenSize({windowSize.w, windowSize.h});
 }
 
 void UserInterfaceExtension::changeScreenTo(ScreenType screenType)

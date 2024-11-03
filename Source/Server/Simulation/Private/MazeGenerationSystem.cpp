@@ -34,13 +34,13 @@ MazeGenerationSystem::MazeGenerationSystem(World& inWorld,
 , randGenerator{std::random_device()()}
 {
     // Fill in the graphic set ID's.
-    wallIDs[0] = graphicData.getWallGraphicSet("hedge").numericID;
-    wallIDs[1] = graphicData.getWallGraphicSet("hedgeflower").numericID;
-    wallIDs[2] = graphicData.getWallGraphicSet("roundedhedge").numericID;
-    wallIDs[3] = graphicData.getWallGraphicSet("roundedhedgeflower").numericID;
-    wallIDs[4] = graphicData.getWallGraphicSet("squaredhedge").numericID;
-    wallIDs[5] = graphicData.getWallGraphicSet("squaredhedgeflower").numericID;
-    fullFillID = graphicData.getObjectGraphicSet("hedgefullfill").numericID;
+    //wallIDs[0] = graphicData.getWallGraphicSet("hedge").numericID;
+    //wallIDs[1] = graphicData.getWallGraphicSet("hedgeflower").numericID;
+    //wallIDs[2] = graphicData.getWallGraphicSet("roundedhedge").numericID;
+    //wallIDs[3] = graphicData.getWallGraphicSet("roundedhedgeflower").numericID;
+    //wallIDs[4] = graphicData.getWallGraphicSet("squaredhedge").numericID;
+    //wallIDs[5] = graphicData.getWallGraphicSet("squaredhedgeflower").numericID;
+    //fullFillID = graphicData.getObjectGraphicSet("hedgefullfill").numericID;
 
     // Prime a timer.
     Timer timer;

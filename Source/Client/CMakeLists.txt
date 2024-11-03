@@ -87,8 +87,10 @@ else()
 endif()
 
 # Copy assets to the build directory.
-file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/
-     DESTINATION ${BUILD_RESOURCES_FOLDER}/)
+file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/Assets/Fonts/
+     DESTINATION ${BUILD_RESOURCES_FOLDER}/Assets/Fonts/)
+file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/Assets/Textures/
+     DESTINATION ${BUILD_RESOURCES_FOLDER}/Assets/Textures/)
 
 # Copy shared assets to the build directory.
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/

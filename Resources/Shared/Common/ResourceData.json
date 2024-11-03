@@ -1,56 +1,14 @@
 {
-    "animations": [
-        {
-            "collisionEnabled": false,
-            "displayName": "RobertoRun",
-            "fps": 12,
-            "frameCount": 10,
-            "frameNumbers": [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9
-            ],
-            "modelBounds": {
-                "maxX": 20.5,
-                "maxY": 22.0,
-                "maxZ": 45.599998474121094,
-                "minX": 13.625,
-                "minY": 14.5,
-                "minZ": 0.0
-            },
-            "modelBoundsID": 0,
-            "numericID": 1,
-            "spriteIDs": [
-                62,
-                63,
-                64,
-                65,
-                66,
-                67,
-                68,
-                69,
-                70,
-                71
-            ],
-            "stringID": "robertorun"
-        }
-    ],
+    "animations": [],
     "boundingBoxes": [
         {
             "displayName": "Ghost",
             "modelBounds": {
-                "maxX": 16.25,
-                "maxY": 16.75,
-                "maxZ": 28.799999237060547,
-                "minX": 8.25,
-                "minY": 7.875,
+                "maxX": 16.75,
+                "maxY": 17.25,
+                "maxZ": 26.399999618530273,
+                "minX": 6.875,
+                "minY": 7.625,
                 "minZ": 0.0
             },
             "numericID": 1
@@ -60,2328 +18,379 @@
         {
             "displayName": "Ghost",
             "graphicIDTypes": [
-                9,
                 1,
-                15,
                 7,
-                13,
                 5,
-                11,
                 3
             ],
             "graphicIDValues": [
-                57,
-                57,
-                55,
-                55,
-                56,
-                56,
-                58,
-                58
-            ],
-            "numericID": 1,
-            "stringID": "ghost"
-        },
-        {
-            "displayName": "sunflowerSapling",
-            "graphicIDTypes": [
-                1
-            ],
-            "graphicIDValues": [
-                20
-            ],
-            "numericID": 2,
-            "stringID": "sunflowersapling"
-        },
-        {
-            "displayName": "sunflowerMidGrowth",
-            "graphicIDTypes": [
-                1
-            ],
-            "graphicIDValues": [
-                21
-            ],
-            "numericID": 3,
-            "stringID": "sunflowermidgrowth"
-        },
-        {
-            "displayName": "sunflowerFullyGrown",
-            "graphicIDTypes": [
-                1
-            ],
-            "graphicIDValues": [
-                22
-            ],
-            "numericID": 4,
-            "stringID": "sunflowerfullygrown"
-        },
-        {
-            "displayName": "sunflowerDead",
-            "graphicIDTypes": [
-                1
-            ],
-            "graphicIDValues": [
-                23
-            ],
-            "numericID": 5,
-            "stringID": "sunflowerdead"
-        }
-    ],
-    "floors": [
-        {
-            "displayName": "Grass0",
-            "graphicIDs": [
-                1,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 1,
-            "stringID": "grass0"
-        },
-        {
-            "displayName": "Grass1",
-            "graphicIDs": [
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 2,
-            "stringID": "grass1"
-        },
-        {
-            "displayName": "Grass2",
-            "graphicIDs": [
                 3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                1,
+                2,
+                4
             ],
-            "numericID": 3,
-            "stringID": "grass2"
-        },
-        {
-            "displayName": "Grass3",
-            "graphicIDs": [
-                4,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 4,
-            "stringID": "grass3"
-        },
-        {
-            "displayName": "Grass4",
-            "graphicIDs": [
-                5,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 5,
-            "stringID": "grass4"
-        },
-        {
-            "displayName": "Grass5",
-            "graphicIDs": [
-                6,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 6,
-            "stringID": "grass5"
-        },
-        {
-            "displayName": "Template",
-            "graphicIDs": [
-                75,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 7,
-            "stringID": "template"
+            "numericID": 1
         }
     ],
-    "iconSheets": [
-        {
-            "icons": [
-                {
-                    "displayName": "Test_0",
-                    "numericID": 1,
-                    "stringID": "test_0",
-                    "textureExtent": {
-                        "h": 58,
-                        "w": 58,
-                        "x": 0,
-                        "y": 0
-                    }
-                },
-                {
-                    "displayName": "Test_1",
-                    "numericID": 2,
-                    "stringID": "test_1",
-                    "textureExtent": {
-                        "h": 58,
-                        "w": 58,
-                        "x": 58,
-                        "y": 0
-                    }
-                },
-                {
-                    "displayName": "Test_2",
-                    "numericID": 3,
-                    "stringID": "test_2",
-                    "textureExtent": {
-                        "h": 58,
-                        "w": 58,
-                        "x": 0,
-                        "y": 58
-                    }
-                },
-                {
-                    "displayName": "Test_3",
-                    "numericID": 4,
-                    "stringID": "test_3",
-                    "textureExtent": {
-                        "h": 58,
-                        "w": 58,
-                        "x": 58,
-                        "y": 58
-                    }
-                }
-            ],
-            "relPath": "Icons/Items/Test.png"
-        }
-    ],
-    "objects": [
-        {
-            "displayName": "Sunflower",
-            "graphicIDs": [
-                20,
-                21,
-                22,
-                23,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 1,
-            "stringID": "sunflower"
-        },
-        {
-            "displayName": "Grass",
-            "graphicIDs": [
-                14,
-                19,
-                15,
-                18,
-                16,
-                17,
-                0,
-                0
-            ],
-            "numericID": 2,
-            "stringID": "grass"
-        },
-        {
-            "displayName": "TemplateFullFill",
-            "graphicIDs": [
-                77,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 3,
-            "stringID": "templatefullfill"
-        },
-        {
-            "displayName": "HedgeFullFill",
-            "graphicIDs": [
-                27,
-                28,
-                29,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 4,
-            "stringID": "hedgefullfill"
-        },
-        {
-            "displayName": "Roberto",
-            "graphicIDs": [
-                69,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 5,
-            "stringID": "roberto"
-        },
-        {
-            "displayName": "Ghost",
-            "graphicIDs": [
-                57,
-                0,
-                58,
-                0,
-                56,
-                0,
-                55,
-                0
-            ],
-            "numericID": 6,
-            "stringID": "ghost"
-        },
-        {
-            "displayName": "Column",
-            "graphicIDs": [
-                37,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "numericID": 7,
-            "stringID": "column"
-        }
-    ],
+    "floors": [],
+    "iconSheets": [],
+    "objects": [],
     "spriteSheets": [
         {
-            "relPath": "Floors.png",
+            "displayName": "Ghost",
             "sprites": [
                 {
                     "collisionEnabled": false,
-                    "displayName": "Floor0",
+                    "displayName": "GhostEast",
+                    "imagePath": "Ghost/GhostEast.png",
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 0.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
+                        "maxX": 16.75,
+                        "maxY": 17.25,
+                        "maxZ": 26.399999618530273,
+                        "minX": 6.875,
+                        "minY": 7.625,
                         "minZ": 0.0
                     },
-                    "modelBoundsID": 0,
+                    "modelBoundsID": 1,
                     "numericID": 1,
-                    "stringID": "floor0",
+                    "stageX": 128,
+                    "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
                         "x": 0,
                         "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                    }
                 },
                 {
                     "collisionEnabled": false,
-                    "displayName": "Floor1",
+                    "displayName": "GhostNorth",
+                    "imagePath": "Ghost/GhostNorth.png",
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 0.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
+                        "maxX": 16.75,
+                        "maxY": 17.25,
+                        "maxZ": 26.399999618530273,
+                        "minX": 6.875,
+                        "minY": 7.625,
                         "minZ": 0.0
                     },
-                    "modelBoundsID": 0,
+                    "modelBoundsID": 1,
                     "numericID": 2,
-                    "stringID": "floor1",
+                    "stageX": 128,
+                    "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
                         "x": 256,
                         "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                    }
                 },
                 {
                     "collisionEnabled": false,
-                    "displayName": "Floor2",
+                    "displayName": "GhostSouth",
+                    "imagePath": "Ghost/GhostSouth.png",
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 0.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
+                        "maxX": 16.75,
+                        "maxY": 17.25,
+                        "maxZ": 26.399999618530273,
+                        "minX": 6.875,
+                        "minY": 7.625,
                         "minZ": 0.0
                     },
-                    "modelBoundsID": 0,
+                    "modelBoundsID": 1,
                     "numericID": 3,
-                    "stringID": "floor2",
+                    "stageX": 128,
+                    "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
                         "x": 512,
                         "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                    }
                 },
                 {
                     "collisionEnabled": false,
-                    "displayName": "Floor3",
+                    "displayName": "GhostWest",
+                    "imagePath": "Ghost/GhostWest.png",
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 0.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
+                        "maxX": 16.75,
+                        "maxY": 17.25,
+                        "maxZ": 26.399999618530273,
+                        "minX": 6.875,
+                        "minY": 7.625,
                         "minZ": 0.0
                     },
-                    "modelBoundsID": 0,
+                    "modelBoundsID": 1,
                     "numericID": 4,
-                    "stringID": "floor3",
+                    "stageX": 128,
+                    "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
                         "x": 768,
                         "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
+                    }
+                }
+            ],
+            "textureHeight": 512,
+            "textureWidth": 1024
+        },
+        {
+            "displayName": "Floor",
+            "sprites": [
                 {
                     "collisionEnabled": false,
-                    "displayName": "Floor4",
+                    "displayName": "Floor1",
+                    "imagePath": "Floors/Floor1.png",
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 0.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 5,
-                    "stringID": "floor4",
+                    "stageX": 128,
+                    "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
                         "x": 0,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                        "y": 0
+                    }
                 },
                 {
                     "collisionEnabled": false,
-                    "displayName": "Floor5",
+                    "displayName": "Floor1_Flowers",
+                    "imagePath": "Floors/Floor1_Flowers.png",
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 0.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 6,
-                    "stringID": "floor5",
+                    "stageX": 128,
+                    "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
                         "x": 256,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                        "y": 0
+                    }
                 },
                 {
                     "collisionEnabled": false,
-                    "displayName": "Floor6",
+                    "displayName": "Floor2",
+                    "imagePath": "Floors/Floor2.png",
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 0.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 7,
-                    "stringID": "floor6",
+                    "stageX": 128,
+                    "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
                         "x": 512,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                        "y": 0
+                    }
                 },
                 {
                     "collisionEnabled": false,
-                    "displayName": "Floor7",
+                    "displayName": "Floor2_Flowers",
+                    "imagePath": "Floors/Floor2_Flowers.png",
                     "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 0.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 8,
-                    "stringID": "floor7",
+                    "stageX": 128,
+                    "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
                         "x": 768,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                }
-            ]
-        },
-        {
-            "relPath": "Grass_Sunflower.png",
-            "sprites": [
+                        "y": 0
+                    }
+                },
                 {
                     "collisionEnabled": false,
-                    "displayName": "Grass0",
+                    "displayName": "Floor3",
+                    "imagePath": "Floors/Floor3.png",
                     "modelBounds": {
-                        "maxX": 30.25,
-                        "maxY": 29.75,
-                        "maxZ": 19.200000762939453,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 9,
-                    "stringID": "grass0",
+                    "stageX": 128,
+                    "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
                         "x": 0,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                        "y": 512
+                    }
                 },
                 {
                     "collisionEnabled": false,
-                    "displayName": "Grass1",
+                    "displayName": "Floor3_Flowers",
+                    "imagePath": "Floors/Floor3_Flowers.png",
                     "modelBounds": {
-                        "maxX": 30.25,
-                        "maxY": 29.75,
-                        "maxZ": 19.200000762939453,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 10,
-                    "stringID": "grass1",
+                    "stageX": 128,
+                    "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
                         "x": 256,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
+                        "y": 512
+                    }
+                }
+            ],
+            "textureHeight": 1024,
+            "textureWidth": 1024
+        },
+        {
+            "displayName": "Templates",
+            "sprites": [
                 {
                     "collisionEnabled": false,
-                    "displayName": "Grass2",
+                    "displayName": "TerrainFlat",
+                    "imagePath": "Templates\\TerrainFlat.png",
                     "modelBounds": {
-                        "maxX": 30.25,
-                        "maxY": 29.75,
-                        "maxZ": 19.200000762939453,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 11,
-                    "stringID": "grass2",
+                    "stageX": 128,
+                    "stageY": 384,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 512,
+                        "x": 0,
                         "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                    }
                 },
                 {
                     "collisionEnabled": false,
-                    "displayName": "Grass3",
+                    "displayName": "TerrainFull",
+                    "imagePath": "Templates\\TerrainFull.png",
                     "modelBounds": {
-                        "maxX": 30.25,
-                        "maxY": 29.75,
-                        "maxZ": 12.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 12,
-                    "stringID": "grass3",
+                    "stageX": 128,
+                    "stageY": 384,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 768,
+                        "x": 256,
                         "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                    }
                 },
                 {
                     "collisionEnabled": false,
-                    "displayName": "Grass4",
+                    "displayName": "TerrainOneThird",
+                    "imagePath": "Templates\\TerrainOneThird.png",
                     "modelBounds": {
-                        "maxX": 30.25,
-                        "maxY": 29.75,
-                        "maxZ": 12.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 13,
-                    "stringID": "grass4",
+                    "stageX": 128,
+                    "stageY": 384,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 1024,
+                        "x": 512,
                         "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                    }
                 },
                 {
-                    "collisionEnabled": true,
-                    "displayName": "Grass_West1",
+                    "collisionEnabled": false,
+                    "displayName": "TerrainTwoThird",
+                    "imagePath": "Templates\\TerrainTwoThird.png",
                     "modelBounds": {
-                        "maxX": 7.099999904632568,
-                        "maxY": 32.0,
-                        "maxZ": 5.0,
-                        "minX": 7.0,
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
                     "numericID": 14,
-                    "stringID": "grass_west1",
+                    "stageX": 128,
+                    "stageY": 384,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 1280,
+                        "x": 768,
                         "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Grass_North1",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.099999904632568,
-                        "maxZ": 5.0,
-                        "minX": 0.0,
-                        "minY": 7.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 15,
-                    "stringID": "grass_north1",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Grass_NW1",
-                    "modelBounds": {
-                        "maxX": 7.099999904632568,
-                        "maxY": 7.099999904632568,
-                        "maxZ": 5.0,
-                        "minX": 7.0,
-                        "minY": 7.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 16,
-                    "stringID": "grass_nw1",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Grass_NW2",
-                    "modelBounds": {
-                        "maxX": 7.099999904632568,
-                        "maxY": 7.099999904632568,
-                        "maxZ": 5.0,
-                        "minX": 7.0,
-                        "minY": 7.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 17,
-                    "stringID": "grass_nw2",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Grass_North2",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.099999904632568,
-                        "maxZ": 5.0,
-                        "minX": 0.0,
-                        "minY": 7.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 18,
-                    "stringID": "grass_north2",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Grass_West2",
-                    "modelBounds": {
-                        "maxX": 7.099999904632568,
-                        "maxY": 32.0,
-                        "maxZ": 5.0,
-                        "minX": 7.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 19,
-                    "stringID": "grass_west2",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1024,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Sunflower_0",
-                    "modelBounds": {
-                        "maxX": 18.25,
-                        "maxY": 18.25,
-                        "maxZ": 27.0,
-                        "minX": 16.375,
-                        "minY": 17.125,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 20,
-                    "stringID": "sunflower_0",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1280,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Sunflower_1",
-                    "modelBounds": {
-                        "maxX": 18.25,
-                        "maxY": 18.25,
-                        "maxZ": 47.400001525878906,
-                        "minX": 16.375,
-                        "minY": 17.125,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 21,
-                    "stringID": "sunflower_1",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Sunflower_2",
-                    "modelBounds": {
-                        "maxX": 18.25,
-                        "maxY": 18.25,
-                        "maxZ": 76.19999694824219,
-                        "minX": 16.375,
-                        "minY": 17.125,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 22,
-                    "stringID": "sunflower_2",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Sunflower_3",
-                    "modelBounds": {
-                        "maxX": 18.25,
-                        "maxY": 18.25,
-                        "maxZ": 49.20000076293945,
-                        "minX": 16.375,
-                        "minY": 17.125,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 23,
-                    "stringID": "sunflower_3",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Grass15",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 24,
-                    "stringID": "grass15",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Grass16",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 25,
-                    "stringID": "grass16",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1024,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Grass17",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 26,
-                    "stringID": "grass17",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1280,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
+                    }
                 }
-            ]
-        },
-        {
-            "relPath": "Walls.png",
-            "sprites": [
-                {
-                    "collisionEnabled": true,
-                    "displayName": "FullFill1",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 27,
-                    "stringID": "fullfill1",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "FullFill2",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 28,
-                    "stringID": "fullfill2",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "FullFill3",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 29,
-                    "stringID": "fullfill3",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "NE_Fill1",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 7.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 30,
-                    "stringID": "ne_fill1",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "NE_Fill2",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 7.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 31,
-                    "stringID": "ne_fill2",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1024,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "NE_Fill3",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 7.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 32,
-                    "stringID": "ne_fill3",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1280,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "West3",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 33,
-                    "stringID": "west3",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1536,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "NW_Fill1",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 34,
-                    "stringID": "nw_fill1",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "NW_Fill2",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 35,
-                    "stringID": "nw_fill2",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "NW_Fill3",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 36,
-                    "stringID": "nw_fill3",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Column",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 37,
-                    "stringID": "column",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "North1",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 38,
-                    "stringID": "north1",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1024,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "North2",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 39,
-                    "stringID": "north2",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1280,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "West4",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 40,
-                    "stringID": "west4",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1536,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "North3",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 41,
-                    "stringID": "north3",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "North4",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 42,
-                    "stringID": "north4",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "North5",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 43,
-                    "stringID": "north5",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "North6",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 44,
-                    "stringID": "north6",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "West1",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 45,
-                    "stringID": "west1",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1024,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "West2",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 46,
-                    "stringID": "west2",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1280,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "West5",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 47,
-                    "stringID": "west5",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1536,
-                        "y": 1024
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "West6",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 48,
-                    "stringID": "west6",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 1536
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Wall22",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 49,
-                    "stringID": "wall22",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 1536
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Wall23",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 50,
-                    "stringID": "wall23",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 1536
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Wall24",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 51,
-                    "stringID": "wall24",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 1536
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Wall25",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 52,
-                    "stringID": "wall25",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1024,
-                        "y": 1536
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Wall26",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 53,
-                    "stringID": "wall26",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1280,
-                        "y": 1536
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Wall27",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 54,
-                    "stringID": "wall27",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1536,
-                        "y": 1536
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                }
-            ]
-        },
-        {
-            "relPath": "Ghost.png",
-            "sprites": [
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Ghost_East",
-                    "modelBounds": {
-                        "maxX": 16.25,
-                        "maxY": 16.75,
-                        "maxZ": 28.799999237060547,
-                        "minX": 8.25,
-                        "minY": 7.875,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 1,
-                    "numericID": 55,
-                    "stringID": "ghost_east",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Ghost_North",
-                    "modelBounds": {
-                        "maxX": 16.25,
-                        "maxY": 16.75,
-                        "maxZ": 28.799999237060547,
-                        "minX": 8.25,
-                        "minY": 7.875,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 1,
-                    "numericID": 56,
-                    "stringID": "ghost_north",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Ghost_South",
-                    "modelBounds": {
-                        "maxX": 16.25,
-                        "maxY": 16.75,
-                        "maxZ": 28.799999237060547,
-                        "minX": 8.25,
-                        "minY": 7.875,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 1,
-                    "numericID": 57,
-                    "stringID": "ghost_south",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Ghost_West",
-                    "modelBounds": {
-                        "maxX": 16.25,
-                        "maxY": 16.75,
-                        "maxZ": 28.799999237060547,
-                        "minX": 8.25,
-                        "minY": 7.875,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 1,
-                    "numericID": 58,
-                    "stringID": "ghost_west",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Ghost4",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 59,
-                    "stringID": "ghost4",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "Ghost5",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 60,
-                    "stringID": "ghost5",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                }
-            ]
-        },
-        {
-            "relPath": "Roberto.png",
-            "sprites": [
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Roberto",
-                    "modelBounds": {
-                        "maxX": 19.25,
-                        "maxY": 17.75,
-                        "maxZ": 58.20000076293945,
-                        "minX": 11.25,
-                        "minY": 13.75,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 61,
-                    "stringID": "roberto",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                }
-            ]
-        },
-        {
-            "relPath": "RobertoRun.png",
-            "sprites": [
-                {
-                    "collisionEnabled": true,
-                    "displayName": "RobertoRun0",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 62,
-                    "stringID": "robertorun0",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "RobertoRun1",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 63,
-                    "stringID": "robertorun1",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "RobertoRun2",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 64,
-                    "stringID": "robertorun2",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "RobertoRun3",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 65,
-                    "stringID": "robertorun3",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "RobertoRun4",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 66,
-                    "stringID": "robertorun4",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1024,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "RobertoRun5",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 67,
-                    "stringID": "robertorun5",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "RobertoRun6",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 68,
-                    "stringID": "robertorun6",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "RobertoRun7",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 69,
-                    "stringID": "robertorun7",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "RobertoRun8",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 70,
-                    "stringID": "robertorun8",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "RobertoRun9",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 71,
-                    "stringID": "robertorun9",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1024,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                }
-            ]
-        },
-        {
-            "relPath": "Templates.png",
-            "sprites": [
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_NE_Fill",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 7.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 72,
-                    "stringID": "template_ne_fill",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_NW_Fill",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 73,
-                    "stringID": "template_nw_fill",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_North",
-                    "modelBounds": {
-                        "maxX": 32.0,
-                        "maxY": 7.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 74,
-                    "stringID": "template_north",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_Terrain_Flat",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 75,
-                    "stringID": "template_terrain_flat",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 384
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_Terrain_TwoThird",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 76,
-                    "stringID": "template_terrain_twothird",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1024,
-                        "y": 0
-                    },
-                    "stageX": 128,
-                    "stageY": 384
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_Terrain_Full",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 77,
-                    "stringID": "template_terrain_full",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 0,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 384
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_Terrain_OneThird",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 78,
-                    "stringID": "template_terrain_onethird",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 256,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 384
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_West",
-                    "modelBounds": {
-                        "maxX": 7.0,
-                        "maxY": 32.0,
-                        "maxZ": 78.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 79,
-                    "stringID": "template_west",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 512,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_8",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 80,
-                    "stringID": "template_8",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 768,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                },
-                {
-                    "collisionEnabled": true,
-                    "displayName": "Template_9",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 81,
-                    "stringID": "template_9",
-                    "textureExtent": {
-                        "h": 512,
-                        "w": 256,
-                        "x": 1024,
-                        "y": 512
-                    },
-                    "stageX": 128,
-                    "stageY": 374
-                }
-            ]
+            ],
+            "textureHeight": 512,
+            "textureWidth": 1024
         }
     ],
     "terrain": [
         {
             "displayName": "Template",
             "graphicIDs": [
-                75,
-                78,
-                76,
-                77
+                11,
+                13,
+                14,
+                12
             ],
-            "numericID": 1,
-            "stringID": "template"
+            "numericID": 1
         }
     ],
-    "walls": [
-        {
-            "displayName": "Template",
-            "graphicIDs": [
-                79,
-                74,
-                73,
-                72
-            ],
-            "numericID": 1,
-            "stringID": "template"
-        },
-        {
-            "displayName": "Hedge",
-            "graphicIDs": [
-                33,
-                41,
-                34,
-                30
-            ],
-            "numericID": 2,
-            "stringID": "hedge"
-        },
-        {
-            "displayName": "HedgeFlower",
-            "graphicIDs": [
-                40,
-                42,
-                36,
-                32
-            ],
-            "numericID": 3,
-            "stringID": "hedgeflower"
-        },
-        {
-            "displayName": "RoundedHedge",
-            "graphicIDs": [
-                45,
-                38,
-                34,
-                30
-            ],
-            "numericID": 4,
-            "stringID": "roundedhedge"
-        },
-        {
-            "displayName": "RoundedHedgeFlower",
-            "graphicIDs": [
-                46,
-                39,
-                35,
-                31
-            ],
-            "numericID": 5,
-            "stringID": "roundedhedgeflower"
-        },
-        {
-            "displayName": "SquaredHedge",
-            "graphicIDs": [
-                47,
-                43,
-                34,
-                30
-            ],
-            "numericID": 6,
-            "stringID": "squaredhedge"
-        },
-        {
-            "displayName": "SquaredHedgeFlower",
-            "graphicIDs": [
-                48,
-                44,
-                36,
-                31
-            ],
-            "numericID": 7,
-            "stringID": "squaredhedgeflower"
-        }
-    ]
+    "walls": []
 }

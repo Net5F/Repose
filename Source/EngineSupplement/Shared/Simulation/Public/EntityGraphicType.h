@@ -17,6 +17,7 @@ namespace AM
 enum class EntityGraphicType : Uint8 {
     // Engine graphic types (copied here so we can use one strongly-typed enum).
     NotSet = static_cast<Uint8>(EngineEntityGraphicType::NotSet),
+    /** Note: All graphic sets are expected to contain IdleSouth. */
     IdleSouth = static_cast<Uint8>(EngineEntityGraphicType::IdleSouth),
     IdleSouthWest = static_cast<Uint8>(EngineEntityGraphicType::IdleSouthWest),
     IdleWest = static_cast<Uint8>(EngineEntityGraphicType::IdleWest),

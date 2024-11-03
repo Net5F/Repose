@@ -21,11 +21,12 @@ PlantSystem::PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData)
 , graphicData{inGraphicData}
 , updateTimer{}
 , plantExtent{4, 35, 0, 9, 11, 1}
-, sunflowerGraphicSetIDs{
-      graphicData.getEntityGraphicSet("sunflowersapling").numericID,
-      graphicData.getEntityGraphicSet("sunflowermidgrowth").numericID,
-      graphicData.getEntityGraphicSet("sunflowerfullygrown").numericID,
-      graphicData.getEntityGraphicSet("sunflowerdead").numericID}
+, sunflowerGraphicSetIDs{}
+//, sunflowerGraphicSetIDs{
+//      graphicData.getEntityGraphicSet("sunflowersapling").numericID,
+//      graphicData.getEntityGraphicSet("sunflowermidgrowth").numericID,
+//      graphicData.getEntityGraphicSet("sunflowerfullygrown").numericID,
+//      graphicData.getEntityGraphicSet("sunflowerdead").numericID}
 {
     // Delete any existing plants.
     auto& entitiesInPlantExtent{world.entityLocator.getEntities(plantExtent)};
