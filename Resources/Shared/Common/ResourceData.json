@@ -1,5 +1,36 @@
 {
-    "animations": [],
+    "animations": [
+        {
+            "collisionEnabled": false,
+            "displayName": "Male_0_Run",
+            "fps": 10,
+            "frameCount": 5,
+            "frameNumbers": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "modelBounds": {
+                "maxX": 20.0,
+                "maxY": 25.125,
+                "maxZ": 46.79999923706055,
+                "minX": 13.5,
+                "minY": 8.75,
+                "minZ": 0.0
+            },
+            "modelBoundsID": 0,
+            "numericID": 1,
+            "spriteIDs": [
+                15,
+                16,
+                17,
+                18,
+                19
+            ]
+        }
+    ],
     "boundingBoxes": [
         {
             "displayName": "Ghost",
@@ -19,15 +50,15 @@
             "displayName": "Ghost",
             "graphicIDTypes": [
                 1,
-                7,
                 5,
-                3
+                3,
+                7
             ],
             "graphicIDValues": [
                 3,
-                1,
                 2,
-                4
+                4,
+                1
             ],
             "numericID": 1
         }
@@ -377,6 +408,128 @@
                 }
             ],
             "textureHeight": 512,
+            "textureWidth": 1024
+        },
+        {
+            "displayName": "Roberto",
+            "sprites": [
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Male_0_Run_0",
+                    "imagePath": "Roberto\\Male_0_Run_0.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 15,
+                    "stageX": 128,
+                    "stageY": 374,
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Male_0_Run_1",
+                    "imagePath": "Roberto\\Male_0_Run_1.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 16,
+                    "stageX": 128,
+                    "stageY": 374,
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 256,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Male_0_Run_2",
+                    "imagePath": "Roberto\\Male_0_Run_2.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 17,
+                    "stageX": 128,
+                    "stageY": 374,
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 512,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Male_0_Run_3",
+                    "imagePath": "Roberto\\Male_0_Run_3.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 18,
+                    "stageX": 128,
+                    "stageY": 374,
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 768,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Male_0_Run_4",
+                    "imagePath": "Roberto\\Male_0_Run_4.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 19,
+                    "stageX": 128,
+                    "stageY": 374,
+                    "textureExtent": {
+                        "h": 512,
+                        "w": 256,
+                        "x": 0,
+                        "y": 512
+                    }
+                }
+            ],
+            "textureHeight": 1024,
             "textureWidth": 1024
         }
     ],

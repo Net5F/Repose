@@ -28,8 +28,6 @@ TeleportSystem::TeleportSystem(World& inWorld)
 void TeleportSystem::teleportPlayers()
 {
     if (updateTimer.getTime() >= UPDATE_TIMESTEP_S) {
-        auto movementGroup{EnttGroups::getMovementGroup(world.registry)};
-
         // For each teleport volume.
         for (std::size_t i = 0; i < teleportVolumes.size(); ++i) {
             const BoundingBox& volume{teleportVolumes[i]};
@@ -42,17 +40,7 @@ void TeleportSystem::teleportPlayers()
             // Teleport each entity to the destination.
             const Vector3& destination{teleportDestinations[i]};
             for (auto* collisionInfo : collisionMatches) {
-                auto [position, collision]
-                    = movementGroup.get<Position, Collision>(
-                        collisionInfo->entity);
-                position = destination;
-                collision.worldBounds = Transforms::modelToWorldEntity(
-                    collision.modelBounds, position);
-
-                // Flag that the entity's movement state needs to be synced.
-                // (movement state is auto-synced when Input is dirtied).
-                world.registry.patch<Input>(collisionInfo->entity,
-                                            [](auto&) {});
+                world.teleportEntity(collisionInfo->entity, destination);
             }
         }
 

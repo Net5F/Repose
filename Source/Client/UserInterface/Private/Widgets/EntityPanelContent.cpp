@@ -325,7 +325,7 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
     // Calc a square texture extent that shows the bottom of the sprite
     // (so we don't have to squash it).
     const SpriteRenderData& renderData{
-        graphicData.getRenderData(graphic.getFirstSprite().numericID)};
+        graphicData.getSpriteRenderData(graphic.getFirstSprite().numericID)};
     SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
 
     // Load the sprite's image.
@@ -369,8 +369,8 @@ void EntityPanelContent::addTemplateThumbnails(
 
         // Calc a square texture extent that shows the bottom of the sprite
         // (so we don't have to squash it).
-        const SpriteRenderData& renderData{
-            graphicData.getRenderData(graphic.getFirstSprite().numericID)};
+        const SpriteRenderData& renderData{graphicData.getSpriteRenderData(
+            graphic.getFirstSprite().numericID)};
         SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
 
         // Load the sprite's image.
@@ -417,7 +417,7 @@ void EntityPanelContent::addSpriteSetThumbnails()
             graphicSet.graphics.at(EntityGraphicType::IdleSouth)
                 .getFirstSprite()};
         const SpriteRenderData& renderData{
-            graphicData.getRenderData(sprite.numericID)};
+            graphicData.getSpriteRenderData(sprite.numericID)};
         SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
 
         // Load the sprite's image.
