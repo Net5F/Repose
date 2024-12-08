@@ -204,7 +204,7 @@ void BuildPanel::addTileGraphicSet(TileLayer::Type type,
 
     // Load the sprite's image.
     thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath,
-                                            textureExtent);
+                                            textureExtent, SDL_ScaleModeLinear);
 
     // Add a callback to deactivate all other thumbnails when one is activated.
     thumbnail.setOnSelected([this, &graphicSet](AUI::Thumbnail* selectedThumb) {

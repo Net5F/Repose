@@ -84,6 +84,7 @@
                     },
                     "modelBoundsID": 1,
                     "numericID": 1,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
@@ -107,12 +108,13 @@
                     },
                     "modelBoundsID": 1,
                     "numericID": 2,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 256,
+                        "x": 258,
                         "y": 0
                     }
                 },
@@ -130,12 +132,13 @@
                     },
                     "modelBoundsID": 1,
                     "numericID": 3,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 512,
+                        "x": 516,
                         "y": 0
                     }
                 },
@@ -153,18 +156,19 @@
                     },
                     "modelBoundsID": 1,
                     "numericID": 4,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 768,
+                        "x": 774,
                         "y": 0
                     }
                 }
             ],
-            "textureHeight": 512,
-            "textureWidth": 1024
+            "textureHeight": 1024,
+            "textureWidth": 2048
         },
         {
             "displayName": "Floor",
@@ -183,6 +187,7 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 5,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
@@ -206,12 +211,13 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 6,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 256,
+                        "x": 258,
                         "y": 0
                     }
                 },
@@ -229,12 +235,13 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 7,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 512,
+                        "x": 516,
                         "y": 0
                     }
                 },
@@ -252,12 +259,13 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 8,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 768,
+                        "x": 774,
                         "y": 0
                     }
                 },
@@ -275,13 +283,14 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 9,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 0,
-                        "y": 512
+                        "x": 1032,
+                        "y": 0
                     }
                 },
                 {
@@ -298,18 +307,19 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 10,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 256,
-                        "y": 512
+                        "x": 1290,
+                        "y": 0
                     }
                 }
             ],
             "textureHeight": 1024,
-            "textureWidth": 1024
+            "textureWidth": 2048
         },
         {
             "displayName": "Templates",
@@ -328,6 +338,7 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 11,
+                    "premultiplyAlpha": true,
                     "stageX": 128,
                     "stageY": 384,
                     "textureExtent": {
@@ -351,12 +362,13 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 12,
+                    "premultiplyAlpha": true,
                     "stageX": 128,
                     "stageY": 384,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 256,
+                        "x": 258,
                         "y": 0
                     }
                 },
@@ -374,12 +386,13 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 13,
+                    "premultiplyAlpha": true,
                     "stageX": 128,
                     "stageY": 384,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 512,
+                        "x": 516,
                         "y": 0
                     }
                 },
@@ -397,18 +410,19 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 14,
+                    "premultiplyAlpha": true,
                     "stageX": 128,
                     "stageY": 384,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 768,
+                        "x": 774,
                         "y": 0
                     }
                 }
             ],
-            "textureHeight": 512,
-            "textureWidth": 1024
+            "textureHeight": 1024,
+            "textureWidth": 2048
         },
         {
             "displayName": "Roberto",
@@ -427,6 +441,7 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 15,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
@@ -450,12 +465,13 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 16,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 256,
+                        "x": 258,
                         "y": 0
                     }
                 },
@@ -473,12 +489,13 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 17,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 512,
+                        "x": 516,
                         "y": 0
                     }
                 },
@@ -496,12 +513,13 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 18,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 768,
+                        "x": 774,
                         "y": 0
                     }
                 },
@@ -519,18 +537,19 @@
                     },
                     "modelBoundsID": 0,
                     "numericID": 19,
+                    "premultiplyAlpha": false,
                     "stageX": 128,
                     "stageY": 374,
                     "textureExtent": {
                         "h": 512,
                         "w": 256,
-                        "x": 0,
-                        "y": 512
+                        "x": 1032,
+                        "y": 0
                     }
                 }
             ],
             "textureHeight": 1024,
-            "textureWidth": 1024
+            "textureWidth": 2048
         }
     ],
     "terrain": [

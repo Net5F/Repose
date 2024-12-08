@@ -23,7 +23,7 @@ public:
     // Simulation
     //-------------------------------------------------------------------------
     /** The strategy that we'll use when spawning entities. */
-    static constexpr SpawnStrategy SPAWN_STRATEGY{SpawnStrategy::Grouped};
+    static constexpr SpawnStrategy SPAWN_STRATEGY{SpawnStrategy::Fixed};
 
     // SpawnPoint::Fixed Config
     /** Fixed spawn position. */
