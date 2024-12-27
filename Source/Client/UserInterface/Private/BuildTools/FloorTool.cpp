@@ -139,6 +139,10 @@ void FloorTool::onMouseMove(const SDL_Point& cursorPosition)
         // If our tile position changed, default our Z offset to line up with 
         // the new tile.
         if (mouseTilePosition != oldMouseTilePosition) {
+            // First reset the Z offset, in case the new tile doesn't exist 
+            // or it doesn't have a terrain layer.
+            selectedTileOffset.z = 0;
+
             if (const Tile* tile{world.tileMap.cgetTile(mouseTilePosition)}) {
                 if (const TileLayer*
                      terrain{tile->findLayer(TileLayer::Type::Terrain)}) {

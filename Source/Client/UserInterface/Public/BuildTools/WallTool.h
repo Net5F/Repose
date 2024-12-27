@@ -33,19 +33,19 @@ private:
      * types depend on whether the mouse is closer to the top or left of a tile,
      * and what wall types are already on that tile.
      */
-    void addPhantomWalls(const SDL_Point& cursorPosition);
+    void addPhantomWalls();
 
     /**
-     * Adds a North wall phantom to the given tile and adds gap fills if
+     * Adds a North wall phantom to mouseTilePosition and adds gap fills if
      * necessary.
      */
-    void addNorthWallPhantom(const TilePosition& tilePosition);
+    void addNorthWallPhantom();
 
     /**
-     * Adds a West wall phantom to the given tile and adds gap fills if
+     * Adds a West wall phantom to mouseTilePosition and adds gap fills if
      * necessary.
      */
-    void addWestWallPhantom(const TilePosition& tilePosition);
+    void addWestWallPhantom();
 
     /**
      * Pushes the given sprite into the phantomTileSprites vector as a phantom

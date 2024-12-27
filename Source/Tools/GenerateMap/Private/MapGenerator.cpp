@@ -37,10 +37,10 @@ void MapGenerator::generateAndSave(const std::string& fileName)
             ChunkPosition chunkPosition{x, y, groundLevel};
             ChunkSnapshot& chunkSnapshot{mapSnapshot.chunks[chunkPosition]};
 
-            // Push the graphic that we're filling the map with into this chunk's 
-            // palette.
+            // Push the terrain that we're filling the map with into this 
+            // chunk's palette.
             chunkSnapshot.getPaletteIndex(TileLayer::Type::Terrain,
-                                          fillGraphicSetID, 0);
+                                          fillGraphicSetID, Terrain::Flat);
 
             // Push the palette index of the graphic into each tile.
             for (std::size_t i{0}; i < SharedConfig::CHUNK_TILE_COUNT;

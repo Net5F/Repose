@@ -43,7 +43,8 @@ void RemoveTool::onMouseDown(AUI::MouseButtonType buttonType,
             network.serializeAndSend(EntityDeleteRequest{*entity});
         }
         else {
-            // Didn't hit a removable object. Tell the sim to remove the terrain.
+            // Didn't hit a removable object, must be terrain. Tell the sim to 
+            // remove the terrain.
             network.serializeAndSend(
                 TileRemoveLayer{mouseTilePosition, TileOffset{},
                                 TileLayer::Type::Terrain, 0, 0});

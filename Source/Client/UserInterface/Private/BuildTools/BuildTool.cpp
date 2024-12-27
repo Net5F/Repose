@@ -2,6 +2,7 @@
 #include "World.h"
 #include "Network.h"
 #include "Transforms.h"
+#include "SDLHelpers.h"
 
 namespace AM
 {
@@ -54,16 +55,17 @@ void BuildTool::onMouseWheel(int) {}
 void BuildTool::onMouseMove(const SDL_Point& cursorPosition)
 {
     // Get the tile coordinate that the mouse is hovering over.
-    SDL_FPoint screenPoint{static_cast<float>(cursorPosition.x),
-                           static_cast<float>(cursorPosition.y)};
-    Vector3 newWorldPoint{
+    // Note: This will return a tile coordinate at the same Z height as the 
+    //       camera's target (usually the player entity). This isn't always the
+    //       most intuitive result, and may have room for improvement.
+    SDL_FPoint screenPoint{SDLHelpers::pointToFPoint(cursorPosition)};
+    std::optional<Vector3> newWorldPoint{
         Transforms::screenToWorldTarget(screenPoint, camera)};
-    TilePosition newTilePosition{
-        Transforms::screenToWorldTile(screenPoint, camera)};
+    TilePosition newTilePosition(newWorldPoint.value());
 
     // If the mouse is within the world bounds, save the new positions.
-    if (mapTileExtent.contains(newTilePosition)) {
-        mouseWorldPoint = newWorldPoint;
+    if (newWorldPoint && mapTileExtent.contains(newTilePosition)) {
+        mouseWorldPoint = newWorldPoint.value();
         mouseTilePosition = newTilePosition;
         isActive = true;
     }

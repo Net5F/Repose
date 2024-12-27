@@ -63,9 +63,39 @@
             "numericID": 1
         }
     ],
-    "floors": [],
+    "floors": [
+        {
+            "displayName": "Grass",
+            "graphicIDs": [
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                0,
+                0
+            ],
+            "numericID": 1
+        }
+    ],
     "iconSheets": [],
-    "objects": [],
+    "objects": [
+        {
+            "displayName": "Ghost",
+            "graphicIDs": [
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "numericID": 1
+        }
+    ],
     "spriteSheets": [
         {
             "displayName": "Ghost",
@@ -178,9 +208,9 @@
                     "displayName": "Floor1",
                     "imagePath": "Floors/Floor1.png",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -202,9 +232,9 @@
                     "displayName": "Floor1_Flowers",
                     "imagePath": "Floors/Floor1_Flowers.png",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -226,9 +256,9 @@
                     "displayName": "Floor2",
                     "imagePath": "Floors/Floor2.png",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -250,9 +280,9 @@
                     "displayName": "Floor2_Flowers",
                     "imagePath": "Floors/Floor2_Flowers.png",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -274,9 +304,9 @@
                     "displayName": "Floor3",
                     "imagePath": "Floors/Floor3.png",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -298,9 +328,9 @@
                     "displayName": "Floor3_Flowers",
                     "imagePath": "Floors/Floor3_Flowers.png",
                     "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
+                        "maxX": 32.0,
+                        "maxY": 32.0,
+                        "maxZ": 0.0,
                         "minX": 0.0,
                         "minY": 0.0,
                         "minZ": 0.0
@@ -417,6 +447,102 @@
                         "h": 512,
                         "w": 256,
                         "x": 774,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "NorthWall",
+                    "imagePath": "Templates\\NorthWall.png",
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 5.5,
+                        "maxZ": 84.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 21,
+                    "premultiplyAlpha": true,
+                    "stageX": 22,
+                    "stageY": 168,
+                    "textureExtent": {
+                        "h": 243,
+                        "w": 150,
+                        "x": 1032,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "NWGapFill",
+                    "imagePath": "Templates\\NWGapFill.png",
+                    "modelBounds": {
+                        "maxX": 5.5,
+                        "maxY": 5.5,
+                        "maxZ": 84.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 22,
+                    "premultiplyAlpha": true,
+                    "stageX": 22,
+                    "stageY": 168,
+                    "textureExtent": {
+                        "h": 190,
+                        "w": 44,
+                        "x": 1290,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "WestWall",
+                    "imagePath": "Templates\\WestWall.png",
+                    "modelBounds": {
+                        "maxX": 5.5,
+                        "maxY": 32.0,
+                        "maxZ": 84.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 23,
+                    "premultiplyAlpha": true,
+                    "stageX": 128,
+                    "stageY": 168,
+                    "textureExtent": {
+                        "h": 243,
+                        "w": 150,
+                        "x": 1548,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": true,
+                    "displayName": "NEGapFill",
+                    "imagePath": "Templates\\NEGapFill.png",
+                    "modelBounds": {
+                        "maxX": 32.0,
+                        "maxY": 5.5,
+                        "maxZ": 84.0,
+                        "minX": 5.5,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 24,
+                    "premultiplyAlpha": true,
+                    "stageX": 22,
+                    "stageY": 168,
+                    "textureExtent": {
+                        "h": 243,
+                        "w": 150,
+                        "x": 1806,
                         "y": 0
                     }
                 }
@@ -564,5 +690,16 @@
             "numericID": 1
         }
     ],
-    "walls": []
+    "walls": [
+        {
+            "displayName": "Template",
+            "graphicIDs": [
+                23,
+                21,
+                22,
+                24
+            ],
+            "numericID": 1
+        }
+    ]
 }
