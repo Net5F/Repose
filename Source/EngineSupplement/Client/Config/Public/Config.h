@@ -4,6 +4,7 @@
 #include <SDL_stdinc.h>
 #include <SDL_render.h>
 #include <string>
+#include <vector>
 
 namespace AM
 {
@@ -100,6 +101,14 @@ public:
 
     /** If true, zooming with the mouse scroll wheel will be enabled. */
     static constexpr bool ENABLE_MOUSE_ZOOM{true};
+
+    /** The levels of zoom that the player can select. */
+    static constexpr std::array<float, 8> ZOOM_LEVELS{0.25, 0.5, 0.75, 1,
+                                                      1.25, 1.5, 1.75, 2};
+
+    /** The index in the ZOOM_LEVELS vector that the camera should initially 
+        be set to. */
+    static constexpr std::size_t DEFAULT_ZOOM_LEVEL_INDEX{3};
 };
 
 } // End namespace Client
