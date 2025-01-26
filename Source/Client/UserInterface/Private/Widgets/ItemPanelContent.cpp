@@ -118,8 +118,8 @@ ItemPanelContent::ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
 
     // If an item that we're displaying (or trying to display) is updated, we
     // need to update this widget.
-    inSimulation.getItemUpdateSink().connect<&ItemPanelContent::onItemUpdate>(
-        *this);
+    world.itemData.itemCreated.connect<&ItemPanelContent::onItemUpdate>(*this);
+    world.itemData.itemUpdated.connect<&ItemPanelContent::onItemUpdate>(*this);
 }
 
 void ItemPanelContent::reset()
@@ -201,23 +201,24 @@ void ItemPanelContent::trySelectItem(std::string_view displayName)
     network.serializeAndSend(ItemDataRequest{stringID});
 }
 
-void ItemPanelContent::onItemUpdate(const Item& item)
+void ItemPanelContent::onItemUpdate(ItemID itemID)
 {
     // Note: We handle this signal instead of just receiving the update message
     //       in the UI, so that we can be sure ItemData is up-to-date before we
     //       call getAllItems().
 
     // If we requested this item, select it.
-    if (requestedItemStringID == item.stringID) {
+    const Item* item{world.itemData.getItem(itemID)};
+    if (requestedItemStringID == item->stringID) {
         // Select the item.
-        selectedItemID = item.numericID;
-        selectedItemDisplayName = item.displayName;
-        selectedItemIconID = item.iconID;
+        selectedItemID = item->numericID;
+        selectedItemDisplayName = item->displayName;
+        selectedItemIconID = item->iconID;
 
         // Update the UI.
-        nameInput.setText(item.displayName);
+        nameInput.setText(item->displayName);
         const IconRenderData& iconRenderData{
-            iconData.getRenderData(item.iconID)};
+            iconData.getRenderData(item->iconID)};
         itemIconImage.setSimpleImage(iconRenderData.iconSheetRelPath,
                                      iconRenderData.textureExtent);
         itemNotFoundLabel.setIsVisible(false);
@@ -235,14 +236,14 @@ void ItemPanelContent::onItemUpdate(const Item& item)
         requestedItemStringID = "";
     }
     // If this is the currently selected item, update it.
-    else if (item.numericID == selectedItemID) {
+    else if (item->numericID == selectedItemID) {
         // Update our state and the UI.
-        selectedItemDisplayName = item.displayName;
-        selectedItemIconID = item.iconID;
+        selectedItemDisplayName = item->displayName;
+        selectedItemIconID = item->iconID;
 
-        nameInput.setText(item.displayName);
+        nameInput.setText(item->displayName);
         const IconRenderData& iconRenderData{
-            iconData.getRenderData(item.iconID)};
+            iconData.getRenderData(item->iconID)};
         itemIconImage.setSimpleImage(iconRenderData.iconSheetRelPath,
                                      iconRenderData.textureExtent);
         errorLabel.setIsVisible(false);
@@ -403,7 +404,7 @@ void ItemPanelContent::addIconThumbnails()
 void ItemPanelContent::showHomeView()
 {
     // Set our widget behaviors.
-    nameLabel.setText("Item Name");
+    nameLabel.setText("Item Search");
 
     nameInput.setOnTextCommitted([&]() { trySelectItem(nameInput.getText()); });
 
@@ -430,7 +431,6 @@ void ItemPanelContent::showHomeView()
 
     // If we have an item selected, show it.
     if (selectedItemID != NULL_ITEM_ID) {
-        nameLabel.setText(selectedItemDisplayName);
         nameInput.setText(selectedItemDisplayName);
         itemIconImage.setIsVisible(true);
         rightButton1.setIsVisible(true);

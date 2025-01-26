@@ -62,7 +62,7 @@ private:
      *
      * Also refreshes itemCacheContainer.
      */
-    void onItemUpdate(const Item& item);
+    void onItemUpdate(ItemID itemID);
 
     /**
      * If we have a selected item and have received its init script, sends

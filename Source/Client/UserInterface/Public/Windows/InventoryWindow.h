@@ -65,7 +65,7 @@ private:
                              Uint8 itemCount, Uint8 slotIndex);
 
     void onInventoryUpdated(entt::registry& registry, entt::entity entity);
-    void onItemUpdate(const Item& item);
+    void onItemUpdate(ItemID itemID);
 
     /** Used to interact with the player's inventory. */
     World& world;

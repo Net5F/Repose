@@ -3,7 +3,7 @@ target_sources(SharedLib
         Public/EntityGraphicType.h
         Public/EntityInteractionType.h
         Public/ItemInteractionType.h
-        Public/ItemProperties.h
+        Public/TypeLists/ProjectItemPropertyTypes.h
         Public/TypeLists/ProjectReplicatedComponentTypes.h
 )
 

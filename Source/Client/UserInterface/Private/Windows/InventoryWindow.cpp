@@ -46,8 +46,8 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
     // when an item definition changes.
     world.registry.on_update<Inventory>()
         .connect<&InventoryWindow::onInventoryUpdated>(*this);
-    inSimulation.getItemUpdateSink().connect<&InventoryWindow::onItemUpdate>(
-        *this);
+    world.itemData.itemCreated.connect<&InventoryWindow::onItemUpdate>(*this);
+    world.itemData.itemUpdated.connect<&InventoryWindow::onItemUpdate>(*this);
 }
 
 void InventoryWindow::arrange()
@@ -205,13 +205,14 @@ void InventoryWindow::onInventoryUpdated(entt::registry& registry,
     refresh(registry.get<Inventory>(entity));
 }
 
-void InventoryWindow::onItemUpdate(const Item& item)
+void InventoryWindow::onItemUpdate(ItemID itemID)
 {
     // If this update is for an item in the inventory, we need to refresh.
+    const Item* item{world.itemData.getItem(itemID)};
     Inventory& inventory{world.registry.get<Inventory>(world.playerEntity)};
     auto it{std::find_if(inventory.slots.begin(), inventory.slots.end(),
                          [&](const Inventory::ItemSlot& itemSlot) {
-                             return (itemSlot.ID == item.numericID);
+                             return (itemSlot.ID == item->numericID);
                          })};
     if (it != inventory.slots.end()) {
         refresh(inventory);
