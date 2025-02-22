@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ConnectionError.h"
-#include "QueuedEvents.h"
 #include "AUI/Window.h"
 #include "AUI/Text.h"
 #include "AUI/Image.h"
@@ -11,6 +10,8 @@
 
 namespace AM
 {
+class EventDispatcher;
+
 namespace Client
 {
 class UserInterfaceExtension;

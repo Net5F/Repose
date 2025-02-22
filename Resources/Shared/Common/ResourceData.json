@@ -29,6 +29,46 @@
                 18,
                 19
             ]
+        },
+        {
+            "collisionEnabled": false,
+            "displayName": "Explosion",
+            "fps": 30,
+            "frameCount": 10,
+            "frameNumbers": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "modelBounds": {
+                "maxX": 12.5,
+                "maxY": 12.5,
+                "maxZ": 25.799999237060547,
+                "minX": 6.0,
+                "minY": 6.0,
+                "minZ": 0.0
+            },
+            "modelBoundsID": 0,
+            "numericID": 2,
+            "spriteIDs": [
+                20,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33
+            ]
         }
     ],
     "boundingBoxes": [
@@ -676,6 +716,253 @@
             ],
             "textureHeight": 1024,
             "textureWidth": 2048
+        },
+        {
+            "displayName": "Explosion",
+            "sprites": [
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Explosion_0",
+                    "imagePath": "Effects\\Explosion_0.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 20,
+                    "premultiplyAlpha": true,
+                    "stageX": 110,
+                    "stageY": 90,
+                    "textureExtent": {
+                        "h": 160,
+                        "w": 220,
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Explosion_1",
+                    "imagePath": "Effects\\Explosion_1.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 25,
+                    "premultiplyAlpha": true,
+                    "stageX": 110,
+                    "stageY": 90,
+                    "textureExtent": {
+                        "h": 160,
+                        "w": 220,
+                        "x": 222,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Explosion_2",
+                    "imagePath": "Effects\\Explosion_2.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 26,
+                    "premultiplyAlpha": true,
+                    "stageX": 110,
+                    "stageY": 90,
+                    "textureExtent": {
+                        "h": 160,
+                        "w": 220,
+                        "x": 444,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Explosion_3",
+                    "imagePath": "Effects\\Explosion_3.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 27,
+                    "premultiplyAlpha": true,
+                    "stageX": 110,
+                    "stageY": 90,
+                    "textureExtent": {
+                        "h": 160,
+                        "w": 220,
+                        "x": 666,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Explosion_4",
+                    "imagePath": "Effects\\Explosion_4.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 28,
+                    "premultiplyAlpha": true,
+                    "stageX": 110,
+                    "stageY": 90,
+                    "textureExtent": {
+                        "h": 160,
+                        "w": 220,
+                        "x": 888,
+                        "y": 0
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Explosion_5",
+                    "imagePath": "Effects\\Explosion_5.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 29,
+                    "premultiplyAlpha": true,
+                    "stageX": 110,
+                    "stageY": 90,
+                    "textureExtent": {
+                        "h": 160,
+                        "w": 220,
+                        "x": 0,
+                        "y": 162
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Explosion_6",
+                    "imagePath": "Effects\\Explosion_6.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 30,
+                    "premultiplyAlpha": true,
+                    "stageX": 110,
+                    "stageY": 90,
+                    "textureExtent": {
+                        "h": 160,
+                        "w": 220,
+                        "x": 222,
+                        "y": 162
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Explosion_7",
+                    "imagePath": "Effects\\Explosion_7.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 31,
+                    "premultiplyAlpha": true,
+                    "stageX": 110,
+                    "stageY": 90,
+                    "textureExtent": {
+                        "h": 160,
+                        "w": 220,
+                        "x": 444,
+                        "y": 162
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Explosion_8",
+                    "imagePath": "Effects\\Explosion_8.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 32,
+                    "premultiplyAlpha": true,
+                    "stageX": 110,
+                    "stageY": 90,
+                    "textureExtent": {
+                        "h": 160,
+                        "w": 220,
+                        "x": 666,
+                        "y": 162
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "Explosion_9",
+                    "imagePath": "Effects\\Explosion_9.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 33,
+                    "premultiplyAlpha": true,
+                    "stageX": 110,
+                    "stageY": 90,
+                    "textureExtent": {
+                        "h": 160,
+                        "w": 220,
+                        "x": 888,
+                        "y": 162
+                    }
+                }
+            ],
+            "textureHeight": 512,
+            "textureWidth": 1024
         }
     ],
     "terrain": [

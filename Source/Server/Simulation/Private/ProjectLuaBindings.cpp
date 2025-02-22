@@ -4,6 +4,7 @@
 #include "ItemInitLua.h"
 #include "DialogueLua.h"
 #include "DialogueChoiceConditionLua.h"
+#include "GraphicData.h"
 #include "World.h"
 #include "RandomWalkerAI.h"
 #include "PreviousPosition.h"
@@ -17,12 +18,14 @@ ProjectLuaBindings::ProjectLuaBindings(
     EntityInitLua& inEntityInitLua,
     EntityItemHandlerLua& inEntityItemHandlerLua, ItemInitLua& inItemInitLua,
     DialogueLua& inDialogueLua,
-    DialogueChoiceConditionLua& inDialogueChoiceConditionLua, World& inWorld)
+    DialogueChoiceConditionLua& inDialogueChoiceConditionLua,
+    const GraphicData& inGraphicData, World& inWorld)
 : entityInitLua{inEntityInitLua}
 , entityItemHandlerLua{inEntityItemHandlerLua}
 , itemInitLua{inItemInitLua}
 , dialogueLua{inDialogueLua}
 , dialogueChoiceConditionLua{inDialogueChoiceConditionLua}
+, graphicData{inGraphicData}
 , world{inWorld}
 {
 }
@@ -37,6 +40,9 @@ void ProjectLuaBindings::addBindings()
     // Entity item handler
 
     // Item init
+    itemInitLua.luaState.set_function(
+        "addAVSequenceTestInteraction",
+        &ProjectLuaBindings::addAVSequenceTestInteraction, this);
 }
 
 void ProjectLuaBindings::addRandomWalkerAIBehavior(
@@ -49,6 +55,13 @@ void ProjectLuaBindings::addRandomWalkerAIBehavior(
     // Add the behavior.
     world.registry.emplace<RandomWalkerAI>(entity, timeToWalk, timeToWait,
                                            timeTillDirectionChange);
+}
+
+void ProjectLuaBindings::addAVSequenceTestInteraction()
+{
+    // Add the interaction.
+    Item* item{itemInitLua.selfItem};
+    item->addInteraction(ItemInteractionType::TestAVEffect);
 }
 
 } // namespace Server

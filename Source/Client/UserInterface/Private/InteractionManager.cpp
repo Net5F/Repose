@@ -9,9 +9,11 @@
 #include "CombineItemsRequest.h"
 #include "ItemInteractionRequest.h"
 #include "InventoryOperation.h"
-#include "DisplayStrings.h"
+#include "EntityInteractionDisplayData.h"
+#include "ItemInteractionDisplayData.h"
 #include "ItemThumbnail.h"
 #include "Log.h"
+#include "QueuedEvents.h"
 
 namespace AM
 {
@@ -19,9 +21,11 @@ namespace Client
 {
 
 InteractionManager::InteractionManager(World& inWorld, Network& inNetwork,
+                                       EventDispatcher& inUiEventDispatcher,
                                        MainScreen& inMainScreen)
 : world{inWorld}
 , network{inNetwork}
+, uiEventDispatcher{inUiEventDispatcher}
 , mainScreen{inMainScreen}
 , usingItem{false}
 , sourceSlotIndex{0}
@@ -67,6 +71,7 @@ void InteractionManager::entityLeftClicked(entt::entity entity)
     // If we're using an item, this is the target. Send the UseOn request and
     // deselect the first item.
     if (usingItem) {
+        // Note: There's no associated A/V effect, so we can send this directly.
         network.serializeAndSend(
             UseItemOnEntityRequest{sourceSlotIndex, entity});
 
@@ -82,8 +87,8 @@ void InteractionManager::entityLeftClicked(entt::entity entity)
             return;
         }
 
-        network.serializeAndSend(
-            EntityInteractionRequest{entity, interaction->getDefault()});
+        uiEventDispatcher.push<EntityInteractionRequest>(
+            {entity, interaction->getDefault()});
     }
 }
 
@@ -106,8 +111,8 @@ void InteractionManager::entityRightClicked(entt::entity entity)
          interaction->supportedInteractions) {
         // Tell the server to process this interaction.
         auto interactWith = [&, entity, interactionType]() {
-            network.serializeAndSend(
-                EntityInteractionRequest{entity, interactionType});
+            uiEventDispatcher.push<EntityInteractionRequest>(
+                {entity, interactionType});
         };
         mainScreen.addRightClickMenuAction(DisplayStrings::get(interactionType),
                                            std::move(interactWith));
@@ -168,6 +173,7 @@ bool InteractionManager::itemMouseDown(Uint8 slotIndex,
     else if ((buttonType == AUI::MouseButtonType::Left) && usingItem
              && (slotIndex != sourceSlotIndex)) {
         // Send the combine request and reset our state.
+        // Note: There's no associated A/V effect, so we can send this directly.
         network.serializeAndSend(
             CombineItemsRequest{sourceSlotIndex, slotIndex});
         usingItem = false;
@@ -175,7 +181,8 @@ bool InteractionManager::itemMouseDown(Uint8 slotIndex,
         return false;
     }
     else if (buttonType == AUI::MouseButtonType::Left) {
-        // TODO: Drag and drop?
+        // Nothing to do. Since we have drag+drop, we count MouseUp as the 
+        // actual click. Drag behavior is handled by AUI.
     }
 
     // Request mouse capture, so we get the associated MouseUp.
@@ -243,8 +250,8 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex,
     }
     // Else, request the item's default interaction be performed.
     else {
-        network.serializeAndSend(
-            ItemInteractionRequest{slotIndex, defaultInteraction});
+        uiEventDispatcher.push<ItemInteractionRequest>(
+            {slotIndex, defaultInteraction});
     }
 }
 
@@ -295,8 +302,8 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
         else {
             // Tell the server to process this interaction.
             auto interactWith = [&, slotIndex, interactionType]() {
-                network.serializeAndSend(
-                    ItemInteractionRequest{slotIndex, interactionType});
+                uiEventDispatcher.push<ItemInteractionRequest>(
+                    {slotIndex, interactionType});
             };
             mainScreen.addRightClickMenuAction(
                 DisplayStrings::get(interactionType), std::move(interactWith));

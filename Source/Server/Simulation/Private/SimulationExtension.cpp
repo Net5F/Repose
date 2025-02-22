@@ -23,6 +23,7 @@ SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
                      deps.simulation.getItemInitLua(),
                      deps.simulation.getDialogueLua(),
                      deps.simulation.getDialogueChoiceConditionLua(),
+                     deps.graphicData,
                      world}
 , buildModeDataSystem{world, deps.network.getEventDispatcher(), deps.network,
                       deps.graphicData}

@@ -5,6 +5,7 @@
 #include "ConnectionRequest.h"
 #include "Paths.h"
 #include "Log.h"
+#include "QueuedEvents.h"
 
 namespace AM
 {

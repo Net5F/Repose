@@ -23,7 +23,7 @@ try {
     Log::enableFileLogging("Client.log");
 
     // Construct the app.
-    Application app;
+    Application app{};
 
     // Init the project user config before it's used in the extension classes.
     ProjectUserConfig::get();

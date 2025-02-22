@@ -1,8 +1,11 @@
 target_sources(SharedLib
     PUBLIC
+        Public/EntityGraphicDisplayData.h
         Public/EntityGraphicType.h
+        Public/EntityInteractionDisplayData.h
         Public/EntityInteractionType.h
         Public/ItemInteractionType.h
+        Public/ItemInteractionDisplayData.h
         Public/TypeLists/ProjectItemPropertyTypes.h
         Public/TypeLists/ProjectReplicatedComponentTypes.h
 )

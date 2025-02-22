@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entt/fwd.hpp"
+#include <string_view> 
 
 namespace AM
 {
@@ -11,6 +12,7 @@ struct EntityItemHandlerLua;
 struct ItemInitLua;
 struct DialogueLua;
 struct DialogueChoiceConditionLua;
+class GraphicData;
 class World;
 
 /**
@@ -26,7 +28,7 @@ public:
                        EntityItemHandlerLua& inEntityItemHandlerLua,
                        ItemInitLua& inItemInitLua, DialogueLua& inDialogueLua,
                        DialogueChoiceConditionLua& inDialogueChoiceConditionLua,
-                       World& inWorld);
+                       const GraphicData& inGraphicData, World& inWorld);
 
     /**
      * Adds our bindings to the lua object.
@@ -47,12 +49,17 @@ private:
     // Entity item handler
 
     // Item init
+    /**
+     * Adds a "Test AV Sequence" interaction.
+     */
+    void addAVSequenceTestInteraction();
 
     EntityInitLua& entityInitLua;
     EntityItemHandlerLua& entityItemHandlerLua;
     ItemInitLua& itemInitLua;
     DialogueLua& dialogueLua;
     DialogueChoiceConditionLua& dialogueChoiceConditionLua;
+    const GraphicData& graphicData;
     World& world;
 };
 

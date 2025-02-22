@@ -20,7 +20,8 @@ namespace Client
 MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 : AUI::Screen("MainScreen")
 , world{deps.simulation.getWorld()}
-, interactionManager{deps.simulation.getWorld(), deps.network, *this}
+, interactionManager{deps.simulation.getWorld(), deps.network,
+                     deps.uiEventDispatcher, *this}
 , playerIsInBuildArea{false}
 , dialogueResponseQueue{deps.network.getEventDispatcher()}
 , mainOverlay{world, deps.worldObjectLocator, deps.network, interactionManager}
@@ -106,7 +107,7 @@ void MainScreen::setCamera(const Camera& inCamera)
 
 std::vector<PhantomSpriteInfo> MainScreen::getPhantomSprites() const
 {
-    // Fill a vector with the phantoms from each relevent UI object.
+    // Fill a vector with the phantoms from each relevant UI object.
     std::vector<PhantomSpriteInfo> phantoms{};
 
     std::span<const PhantomSpriteInfo> overlayPhantoms{
@@ -118,7 +119,7 @@ std::vector<PhantomSpriteInfo> MainScreen::getPhantomSprites() const
 
 std::vector<SpriteColorModInfo> MainScreen::getSpriteColorMods() const
 {
-    // Fill a vector with the color mods from each relevent UI object.
+    // Fill a vector with the color mods from each relevant UI object.
     std::vector<SpriteColorModInfo> colorMods{};
 
     std::span<const SpriteColorModInfo> overlayColorMods{
