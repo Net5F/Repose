@@ -49,10 +49,6 @@ private:
     // Entity item handler
 
     // Item init
-    /**
-     * Adds a "Test AV Sequence" interaction.
-     */
-    void addAVSequenceTestInteraction();
 
     EntityInitLua& entityInitLua;
     EntityItemHandlerLua& entityItemHandlerLua;

@@ -20,8 +20,7 @@ namespace Client
 MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 : AUI::Screen("MainScreen")
 , world{deps.simulation.getWorld()}
-, interactionManager{deps.simulation.getWorld(), deps.network,
-                     deps.uiEventDispatcher, *this}
+, interactionManager{deps.simulation.getWorld(), deps.network, *this}
 , playerIsInBuildArea{false}
 , dialogueResponseQueue{deps.network.getEventDispatcher()}
 , mainOverlay{world, deps.worldObjectLocator, deps.network, interactionManager}

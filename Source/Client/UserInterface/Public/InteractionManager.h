@@ -11,8 +11,6 @@
 
 namespace AM
 {
-class EventDispatcher;
-
 namespace Client
 {
 class World;
@@ -33,7 +31,6 @@ class InteractionManager
 {
 public:
     InteractionManager(World& inWorld, Network& inNetwork,
-                       EventDispatcher& inUiEventDispatcher,
                        MainScreen& inMainScreen);
 
     // Entity interactions.
@@ -87,8 +84,6 @@ private:
     World& world;
     /** Used to send interaction messages. */
     Network& network;
-    /** Event dispatcher. Used for sending interaction requests to the sim. */
-    EventDispatcher& uiEventDispatcher;
     /** Used to set focus to a selected item. */
     MainScreen& mainScreen;
 

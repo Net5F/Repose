@@ -1,17 +1,26 @@
 target_sources(SharedLib
+    PRIVATE
+        Private/CastableData/CastableInit.cpp
     PUBLIC
-        Public/EntityGraphicDisplayData.h
         Public/EntityGraphicType.h
-        Public/EntityInteractionDisplayData.h
-        Public/EntityInteractionType.h
-        Public/ItemInteractionType.h
-        Public/ItemInteractionDisplayData.h
+        Public/CastableData/CastableInit.h
+        Public/CastableData/CastableRequirementType.h
+        Public/CastableData/EntityInteraction.h
+        Public/CastableData/EntityInteractionType.h
+        Public/CastableData/ItemInteraction.h
+        Public/CastableData/ItemInteractionType.h
+        Public/CastableData/Spell.h
+        Public/CastableData/SpellType.h
+        Public/CastableData/ValidateCast.h
         Public/TypeLists/ProjectItemPropertyTypes.h
         Public/TypeLists/ProjectReplicatedComponentTypes.h
 )
 
 target_include_directories(SharedLib
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/Private
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Public
+        ${CMAKE_CURRENT_SOURCE_DIR}/Public/CastableData
         ${CMAKE_CURRENT_SOURCE_DIR}/Public/TypeLists
 )
