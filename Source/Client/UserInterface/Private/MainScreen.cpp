@@ -20,18 +20,19 @@ namespace Client
 MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 : AUI::Screen("MainScreen")
 , world{deps.simulation.getWorld()}
-, interactionManager{deps.simulation.getWorld(), deps.network, *this}
+, interactionManager{deps.simulation.getWorld(), deps.network, deps.itemData,
+                     *this}
 , playerIsInBuildArea{false}
 , dialogueResponseQueue{deps.network.getEventDispatcher()}
 , mainOverlay{world, deps.worldObjectLocator, deps.network, interactionManager}
 , chatWindow{deps.network, deps.sdlRenderer}
 , dialogueWindow{world, deps.network}
-, inventoryWindow{deps.simulation, deps.network, deps.iconData,
+, inventoryWindow{deps.simulation, deps.network, deps.itemData, deps.iconData,
                   interactionManager}
 , buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
                deps.graphicData}
-, buildPanel{deps.simulation, deps.network, deps.graphicData, deps.iconData,
-             buildOverlay}
+, buildPanel{deps.simulation, deps.network,  deps.graphicData,
+             deps.itemData,   deps.iconData, buildOverlay}
 , rightClickMenu{}
 {
     // Add our windows so they're included in rendering, etc.

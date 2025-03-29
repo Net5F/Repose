@@ -44,17 +44,16 @@ PlantSystem::PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData)
     //        createSapling(tileCenter);
     //    }
     //}
+
+    // Register a callback for entity Replant interactions.
+    world.castHelper.setOnEntityInteractionCompleted(
+        EntityInteractionType::Replant, [this](const CastInfo& castInfo) {
+            replantPlant(castInfo);
+        });
 }
 
 void PlantSystem::updatePlants()
 {
-    // Process any waiting interactions.
-    Simulation::EntityInteractionData replantRequest{};
-    while (simulation.popEntityInteractionRequest(
-        EntityInteractionType::Replant, replantRequest)) {
-        replantPlant(replantRequest.targetEntity);
-    }
-
     // Update all the plants.
     if (updateTimer.getTime() >= UPDATE_TIMESTEP_S) {
         auto view{world.registry.view<Plant>()};
@@ -140,8 +139,10 @@ void PlantSystem::createDeadPlant(const Position& position)
     }
 }
 
-void PlantSystem::replantPlant(entt::entity oldPlant)
+void PlantSystem::replantPlant(const CastInfo& castInfo)
 {
+    entt::entity oldPlant{castInfo.targetEntity};
+
     // Verify that the given entity is a dead plant.
     if (!(world.registry.valid(oldPlant))
         || !(world.registry.all_of<Plant>(oldPlant))) {

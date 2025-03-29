@@ -15,6 +15,7 @@ namespace Client
 {
 class World;
 class Network;
+class ItemData;
 class MainScreen;
 class ItemThumbnail;
 
@@ -31,7 +32,7 @@ class InteractionManager
 {
 public:
     InteractionManager(World& inWorld, Network& inNetwork,
-                       MainScreen& inMainScreen);
+                       const ItemData& inItemData, MainScreen& inMainScreen);
 
     // Entity interactions.
     /** @param entity The relevant entity. */
@@ -84,6 +85,8 @@ private:
     World& world;
     /** Used to send interaction messages. */
     Network& network;
+    /** Used to access item data. */
+    const ItemData& itemData;
     /** Used to set focus to a selected item. */
     MainScreen& mainScreen;
 

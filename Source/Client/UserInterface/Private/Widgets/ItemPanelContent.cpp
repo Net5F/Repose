@@ -4,6 +4,7 @@
 #include "Network.h"
 #include "Item.h"
 #include "IconData.h"
+#include "ItemData.h"
 #include "BuildPanel.h"
 #include "BuildModeThumbnail.h"
 #include "ItemDataRequest.h"
@@ -23,12 +24,13 @@ namespace AM
 namespace Client
 {
 ItemPanelContent::ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
-                                   IconData& inIconData,
+                                   ItemData& inItemData, IconData& inIconData,
                                    const SDL_Rect& inScreenExtent,
                                    const std::string& inDebugName)
 : AUI::Widget(inScreenExtent, inDebugName)
 , world{inSimulation.getWorld()}
 , network{inNetwork}
+, itemData{inItemData}
 , iconData{inIconData}
 , currentView{ViewType::Home}
 , requestedItemStringID{}
@@ -118,8 +120,8 @@ ItemPanelContent::ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
 
     // If an item that we're displaying (or trying to display) is updated, we
     // need to update this widget.
-    world.itemData.itemCreated.connect<&ItemPanelContent::onItemUpdate>(*this);
-    world.itemData.itemUpdated.connect<&ItemPanelContent::onItemUpdate>(*this);
+    itemData.itemCreated.connect<&ItemPanelContent::onItemUpdate>(*this);
+    itemData.itemUpdated.connect<&ItemPanelContent::onItemUpdate>(*this);
 }
 
 void ItemPanelContent::reset()
@@ -208,7 +210,7 @@ void ItemPanelContent::onItemUpdate(ItemID itemID)
     //       call getAllItems().
 
     // If we requested this item, select it.
-    const Item* item{world.itemData.getItem(itemID)};
+    const Item* item{itemData.getItem(itemID)};
     if (requestedItemStringID == item->stringID) {
         // Select the item.
         selectedItemID = item->numericID;
@@ -327,7 +329,7 @@ void ItemPanelContent::refreshItemCacheThumbnails()
     itemCacheContainer.clear();
 
     // Add thumbnails for all cached items.
-    for (const auto& [key, item] : world.itemData.getAllItems()) {
+    for (const auto& [key, item] : itemData.getAllItems()) {
         // Skip the null item.
         if (!(item.numericID)) {
             continue;

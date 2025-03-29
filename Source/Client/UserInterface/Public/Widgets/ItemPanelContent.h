@@ -26,6 +26,7 @@ namespace Client
 class Simulation;
 class World;
 class Network;
+class ItemData;
 class IconData;
 
 /**
@@ -35,7 +36,8 @@ class ItemPanelContent : public AUI::Widget
 {
 public:
     ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
-                     IconData& inIconData, const SDL_Rect& inScreenExtent,
+                     ItemData& inItemData, IconData& inIconData,
+                     const SDL_Rect& inScreenExtent,
                      const std::string& inDebugName = "ItemPanelContent");
 
     /**
@@ -108,10 +110,10 @@ private:
 
     /** Used for getting the current editing entity's component data. */
     World& world;
-
     /** Used for sending entity init requests to the server. */
     Network& network;
-
+    /** Used to get item data and subscribe to updates. */
+    ItemData& itemData;
     /** Used to get the item icons. */
     IconData& iconData;
 

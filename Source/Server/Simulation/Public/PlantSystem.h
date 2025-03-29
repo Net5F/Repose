@@ -1,6 +1,5 @@
 #pragma once
 
-#include "EntityInteractionRequest.h"
 #include "GraphicSetIDs.h"
 #include "TileExtent.h"
 #include "Timer.h"
@@ -12,6 +11,7 @@ namespace AM
 {
 struct Position;
 struct ObjectGraphicSet;
+struct CastInfo;
 
 namespace Server
 {
@@ -58,7 +58,7 @@ private:
     /**
      * Deletes the given old plant and plants a new sapling in its place.
      */
-    void replantPlant(entt::entity oldPlant);
+    void replantPlant(const CastInfo& castInfo);
 
     /** Used for getting Replant interaction requests. */
     Simulation& simulation;

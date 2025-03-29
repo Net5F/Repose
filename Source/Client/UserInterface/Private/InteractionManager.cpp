@@ -1,13 +1,13 @@
 #include "InteractionManager.h"
 #include "World.h"
 #include "Network.h"
+#include "ItemData.h"
 #include "MainScreen.h"
 #include "Inventory.h"
 #include "Interaction.h"
-#include "EntityInteractionRequest.h"
+#include "CastRequest.h"
 #include "UseItemOnEntityRequest.h"
 #include "CombineItemsRequest.h"
-#include "ItemInteractionRequest.h"
 #include "InventoryOperation.h"
 #include "DisplayStrings.h"
 #include "ItemThumbnail.h"
@@ -19,9 +19,11 @@ namespace Client
 {
 
 InteractionManager::InteractionManager(World& inWorld, Network& inNetwork,
+                                       const ItemData& inItemData,
                                        MainScreen& inMainScreen)
 : world{inWorld}
 , network{inNetwork}
+, itemData{inItemData}
 , mainScreen{inMainScreen}
 , usingItem{false}
 , sourceSlotIndex{0}
@@ -82,8 +84,8 @@ void InteractionManager::entityLeftClicked(entt::entity entity)
             return;
         }
 
-        network.serializeAndSend<EntityInteractionRequest>(
-            {entity, interaction->getDefault()});
+        network.serializeAndSend<CastRequest>(
+            {interaction->getDefault(), 0, entity, {}});
     }
 }
 
@@ -106,8 +108,8 @@ void InteractionManager::entityRightClicked(entt::entity entity)
          interaction->supportedInteractions) {
         // Tell the server to process this interaction.
         auto interactWith = [&, entity, interactionType]() {
-            network.serializeAndSend<EntityInteractionRequest>(
-                {entity, interactionType});
+            network.serializeAndSend<CastRequest>(
+                {interactionType, 0, entity, {}});
         };
         mainScreen.addRightClickMenuAction(DisplayStrings::get(interactionType),
                                            std::move(interactWith));
@@ -120,7 +122,7 @@ void InteractionManager::itemHovered(Uint8 slotIndex)
 {
     // If the given slot doesn't contain an item, do nothing.
     auto& inventory{world.registry.get<Inventory>(world.playerEntity)};
-    const Item* hoveredItem{inventory.getItem(slotIndex, world.itemData)};
+    const Item* hoveredItem{inventory.getItem(slotIndex, itemData)};
     if (!hoveredItem) {
         return;
     }
@@ -228,7 +230,7 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex,
 {
     // If the given slot doesn't contain an item, do nothing.
     auto& inventory{world.registry.get<Inventory>(world.playerEntity)};
-    const Item* clickedItem{inventory.getItem(slotIndex, world.itemData)};
+    const Item* clickedItem{inventory.getItem(slotIndex, itemData)};
     if (!clickedItem) {
         return;
     }
@@ -244,8 +246,7 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex,
     }
     // Else, request the item's default interaction be performed.
     else {
-        network.serializeAndSend<ItemInteractionRequest>(
-            {slotIndex, defaultInteraction});
+        network.serializeAndSend<CastRequest>({defaultInteraction, slotIndex});
     }
 }
 
@@ -254,7 +255,7 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
 {
     // If the given slot doesn't contain an item, do nothing.
     auto& inventory{world.registry.get<Inventory>(world.playerEntity)};
-    const Item* clickedItem{inventory.getItem(slotIndex, world.itemData)};
+    const Item* clickedItem{inventory.getItem(slotIndex, itemData)};
     if (!clickedItem) {
         return;
     }
@@ -296,8 +297,8 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
         else {
             // Tell the server to process this interaction.
             auto interactWith = [&, slotIndex, interactionType]() {
-                network.serializeAndSend<ItemInteractionRequest>(
-                    {slotIndex, interactionType});
+                network.serializeAndSend<CastRequest>(
+                    {interactionType, slotIndex});
             };
             mainScreen.addRightClickMenuAction(
                 DisplayStrings::get(interactionType), std::move(interactWith));

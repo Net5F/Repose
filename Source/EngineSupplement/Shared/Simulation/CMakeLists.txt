@@ -4,12 +4,10 @@ target_sources(SharedLib
     PUBLIC
         Public/EntityGraphicType.h
         Public/CastableData/CastableInit.h
+        Public/CastableData/CastableProjectData.h
         Public/CastableData/CastableRequirementType.h
-        Public/CastableData/EntityInteraction.h
         Public/CastableData/EntityInteractionType.h
-        Public/CastableData/ItemInteraction.h
         Public/CastableData/ItemInteractionType.h
-        Public/CastableData/Spell.h
         Public/CastableData/SpellType.h
         Public/CastableData/ValidateCast.h
         Public/TypeLists/ProjectItemPropertyTypes.h

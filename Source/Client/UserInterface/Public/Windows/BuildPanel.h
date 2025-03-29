@@ -27,6 +27,7 @@ class Simulation;
 class World;
 class Network;
 class GraphicData;
+class ItemData;
 class IconData;
 class BuildOverlay;
 
@@ -43,8 +44,8 @@ public:
     // Public interface
     //-------------------------------------------------------------------------
     BuildPanel(Simulation& inSimulation, Network& inNetwork,
-               GraphicData& inGraphicData, IconData& inIconData,
-               BuildOverlay& inBuildOverlay);
+               GraphicData& inGraphicData, ItemData& inItemData,
+               IconData& inIconData, BuildOverlay& inBuildOverlay);
 
     ~BuildPanel() = default;
 

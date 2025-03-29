@@ -1,12 +1,12 @@
 #include "InventoryWindow.h"
 #include "Simulation.h"
 #include "Network.h"
+#include "ItemData.h"
 #include "IconData.h"
 #include "InteractionManager.h"
 #include "Paths.h"
 #include "Inventory.h"
 #include "ItemThumbnail.h"
-#include "ItemInteractionRequest.h"
 #include "DragDropData.h"
 #include "InventoryOperation.h"
 #include "AUI/ScalingHelpers.h"
@@ -17,11 +17,12 @@ namespace AM
 namespace Client
 {
 InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
-                                 IconData& inIconData,
+                                 ItemData& inItemData, IconData& inIconData,
                                  InteractionManager& inInteractionManager)
 : AUI::Window({1362, 340, 256, 256}, "InventoryWindow")
 , world{inSimulation.getWorld()}
 , network{inNetwork}
+, itemData{inItemData}
 , iconData{inIconData}
 , interactionManager{inInteractionManager}
 , wasRefreshed{false}
@@ -46,8 +47,8 @@ InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
     // when an item definition changes.
     world.registry.on_update<Inventory>()
         .connect<&InventoryWindow::onInventoryUpdated>(*this);
-    world.itemData.itemCreated.connect<&InventoryWindow::onItemUpdate>(*this);
-    world.itemData.itemUpdated.connect<&InventoryWindow::onItemUpdate>(*this);
+    itemData.itemCreated.connect<&InventoryWindow::onItemUpdate>(*this);
+    itemData.itemUpdated.connect<&InventoryWindow::onItemUpdate>(*this);
 }
 
 void InventoryWindow::arrange()
@@ -144,7 +145,7 @@ void InventoryWindow::finishItemThumbnail(ItemThumbnail& thumbnail,
 {
     // Load the item's icon.
     const IconRenderData* renderData{nullptr};
-    if (const Item* item{world.itemData.getItem(itemID)}) {
+    if (const Item* item{itemData.getItem(itemID)}) {
         renderData = &(iconData.getRenderData(item->iconID));
     }
     else {
@@ -208,7 +209,7 @@ void InventoryWindow::onInventoryUpdated(entt::registry& registry,
 void InventoryWindow::onItemUpdate(ItemID itemID)
 {
     // If this update is for an item in the inventory, we need to refresh.
-    const Item* item{world.itemData.getItem(itemID)};
+    const Item* item{itemData.getItem(itemID)};
     Inventory& inventory{world.registry.get<Inventory>(world.playerEntity)};
     auto it{std::find_if(inventory.slots.begin(), inventory.slots.end(),
                          [&](const Inventory::ItemSlot& itemSlot) {

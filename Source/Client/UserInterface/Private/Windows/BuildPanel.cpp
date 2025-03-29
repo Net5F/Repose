@@ -4,6 +4,7 @@
 #include "World.h"
 #include "Network.h"
 #include "GraphicData.h"
+#include "ItemData.h"
 #include "IconData.h"
 #include "BuildOverlay.h"
 #include "BuildModeThumbnail.h"
@@ -17,8 +18,8 @@ namespace AM
 namespace Client
 {
 BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
-                       GraphicData& inGraphicData, IconData& inIconData,
-                       BuildOverlay& inBuildOverlay)
+                       GraphicData& inGraphicData, ItemData& inItemData,
+                       IconData& inIconData, BuildOverlay& inBuildOverlay)
 : AUI::Window{{0, 761, 1920, 319}, "BuildPanel"}
 , network{inNetwork}
 , graphicData{inGraphicData}
@@ -36,11 +37,9 @@ BuildPanel::BuildPanel(Simulation& inSimulation, Network& inNetwork,
                      {366, 91, 1188, 220},
                      "EntityPanelContent"}
 , removeHintText{{679, 171, 562, 36}, "RemoveHintText"}
-, itemPanelContent{inSimulation,
-                   network,
-                   inIconData,
-                   {366, 91, 1188, 220},
-                   "ItemPanelContent"}
+, itemPanelContent{inSimulation,         network,
+                   inItemData,           inIconData,
+                   {366, 91, 1188, 220}, "ItemPanelContent"}
 , tileLayersLabel{{152, 92, 138, 36}, "TileLayersLabel"}
 , otherLabel{{1630, 92, 138, 36}, "OtherLabel"}
 , buildModeButtons{
