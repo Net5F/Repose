@@ -1,7 +1,8 @@
 #include "PlantSystem.h"
-#include "Simulation.h"
+#include "World.h"
 #include "GraphicData.h"
 #include "EntityInteractionType.h"
+#include "Position.h"
 #include "Name.h"
 #include "GraphicState.h"
 #include "Interaction.h"
@@ -15,9 +16,8 @@ namespace AM
 namespace Server
 {
 
-PlantSystem::PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData)
-: simulation{inSimulation}
-, world{inSimulation.getWorld()}
+PlantSystem::PlantSystem(World& inWorld, GraphicData& inGraphicData)
+: world{inWorld}
 , graphicData{inGraphicData}
 , updateTimer{}
 , plantExtent{4, 35, 0, 9, 11, 1}

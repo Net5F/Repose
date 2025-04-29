@@ -28,7 +28,7 @@ SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
 , buildModeDataSystem{world, deps.network.getEventDispatcher(), deps.network,
                       deps.graphicData}
 , mazeGenerationSystem{world, deps.graphicData}
-, plantSystem{deps.simulation, deps.graphicData}
+, plantSystem{world, deps.graphicData}
 , teleportSystem{deps.simulation.getWorld()}
 {
     // Add our Lua bindings.

@@ -84,8 +84,9 @@ void InteractionManager::entityLeftClicked(entt::entity entity)
             return;
         }
 
-        network.serializeAndSend<CastRequest>(
-            {interaction->getDefault(), 0, entity, {}});
+        world.castHelper.castEntityInteraction(
+            {.interactionType{interaction->getDefault()},
+             .targetEntity{entity}});
     }
 }
 
@@ -108,8 +109,8 @@ void InteractionManager::entityRightClicked(entt::entity entity)
          interaction->supportedInteractions) {
         // Tell the server to process this interaction.
         auto interactWith = [&, entity, interactionType]() {
-            network.serializeAndSend<CastRequest>(
-                {interactionType, 0, entity, {}});
+            world.castHelper.castEntityInteraction(
+                {.interactionType{interactionType}, .targetEntity{entity}});
         };
         mainScreen.addRightClickMenuAction(DisplayStrings::get(interactionType),
                                            std::move(interactWith));
@@ -246,7 +247,8 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex,
     }
     // Else, request the item's default interaction be performed.
     else {
-        network.serializeAndSend<CastRequest>({defaultInteraction, slotIndex});
+        world.castHelper.castItemInteraction(
+            {.interactionType{defaultInteraction}, .slotIndex{slotIndex}});
     }
 }
 
@@ -295,10 +297,10 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
                                                std::move(deleteItem));
         }
         else {
-            // Tell the server to process this interaction.
+            // Tell the sim to process this interaction.
             auto interactWith = [&, slotIndex, interactionType]() {
-                network.serializeAndSend<CastRequest>(
-                    {interactionType, slotIndex});
+                world.castHelper.castItemInteraction(
+                    {.interactionType{interactionType}, .slotIndex{slotIndex}});
             };
             mainScreen.addRightClickMenuAction(
                 DisplayStrings::get(interactionType), std::move(interactWith));

@@ -1,9 +1,7 @@
 target_sources(SharedLib
-    PRIVATE
-        Private/CastableData/CastableInit.cpp
     PUBLIC
         Public/EntityGraphicType.h
-        Public/CastableData/CastableInit.h
+        Public/CastableData/CastableDef.h
         Public/CastableData/CastableProjectData.h
         Public/CastableData/CastableRequirementType.h
         Public/CastableData/EntityInteractionType.h
@@ -15,8 +13,6 @@ target_sources(SharedLib
 )
 
 target_include_directories(SharedLib
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/Private
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Public
         ${CMAKE_CURRENT_SOURCE_DIR}/Public/CastableData

@@ -319,8 +319,8 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
     // Note: IdleSouth is guaranteed to be present in every entity graphic set.
     const EntityGraphicSet& graphicSet{graphicData.getEntityGraphicSet(
         SharedConfig::DEFAULT_ENTITY_GRAPHIC_SET)};
-    const GraphicRef& graphic{
-        graphicSet.graphics.at(EntityGraphicType::IdleSouth)};
+    const auto& graphicArr{graphicSet.graphics.at(EntityGraphicType::Idle)};
+    const GraphicRef& graphic{graphicArr.at(Rotation::Direction::South)};
 
     // Calc a square texture extent that shows the bottom of the sprite
     // (so we don't have to squash it).
@@ -364,8 +364,8 @@ void EntityPanelContent::addTemplateThumbnails(
         // Note: IdleSouth is guaranteed to be present in every entity set.
         const EntityGraphicSet& graphicSet{graphicData.getEntityGraphicSet(
             entityData.graphicState.graphicSetID)};
-        const GraphicRef& graphic{
-            graphicSet.graphics.at(EntityGraphicType::IdleSouth)};
+        const auto& graphicArr{graphicSet.graphics.at(EntityGraphicType::Idle)};
+        const GraphicRef& graphic{graphicArr.at(Rotation::Direction::South)};
 
         // Calc a square texture extent that shows the bottom of the sprite
         // (so we don't have to squash it).
@@ -413,9 +413,9 @@ void EntityPanelContent::addSpriteSetThumbnails()
         // Calc a square texture extent that shows the bottom of the graphic
         // (so we don't have to squash it).
         // Note: IdleSouth is guaranteed to be present in every entity set.
+        const auto& graphicArr{graphicSet.graphics.at(EntityGraphicType::Idle)};
         const Sprite& sprite{
-            graphicSet.graphics.at(EntityGraphicType::IdleSouth)
-                .getFirstSprite()};
+            graphicArr.at(Rotation::Direction::South).getFirstSprite()};
         const SpriteRenderData& renderData{
             graphicData.getSpriteRenderData(sprite.numericID)};
         SDL_Rect textureExtent{calcSquareTexExtent(renderData)};

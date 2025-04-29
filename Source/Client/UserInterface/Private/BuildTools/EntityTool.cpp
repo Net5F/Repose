@@ -203,7 +203,8 @@ PhantomSpriteInfo EntityTool::getSelectedTemplatePhantomInfo()
         selectedTemplateGraphicState.graphicSetID)};
     selectedPhantomInfo.graphicSet = &graphicSet;
     selectedPhantomInfo.graphicValue
-        = static_cast<Uint8>(EntityGraphicType::IdleSouth);
+        = static_cast<Uint8>(EntityGraphicType::Idle);
+    selectedPhantomInfo.graphicDirection = Rotation::Direction::South;
 
     return selectedPhantomInfo;
 }

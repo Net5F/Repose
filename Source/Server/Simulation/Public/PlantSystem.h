@@ -16,7 +16,6 @@ struct CastInfo;
 namespace Server
 {
 
-class Simulation;
 class World;
 class GraphicData;
 
@@ -28,7 +27,7 @@ class GraphicData;
 class PlantSystem
 {
 public:
-    PlantSystem(Simulation& inSimulation, GraphicData& inGraphicData);
+    PlantSystem(World& inWorld, GraphicData& inGraphicData);
 
     /**
      * Iterates through the plants and updates any that need to grow or die.
@@ -60,8 +59,6 @@ private:
      */
     void replantPlant(const CastInfo& castInfo);
 
-    /** Used for getting Replant interaction requests. */
-    Simulation& simulation;
     /** Used to modify the tile map. */
     World& world;
     /** Used to get the plant graphics that we apply to the tile map. */
