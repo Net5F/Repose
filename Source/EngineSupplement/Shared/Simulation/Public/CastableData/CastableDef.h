@@ -2,6 +2,7 @@
 
 #include "CastableID.h"
 #include "Castable.h"
+#include "GraphicDataBase.h"
 #include <functional>
 
 namespace AM
@@ -13,7 +14,7 @@ namespace AM
  */
 class CastableDef {
 public:
-    static void defineCastables(
+    static void defineCastables(const GraphicDataBase& graphicData,
         std::function<void(CastableID, const Castable&)> addCastable)
     {
     }
