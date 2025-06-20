@@ -36,6 +36,11 @@ public:
     virtual ~MainScreen() = default;
 
     /**
+     * Adds the given message to the chat.
+     */
+    void addChatMessage(std::string_view message);
+
+    /**
      * Clears all actions from the right-click menu.
      */
     void clearRightClickMenu();

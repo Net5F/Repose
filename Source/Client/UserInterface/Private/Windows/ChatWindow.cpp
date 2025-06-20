@@ -1,5 +1,7 @@
 #include "ChatWindow.h"
+#include "Simulation.h"
 #include "Network.h"
+#include "CastFailed.h"
 #include "Paths.h"
 #include "AUI/ScalingHelpers.h"
 #include <SDL_render.h>
@@ -9,7 +11,8 @@ namespace AM
 {
 namespace Client
 {
-ChatWindow::ChatWindow(Network& inNetwork, SDL_Renderer* inSdlRenderer)
+ChatWindow::ChatWindow(Simulation& inSimulation, Network& inNetwork,
+                       SDL_Renderer* inSdlRenderer)
 : AUI::Window({6, 528, 642, 216}, "ChatWindow")
 , network{inNetwork}
 , sdlRenderer{inSdlRenderer}
@@ -29,6 +32,37 @@ ChatWindow::ChatWindow(Network& inNetwork, SDL_Renderer* inSdlRenderer)
     /* Message container. */
     messageContainer.setFlowDirection(
         AUI::VerticalListContainer::FlowDirection::BottomToTop);
+
+    // When a cast fails, print a message to the chat.
+    inSimulation.getCastFailedSink().connect<&ChatWindow::addCastFailedMessage>(
+        this);
+}
+
+void ChatWindow::addChatMessage(std::string_view message)
+{
+    // Add the new text.
+    // Note: The widget's height will be auto-adjusted to fit the given
+    // text.
+    std::unique_ptr<AUI::Widget> textPtr{std::make_unique<AUI::Text>(
+        SDL_Rect{0, 0, logicalExtent.w, 0}, "SystemMessageText")};
+    AUI::Text& text{static_cast<AUI::Text&>(*textPtr)};
+    text.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 20);
+    text.setColor({255, 255, 255, 255});
+    text.setText(message);
+    text.setAutoHeightEnabled(true);
+    text.refreshTexture();
+
+    messageContainer.insert(messageContainer.begin(), std::move(textPtr));
+
+    // If the container has more than our max text widgets, erase the
+    // oldest one.
+    if (messageContainer.size() > MAX_MESSAGES) {
+        messageContainer.erase(messageContainer.end() - 1);
+    }
+
+    idleTimer.reset();
+    shouldFade = false;
+    setAlpha(255);
 }
 
 void ChatWindow::onMouseEnter()
@@ -49,29 +83,7 @@ void ChatWindow::onTick(double)
     // Process any waiting messages.
     SystemMessage systemMessage{};
     while (systemMessageQueue.pop(systemMessage)) {
-        // Add the new text.
-        // Note: The widget's height will be auto-adjusted to fit the given
-        // text.
-        std::unique_ptr<AUI::Widget> textPtr{std::make_unique<AUI::Text>(
-            SDL_Rect{0, 0, logicalExtent.w, 0}, "SystemMessageText")};
-        AUI::Text& text{static_cast<AUI::Text&>(*textPtr)};
-        text.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 20);
-        text.setColor({255, 255, 255, 255});
-        text.setText(systemMessage.messageString);
-        text.setAutoHeightEnabled(true);
-        text.refreshTexture();
-
-        messageContainer.insert(messageContainer.begin(), std::move(textPtr));
-
-        // If the container has more than our max text widgets, erase the
-        // oldest one.
-        if (messageContainer.size() > MAX_MESSAGES) {
-            messageContainer.erase(messageContainer.end() - 1);
-        }
-
-        idleTimer.reset();
-        shouldFade = false;
-        setAlpha(255);
+        addChatMessage(systemMessage.messageString);
     }
 
     // If we've been idle for long enough, start fading.
@@ -160,6 +172,15 @@ void ChatWindow::setAlpha(Uint8 inAlpha)
 {
     alpha = inAlpha;
     SDL_SetTextureAlphaMod(renderTexture.get(), alpha);
+}
+
+void ChatWindow::addCastFailedMessage(const CastFailed& castFailed)
+{
+    std::string_view failureString{
+        getCastFailureString(castFailed.castFailureType)};
+    if (failureString.compare("") != 0) {
+        addChatMessage(failureString);
+    }
 }
 
 } // End namespace Client

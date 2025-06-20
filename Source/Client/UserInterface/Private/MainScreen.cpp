@@ -25,7 +25,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 , playerIsInBuildArea{false}
 , dialogueResponseQueue{deps.network.getEventDispatcher()}
 , mainOverlay{world, deps.worldObjectLocator, deps.network, interactionManager}
-, chatWindow{deps.network, deps.sdlRenderer}
+, chatWindow{deps.simulation, deps.network, deps.sdlRenderer}
 , dialogueWindow{world, deps.network}
 , inventoryWindow{deps.simulation, deps.network, deps.itemData, deps.iconData,
                   interactionManager}
@@ -62,6 +62,11 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
         // area.
         playerIsInBuildArea = true;
     }
+}
+
+void MainScreen::addChatMessage(std::string_view message)
+{
+    chatWindow.addChatMessage(message);
 }
 
 void MainScreen::clearRightClickMenu()

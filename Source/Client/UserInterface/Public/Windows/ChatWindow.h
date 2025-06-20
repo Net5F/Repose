@@ -13,8 +13,11 @@ struct SDL_Renderer;
 
 namespace AM
 {
+struct CastFailed;
+
 namespace Client
 {
+class Simulation;
 class Network;
 
 /**
@@ -26,7 +29,13 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    ChatWindow(Network& inNetwork, SDL_Renderer* inSdlRenderer);
+    ChatWindow(Simulation& inSimulation, Network& inNetwork,
+               SDL_Renderer* inSdlRenderer);
+
+    /**
+     * Adds the given message to the chat.
+     */
+    void addChatMessage(std::string_view message);
 
     //-------------------------------------------------------------------------
     // Widget class overrides
@@ -46,6 +55,12 @@ private:
      * Sets renderTexture's alpha to the given value.
      */
     void setAlpha(Uint8 inAlpha);
+
+    /**
+     * If necessary, adds a message to the chat to inform the player of the 
+     * given error.
+     */
+    void addCastFailedMessage(const CastFailed& castFailed);
 
     /** The maximum number of messages that our messageContainer will hold.
         As we receive more, the oldest will be erased. */

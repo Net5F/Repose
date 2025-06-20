@@ -33,13 +33,17 @@ InteractionManager::InteractionManager(World& inWorld, Network& inNetwork,
 
 void InteractionManager::entityHovered(entt::entity entity)
 {
-    Name& name{world.registry.get<Name>(entity)};
+    Name* name{world.registry.try_get<Name>(entity)};
+    if (!name) {
+        // A/V entities don't have a name, and can't be interacted with.
+        return;
+    }
 
     // If we're using an item, update the text to reflect the hovered entity as
     // the target.
     std::string newInteractionText{};
     if (usingItem) {
-        newInteractionText += "Use " + sourceName + " on " + name.value;
+        newInteractionText += "Use " + sourceName + " on " + name->value;
     }
     // Else, update the text to reflect the hovered entity's interactions.
     else {
@@ -52,7 +56,7 @@ void InteractionManager::entityHovered(entt::entity entity)
         // Update the text to reflect the hovered entity's default interaction.
         EntityInteractionType defaultInteraction{interaction->getDefault()};
         newInteractionText
-            += DisplayStrings::get(defaultInteraction) + " " + name.value;
+            += DisplayStrings::get(defaultInteraction) + " " + name->value;
 
         std::size_t interactionCount{interaction->supportedInteractions.size()};
         if (interactionCount > 1) {
@@ -84,9 +88,13 @@ void InteractionManager::entityLeftClicked(entt::entity entity)
             return;
         }
 
-        world.castHelper.castEntityInteraction(
+        CastFailureType failureType{world.castHelper.castEntityInteraction(
             {.interactionType{interaction->getDefault()},
-             .targetEntity{entity}});
+             .targetEntity{entity}})};
+        std::string_view failureString{getCastFailureString(failureType)};
+        if (failureString.compare("") != 0) {
+            mainScreen.addChatMessage(failureString);
+        }
     }
 }
 
@@ -109,8 +117,12 @@ void InteractionManager::entityRightClicked(entt::entity entity)
          interaction->supportedInteractions) {
         // Tell the server to process this interaction.
         auto interactWith = [&, entity, interactionType]() {
-            world.castHelper.castEntityInteraction(
-                {.interactionType{interactionType}, .targetEntity{entity}});
+            CastFailureType failureType{world.castHelper.castEntityInteraction(
+                {.interactionType{interactionType}, .targetEntity{entity}})};
+            std::string_view failureString{getCastFailureString(failureType)};
+            if (failureString.compare("") != 0) {
+                mainScreen.addChatMessage(failureString);
+            }
         };
         mainScreen.addRightClickMenuAction(DisplayStrings::get(interactionType),
                                            std::move(interactWith));
@@ -247,8 +259,12 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex,
     }
     // Else, request the item's default interaction be performed.
     else {
-        world.castHelper.castItemInteraction(
-            {.interactionType{defaultInteraction}, .slotIndex{slotIndex}});
+        CastFailureType failureType{world.castHelper.castItemInteraction(
+            {.interactionType{defaultInteraction}, .slotIndex{slotIndex}})};
+        std::string_view failureString{getCastFailureString(failureType)};
+        if (failureString.compare("") != 0) {
+            mainScreen.addChatMessage(failureString);
+        }
     }
 }
 
@@ -299,8 +315,14 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
         else {
             // Tell the sim to process this interaction.
             auto interactWith = [&, slotIndex, interactionType]() {
-                world.castHelper.castItemInteraction(
-                    {.interactionType{interactionType}, .slotIndex{slotIndex}});
+                CastFailureType failureType{
+                    world.castHelper.castItemInteraction(
+                        {.interactionType{interactionType},
+                         .slotIndex{slotIndex}})};
+                const char* failureString{getCastFailureString(failureType)};
+                if (failureString != "") {
+                    mainScreen.addChatMessage(failureString);
+                }
             };
             mainScreen.addRightClickMenuAction(
                 DisplayStrings::get(interactionType), std::move(interactWith));

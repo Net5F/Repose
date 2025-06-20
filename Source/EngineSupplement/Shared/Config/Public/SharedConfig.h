@@ -75,7 +75,7 @@ public:
     static constexpr float AOI_HALF_HEIGHT{TILE_WORLD_HEIGHT * 3};
 
     /** The string ID of the default graphic set for entities. */
-    static constexpr const char* DEFAULT_ENTITY_GRAPHIC_SET{"ghost"};
+    static constexpr const char* DEFAULT_ENTITY_GRAPHIC_SET{"sorcerer"};
 
     /** The force of gravity in world units per second. */
     static constexpr float FORCE_OF_GRAVITY{20};
