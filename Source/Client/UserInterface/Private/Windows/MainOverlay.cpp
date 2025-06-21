@@ -2,8 +2,9 @@
 #include "World.h"
 #include "WorldObjectLocator.h"
 #include "Network.h"
+#include "ViewModel.h"
 #include "InteractionManager.h"
-#include "entt/entity/entity.hpp"
+#include "Name.h"
 #include "Paths.h"
 
 namespace AM
@@ -12,20 +13,29 @@ namespace Client
 {
 MainOverlay::MainOverlay(World& inWorld,
                          const WorldObjectLocator& inWorldObjectLocator,
-                         Network& inNetwork,
+                         Network& inNetwork, ViewModel& inViewModel,
                          InteractionManager& inInteractionManager)
 : AUI::Window({0, 0, 1920, 1080}, "MainOverlay")
 , world{inWorld}
 , worldObjectLocator{inWorldObjectLocator}
 , network{inNetwork}
+, viewModel{inViewModel}
 , interactionManager{inInteractionManager}
-, hoveredEntity{entt::null}
+, currentHoveredEntity{entt::null}
+, targetText{{0, 20, logicalExtent.w, logicalExtent.h}, "TargetText"}
 , interactionText{{20, 20, 700, 100}, "InteractionText"}
 , buildModeHintText({50, 850, 500, 500}, "BuildModeHintText")
 {
     // Add our children so they're included in rendering, etc.
+    children.push_back(targetText);
     children.push_back(interactionText);
     children.push_back(buildModeHintText);
+
+    /* Target text. */
+    targetText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 30);
+    targetText.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
+    targetText.setColor({255, 255, 255, 255});
+    targetText.setIsVisible(false);
 
     /* Interaction text. */
     interactionText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 30);
@@ -38,17 +48,14 @@ MainOverlay::MainOverlay(World& inWorld,
     buildModeHintText.setText("Press 'b' to enter Build Mode.");
     buildModeHintText.setIsVisible(false);
 
+    // When an entity is targeted, update targetText.
+    viewModel.entityTargeted.connect<&MainOverlay::onEntityTargeted>(this);
+    // Note: We don't subscribe to entityHovered because we're the only 
+    //       source of entity hover events.
+
     // Update interactionText when InteractionManager tells us to.
-    interactionManager.setOnInteractionTextUpdated(
-        [&](std::string_view newInteractionText) {
-            if (newInteractionText != "") {
-                interactionText.setText(newInteractionText);
-                interactionText.setIsVisible(true);
-            }
-            else {
-                interactionText.setIsVisible(false);
-            }
-        });
+    interactionManager.interactionTextUpdated
+        .connect<&MainOverlay::onInteractionTextUpdated>(this);
 }
 
 void MainOverlay::setBuildModeHintVisibility(bool isVisible)
@@ -64,7 +71,14 @@ AUI::EventResult MainOverlay::onMouseDown(AUI::MouseButtonType buttonType,
         worldObjectLocator.getObjectUnderPoint(cursorPosition)};
 
     // If we hit an entity, pass it to the interaction manager.
-    if (entt::entity* entity{std::get_if<entt::entity>(&objectID)}) {
+    if (entt::entity* entity{std::get_if<entt::entity>(&objectID)};
+        entity && world.registry.valid(*entity)) {
+        // TODO: If you left click to interact, how does targeting work?
+        //       Maybe commit, then try ripping out all of the left click 
+        //       default hover stuff.
+        // Set the entity as our current target.
+        viewModel.setTargetEntity(*entity);
+
         if (buttonType == AUI::MouseButtonType::Left) {
             interactionManager.entityLeftClicked(*entity);
         }
@@ -73,6 +87,10 @@ AUI::EventResult MainOverlay::onMouseDown(AUI::MouseButtonType buttonType,
         }
 
         return AUI::EventResult{.wasHandled{true}};
+    }
+    else {
+        // Not an entity. Clear the target selection.
+        viewModel.setTargetEntity(entt::null);
     }
 
     return AUI::EventResult{.wasHandled{false}};
@@ -94,19 +112,45 @@ AUI::EventResult MainOverlay::onMouseMove(const SDL_Point& cursorPosition)
 
     // If we hit an entity, pass it to InteractionManager.
     entt::entity* entity{std::get_if<entt::entity>(&objectID)};
-    if (entity && (*entity != hoveredEntity)) {
-        hoveredEntity = *entity;
+    if (entity && world.registry.valid(*entity)
+        && (*entity != currentHoveredEntity)) {
+        currentHoveredEntity = *entity;
         interactionManager.entityHovered(*entity);
 
         return AUI::EventResult{.wasHandled{true}};
     }
     // If we didn't hit an entity, tell InteractionManager to unhover.
     else if (!entity) {
+        currentHoveredEntity = entt::null;
         interactionManager.unhovered();
-        hoveredEntity = entt::null;
     }
 
     return AUI::EventResult{.wasHandled{false}};
+}
+
+void MainOverlay::onEntityTargeted(entt::entity newTargetedEntity)
+{
+    // Note: We need to do this here instead of onMouseDown because we may not 
+    //       be the only source of entity target changes.
+    if (newTargetedEntity != entt::null) {
+        const Name& name{world.registry.get<Name>(newTargetedEntity)};
+        targetText.setText(name.value);
+        targetText.setIsVisible(true);
+    }
+    else {
+        targetText.setIsVisible(false);
+    }
+}
+
+void MainOverlay::onInteractionTextUpdated(std::string_view newInteractionText)
+{
+    if (newInteractionText != "") {
+        interactionText.setText(newInteractionText);
+        interactionText.setIsVisible(true);
+    }
+    else {
+        interactionText.setIsVisible(false);
+    }
 }
 
 } // End namespace Client

@@ -3,6 +3,7 @@
 #include "AUI/MouseButtonType.h"
 #include "AUI/WidgetWeakRef.h"
 #include "entt/fwd.hpp"
+#include "entt/signal/sigh.hpp"
 #include <SDL_stdinc.h>
 #include <SDL_rect.h>
 #include <functional>
@@ -57,13 +58,6 @@ public:
      */
     void unhovered();
 
-    /**
-     * Sets a callback for when our interaction state changes and the text
-     * should be updated.
-     */
-    void setOnInteractionTextUpdated(
-        std::function<void(std::string_view)> inOnInteractionTextUpdated);
-
 private:
     void itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail);
     void itemRightClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail);
@@ -101,7 +95,20 @@ private:
         being used. */
     std::string sourceName;
 
-    std::function<void(std::string_view)> onInteractionTextUpdated;
+    //-------------------------------------------------------------------------
+    // Signals
+    //-------------------------------------------------------------------------
+    entt::sigh<void(std::string_view newInteractionText)>
+        interactionTextUpdatedSig;
+
+public:
+    //-------------------------------------------------------------------------
+    // Signal Sinks
+    //-------------------------------------------------------------------------
+    /** The player has hovered an entity, or is no longer hovering an entity. 
+        Will be entt::null if no entity is hovered. */
+    entt::sink<entt::sigh<void(std::string_view newInteractionText)>>
+        interactionTextUpdated;
 };
 
 } // namespace Client

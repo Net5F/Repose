@@ -28,22 +28,20 @@ InteractionManager::InteractionManager(World& inWorld, Network& inNetwork,
 , usingItem{false}
 , sourceSlotIndex{0}
 , sourceName{""}
+, interactionTextUpdatedSig{}
+, interactionTextUpdated{interactionTextUpdatedSig}
 {
 }
 
 void InteractionManager::entityHovered(entt::entity entity)
 {
-    Name* name{world.registry.try_get<Name>(entity)};
-    if (!name) {
-        // A/V entities don't have a name, and can't be interacted with.
-        return;
-    }
+    Name name{world.registry.get<Name>(entity)};
 
     // If we're using an item, update the text to reflect the hovered entity as
     // the target.
     std::string newInteractionText{};
     if (usingItem) {
-        newInteractionText += "Use " + sourceName + " on " + name->value;
+        newInteractionText += "Use " + sourceName + " on " + name.value;
     }
     // Else, update the text to reflect the hovered entity's interactions.
     else {
@@ -56,7 +54,7 @@ void InteractionManager::entityHovered(entt::entity entity)
         // Update the text to reflect the hovered entity's default interaction.
         EntityInteractionType defaultInteraction{interaction->getDefault()};
         newInteractionText
-            += DisplayStrings::get(defaultInteraction) + " " + name->value;
+            += DisplayStrings::get(defaultInteraction) + " " + name.value;
 
         std::size_t interactionCount{interaction->supportedInteractions.size()};
         if (interactionCount > 1) {
@@ -65,7 +63,7 @@ void InteractionManager::entityHovered(entt::entity entity)
         }
     }
 
-    onInteractionTextUpdated(newInteractionText);
+    interactionTextUpdatedSig.publish(newInteractionText);
 }
 
 void InteractionManager::entityLeftClicked(entt::entity entity)
@@ -108,7 +106,7 @@ void InteractionManager::entityRightClicked(entt::entity entity)
     // If we're using an item, cancel it.
     if (usingItem) {
         usingItem = false;
-        onInteractionTextUpdated("");
+        interactionTextUpdatedSig.publish("");
     }
 
     // Fill the right-click menu with this entity's interactions.
@@ -161,7 +159,7 @@ void InteractionManager::itemHovered(Uint8 slotIndex)
         }
     }
 
-    onInteractionTextUpdated(newInteractionText);
+    interactionTextUpdatedSig.publish(newInteractionText);
 }
 
 bool InteractionManager::itemMouseDown(Uint8 slotIndex,
@@ -174,7 +172,7 @@ bool InteractionManager::itemMouseDown(Uint8 slotIndex,
 
         // Clear out the interaction text, since thumbnail interactions are
         // blocked while the right-click menu is open.
-        onInteractionTextUpdated("");
+        interactionTextUpdatedSig.publish("");
 
         return false;
     }
@@ -215,7 +213,7 @@ void InteractionManager::itemDeselected()
     if (usingItem) {
         // Item usage was canceled, reset our state and the text.
         usingItem = false;
-        onInteractionTextUpdated("");
+        interactionTextUpdatedSig.publish("");
     }
 }
 
@@ -224,18 +222,12 @@ void InteractionManager::unhovered()
     // If we're using an item, go back to the Use text without a target.
     if (usingItem) {
         std::string newInteractionText{"Use " + sourceName + " on"};
-        onInteractionTextUpdated(newInteractionText);
+        interactionTextUpdatedSig.publish(newInteractionText);
     }
     else {
         // Not using an item, reset the text.
-        onInteractionTextUpdated("");
+        interactionTextUpdatedSig.publish("");
     }
-}
-
-void InteractionManager::setOnInteractionTextUpdated(
-    std::function<void(std::string_view)> inOnInteractionTextUpdated)
-{
-    onInteractionTextUpdated = std::move(inOnInteractionTextUpdated);
 }
 
 void InteractionManager::itemLeftClicked(Uint8 slotIndex,
@@ -281,7 +273,7 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
     // If we're using an item, cancel it.
     if (usingItem) {
         usingItem = false;
-        onInteractionTextUpdated("");
+        interactionTextUpdatedSig.publish("");
     }
 
     // Fill the right-click menu with this item's interactions.
@@ -348,7 +340,7 @@ void InteractionManager::beginUseItemOnInteraction(Uint8 slotIndex,
     mainScreen.setFocus(&itemThumbnail);
 
     std::string newInteractionText{"Use " + sourceName + " on " + sourceName};
-    onInteractionTextUpdated(newInteractionText);
+    interactionTextUpdatedSig.publish(newInteractionText);
 }
 
 } // End namespace Client

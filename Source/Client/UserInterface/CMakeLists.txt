@@ -4,6 +4,7 @@ target_sources(Client
         Private/MainScreen.cpp
         Private/TitleScreen.cpp
         Private/UserInterfaceExtension.cpp
+        Private/ViewModel.cpp
         Private/BuildTools/BuildTool.cpp
         Private/BuildTools/EntityTool.cpp
         Private/BuildTools/FloorTool.cpp
@@ -33,6 +34,7 @@ target_sources(Client
         Public/MainScreen.h
         Public/TitleScreen.h
         Public/UserInterfaceExtension.h
+        Public/ViewModel.h
         Public/BuildTools/BuildTool.h
         Public/BuildTools/EntityTool.h
         Public/BuildTools/FloorTool.h

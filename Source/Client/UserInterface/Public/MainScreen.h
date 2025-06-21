@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "PhantomSpriteInfo.h"
 #include "SpriteColorModInfo.h"
+#include "ViewModel.h"
 #include "InteractionManager.h"
 #include "MainOverlay.h"
 #include "ChatWindow.h"
@@ -98,6 +99,9 @@ private:
 
     /** Used to get the player entity's ID. */
     World& world;
+
+    /** Holds UI-specific model data. */
+    ViewModel viewModel;
 
     /** Orchestrates item and entity interactions from MainOverlay and
         InventoryWindow. */

@@ -11,7 +11,7 @@ namespace AM
 enum class SpellType : Uint8 {
     // Note: NotSet must always be present.
     NotSet = 0,
-    MySpell = 1
+    Fireball
 };
 
 } // End namespace AM

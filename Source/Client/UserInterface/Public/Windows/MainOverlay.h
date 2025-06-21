@@ -11,6 +11,7 @@ namespace Client
 class World;
 class WorldObjectLocator;
 class Network;
+class ViewModel;
 class InteractionManager;
 
 /**
@@ -23,7 +24,8 @@ public:
     // Public interface
     //-------------------------------------------------------------------------
     MainOverlay(World& inWorld, const WorldObjectLocator& inWorldObjectLocator,
-                Network& inNetwork, InteractionManager& inInteractionManager);
+                Network& inNetwork, ViewModel& inViewModel,
+                InteractionManager& inInteractionManager);
 
     /**
      * Sets the visibility of the hint text.
@@ -45,6 +47,9 @@ public:
     AUI::EventResult onMouseMove(const SDL_Point& cursorPosition) override;
 
 private:
+    void onEntityTargeted(entt::entity newTargetedEntity);
+    void onInteractionTextUpdated(std::string_view newInteractionText);
+
     /** Used for getting the world state so we can make decisions and send
         messages. */
     World& world;
@@ -53,16 +58,22 @@ private:
     const WorldObjectLocator& worldObjectLocator;
     /** Used to send interaction requests. */
     Network& network;
+    /** Used to update hovered/targeted entity state. */
+    ViewModel& viewModel;
     /** Used to orchestrate item/entity interactions. */
     InteractionManager& interactionManager;
 
     /** If the mouse is currently hovering over an entity, this is its ID.
         Else, this will be entt::null. */
-    entt::entity hoveredEntity;
+    entt::entity currentHoveredEntity;
 
     //-------------------------------------------------------------------------
     // Private child widgets
     //-------------------------------------------------------------------------
+    /** The text at the top of the screen that tells you what your currently 
+        selected target is. */
+    AUI::Text targetText;
+
     /** The text at the top of the screen that tells you what action will
         be performed if you click. */
     AUI::Text interactionText;
