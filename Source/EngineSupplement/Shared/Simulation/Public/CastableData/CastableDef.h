@@ -21,25 +21,21 @@ public:
         {
             Castable castable{
                 .range{64},
-                .castTime{2},
+                .castTime{1},
                 .cooldownTime{2},
                 .triggersGCD{true},
                 .castingGraphicType{EntityGraphicType::Crouch},
-                // TODO: Does diablo loop the last frames or anything?
                 //.castCompleteGraphicType{EntityGraphicType::Crouch}
             };
 
-            // TODO: Test that this still works fine
-            VisualEffect visualEffect{
-                .graphicID{toGraphicID(
-                    graphicData.getAnimation("explosion").numericID)},
-                .loopMode{VisualEffect::LoopMode::Loop},
-                .loopTime{3}};
-            castable.castCompleteVisualEffects.emplace_back(visualEffect);
+            //VisualEffect visualEffect{
+            //    .graphicID{toGraphicID(
+            //        graphicData.getAnimation("explosion").numericID)},
+            //    .loopMode{VisualEffect::LoopMode::Loop},
+            //    .loopTime{3}};
+            //castable.castCompleteVisualEffects.emplace_back(visualEffect);
 
-            // TODO: Play with startDistance, is it working right? Or is it 
-            //       causing our misalignment?
-            AVEntity avEntity{.startDistance{4}, .canMoveVertically{true}};
+            AVEntity avEntity{.startDistance{10}, .canMoveVertically{true}};
             AVEntity::Phase phase{
                 .graphicSetID{
                     graphicData.getEntityGraphicSet("Fireball").numericID},
