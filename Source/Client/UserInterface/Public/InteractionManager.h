@@ -76,13 +76,15 @@ private:
                                    std::string_view displayName,
                                    ItemThumbnail& itemThumbnail);
 
-    /** Used to access the registry for interactions and inventory. */
+    /** Used to access the registry for interactions and inventory, 
+        and to request casts. */
     World& world;
     /** Used to send interaction messages. */
     Network& network;
     /** Used to access item data. */
     const ItemData& itemData;
-    /** Used to set focus to a selected item. */
+    /** Used to set focus to a selected item and to print cast failures to 
+        the chat. */
     MainScreen& mainScreen;
     /** Used to get the currently targeted entity. */
     const ViewModel& viewModel;

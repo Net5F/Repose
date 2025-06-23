@@ -1,30 +1,38 @@
 #include "HotbarWindow.h"
-#include "CastableData.h"
-#include "Network.h"
+#include "World.h"
+#include "MainScreen.h"
+#include "ViewModel.h"
 #include "CastRequest.h"
 
 namespace AM
 {
 namespace Client
 {
-HotbarWindow::HotbarWindow(CastableData& inCastableData, Network& inNetwork)
+HotbarWindow::HotbarWindow(World& inWorld, MainScreen& inMainScreen,
+                           const ViewModel& inViewModel)
 : AUI::Window({1362, 340, 256, 256}, "HotbarWindow")
-, castableData{inCastableData}
-, network{inNetwork}
+, world{inWorld}
+, mainScreen{inMainScreen}
+, viewModel{inViewModel}
 {
 }
 
-bool HotbarWindow::onKeyDown(SDL_Keycode keyCode)
+AUI::EventResult HotbarWindow::onKeyDown(SDL_Keycode keyCode)
 {
-    // TODO: Need target entity
     // If the '1' key is pressed, cast a fireball spell.
     if (keyCode == SDLK_1) {
-        const Castable& fireball{castableData.getCastable(SpellType::Fireball)};
-        network.serializeAndSend(CastRequest{fireball->castableID, 0,
-                                             params.targetEntity});
+        CastFailureType result{world.castHelper.castSpell(
+            {.interactionType{SpellType::Fireball},
+             .targetEntity{viewModel.getTargetEntity()}})};
+        std::string_view resultString{getCastFailureString(result)};
+        if (resultString.compare("") != 0) {
+            mainScreen.addChatMessage(resultString);
+        }
+
+        return {.wasHandled{true}};
     }
 
-    return false;
+    return {.wasHandled{false}};
 }
 
 } // End namespace Client

@@ -4,11 +4,11 @@
 
 namespace AM
 {
-class CastableData;
-
 namespace Client
 {
-class Network;
+class World;
+class MainScreen;
+class ViewModel;
 
 /**
  * The hotbar that manages castable->keyboard button assignments.
@@ -22,18 +22,21 @@ public:
     //-------------------------------------------------------------------------
     // Public interface
     //-------------------------------------------------------------------------
-    HotbarWindow(CastableData& inCastableData, Network& inNetwork);
+    HotbarWindow(World& inWorld, MainScreen& inMainScreen,
+                 const ViewModel& inViewModel);
 
-    //-------------------------------------------------------------------------
-    // Base class overrides
-    //-------------------------------------------------------------------------
-    bool onKeyDown(SDL_Keycode keyCode) override;
+    // Note: Since this widget doesn't take focus, this function won't be 
+    //       called automatically. Instead, MainScreen has to manually call 
+    //       this function when an input is unhandled by everything else.
+    AUI::EventResult onKeyDown(SDL_Keycode keyCode);
 
 private:
-    /** Used to get Castable definitions. */
-    CastableData& castableData;
-    /** Used to send cast requests. */
-    Network& network;
+    /** Used to request casts. */
+    World& world;
+    /** Used to print cast failure messages to the chat. */
+    MainScreen& mainScreen;
+    /** Used to get the currently targeted entity. */
+    const ViewModel& viewModel;
 };
 
 } // End namespace Client

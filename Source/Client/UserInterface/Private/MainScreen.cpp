@@ -31,6 +31,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 , dialogueWindow{world, deps.network}
 , inventoryWindow{deps.simulation, deps.network, deps.itemData, deps.iconData,
                   interactionManager}
+, hotbarWindow{world, *this, viewModel}
 , buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
                deps.graphicData}
 , buildPanel{deps.simulation, deps.network,  deps.graphicData,
@@ -42,6 +43,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
     windows.push_back(chatWindow);
     windows.push_back(dialogueWindow);
     windows.push_back(inventoryWindow);
+    windows.push_back(hotbarWindow);
     windows.push_back(buildOverlay);
     windows.push_back(buildPanel);
     windows.push_back(rightClickMenu);
@@ -153,7 +155,10 @@ bool MainScreen::onKeyDown(SDL_Keycode keyCode)
         inventoryWindow.setIsVisible(!(inventoryWindow.getIsVisible()));
     }
 
-    return false;
+    // Note: Since HotbarWindow doesn't take focus, we need to manually pass 
+    //       unhandled key presses to it.
+    AUI::EventResult eventResult{hotbarWindow.onKeyDown(keyCode)};
+    return (eventResult.wasHandled);
 }
 
 void MainScreen::tick(double timestepS)

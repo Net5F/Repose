@@ -10,6 +10,7 @@
 #include "ChatWindow.h"
 #include "DialogueWindow.h"
 #include "InventoryWindow.h"
+#include "HotbarWindow.h"
 #include "BuildPanel.h"
 #include "BuildOverlay.h"
 #include "RightClickMenu.h"
@@ -128,6 +129,9 @@ private:
 
     /** The player's inventory window. */
     InventoryWindow inventoryWindow;
+
+    /** The player's hotbar window. */
+    HotbarWindow hotbarWindow;
 
     /** The build mode overlay. Allows the player to place tiles. */
     BuildOverlay buildOverlay;
