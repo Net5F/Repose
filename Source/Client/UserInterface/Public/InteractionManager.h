@@ -18,6 +18,7 @@ class World;
 class Network;
 class ItemData;
 class MainScreen;
+class ViewModel;
 class ItemThumbnail;
 
 /**
@@ -33,11 +34,11 @@ class InteractionManager
 {
 public:
     InteractionManager(World& inWorld, Network& inNetwork,
-                       const ItemData& inItemData, MainScreen& inMainScreen);
+                       const ItemData& inItemData, MainScreen& inMainScreen,
+                       const ViewModel& inViewModel);
 
     // Entity interactions.
     /** @param entity The relevant entity. */
-    void entityHovered(entt::entity entity);
     void entityLeftClicked(entt::entity entity);
     void entityRightClicked(entt::entity entity);
 
@@ -83,6 +84,8 @@ private:
     const ItemData& itemData;
     /** Used to set focus to a selected item. */
     MainScreen& mainScreen;
+    /** Used to get the currently targeted entity. */
+    const ViewModel& viewModel;
 
     /** If true, there's an ongoing "Use item on X" interaction. */
     bool usingItem;

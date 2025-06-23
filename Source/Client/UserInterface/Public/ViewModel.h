@@ -20,11 +20,13 @@ public:
      * Sets the currently hovered entity. To clear, set this to entt::null.
      */
     void setHoveredEntity(entt::entity entity);
+    entt::entity getHoveredEntity() const;
 
     /**
      * Sets the currently targeted entity. To clear, set this to entt::null.
      */
     void setTargetEntity(entt::entity entity);
+    entt::entity getTargetEntity() const;
 
 private:
     /** If the mouse is currently hovering over an entity, this is its ID.

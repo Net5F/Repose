@@ -22,7 +22,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
 , world{deps.simulation.getWorld()}
 , viewModel{}
 , interactionManager{deps.simulation.getWorld(), deps.network, deps.itemData,
-                     *this}
+                     *this, viewModel}
 , playerIsInBuildArea{false}
 , dialogueResponseQueue{deps.network.getEventDispatcher()}
 , mainOverlay{world, deps.worldObjectLocator, deps.network, viewModel,

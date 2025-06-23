@@ -23,12 +23,21 @@ void ViewModel::setHoveredEntity(entt::entity entity)
     }
 }
 
+entt::entity ViewModel::getHoveredEntity() const
+{
+    return hoveredEntity;
+}
+
 void ViewModel::setTargetEntity(entt::entity entity)
 {
     if (entity != targetEntity) {
         targetEntity = entity;
         entityTargetedSig.publish(targetEntity);
     }
+}
+entt::entity ViewModel::getTargetEntity() const
+{
+    return targetEntity;
 }
 
 } // End namespace Client

@@ -21,7 +21,6 @@ MainOverlay::MainOverlay(World& inWorld,
 , network{inNetwork}
 , viewModel{inViewModel}
 , interactionManager{inInteractionManager}
-, currentHoveredEntity{entt::null}
 , targetText{{0, 20, logicalExtent.w, logicalExtent.h}, "TargetText"}
 , interactionText{{20, 20, 700, 100}, "InteractionText"}
 , buildModeHintText({50, 850, 500, 500}, "BuildModeHintText")
@@ -73,9 +72,6 @@ AUI::EventResult MainOverlay::onMouseDown(AUI::MouseButtonType buttonType,
     // If we hit an entity, pass it to the interaction manager.
     if (entt::entity* entity{std::get_if<entt::entity>(&objectID)};
         entity && world.registry.valid(*entity)) {
-        // TODO: If you left click to interact, how does targeting work?
-        //       Maybe commit, then try ripping out all of the left click 
-        //       default hover stuff.
         // Set the entity as our current target.
         viewModel.setTargetEntity(*entity);
 
@@ -113,16 +109,14 @@ AUI::EventResult MainOverlay::onMouseMove(const SDL_Point& cursorPosition)
     // If we hit an entity, pass it to InteractionManager.
     entt::entity* entity{std::get_if<entt::entity>(&objectID)};
     if (entity && world.registry.valid(*entity)
-        && (*entity != currentHoveredEntity)) {
-        currentHoveredEntity = *entity;
-        interactionManager.entityHovered(*entity);
+        && (*entity != viewModel.getHoveredEntity())) {
+        viewModel.setHoveredEntity(*entity);
 
         return AUI::EventResult{.wasHandled{true}};
     }
     // If we didn't hit an entity, tell InteractionManager to unhover.
     else if (!entity) {
-        currentHoveredEntity = entt::null;
-        interactionManager.unhovered();
+        viewModel.setHoveredEntity(entt::null);
     }
 
     return AUI::EventResult{.wasHandled{false}};

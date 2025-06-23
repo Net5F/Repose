@@ -3,6 +3,7 @@
 #include "Network.h"
 #include "ItemData.h"
 #include "MainScreen.h"
+#include "ViewModel.h"
 #include "Inventory.h"
 #include "Interaction.h"
 #include "CastRequest.h"
@@ -20,50 +21,19 @@ namespace Client
 
 InteractionManager::InteractionManager(World& inWorld, Network& inNetwork,
                                        const ItemData& inItemData,
-                                       MainScreen& inMainScreen)
+                                       MainScreen& inMainScreen,
+                                       const ViewModel& inViewModel)
 : world{inWorld}
 , network{inNetwork}
 , itemData{inItemData}
 , mainScreen{inMainScreen}
+, viewModel{inViewModel}
 , usingItem{false}
 , sourceSlotIndex{0}
 , sourceName{""}
 , interactionTextUpdatedSig{}
 , interactionTextUpdated{interactionTextUpdatedSig}
 {
-}
-
-void InteractionManager::entityHovered(entt::entity entity)
-{
-    Name name{world.registry.get<Name>(entity)};
-
-    // If we're using an item, update the text to reflect the hovered entity as
-    // the target.
-    std::string newInteractionText{};
-    if (usingItem) {
-        newInteractionText += "Use " + sourceName + " on " + name.value;
-    }
-    // Else, update the text to reflect the hovered entity's interactions.
-    else {
-        // If this entity has no interactions, return early.
-        auto* interaction{world.registry.try_get<Interaction>(entity)};
-        if (!interaction || interaction->supportedInteractions.empty()) {
-            return;
-        }
-
-        // Update the text to reflect the hovered entity's default interaction.
-        EntityInteractionType defaultInteraction{interaction->getDefault()};
-        newInteractionText
-            += DisplayStrings::get(defaultInteraction) + " " + name.value;
-
-        std::size_t interactionCount{interaction->supportedInteractions.size()};
-        if (interactionCount > 1) {
-            newInteractionText += " / " + std::to_string(interactionCount - 1)
-                                  + " more options.";
-        }
-    }
-
-    interactionTextUpdatedSig.publish(newInteractionText);
 }
 
 void InteractionManager::entityLeftClicked(entt::entity entity)
@@ -77,22 +47,6 @@ void InteractionManager::entityLeftClicked(entt::entity entity)
         // Note: Dropping focus will cause the first item to deselect itself.
         mainScreen.dropFocus();
         usingItem = false;
-    }
-    // Else, request the entity's default interaction be performed.
-    else {
-        // If this entity has no interactions, return early.
-        auto* interaction{world.registry.try_get<Interaction>(entity)};
-        if (!interaction || interaction->supportedInteractions.empty()) {
-            return;
-        }
-
-        CastFailureType failureType{world.castHelper.castEntityInteraction(
-            {.interactionType{interaction->getDefault()},
-             .targetEntity{entity}})};
-        std::string_view failureString{getCastFailureString(failureType)};
-        if (failureString.compare("") != 0) {
-            mainScreen.addChatMessage(failureString);
-        }
     }
 }
 
@@ -115,11 +69,11 @@ void InteractionManager::entityRightClicked(entt::entity entity)
          interaction->supportedInteractions) {
         // Tell the server to process this interaction.
         auto interactWith = [&, entity, interactionType]() {
-            CastFailureType failureType{world.castHelper.castEntityInteraction(
+            CastFailureType result{world.castHelper.castEntityInteraction(
                 {.interactionType{interactionType}, .targetEntity{entity}})};
-            std::string_view failureString{getCastFailureString(failureType)};
-            if (failureString.compare("") != 0) {
-                mainScreen.addChatMessage(failureString);
+            std::string_view resultString{getCastFailureString(result)};
+            if (resultString.compare("") != 0) {
+                mainScreen.addChatMessage(resultString);
             }
         };
         mainScreen.addRightClickMenuAction(DisplayStrings::get(interactionType),
@@ -251,11 +205,13 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex,
     }
     // Else, request the item's default interaction be performed.
     else {
-        CastFailureType failureType{world.castHelper.castItemInteraction(
-            {.interactionType{defaultInteraction}, .slotIndex{slotIndex}})};
-        std::string_view failureString{getCastFailureString(failureType)};
-        if (failureString.compare("") != 0) {
-            mainScreen.addChatMessage(failureString);
+        CastFailureType result{world.castHelper.castItemInteraction(
+            {.interactionType{defaultInteraction},
+             .slotIndex{slotIndex},
+             .targetEntity{viewModel.getTargetEntity()}})};
+        std::string_view resultString{getCastFailureString(result)};
+        if (resultString.compare("") != 0) {
+            mainScreen.addChatMessage(resultString);
         }
     }
 }
@@ -307,13 +263,13 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
         else {
             // Tell the sim to process this interaction.
             auto interactWith = [&, slotIndex, interactionType]() {
-                CastFailureType failureType{
-                    world.castHelper.castItemInteraction(
-                        {.interactionType{interactionType},
-                         .slotIndex{slotIndex}})};
-                const char* failureString{getCastFailureString(failureType)};
-                if (failureString != "") {
-                    mainScreen.addChatMessage(failureString);
+                CastFailureType result{world.castHelper.castItemInteraction(
+                    {.interactionType{interactionType},
+                     .slotIndex{slotIndex},
+                     .targetEntity{viewModel.getTargetEntity()}})};
+                std::string_view resultString{getCastFailureString(result)};
+                if (resultString.compare("") != 0) {
+                    mainScreen.addChatMessage(resultString);
                 }
             };
             mainScreen.addRightClickMenuAction(

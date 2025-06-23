@@ -63,10 +63,6 @@ private:
     /** Used to orchestrate item/entity interactions. */
     InteractionManager& interactionManager;
 
-    /** If the mouse is currently hovering over an entity, this is its ID.
-        Else, this will be entt::null. */
-    entt::entity currentHoveredEntity;
-
     //-------------------------------------------------------------------------
     // Private child widgets
     //-------------------------------------------------------------------------
