@@ -31,8 +31,6 @@ InteractionManager::InteractionManager(World& inWorld, Network& inNetwork,
 , usingItem{false}
 , sourceSlotIndex{0}
 , sourceName{""}
-, interactionTextUpdatedSig{}
-, interactionTextUpdated{interactionTextUpdatedSig}
 {
 }
 
@@ -60,7 +58,6 @@ void InteractionManager::entityRightClicked(entt::entity entity)
     // If we're using an item, cancel it.
     if (usingItem) {
         usingItem = false;
-        interactionTextUpdatedSig.publish("");
     }
 
     // Fill the right-click menu with this entity's interactions.
@@ -83,37 +80,30 @@ void InteractionManager::entityRightClicked(entt::entity entity)
     mainScreen.openRightClickMenu();
 }
 
-void InteractionManager::itemHovered(Uint8 slotIndex)
+std::string InteractionManager::getItemTooltipString(Uint8 slotIndex)
 {
     // If the given slot doesn't contain an item, do nothing.
     auto& inventory{world.registry.get<Inventory>(world.playerEntity)};
     const Item* hoveredItem{inventory.getItem(slotIndex, itemData)};
     if (!hoveredItem) {
-        return;
+        return "";
     }
 
     // If we're using an item, update the text to reflect the hovered item as
     // the target.
-    std::string newInteractionText{};
+    std::string tooltipText{};
     if (usingItem) {
-        newInteractionText
-            += "Use " + sourceName + " on " + hoveredItem->displayName;
+        tooltipText += "Use " + sourceName + " on " + hoveredItem->displayName;
     }
     // Else, update the text to reflect the hovered item's interactions.
     else {
         ItemInteractionType defaultInteraction{
             hoveredItem->getDefaultInteraction()};
-        newInteractionText += DisplayStrings::get(defaultInteraction) + " "
-                              + hoveredItem->displayName;
-
-        std::size_t interactionCount{hoveredItem->getInteractionCount()};
-        if (interactionCount > 1) {
-            newInteractionText += " / " + std::to_string(interactionCount - 1)
-                                  + " more options.";
-        }
+        tooltipText += DisplayStrings::get(defaultInteraction) + " "
+                       + hoveredItem->displayName;
     }
 
-    interactionTextUpdatedSig.publish(newInteractionText);
+    return tooltipText;
 }
 
 bool InteractionManager::itemMouseDown(Uint8 slotIndex,
@@ -123,10 +113,6 @@ bool InteractionManager::itemMouseDown(Uint8 slotIndex,
     // There's no drag+drop on right click, so we can handle it immediately.
     if (buttonType == AUI::MouseButtonType::Right) {
         itemRightClicked(slotIndex, itemThumbnail);
-
-        // Clear out the interaction text, since thumbnail interactions are
-        // blocked while the right-click menu is open.
-        interactionTextUpdatedSig.publish("");
 
         return false;
     }
@@ -167,20 +153,6 @@ void InteractionManager::itemDeselected()
     if (usingItem) {
         // Item usage was canceled, reset our state and the text.
         usingItem = false;
-        interactionTextUpdatedSig.publish("");
-    }
-}
-
-void InteractionManager::unhovered()
-{
-    // If we're using an item, go back to the Use text without a target.
-    if (usingItem) {
-        std::string newInteractionText{"Use " + sourceName + " on"};
-        interactionTextUpdatedSig.publish(newInteractionText);
-    }
-    else {
-        // Not using an item, reset the text.
-        interactionTextUpdatedSig.publish("");
     }
 }
 
@@ -229,7 +201,6 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
     // If we're using an item, cancel it.
     if (usingItem) {
         usingItem = false;
-        interactionTextUpdatedSig.publish("");
     }
 
     // Fill the right-click menu with this item's interactions.
@@ -294,9 +265,6 @@ void InteractionManager::beginUseItemOnInteraction(Uint8 slotIndex,
     //       they lose focus.
     itemThumbnail.setIsFocusable(true);
     mainScreen.setFocus(&itemThumbnail);
-
-    std::string newInteractionText{"Use " + sourceName + " on " + sourceName};
-    interactionTextUpdatedSig.publish(newInteractionText);
 }
 
 } // End namespace Client

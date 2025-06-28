@@ -10,7 +10,7 @@ namespace Client
 {
 HotbarWindow::HotbarWindow(World& inWorld, MainScreen& inMainScreen,
                            const ViewModel& inViewModel)
-: AUI::Window({1362, 340, 256, 256}, "HotbarWindow")
+: AUI::Window({0, 0, 1, 1}, "HotbarWindow")
 , world{inWorld}
 , mainScreen{inMainScreen}
 , viewModel{inViewModel}

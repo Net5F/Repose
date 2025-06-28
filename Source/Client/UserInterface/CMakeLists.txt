@@ -28,6 +28,7 @@ target_sources(Client
         Private/Windows/MainOverlay.cpp
         Private/Windows/RightClickMenu.cpp
         Private/Windows/TitleWindow.cpp
+        Private/Windows/TooltipWindow.cpp
     PUBLIC
         Public/BuildModeType.h
         Public/DragDropData.h
@@ -59,6 +60,7 @@ target_sources(Client
         Public/Windows/MainOverlay.h
         Public/Windows/RightClickMenu.h
         Public/Windows/TitleWindow.h
+        Public/Windows/TooltipWindow.h
 )
 
 target_include_directories(Client

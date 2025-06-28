@@ -3,7 +3,6 @@
 #include "AUI/MouseButtonType.h"
 #include "AUI/WidgetWeakRef.h"
 #include "entt/fwd.hpp"
-#include "entt/signal/sigh.hpp"
 #include <SDL_stdinc.h>
 #include <SDL_rect.h>
 #include <functional>
@@ -44,8 +43,8 @@ public:
 
     // Item interactions.
     /** @param slotIndex The inventory slot containing the relevant item.
-        @param itemThumbnail The widget to focus. */
-    void itemHovered(Uint8 slotIndex);
+        @return The tooltip string to display. */
+    std::string getItemTooltipString(Uint8 slotIndex);
     /** @return true if the given thumbnail should request mouse capture, else
                 false. */
     bool itemMouseDown(Uint8 slotIndex, AUI::MouseButtonType buttonType,
@@ -53,11 +52,6 @@ public:
     void itemMouseUp(Uint8 slotIndex, AUI::MouseButtonType buttonType,
                      ItemThumbnail& itemThumbnail);
     void itemDeselected();
-
-    /**
-     * Called when the mouse moves away from hovering over an entity or item.
-     */
-    void unhovered();
 
 private:
     void itemLeftClicked(Uint8 slotIndex, ItemThumbnail& itemThumbnail);
@@ -99,21 +93,6 @@ private:
     /** If usingItem == true, this is the display name of the item that is
         being used. */
     std::string sourceName;
-
-    //-------------------------------------------------------------------------
-    // Signals
-    //-------------------------------------------------------------------------
-    entt::sigh<void(std::string_view newInteractionText)>
-        interactionTextUpdatedSig;
-
-public:
-    //-------------------------------------------------------------------------
-    // Signal Sinks
-    //-------------------------------------------------------------------------
-    /** The player has hovered an entity, or is no longer hovering an entity. 
-        Will be entt::null if no entity is hovered. */
-    entt::sink<entt::sigh<void(std::string_view newInteractionText)>>
-        interactionTextUpdated;
 };
 
 } // namespace Client

@@ -6,26 +6,55 @@ namespace Client
 {
 
 ViewModel::ViewModel()
-: hoveredEntity{entt::null}
+: hoveredEntityTooltipText{""}
+, hoveredItemTooltipText{""}
 , targetEntity{entt::null}
-, entityHoveredSig{}
+, tooltipTextUpdatedSig{}
 , entityTargetedSig{}
-, entityHovered{entityHoveredSig}
+, tooltipTextUpdated{tooltipTextUpdatedSig}
 , entityTargeted{entityTargetedSig}
 {
 }
 
-void ViewModel::setHoveredEntity(entt::entity entity)
+void ViewModel::setHoveredEntity(std::string_view tooltipText)
 {
-    if (entity != hoveredEntity) {
-        hoveredEntity = entity;
-        entityHoveredSig.publish(hoveredEntity);
+    hoveredEntityTooltipText = tooltipText;
+    tooltipTextUpdatedSig.publish(tooltipText);
+}
+
+void ViewModel::clearHoveredEntity()
+{
+    hoveredEntityTooltipText = "";
+
+    // If an item is hovered, set the tooltip to it.
+    // Note: We never can physically hover an item and entity at the same time,
+    //       but if you move the cursor directly from an entity to an item, 
+    //       we may get the "item hovered" signal before "entity unhovered".
+    if (hoveredItemTooltipText != "") {
+        tooltipTextUpdatedSig.publish(hoveredItemTooltipText);
+    }
+    else {
+        tooltipTextUpdatedSig.publish("");
     }
 }
 
-entt::entity ViewModel::getHoveredEntity() const
+void ViewModel::setHoveredItem(std::string_view tooltipText)
 {
-    return hoveredEntity;
+    hoveredItemTooltipText = tooltipText;
+    tooltipTextUpdatedSig.publish(tooltipText);
+}
+
+void ViewModel::clearHoveredItem()
+{
+    hoveredItemTooltipText = "";
+
+    // If an entity is hovered, set the tooltip to it.
+    if (hoveredEntityTooltipText != "") {
+        tooltipTextUpdatedSig.publish(hoveredEntityTooltipText);
+    }
+    else {
+        tooltipTextUpdatedSig.publish("");
+    }
 }
 
 void ViewModel::setTargetEntity(entt::entity entity)

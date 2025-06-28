@@ -63,6 +63,10 @@ private:
     /** Used to orchestrate item/entity interactions. */
     InteractionManager& interactionManager;
 
+    /** The currently hovered entity. Will be entt::null if no entity is 
+        hovered. */
+    entt::entity hoveredEntity;
+
     //-------------------------------------------------------------------------
     // Private child widgets
     //-------------------------------------------------------------------------

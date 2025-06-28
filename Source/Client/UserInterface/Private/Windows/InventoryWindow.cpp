@@ -3,6 +3,7 @@
 #include "Network.h"
 #include "ItemData.h"
 #include "IconData.h"
+#include "ViewModel.h"
 #include "InteractionManager.h"
 #include "Paths.h"
 #include "Inventory.h"
@@ -18,12 +19,14 @@ namespace Client
 {
 InventoryWindow::InventoryWindow(Simulation& inSimulation, Network& inNetwork,
                                  ItemData& inItemData, IconData& inIconData,
+                                 ViewModel& inViewModel,
                                  InteractionManager& inInteractionManager)
 : AUI::Window({1362, 340, 256, 256}, "InventoryWindow")
 , world{inSimulation.getWorld()}
 , network{inNetwork}
 , itemData{inItemData}
 , iconData{inIconData}
+, viewModel{inViewModel}
 , interactionManager{inInteractionManager}
 , wasRefreshed{false}
 , backgroundImage({0, 0, logicalExtent.w, logicalExtent.h}, "BackgroundImage")
@@ -56,8 +59,9 @@ void InventoryWindow::arrange()
     // Run the normal arrange step.
     Window::arrange();
 
-    // Items in the inventory may have changed. If the mouse is hovering over
-    // the inventory, update InteractionManager's hover state.
+    // Items in the inventory may have changed, causing our old hover state to 
+    // be incorrect. If the mouse is hovering over the inventory, update 
+    // the model's hover state.
     // Note: We have to wait until after layout, so the thumbnails are in their
     //       actual position.
     if (wasRefreshed) {
@@ -75,21 +79,23 @@ void InventoryWindow::arrange()
             return;
         }
 
-        // If we're hovering an item thumbnail, tell InteractionManager.
+        // If we're hovering an item thumbnail, update the model.
         bool hoveringItem{false};
         for (Uint8 slotIndex = 0; slotIndex < slotContainer.size();
              ++slotIndex) {
             std::unique_ptr<AUI::Widget>& item{slotContainer[slotIndex]};
             if (item->getIsVisible() && item->containsPoint(cursorPosition)) {
-                interactionManager.itemHovered(slotIndex);
+                std::string tooltipString{
+                    interactionManager.getItemTooltipString(slotIndex)};
+                viewModel.setHoveredItem(tooltipString);
                 hoveringItem = true;
             }
         }
 
-        // If we aren't hovering an item, tell InteractionManager to unhover
-        // since we may been hovering an item before the update.
+        // If we aren't hovering an item, tell the model to unhover since we 
+        // may been hovering an item before the update.
         if (!hoveringItem) {
-            interactionManager.unhovered();
+            viewModel.clearHoveredItem();
         }
     }
 }
@@ -172,10 +178,12 @@ void InventoryWindow::finishItemThumbnail(ItemThumbnail& thumbnail,
 
     // Add our callbacks.
     thumbnail.setOnHovered([&, slotIndex](ItemThumbnail*) {
-        interactionManager.itemHovered(slotIndex);
+        std::string tooltipString{
+            interactionManager.getItemTooltipString(slotIndex)};
+        viewModel.setHoveredItem(tooltipString);
     });
     thumbnail.setOnUnhovered([&, slotIndex](ItemThumbnail*) {
-        interactionManager.unhovered();
+        viewModel.clearHoveredItem();
     });
     thumbnail.setOnMouseDown([&, slotIndex](ItemThumbnail* thumbnail,
                                             AUI::MouseButtonType buttonType) {

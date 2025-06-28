@@ -29,14 +29,15 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
               interactionManager}
 , chatWindow{deps.simulation, deps.network, deps.sdlRenderer}
 , dialogueWindow{world, deps.network}
-, inventoryWindow{deps.simulation, deps.network, deps.itemData, deps.iconData,
-                  interactionManager}
+, inventoryWindow{deps.simulation, deps.network, deps.itemData,
+                  deps.iconData,   viewModel,    interactionManager}
 , hotbarWindow{world, *this, viewModel}
 , buildOverlay{deps.simulation, deps.worldObjectLocator, deps.network,
                deps.graphicData}
 , buildPanel{deps.simulation, deps.network,  deps.graphicData,
              deps.itemData,   deps.iconData, buildOverlay}
 , rightClickMenu{}
+, tooltipWindow{}
 {
     // Add our windows so they're included in rendering, etc.
     windows.push_back(mainOverlay);
@@ -47,6 +48,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
     windows.push_back(buildOverlay);
     windows.push_back(buildPanel);
     windows.push_back(rightClickMenu);
+    windows.push_back(tooltipWindow);
 
     // Hide the windows that aren't always open.
     buildOverlay.setIsVisible(false);
@@ -54,6 +56,7 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
     dialogueWindow.setIsVisible(false);
     inventoryWindow.setIsVisible(false);
     rightClickMenu.setIsVisible(false);
+    tooltipWindow.setIsVisible(false);
 
     // If world changes are restricted, we need to know when the player enters
     // or exits the build area.
@@ -66,6 +69,10 @@ MainScreen::MainScreen(const UserInterfaceExDependencies& deps)
         // area.
         playerIsInBuildArea = true;
     }
+
+    // If the tooltip text changes, show/hide the tooltip window.
+    viewModel.tooltipTextUpdated.connect<&MainScreen::onTooltipTextUpdated>(
+        this);
 }
 
 void MainScreen::addChatMessage(std::string_view message)
@@ -101,6 +108,14 @@ void MainScreen::openRightClickMenu()
 
         // Open the menu.
         rightClickMenu.setIsVisible(true);
+
+        // If the tooltip window is open, close it (we don't want the 
+        // right click menu and tooltip window open at the same time).
+        // Note: This is a bandaid to fix the tooltip staying up and making 
+        //       the user move their cursor to get rid of it. A real solution 
+        //       for this would probably involve AUI changes, such as re-
+        //       calculating the hover path whenever the layout is invalidated.
+        tooltipWindow.setIsVisible(false);
     }
 }
 
@@ -209,6 +224,17 @@ void MainScreen::onPositionChanged(entt::registry& registry,
 
             playerIsInBuildArea = false;
         }
+    }
+}
+
+void MainScreen::onTooltipTextUpdated(std::string_view newTooltipText)
+{
+    if (newTooltipText != "") {
+        tooltipWindow.text.setText(newTooltipText);
+        tooltipWindow.setIsVisible(true);
+    }
+    else {
+        tooltipWindow.setIsVisible(false);
     }
 }
 

@@ -19,6 +19,7 @@ class World;
 class Network;
 class ItemData;
 class IconData;
+class ViewModel;
 class InteractionManager;
 class ItemThumbnail;
 
@@ -33,6 +34,7 @@ public:
     //-------------------------------------------------------------------------
     InventoryWindow(Simulation& inSimulation, Network& inNetwork,
                     ItemData& inItemData, IconData& inIconData,
+                    ViewModel& inViewModel,
                     InteractionManager& inInteractionManager);
 
     //-------------------------------------------------------------------------
@@ -76,6 +78,8 @@ private:
     ItemData& itemData;
     /** Used to get item icons. */
     IconData& iconData;
+    /** Used to update hovered/targeted item state. */
+    ViewModel& viewModel;
     /** Used to orchestrate item/entity interactions. */
     InteractionManager& interactionManager;
 

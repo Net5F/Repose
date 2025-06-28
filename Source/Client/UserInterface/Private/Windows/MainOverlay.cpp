@@ -21,6 +21,7 @@ MainOverlay::MainOverlay(World& inWorld,
 , network{inNetwork}
 , viewModel{inViewModel}
 , interactionManager{inInteractionManager}
+, hoveredEntity{entt::null}
 , targetText{{0, 20, logicalExtent.w, logicalExtent.h}, "TargetText"}
 , interactionText{{20, 20, 700, 100}, "InteractionText"}
 , buildModeHintText({50, 850, 500, 500}, "BuildModeHintText")
@@ -51,10 +52,6 @@ MainOverlay::MainOverlay(World& inWorld,
     viewModel.entityTargeted.connect<&MainOverlay::onEntityTargeted>(this);
     // Note: We don't subscribe to entityHovered because we're the only 
     //       source of entity hover events.
-
-    // Update interactionText when InteractionManager tells us to.
-    interactionManager.interactionTextUpdated
-        .connect<&MainOverlay::onInteractionTextUpdated>(this);
 }
 
 void MainOverlay::setBuildModeHintVisibility(bool isVisible)
@@ -106,17 +103,19 @@ AUI::EventResult MainOverlay::onMouseMove(const SDL_Point& cursorPosition)
     WorldObjectID objectID{
         worldObjectLocator.getObjectUnderPoint(cursorPosition)};
 
-    // If we hit an entity, pass it to InteractionManager.
+    // If we hit an entity, update the model.
     entt::entity* entity{std::get_if<entt::entity>(&objectID)};
-    if (entity && world.registry.valid(*entity)
-        && (*entity != viewModel.getHoveredEntity())) {
-        viewModel.setHoveredEntity(*entity);
+    if (entity && world.registry.valid(*entity) && (*entity != hoveredEntity)) {
+        const Name& name{world.registry.get<Name>(*entity)};
+        viewModel.setHoveredEntity(name.value);
+        hoveredEntity = *entity;
 
         return AUI::EventResult{.wasHandled{true}};
     }
     // If we didn't hit an entity, tell InteractionManager to unhover.
     else if (!entity) {
-        viewModel.setHoveredEntity(entt::null);
+        viewModel.clearHoveredEntity();
+        hoveredEntity = entt::null;
     }
 
     return AUI::EventResult{.wasHandled{false}};

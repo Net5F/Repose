@@ -14,6 +14,7 @@
 #include "BuildPanel.h"
 #include "BuildOverlay.h"
 #include "RightClickMenu.h"
+#include "TooltipWindow.h"
 #include "DialogueResponse.h"
 #include "QueuedEvents.h"
 #include <string_view>
@@ -98,6 +99,11 @@ private:
      */
     void onPositionChanged(entt::registry& registry, entt::entity entity);
 
+    /**
+     * Shows/hides the TooltipWindow.
+     */
+    void onTooltipTextUpdated(std::string_view newTooltipText);
+
     /** Used to get the player entity's ID. */
     World& world;
 
@@ -142,6 +148,10 @@ private:
     /** A general-purpose right-click menu. Used for e.g. displaying
         the supported interactions when a user right-clicks an item. */
     RightClickMenu rightClickMenu;
+
+    /** A general-purpose tooltip window. Used for e.g. displaying an entity 
+        or item name when hovered. */
+    TooltipWindow tooltipWindow;
 };
 
 } // End namespace Client
