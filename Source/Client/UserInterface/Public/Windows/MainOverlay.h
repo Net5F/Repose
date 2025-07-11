@@ -46,6 +46,8 @@ public:
 
     AUI::EventResult onMouseMove(const SDL_Point& cursorPosition) override;
 
+    void onMouseLeave() override;
+
 private:
     void onEntityTargeted(entt::entity newTargetedEntity);
     void onInteractionTextUpdated(std::string_view newInteractionText);

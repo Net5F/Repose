@@ -112,13 +112,20 @@ AUI::EventResult MainOverlay::onMouseMove(const SDL_Point& cursorPosition)
 
         return AUI::EventResult{.wasHandled{true}};
     }
-    // If we didn't hit an entity, tell InteractionManager to unhover.
+    // If we didn't hit an entity, tell the model to unhover.
     else if (!entity) {
         viewModel.clearHoveredEntity();
         hoveredEntity = entt::null;
     }
 
     return AUI::EventResult{.wasHandled{false}};
+}
+
+void MainOverlay::onMouseLeave()
+{
+    // The mouse left the window. Tell the model to unhover.
+    viewModel.clearHoveredEntity();
+    hoveredEntity = entt::null;
 }
 
 void MainOverlay::onEntityTargeted(entt::entity newTargetedEntity)

@@ -12,6 +12,7 @@
                 3,
                 4
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 25.125,
@@ -47,6 +48,7 @@
                 8,
                 9
             ],
+            "loopStartFrame": 10,
             "modelBounds": {
                 "maxX": 12.5,
                 "maxY": 12.5,
@@ -85,6 +87,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -121,6 +124,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -157,6 +161,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -193,6 +198,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -229,6 +235,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 10.375,
                 "maxY": 10.625,
@@ -265,6 +272,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -301,6 +309,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -337,6 +346,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -373,6 +383,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -409,6 +420,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -445,6 +457,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -481,6 +494,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -517,6 +531,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 10.375,
                 "maxY": 10.625,
@@ -553,6 +568,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -589,6 +605,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -625,6 +642,7 @@
                 6,
                 7
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -665,6 +683,7 @@
                 10,
                 11
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -709,6 +728,7 @@
                 10,
                 11
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -753,6 +773,7 @@
                 10,
                 11
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -797,6 +818,7 @@
                 10,
                 11
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -841,6 +863,7 @@
                 10,
                 11
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 13.875,
                 "maxY": 14.125,
@@ -885,6 +908,7 @@
                 10,
                 11
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -929,6 +953,7 @@
                 10,
                 11
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -973,6 +998,7 @@
                 10,
                 11
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -1019,6 +1045,7 @@
                 12,
                 13
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -1067,6 +1094,7 @@
                 12,
                 13
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -1115,6 +1143,7 @@
                 12,
                 13
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -1163,6 +1192,7 @@
                 12,
                 13
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -1211,6 +1241,7 @@
                 12,
                 13
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 9.0,
                 "maxY": 9.0,
@@ -1259,6 +1290,7 @@
                 12,
                 13
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -1307,6 +1339,7 @@
                 12,
                 13
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -1355,6 +1388,7 @@
                 12,
                 13
             ],
+            "loopStartFrame": 0,
             "modelBounds": {
                 "maxX": 20.0,
                 "maxY": 20.0,
@@ -1498,6 +1532,25 @@
                 ]
             ],
             "numericID": 3
+        },
+        {
+            "displayName": "Explosion",
+            "graphicIDTypes": [
+                1
+            ],
+            "graphicIDValues": [
+                [
+                    2147483650,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "numericID": 4
         }
     ],
     "floors": [

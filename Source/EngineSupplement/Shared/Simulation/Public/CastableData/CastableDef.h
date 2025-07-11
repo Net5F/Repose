@@ -41,7 +41,13 @@ public:
                     graphicData.getEntityGraphicSet("Fireball").numericID},
                 .behavior{AVEntity::Behavior::MoveToEntity},
                 .movementSpeed{5.f}};
+            AVEntity::Phase phase2{
+                .graphicSetID{
+                    graphicData.getEntityGraphicSet("Explosion").numericID},
+                .behavior{AVEntity::Behavior::CurrentPosition},
+                .durationS{-1.f}};
             avEntity.phases.emplace_back(phase);
+            avEntity.phases.emplace_back(phase2);
             castable.castCompleteAVEntities.emplace_back(avEntity);
 
             addCastable(SpellType::Fireball, castable);
