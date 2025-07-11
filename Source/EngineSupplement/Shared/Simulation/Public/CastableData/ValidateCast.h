@@ -15,8 +15,9 @@ namespace AM
  *
  * @return true if casterEntity is allowed to cast castable. Else, false.
  */
-static bool validateCast(entt::entity casterEntity, const Castable& castable,
-                         const entt::registry& registry)
+//inline bool validateCast(entt::entity casterEntity, const Castable& castable,
+//                         const entt::registry& registry)
+inline bool validateCast(entt::entity, const Castable&, const entt::registry&)
 {
     // const Stats* stats{registry.try_get(casterEntity)};
     // if (!stats) {

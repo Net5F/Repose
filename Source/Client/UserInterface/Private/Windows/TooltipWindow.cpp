@@ -41,7 +41,7 @@ void TooltipWindow::setIsVisible(bool inIsVisible)
     updatePosition();
 }
 
-void TooltipWindow::onTick(double timestepS)
+void TooltipWindow::onTick(double)
 {
     // Update our position to constantly follow the cursor.
     updatePosition();
