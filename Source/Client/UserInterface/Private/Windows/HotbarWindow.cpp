@@ -21,13 +21,9 @@ AUI::EventResult HotbarWindow::onKeyDown(SDL_Keycode keyCode)
 {
     // If the '1' key is pressed, cast a fireball spell.
     if (keyCode == SDLK_1) {
-        CastFailureType result{world.castHelper.castSpell(
+        world.castHelper.queueSpell(
             {.interactionType{SpellType::Fireball},
-             .targetEntity{viewModel.getTargetEntity()}})};
-        std::string_view resultString{getCastFailureString(result)};
-        if (resultString.compare("") != 0) {
-            mainScreen.addChatMessage(resultString);
-        }
+             .targetEntity{viewModel.getTargetEntity()}});
 
         return {.wasHandled{true}};
     }

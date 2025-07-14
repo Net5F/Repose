@@ -66,12 +66,8 @@ void InteractionManager::entityRightClicked(entt::entity entity)
          interaction->supportedInteractions) {
         // Tell the server to process this interaction.
         auto interactWith = [&, entity, interactionType]() {
-            CastFailureType result{world.castHelper.castEntityInteraction(
-                {.interactionType{interactionType}, .targetEntity{entity}})};
-            std::string_view resultString{getCastFailureString(result)};
-            if (resultString.compare("") != 0) {
-                mainScreen.addChatMessage(resultString);
-            }
+            world.castHelper.queueEntityInteraction(
+                {.interactionType{interactionType}, .targetEntity{entity}});
         };
         mainScreen.addRightClickMenuAction(DisplayStrings::get(interactionType),
                                            std::move(interactWith));
@@ -177,14 +173,10 @@ void InteractionManager::itemLeftClicked(Uint8 slotIndex,
     }
     // Else, request the item's default interaction be performed.
     else {
-        CastFailureType result{world.castHelper.castItemInteraction(
+        world.castHelper.queueItemInteraction(
             {.interactionType{defaultInteraction},
              .slotIndex{slotIndex},
-             .targetEntity{viewModel.getTargetEntity()}})};
-        std::string_view resultString{getCastFailureString(result)};
-        if (resultString.compare("") != 0) {
-            mainScreen.addChatMessage(resultString);
-        }
+             .targetEntity{viewModel.getTargetEntity()}});
     }
 }
 
@@ -234,14 +226,10 @@ void InteractionManager::itemRightClicked(Uint8 slotIndex,
         else {
             // Tell the sim to process this interaction.
             auto interactWith = [&, slotIndex, interactionType]() {
-                CastFailureType result{world.castHelper.castItemInteraction(
+                world.castHelper.queueItemInteraction(
                     {.interactionType{interactionType},
                      .slotIndex{slotIndex},
-                     .targetEntity{viewModel.getTargetEntity()}})};
-                std::string_view resultString{getCastFailureString(result)};
-                if (resultString.compare("") != 0) {
-                    mainScreen.addChatMessage(resultString);
-                }
+                     .targetEntity{viewModel.getTargetEntity()}});
             };
             mainScreen.addRightClickMenuAction(
                 DisplayStrings::get(interactionType), std::move(interactWith));
