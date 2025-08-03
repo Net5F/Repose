@@ -14,12 +14,15 @@ namespace AM
  */
 class CastableDef {
 public:
-    static void defineCastables(const GraphicDataBase& graphicData,
-        std::function<void(CastableID, const Castable&)> addCastable)
+    static void
+        defineCastables(const GraphicDataBase& graphicData,
+                        std::function<void(const Castable&)> addCastable)
     {
         // Fireball
         {
-            Castable castable{
+            Castable fireballCastable{
+                .castableID{SpellType::Fireball},
+                .targetType{Castable::TargetType::Entity},
                 .range{64},
                 .castTime{1},
                 .cooldownTime{2},
@@ -48,9 +51,9 @@ public:
                 .durationS{-1.f}};
             avEntity.phases.emplace_back(phase);
             avEntity.phases.emplace_back(phase2);
-            castable.castCompleteAVEntities.emplace_back(avEntity);
+            fireballCastable.castCompleteAVEntities.emplace_back(avEntity);
 
-            addCastable(SpellType::Fireball, castable);
+            addCastable(fireballCastable);
         }
     }
 };
