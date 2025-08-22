@@ -33,6 +33,16 @@ SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
 {
     // Add our Lua bindings.
     projectLuaBindings.addBindings();
+
+    // Add an example spell handler.
+    // Note: For better organization, you'd normally define these in a 
+    //       different file. This is just a quick example.
+    world.castHelper.setOnSpellCompleted(SpellType::Fireball,
+                                         [&](const CastInfo&) {
+                                             // Here is where you'd subtract HP
+                                             // from the target, or whatever you
+                                             // want to do.
+                                         });
 }
 
 void SimulationExtension::beforeAll() {}
