@@ -174,7 +174,7 @@ void DialogueWindow::addDialogueText(std::string_view textString,
     // Note: The widget's height will be auto-adjusted to fit the given
     // text.
     std::unique_ptr<AUI::Widget> textPtr{std::make_unique<AUI::Text>(
-        SDL_Rect{0, 0, logicalExtent.w, 0}, "DialogueText")};
+        SDL_Rect{0, 0, (logicalExtent.w - 24), 0}, "DialogueText")};
     AUI::Text& text{static_cast<AUI::Text&>(*textPtr)};
     text.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 20);
     text.setColor(color);
@@ -197,8 +197,8 @@ AUI::TextButton& DialogueWindow::addChoiceText(std::string_view textString)
     // Note: The widget's height will be auto-adjusted to fit the given
     // text.
     std::unique_ptr<AUI::Widget> textButtonPtr{
-        std::make_unique<AUI::TextButton>(SDL_Rect{0, 0, logicalExtent.w, 26},
-                                          "DialogueChoice")};
+        std::make_unique<AUI::TextButton>(
+            SDL_Rect{0, 0, (logicalExtent.w - 24), 26}, "DialogueChoice")};
     AUI::TextButton& textButton{static_cast<AUI::TextButton&>(*textButtonPtr)};
     textButton.text.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 20);
     textButton.setNormalColor({255, 255, 255, 255});

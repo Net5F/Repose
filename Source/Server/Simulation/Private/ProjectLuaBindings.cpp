@@ -47,7 +47,7 @@ void ProjectLuaBindings::addRandomWalkerAIBehavior(
 {
     // Add any components that this behavior requires.
     entt::entity entity{entityInitLua.selfEntity};
-    world.addMovementComponents(entity, Rotation{});
+    world.addMovementComponents(entity);
 
     // Add the behavior.
     world.registry.emplace<RandomWalkerAI>(entity, timeToWalk, timeToWait,

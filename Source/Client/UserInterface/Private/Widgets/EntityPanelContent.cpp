@@ -128,6 +128,7 @@ EntityPanelContent::EntityPanelContent(World& inWorld, Network& inNetwork,
             network.serializeAndSend(EntityInitRequest{
                 editingEntityID, registry.get<Name>(editingEntityID),
                 registry.get<Position>(editingEntityID),
+                registry.get<Rotation>(editingEntityID),
                 registry.get<GraphicState>(editingEntityID), initScript});
         }
         else {
@@ -316,7 +317,8 @@ void EntityPanelContent::addDefaultTemplateThumbnail()
     thumbnail.setIsActivateable(false);
 
     // Get the default graphic.
-    // Note: IdleSouth is guaranteed to be present in every entity graphic set.
+    // Note: Idle South is guaranteed to be present in every entity graphic set
+    //       (though it may be the null sprite).
     const EntityGraphicSet& graphicSet{graphicData.getEntityGraphicSet(
         SharedConfig::DEFAULT_ENTITY_GRAPHIC_SET)};
     const auto& graphicArr{graphicSet.graphics.at(EntityGraphicType::Idle)};
@@ -361,7 +363,8 @@ void EntityPanelContent::addTemplateThumbnails(
         thumbnail.setIsActivateable(false);
 
         // Get the graphic.
-        // Note: IdleSouth is guaranteed to be present in every entity set.
+        // Note: Idle South is guaranteed to be present in every entity graphic
+        //       set (though it may be the null sprite).
         const EntityGraphicSet& graphicSet{graphicData.getEntityGraphicSet(
             entityData.graphicState.graphicSetID)};
         const auto& graphicArr{graphicSet.graphics.at(EntityGraphicType::Idle)};
@@ -369,13 +372,21 @@ void EntityPanelContent::addTemplateThumbnails(
 
         // Calc a square texture extent that shows the bottom of the sprite
         // (so we don't have to squash it).
-        const SpriteRenderData& renderData{graphicData.getSpriteRenderData(
-            graphic.getFirstSprite().numericID)};
+        const Sprite& sprite{graphic.getFirstSprite()};
+        const SpriteRenderData& renderData{
+            graphicData.getSpriteRenderData(sprite.numericID)};
         SDL_Rect textureExtent{calcSquareTexExtent(renderData)};
 
-        // Load the sprite's image.
-        thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath,
-                                                textureExtent);
+        // If the sprite is non-null, load its image as the template thumbnail.
+        if (sprite.numericID != NULL_SPRITE_ID) {
+            thumbnail.thumbnailImage.setSimpleImage(renderData.spriteSheetRelPath,
+                                                    textureExtent);
+        }
+        else {
+            // Sprite is null. Use the engine default icon instead.
+            thumbnail.thumbnailImage.setSimpleImage(Paths::TEXTURE_DIR
+                                                    + "Defaults/Icon.png");
+        }
 
         // Add the callback.
         thumbnail.setOnSelected(
@@ -412,7 +423,8 @@ void EntityPanelContent::addSpriteSetThumbnails()
 
         // Calc a square texture extent that shows the bottom of the graphic
         // (so we don't have to squash it).
-        // Note: IdleSouth is guaranteed to be present in every entity set.
+        // Note: Idle South is guaranteed to be present in every entity graphic
+        //       set (though it may be the null sprite).
         const auto& graphicArr{graphicSet.graphics.at(EntityGraphicType::Idle)};
         const Sprite& sprite{
             graphicArr.at(Rotation::Direction::South).getFirstSprite()};

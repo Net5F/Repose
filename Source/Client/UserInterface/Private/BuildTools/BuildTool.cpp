@@ -61,18 +61,20 @@ void BuildTool::onMouseMove(const SDL_Point& cursorPosition)
     SDL_FPoint screenPoint{SDLHelpers::pointToFPoint(cursorPosition)};
     std::optional<Vector3> newWorldPoint{
         Transforms::screenToWorldTarget(screenPoint, camera)};
-    TilePosition newTilePosition(newWorldPoint.value());
 
     // If the mouse is within the world bounds, save the new positions.
-    if (newWorldPoint && mapTileExtent.contains(newTilePosition)) {
-        mouseWorldPoint = newWorldPoint.value();
-        mouseTilePosition = newTilePosition;
-        isActive = true;
+    if (newWorldPoint) {
+        TilePosition newTilePosition(newWorldPoint.value());
+        if (mapTileExtent.contains(newTilePosition)) {
+            mouseWorldPoint = newWorldPoint.value();
+            mouseTilePosition = newTilePosition;
+            isActive = true;
+            return;
+        }
     }
-    else {
-        // The mouse is outside the world bounds. Deactivate the tool.
-        isActive = false;
-    }
+
+    // The mouse is outside the world bounds. Deactivate the tool.
+    isActive = false;
 }
 
 void BuildTool::onMouseLeave()

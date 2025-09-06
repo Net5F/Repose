@@ -56,6 +56,7 @@ public:
                      const SDL_Point& cursorPosition) override;
     void onMouseDoubleClick(AUI::MouseButtonType buttonType,
                             const SDL_Point& cursorPosition) override;
+    void onMouseWheel(int amountScrolled) override;
     void onMouseMove(const SDL_Point& cursorPosition) override;
     // Note: This is called when the cursor leaves the BuildOverlay.
     void onMouseLeave() override;
@@ -100,8 +101,16 @@ private:
     /** The selected template's name. */
     Name selectedTemplateName;
 
-    /** The selected template's graphic set and graphic index. */
+    /** The selected template's graphic set. */
     GraphicState selectedTemplateGraphicState;
+
+    /** The indices within the selected template's graphic set that contain a 
+        graphic. */
+    std::vector<std::size_t> validTemplateGraphicIndices;
+
+    /** The index within validTemplateGraphicIndices that is currently 
+        selected. */
+    std::size_t selectedTemplateGraphicIndex;
 
     std::function<void(entt::entity entity)> onEntitySelected;
 

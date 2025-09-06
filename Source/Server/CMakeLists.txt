@@ -38,6 +38,10 @@ file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/ResourceData.json
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Server/Common/TileMap.bin
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
+# Copy Database.db3 to the build directory.
+file(COPY ${PROJECT_SOURCE_DIR}/Resources/Server/Common/Database.db3
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+
 # On Windows, copy the SDL2 DLL into the build folder so we can run our executable.
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     file(COPY ${SDL2_DIR}/lib/x64/SDL2.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)

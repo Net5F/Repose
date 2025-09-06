@@ -25,6 +25,8 @@ EntityTool::EntityTool(World& inWorld,
 , selectedEntityID{entt::null}
 , selectedTemplateName{""}
 , selectedTemplateGraphicState{}
+, validTemplateGraphicIndices{}
+, selectedTemplateGraphicIndex{0}
 {
     // Listen for destruction events for the current selected object.
     world.registry.on_destroy<entt::entity>()
@@ -37,6 +39,30 @@ void EntityTool::setSelectedTemplate(const Name& name,
     // Save the name and graphic state.
     selectedTemplateName = name;
     selectedTemplateGraphicState = graphicState;
+
+    // Iterate the set and track which indices contain a graphic.
+    // Note: We don't save the facing direction to the template, we just 
+    //       default to South and let the user set it.
+    const EntityGraphicSet& graphicSet{
+        graphicData.getEntityGraphicSet(graphicState.graphicSetID)};
+    validTemplateGraphicIndices.clear();
+
+    // Note: Idle is guaranteed to be present in every entity graphic set
+    //       (though it may only contain null graphics).
+    auto& idleGraphicArr{graphicSet.graphics.at(EntityGraphicType::Idle)};
+    for (std::size_t i = 0; i < idleGraphicArr.size(); ++i) {
+        if (idleGraphicArr.at(i).getGraphicID() != NULL_GRAPHIC_ID) {
+            validTemplateGraphicIndices.emplace_back(i);
+        }
+    }
+    if (validTemplateGraphicIndices.empty()) {
+        // There were no non-null graphics. Point at the first null graphic, so
+        // we at least have something to reference.
+        validTemplateGraphicIndices.emplace_back(0);
+    }
+
+    // Select the first graphic within validGraphicIndices.
+    selectedTemplateGraphicIndex = 0;
 }
 
 void EntityTool::setOnEntitySelected(
@@ -62,8 +88,10 @@ void EntityTool::onMouseDown(AUI::MouseButtonType buttonType,
         if (selectedTemplateGraphicState.graphicSetID
             != NULL_ENTITY_GRAPHIC_SET_ID) {
             // Tell the sim to create an object based on the template.
+            Rotation rotation{static_cast<Rotation::Direction>(
+                validTemplateGraphicIndices.at(selectedTemplateGraphicIndex))};
             network.serializeAndSend(EntityInitRequest{
-                entt::null, selectedTemplateName, mouseWorldPoint,
+                entt::null, selectedTemplateName, mouseWorldPoint, rotation,
                 selectedTemplateGraphicState});
 
             // To deter users from placing a million entities, we deselect after
@@ -93,6 +121,28 @@ void EntityTool::onMouseDoubleClick(AUI::MouseButtonType buttonType,
 {
     // We treat additional clicks as regular MouseDown events.
     onMouseDown(buttonType, cursorPosition);
+}
+
+void EntityTool::onMouseWheel(int amountScrolled)
+{
+    // If this tool isn't active or we don't have a template selected, do 
+    // nothing.
+    if (!isActive
+        || (selectedTemplateGraphicState.graphicSetID
+            == NULL_ENTITY_GRAPHIC_SET_ID)) {
+        return;
+    }
+
+    // Select the next valid graphic within the set's Idle type, accounting
+    // for negative values.
+    selectedTemplateGraphicIndex
+        = (selectedTemplateGraphicIndex + amountScrolled
+           + validTemplateGraphicIndices.size())
+          % validTemplateGraphicIndices.size();
+
+    // Set the newly selected graphic as a phantom at the current location.
+    phantomSprites.clear();
+    phantomSprites.push_back(getSelectedTemplatePhantomInfo());
 }
 
 void EntityTool::onMouseMove(const SDL_Point& cursorPosition)
@@ -198,13 +248,15 @@ PhantomSpriteInfo EntityTool::getSelectedTemplatePhantomInfo()
     PhantomSpriteInfo selectedPhantomInfo{};
     selectedPhantomInfo.position = mouseWorldPoint;
 
-    // Note: IdleSouth is guaranteed to be present in every entity graphic set.
+    // Note: We already checked that the selected graphic set has a graphic for
+    //       selectedTemplateDirection when we set it.
     const EntityGraphicSet& graphicSet{graphicData.getEntityGraphicSet(
         selectedTemplateGraphicState.graphicSetID)};
     selectedPhantomInfo.graphicSet = &graphicSet;
     selectedPhantomInfo.graphicValue
         = static_cast<Uint8>(EntityGraphicType::Idle);
-    selectedPhantomInfo.graphicDirection = Rotation::Direction::South;
+    selectedPhantomInfo.graphicDirection = static_cast<Rotation::Direction>(
+        validTemplateGraphicIndices.at(selectedTemplateGraphicIndex));
 
     return selectedPhantomInfo;
 }
