@@ -7,6 +7,7 @@
 #include "EntityInitRequest.h"
 #include "EntityNameChangeRequest.h"
 #include "GraphicStateChangeRequest.h"
+#include "SystemMessage.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
 #include "Log.h"
@@ -33,6 +34,14 @@ SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
 {
     // Add our Lua bindings.
     projectLuaBindings.addBindings();
+
+    // Add an example item interaction handler.
+    world.castHelper.setOnItemInteractionCompleted(
+        ItemInteractionType::Test, [&](const CastInfo& castInfo) {
+            deps.network.serializeAndSend(
+                castInfo.clientID,
+                SystemMessage{"Test interaction successful."});
+        });
 
     // Add an example spell handler.
     // Note: For better organization, you'd normally define these in a 

@@ -20,10 +20,10 @@ DialogueWindow::DialogueWindow(World& inWorld, Network& inNetwork)
 , processingResponse{false}
 , currentTargetEntity{entt::null}
 , currentTopicIndex{0}
-, waitTimeS{0}
 , backgroundImage({0, 0, logicalExtent.w, logicalExtent.h}, "BackgroundImage")
 , dividerImage({4, 408, (logicalExtent.w - 8), 4}, "DividerImage")
 , nameText({2, 6, (logicalExtent.w - 4), 44}, "NameText")
+, proceedText({12, 422, (logicalExtent.w - 24), 146}, "ProceedText")
 , dialogueContainer({12, 60, (logicalExtent.w - 24), 340},
                     "DialogueContainer")
 , choiceContainer({12, 422, (logicalExtent.w - 24), 146}, "ChoiceContainer")
@@ -32,6 +32,7 @@ DialogueWindow::DialogueWindow(World& inWorld, Network& inNetwork)
     children.push_back(backgroundImage);
     children.push_back(dividerImage);
     children.push_back(nameText);
+    children.push_back(proceedText);
     children.push_back(dialogueContainer);
     children.push_back(choiceContainer);
 
@@ -46,6 +47,13 @@ DialogueWindow::DialogueWindow(World& inWorld, Network& inNetwork)
     nameText.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
     nameText.setText("");
 
+    /* Proceed text. */
+    proceedText.setFont((Paths::FONT_DIR + "Cagliostro-Regular.ttf"), 20);
+    proceedText.setColor({255, 255, 255, 255});
+    proceedText.setHorizontalAlignment(AUI::Text::HorizontalAlignment::Center);
+    proceedText.setVerticalAlignment(AUI::Text::VerticalAlignment::Center);
+    proceedText.setText("Click to proceed.");
+
     /* Dialogue container. */
     dialogueContainer.setFlowDirection(
         AUI::VerticalListContainer::FlowDirection::BottomToTop);
@@ -54,7 +62,7 @@ DialogueWindow::DialogueWindow(World& inWorld, Network& inNetwork)
 void DialogueWindow::processDialogueResponse(
     const DialogueResponse& dialogueResponse)
 {
-    // Choice are specific to each response, so we always clear them.
+    // Choices are specific to each response, so we always clear them.
     choices.clear();
     choiceContainer.clear();
 
@@ -76,15 +84,32 @@ void DialogueWindow::processDialogueResponse(
         nameText.setText("?");
     }
 
-    // Save all the dialogue events and choices. They'll be processed in onTick.
-    for (const auto& event : dialogueResponse.dialogueEvents) {
-        dialogueEvents.emplace(event);
-    }
+    // Stage the choices.
     for (const auto& choice : dialogueResponse.choices) {
         choices.emplace_back(choice);
     }
 
-    processingResponse = true;
+    // If there's no dialogue, display the choices.
+    if (dialogueResponse.dialogueEvents.empty()) {
+        addChoices();
+    }
+    // If there's one dialogue event, display it and the choices.
+    else if (dialogueResponse.dialogueEvents.size() == 1) {
+        processDialogueEvent(dialogueResponse.dialogueEvents.front());
+        addChoices();
+    }
+    // There are multiple dialogue events. Display the first and save the rest.
+    else {
+        processDialogueEvent(dialogueResponse.dialogueEvents.front());
+
+        for (std::size_t i{1}; i < dialogueResponse.dialogueEvents.size();
+             ++i) {
+            dialogueEvents.emplace(dialogueResponse.dialogueEvents.at(i));
+        }
+
+        proceedText.setIsVisible(true);
+        processingResponse = true;
+    }
 }
 
 void DialogueWindow::clear()
@@ -95,51 +120,49 @@ void DialogueWindow::clear()
     choiceContainer.clear();
 }
 
-void DialogueWindow::onTick(double timestepS)
+AUI::EventResult DialogueWindow::onMouseDown(AUI::MouseButtonType buttonType,
+                                             const SDL_Point& cursorPosition)
 {
-    // If we aren't processing a response, return early.
-    if (!processingResponse) {
-        return;
-    }
-
-    // If we're currently waiting, check if enough time has passed.
-    if (waitTimeS > 0) {
-        waitTimeS -= timestepS;
-        if (waitTimeS > 0) {
-            // There's still time to wait. Return early.
-            return;
-        }
+    // If the choice area wasn't hit or we aren't processing a response, return
+    // early.
+    if (!SDL_PointInRect(&cursorPosition, &(choiceContainer.getClippedExtent()))
+        || !processingResponse) {
+        return AUI::EventResult{.wasHandled{false}};
     }
 
     // If there are more dialogue events, process the next one.
     if (!(dialogueEvents.empty())) {
         processDialogueEvent(dialogueEvents.front());
         dialogueEvents.pop();
-        return;
-    }
-    else {
-        // We've processed all the events in the response. Add the staged 
+        proceedText.setIsVisible(true);
+
+        // If we've processed all the events in the response, add the staged 
         // choices.
-        addChoices();
-        processingResponse = false;
+        if (dialogueEvents.empty()) {
+            addChoices();
+            processingResponse = false;
+        }
     }
+
+    return AUI::EventResult{.wasHandled{true}};
+}
+
+AUI::EventResult
+    DialogueWindow::onMouseDoubleClick(AUI::MouseButtonType buttonType,
+                                       const SDL_Point& cursorPosition)
+{
+    // We treat additional clicks as regular MouseDown events.
+    return onMouseDown(buttonType, cursorPosition);
 }
 
 void DialogueWindow::processDialogueEvent(const DialogueEvent& dialogueEvent)
 {
-    const Name& targetName{world.registry.get<Name>(currentTargetEntity)};
     std::visit(VariantTools::Overload(
                    [&](const SayEvent& sayEvent) {
-                       addDialogueText(targetName.value + ": " + sayEvent.text,
-                                       {143, 231, 255, 255});
+                       addDialogueText(sayEvent.text, {143, 231, 255, 255});
                    },
                    [&](const NarrateEvent& narrateEvent) {
-                       addDialogueText(targetName.value + ": "
-                                           + narrateEvent.text,
-                                       {239, 243, 214, 255});
-                   },
-                   [&](const WaitEvent& waitEvent) {
-                       waitTimeS = waitEvent.waitTimeS;
+                       addDialogueText(narrateEvent.text, {239, 243, 214, 255});
                    }),
                dialogueEvent);
 }
@@ -147,7 +170,6 @@ void DialogueWindow::processDialogueEvent(const DialogueEvent& dialogueEvent)
 void DialogueWindow::addChoices()
 {
     // Add all of the staged choices.
-    const Name& playerName{world.registry.get<Name>(world.playerEntity)};
     for (const auto& choice : choices) {
         AUI::TextButton& choiceButton{addChoiceText(choice.displayText)};
 
@@ -157,14 +179,16 @@ void DialogueWindow::addChoices()
             network.serializeAndSend(DialogueChoiceRequest{
                 currentTargetEntity, currentTopicIndex, choice.index});
 
-            addDialogueText(playerName.value + ": " + choice.displayText,
-                            {255, 255, 255, 255});
+            addDialogueText("> " + choice.displayText, {255, 255, 255, 255});
         });
     }
     
     // Add the "End conversation." choice.
     AUI::TextButton& choiceButton{addChoiceText("End conversation.")};
     choiceButton.setOnPressed([&]() { setIsVisible(false); });
+
+    // Hide the "click to proceed" text.
+    proceedText.setIsVisible(false);
 }
 
 void DialogueWindow::addDialogueText(std::string_view textString,
@@ -183,12 +207,6 @@ void DialogueWindow::addDialogueText(std::string_view textString,
     text.refreshTexture();
 
     dialogueContainer.insert(dialogueContainer.begin(), std::move(textPtr));
-
-    // Whenever text is added, we want to wait a bit before displaying the 
-    // next piece of dialogue.
-    // Note: This also delays WaitEvents, meaning any waits are in addition 
-    //       to this built-in wait.
-    waitTimeS = DIALOGUE_WAIT_TIME_S;
 }
 
 AUI::TextButton& DialogueWindow::addChoiceText(std::string_view textString)

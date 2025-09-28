@@ -49,6 +49,7 @@ private:
     // Entity item handler
 
     // Item init
+    void addTestInteraction();
 
     EntityInitLua& entityInitLua;
     EntityItemHandlerLua& entityItemHandlerLua;

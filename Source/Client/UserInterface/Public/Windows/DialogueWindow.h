@@ -44,16 +44,13 @@ public:
     //-------------------------------------------------------------------------
     // Widget class overrides
     //-------------------------------------------------------------------------
-    void onTick(double timestepS) override;
+    AUI::EventResult onMouseDown(AUI::MouseButtonType buttonType,
+                                 const SDL_Point& cursorPosition);
+
+    AUI::EventResult onMouseDoubleClick(AUI::MouseButtonType buttonType,
+                                        const SDL_Point& cursorPosition);
 
 private:
-    /**
-     * The amount of time to wait between dialogue events.
-     * This gives the dialogue a natural pace, without the script needing 
-     * a wait between every say command.
-     */
-    static constexpr float DIALOGUE_WAIT_TIME_S{1.25};
-
     /**
      * Processes the given dialogue event, adding UI elements or updating 
      * state appropriately.
@@ -99,10 +96,6 @@ private:
         the entity's Dialogue::topics. */
     Uint8 currentTopicIndex;
 
-    /** If we're actively waiting before processing the next dialogue event, 
-        this holds the remaining time to wait in seconds. */
-    double waitTimeS;
-
     //-------------------------------------------------------------------------
     // Private child widgets
     //-------------------------------------------------------------------------
@@ -113,6 +106,9 @@ private:
 
     /** The text that shows the target's name at the top of the dialogue. */
     AUI::Text nameText;
+
+    /** The "Click to proceed" indicator text. */
+    AUI::Text proceedText;
 
     /** Holds the dialogue text. */
     AUI::VerticalListContainer dialogueContainer;

@@ -34,7 +34,8 @@ void TeleportSystem::teleportPlayers()
 
             // Get the list of entities that are touching this volume.
             const auto& collisionMatches{world.collisionLocator.getCollisions(
-                volume, CollisionObjectType::DynamicEntity)};
+                volume, (CollisionLayerType::ClientEntity
+                         | CollisionLayerType::NonClientEntity))};
 
             // Teleport each entity to the destination.
             const Vector3& destination{teleportDestinations[i]};

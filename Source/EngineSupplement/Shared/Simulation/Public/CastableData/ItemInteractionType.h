@@ -24,8 +24,7 @@ enum class ItemInteractionType : Uint8 {
     Examine = static_cast<Uint8>(EngineItemInteractionType::Examine),
 
     // Project interactions.
-    // MyInteraction =
-    // static_cast<Uint8>(EngineItemInteractionType::PROJECT_START),
+    Test = static_cast<Uint8>(EngineItemInteractionType::PROJECT_START),
 };
 
 } // End namespace AM

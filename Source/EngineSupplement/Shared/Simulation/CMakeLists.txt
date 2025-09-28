@@ -1,5 +1,6 @@
 target_sources(SharedLib
     PUBLIC
+        Public/CollisionLayerType.h
         Public/EntityGraphicType.h
         Public/CastableData/CastableDef.h
         Public/CastableData/CastableProjectData.h

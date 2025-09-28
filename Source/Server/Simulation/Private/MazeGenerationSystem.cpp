@@ -100,7 +100,8 @@ void MazeGenerationSystem::generateMaze(MazeTopology& outMaze)
 
     // For each entity in the maze, clear to the existing path or an exit.
     const auto& collisionResult{world.collisionLocator.getCollisions(
-        mazeExtent, CollisionObjectType::DynamicEntity)};
+        mazeExtent, (CollisionLayerType::ClientEntity
+                     | CollisionLayerType::NonClientEntity))};
     for (const auto* collisionInfo : collisionResult) {
         // Calc the tile that the entity's center is on.
         TilePosition tilePosition(

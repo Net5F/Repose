@@ -40,6 +40,8 @@ void ProjectLuaBindings::addBindings()
     // Entity item handler
 
     // Item init
+    itemInitLua.luaState.set_function(
+        "addTestInteraction", &ProjectLuaBindings::addTestInteraction, this);
 }
 
 void ProjectLuaBindings::addRandomWalkerAIBehavior(
@@ -52,6 +54,13 @@ void ProjectLuaBindings::addRandomWalkerAIBehavior(
     // Add the behavior.
     world.registry.emplace<RandomWalkerAI>(entity, timeToWalk, timeToWait,
                                            timeTillDirectionChange);
+}
+
+void ProjectLuaBindings::addTestInteraction()
+{
+    // Add the interaction to this item.
+    Item* selfItem{itemInitLua.selfItem};
+    selfItem->addInteraction(ItemInteractionType::Test);
 }
 
 } // namespace Server

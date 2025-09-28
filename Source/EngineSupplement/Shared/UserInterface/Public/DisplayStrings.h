@@ -42,6 +42,8 @@ inline std::string get(ItemInteractionType interactionType)
         case ItemInteractionType::Examine:
             return "Examine";
         // Project interaction types.
+        case ItemInteractionType::Test:
+            return "Test";
         default:
             break;
     }
