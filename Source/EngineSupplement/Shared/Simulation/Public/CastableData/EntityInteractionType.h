@@ -15,8 +15,7 @@ enum class EntityInteractionType : Uint8 {
     Talk = static_cast<Uint8>(EngineEntityInteractionType::Talk),
 
     // Project interactions.
-    // Sunflower garden
-    Replant = static_cast<Uint8>(EngineEntityInteractionType::PROJECT_START),
+    // MyType = static_cast<Uint8>(EngineEntityInteractionType::PROJECT_START),
 };
 
 } // End namespace AM

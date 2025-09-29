@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Plant.h"
 #include "RandomWalkerAI.h"
 #include "boost/mp11/list.hpp"
 #include "bitsery/traits/vector.h"
@@ -31,7 +30,7 @@ static constexpr unsigned int PROJECT_COMPONENTS_VERSION{0};
  *       PROJECT_COMPONENTS_VERSION and run a migration.
  */
 using ProjectPersistedComponentTypes
-    = boost::mp11::mp_list<Plant, RandomWalkerAI>;
+    = boost::mp11::mp_list<RandomWalkerAI>;
 
 /**
  * A variant that holds a persisted engine component.

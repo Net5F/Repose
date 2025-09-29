@@ -28,8 +28,6 @@ SimulationExtension::SimulationExtension(const SimulationExDependencies& deps)
                      world}
 , buildModeDataSystem{world, deps.network.getEventDispatcher(), deps.network,
                       deps.graphicData}
-, mazeGenerationSystem{world, deps.graphicData}
-, plantSystem{world, deps.graphicData}
 , teleportSystem{deps.simulation.getWorld()}
 {
     // Add our Lua bindings.
@@ -61,12 +59,6 @@ void SimulationExtension::afterMapAndConnectionUpdates()
     // Respond to any build mode data messages that aren't handled
     // by the engine.
     buildModeDataSystem.processMessages();
-
-    // Regenerate the maze, if enough time has passed.
-    mazeGenerationSystem.regenerateMazeIfNecessary();
-
-    // Update any plants that are ready for growth or replanting.
-    plantSystem.updatePlants();
 }
 
 void SimulationExtension::afterSimUpdate()

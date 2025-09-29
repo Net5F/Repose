@@ -1,18 +1,12 @@
 target_sources(Server
     PRIVATE
         Private/BuildModeDataSystem.cpp
-        Private/MazeGenerationSystem.cpp
-        Private/PlantSystem.cpp
         Private/ProjectLuaBindings.cpp
         Private/SimulationExtension.cpp
         Private/TeleportSystem.cpp
         Private/AI/RandomWalkerAI.cpp
     PUBLIC
         Public/BuildModeDataSystem.h
-        Public/MazeGenerationSystem.h
-        Public/MazeTopology.h
-        Public/MazeCell.h
-        Public/PlantSystem.h
         Public/ProjectLuaBindings.h
         Public/SimulationExtension.h
         Public/TeleportSystem.h

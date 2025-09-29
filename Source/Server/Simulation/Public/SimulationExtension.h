@@ -3,8 +3,6 @@
 #include "ISimulationExtension.h"
 #include "ProjectLuaBindings.h"
 #include "BuildModeDataSystem.h"
-#include "MazeGenerationSystem.h"
-#include "PlantSystem.h"
 #include "TeleportSystem.h"
 
 namespace AM
@@ -94,8 +92,6 @@ private:
     ProjectLuaBindings projectLuaBindings;
 
     BuildModeDataSystem buildModeDataSystem;
-    MazeGenerationSystem mazeGenerationSystem;
-    PlantSystem plantSystem;
     TeleportSystem teleportSystem;
 };
 

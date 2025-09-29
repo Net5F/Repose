@@ -21,8 +21,6 @@ inline std::string get(EntityInteractionType interactionType)
         case EntityInteractionType::Talk:
             return "Talk";
         // Project interaction types.
-        case EntityInteractionType::Replant:
-            return "Replant";
         default:
             break;
     }
