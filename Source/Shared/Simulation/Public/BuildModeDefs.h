@@ -1,6 +1,8 @@
 #pragma once
 
 #include "TileExtent.h"
+#include "ItemID.h"
+#include <array>
 
 /**
  * This file contains shared build mode-relevant definitions that should be
@@ -15,12 +17,26 @@ namespace AM
  * We keep this slightly larger than the actual build area, so a bad actor
  * can't wall-off the build area.
  */
-const TileExtent BUILD_MODE_AREA_EXTENT{54, 17, 0, 8, 12, 1};
+const std::array<TileExtent, 3> BUILD_MODE_AREA_EXTENTS{
+    TileExtent{21, 39, 0, 9, 8, 1}, TileExtent{30, 30, 0, 8, 9, 1},
+    TileExtent{38, 39, 0, 9, 8, 1}};
 
 /**
  * The extent of the "valid build area": the room where we allow clients to
  * modify tiles.
  */
-const TileExtent VALID_BUILD_AREA_EXTENT{55, 17, 0, 7, 12, 1};
+const std::array<TileExtent, 3> VALID_BUILD_AREA_EXTENTS{
+    TileExtent{21, 39, 0, 8, 8, 1}, TileExtent{30, 30, 0, 8, 8, 1},
+    TileExtent{39, 39, 0, 8, 8, 1}};
+
+/**
+ * The items in this list are not allowed to be edited by clients.
+ */
+const std::vector<ItemID> PROTECTED_ITEMS{
+    1, // TestItem
+    2, // CombineItem1
+    3, // CombineItem2
+    4  // ResultItem
+};
 
 } // End namespace AM

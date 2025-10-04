@@ -7,6 +7,7 @@
 #include "EntityInitRequest.h"
 #include "EntityNameChangeRequest.h"
 #include "GraphicStateChangeRequest.h"
+#include "NoEdit.h"
 #include "SystemMessage.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
@@ -80,8 +81,8 @@ bool SimulationExtension::isTileExtentEditable(
     NetworkID, const TileExtent& tileExtent) const
 {
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
-        // Only return true for updates within the build area.
-        return VALID_BUILD_AREA_EXTENT.contains(tileExtent);
+        // Only return true for updates within a build area.
+        return isInBuildArea(tileExtent);
     }
     else {
         // No restrictions, always return true;
@@ -93,9 +94,17 @@ bool SimulationExtension::isEntityInitRequestValid(
     const EntityInitRequest& entityInitRequest) const
 {
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
-        // Only return true if the new entity is within the build area.
-        return VALID_BUILD_AREA_EXTENT.contains(
-            TilePosition(entityInitRequest.position));
+        // Only return true if the entity is within a build area and the 
+        // request isn't trying to re-init one of our protected entities.
+        // Note: We need to check entity != null because it's valid to have an 
+        //       init request with a null entity ID (to create a new entity).
+        entt::entity entity{entityInitRequest.entity};
+        bool isEditable{true};
+        if (entity != entt::null) {
+            isEditable
+                = !(world.registry.all_of<NoEdit>(entityInitRequest.entity));
+        }
+        return isInBuildArea(entityInitRequest.position) && isEditable;
     }
     else {
         // No restrictions, always return true;
@@ -109,11 +118,11 @@ bool SimulationExtension::isEntityDeleteRequestValid(
     entt::entity entity{entityDeleteRequest.entity};
 
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
-        // Only return true if the entity is within the build area.
+        // Only return true if the entity is within a build area and isn't 
+        // one of our protected entities.
+        bool isEditable{!(world.registry.all_of<NoEdit>(entity))};
         const auto& position{world.registry.get<Position>(entity)};
-        return VALID_BUILD_AREA_EXTENT.contains(TilePosition(position));
-
-        return false;
+        return isInBuildArea(position) && isEditable;
     }
     else {
         // No restrictions, always return true;
@@ -127,9 +136,11 @@ bool SimulationExtension::isEntityNameChangeRequestValid(
     entt::entity entity{nameChangeRequest.entity};
 
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
-        // Only return true if the entity is within the build area.
+        // Only return true if the entity is within a build area and isn't 
+        // one of our protected entities.
+        bool isEditable{!(world.registry.all_of<NoEdit>(entity))};
         const auto& position{world.registry.get<Position>(entity)};
-        return VALID_BUILD_AREA_EXTENT.contains(TilePosition(position));
+        return isInBuildArea(position) && isEditable;
     }
     else {
         // No restrictions, always return true;
@@ -143,14 +154,88 @@ bool SimulationExtension::isGraphicStateChangeRequestValid(
     entt::entity entity{graphicStateChangeRequest.entity};
 
     if (SharedConfig::RESTRICT_WORLD_CHANGES) {
-        // Only return true if the entity is within the build area.
+        // Only return true if the entity is within a build area and isn't 
+        // one of our protected entities.
+        bool isEditable{!(world.registry.all_of<NoEdit>(entity))};
         const auto& position{world.registry.get<Position>(entity)};
-        return VALID_BUILD_AREA_EXTENT.contains(TilePosition(position));
+        return isInBuildArea(position) && isEditable;
     }
     else {
         // No restrictions, always return true;
         return true;
     }
+}
+
+bool SimulationExtension::isItemInitRequestValid(
+    const ItemInitRequest& itemInitRequest) const
+{
+    if (SharedConfig::RESTRICT_WORLD_CHANGES) {
+        // Find the entity ID of the client that sent this request.
+        auto it{world.netIDMap.find(itemInitRequest.netID)};
+        if (it == world.netIDMap.end()) {
+            // Client doesn't exist (may have disconnected), return false.
+            return false;
+        }
+        entt::entity clientEntity{it->second};
+
+        // Only return true if the entity is within a build area.
+        const auto& position{world.registry.get<Position>(clientEntity)};
+        return isInBuildArea(position);
+    }
+    else {
+        // No restrictions, always return true;
+        return true;
+    }
+}
+
+bool SimulationExtension::isItemChangeRequestValid(
+    const ItemChangeRequest& itemChangeRequest) const
+{
+    if (SharedConfig::RESTRICT_WORLD_CHANGES) {
+        // Find the entity ID of the client that sent this request.
+        auto it{world.netIDMap.find(itemChangeRequest.netID)};
+        if (it == world.netIDMap.end()) {
+            // Client doesn't exist (may have disconnected), return false.
+            return false;
+        }
+        entt::entity clientEntity{it->second};
+
+        // Only return true if the entity is within a build area and the item
+        // isn't one of our protected items.
+        bool isEditable{!(
+            std::ranges::contains(PROTECTED_ITEMS, itemChangeRequest.itemID))};
+        const auto& position{world.registry.get<Position>(clientEntity)};
+        return isInBuildArea(position) && isEditable;
+    }
+    else {
+        // No restrictions, always return true;
+        return true;
+    }
+}
+
+bool SimulationExtension::isInBuildArea(const TileExtent& tileExtent) const
+{
+    for (const TileExtent& buildAreaExtent : VALID_BUILD_AREA_EXTENTS) {
+        if (buildAreaExtent.contains(tileExtent))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool SimulationExtension::isInBuildArea(const Position& position) const
+{
+    bool isInBuildArea{false};
+    for (const TileExtent& buildAreaExtent : VALID_BUILD_AREA_EXTENTS) {
+        if (buildAreaExtent.contains(TilePosition(position)))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 } // End namespace Server

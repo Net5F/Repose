@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RandomWalkerAI.h"
+#include "NoEdit.h"
 #include "boost/mp11/list.hpp"
 #include "bitsery/traits/vector.h"
 #include "bitsery/ext/std_variant.h"
@@ -30,7 +31,7 @@ static constexpr unsigned int PROJECT_COMPONENTS_VERSION{0};
  *       PROJECT_COMPONENTS_VERSION and run a migration.
  */
 using ProjectPersistedComponentTypes
-    = boost::mp11::mp_list<RandomWalkerAI>;
+    = boost::mp11::mp_list<RandomWalkerAI, NoEdit>;
 
 /**
  * A variant that holds a persisted engine component.

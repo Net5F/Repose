@@ -155,10 +155,12 @@ void ItemPanelContent::onTick(double)
             if (itemError.errorType == ItemError::PermissionFailure) {
                 errorLabel.setText(
                     "Error: You don't have permission to edit this item.");
+                errorLabel.setIsVisible(true);
             }
             else if (itemError.errorType == ItemError::InitScriptFailure) {
                 errorLabel.setText(
                     "Error: Invalid script (see chat for details).");
+                errorLabel.setIsVisible(true);
             }
         }
         else if (itemError.errorType == ItemError::NumericIDNotFound) {

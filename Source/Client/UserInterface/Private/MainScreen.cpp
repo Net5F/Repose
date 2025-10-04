@@ -205,25 +205,29 @@ void MainScreen::onPositionChanged(entt::registry& registry,
 
     // If the new position is within the build area, make the hint text visible.
     const Position& position{registry.get<Position>(entity)};
-    if (BUILD_MODE_AREA_EXTENT.contains(TilePosition(position))) {
-        if (!playerIsInBuildArea) {
-            // The player just entered the build area.
-            mainOverlay.setBuildModeHintVisibility(true);
+    for (const TileExtent& extent : BUILD_MODE_AREA_EXTENTS) {
+        if (extent.contains(TilePosition(position))) {
+            if (!playerIsInBuildArea) {
+                // The player just entered the build area.
+                mainOverlay.setBuildModeHintVisibility(true);
 
-            playerIsInBuildArea = true;
+                playerIsInBuildArea = true;
+            }
+
+            return;
         }
     }
-    else {
-        if (playerIsInBuildArea) {
-            // The player just left the build area.
-            mainOverlay.setBuildModeHintVisibility(false);
 
-            // Close build mode, since it isn't available anymore.
-            buildOverlay.setIsVisible(false);
-            buildPanel.setIsVisible(false);
+    // The player is not in the build area. Check if they just left.
+    if (playerIsInBuildArea) {
+        // The player just left the build area.
+        mainOverlay.setBuildModeHintVisibility(false);
 
-            playerIsInBuildArea = false;
-        }
+        // Close build mode, since it isn't available anymore.
+        buildOverlay.setIsVisible(false);
+        buildPanel.setIsVisible(false);
+
+        playerIsInBuildArea = false;
     }
 }
 

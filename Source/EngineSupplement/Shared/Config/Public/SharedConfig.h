@@ -161,7 +161,7 @@ public:
     //-------------------------------------------------------------------------
     /** If true, build mode will only be allowed in the "build area".
         If false, clients can make changes anywhere in the world. */
-    static constexpr bool RESTRICT_WORLD_CHANGES{false};
+    static constexpr bool RESTRICT_WORLD_CHANGES{true};
 };
 
 } // End namespace AM

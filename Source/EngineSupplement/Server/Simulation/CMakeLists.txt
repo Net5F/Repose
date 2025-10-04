@@ -1,6 +1,7 @@
 target_sources(ServerLib
     PUBLIC
         Public/Components/RandomWalkerAI.h
+        Public/Components/NoEdit.h
         Public/TypeLists/ProjectAITypes.h
         Public/TypeLists/ProjectObservedComponentTypes.h
         Public/TypeLists/ProjectPersistedComponentTypes.h

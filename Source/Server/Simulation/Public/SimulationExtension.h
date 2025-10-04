@@ -83,8 +83,22 @@ public:
     bool isGraphicStateChangeRequestValid(
         const GraphicStateChangeRequest& graphicStateChangeRequest)
         const override;
+    bool isItemInitRequestValid(
+        const ItemInitRequest& itemInitRequest) const override;
+    bool isItemChangeRequestValid(
+        const ItemChangeRequest& itemChangeRequest) const override;
 
 private:
+    /**
+     * Returns true if the given tile extent is in a build area, else false.
+     */
+    bool isInBuildArea(const TileExtent& tileExtent) const;
+
+    /**
+     * Returns true if the given position is in a build area, else false.
+     */
+    bool isInBuildArea(const Position& position) const;
+
     /** Used to validate change requests. */
     World& world;
 
