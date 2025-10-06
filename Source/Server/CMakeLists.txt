@@ -26,21 +26,14 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(Server PUBLIC /W3 /permissive-)
 endif()
 
-# Copy UserConfig.json to the build directory.
-file(COPY ${PROJECT_SOURCE_DIR}/Resources/Server/Common/UserConfig.json
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
-
-# Copy ResourceData.json to the build directory.
-file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/ResourceData.json
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
-
-# Copy TileMap.bin to the build directory.
-file(COPY ${PROJECT_SOURCE_DIR}/Resources/Server/Common/TileMap.bin
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
-
-# Copy Database.db3 to the build directory.
-file(COPY ${PROJECT_SOURCE_DIR}/Resources/Server/Common/Database.db3
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+# If any of our needed files don't exist in the build directory, copy them.
+# Note: We don't copy every time, since it would overwrite any changes that 
+#       we hadn't copied to the Resources directory yet.
+include(${PROJECT_SOURCE_DIR}/Libraries/AmalgamEngine/CMake/copy_if_does_not_exist.cmake)
+copy_if_does_not_exist("Resources/Server/Common/UserConfig.json")
+copy_if_does_not_exist("Resources/Server/Common/TileMap.bin")
+copy_if_does_not_exist("Resources/Server/Common/Database.db3")
+copy_if_does_not_exist("Resources/Shared/Common/ResourceData.json")
 
 # On Windows, copy the SDL2 DLL into the build folder so we can run our executable.
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")

@@ -86,6 +86,9 @@ else()
     set(BUILD_RESOURCES_FOLDER "${CMAKE_CURRENT_BINARY_DIR}")
 endif()
 
+# TODO: We can change these asset files to "only copy if changed", but we're
+#       probably going to pack them all into an archive eventually so it 
+#       should be done as part of that.
 # Copy assets to the build directory.
 file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/Assets/Fonts/
      DESTINATION ${BUILD_RESOURCES_FOLDER}/Assets/Fonts/)
@@ -100,13 +103,12 @@ file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/
 file(COPY ${PROJECT_SOURCE_DIR}/Libraries/AmalgamEngine/Resources/EngineDefaults/Common/
      DESTINATION ${BUILD_RESOURCES_FOLDER}/)
 
-# Copy UserConfig.json to the build directory.
-file(COPY ${PROJECT_SOURCE_DIR}/Resources/Client/Common/UserConfig.json
-     DESTINATION ${BUILD_RESOURCES_FOLDER}/)
-
-# Copy ResourceData.json to the build directory.
-file(COPY ${PROJECT_SOURCE_DIR}/Resources/Shared/Common/ResourceData.json
-     DESTINATION ${BUILD_RESOURCES_FOLDER}/)
+# If any of our needed files don't exist in the build directory, copy them.
+# Note: We don't copy every time, since it would overwrite any changes that 
+#       we hadn't copied to the Resources directory yet.
+include(${PROJECT_SOURCE_DIR}/Libraries/AmalgamEngine/CMake/copy_if_does_not_exist.cmake)
+copy_if_does_not_exist("Resources/Client/Common/UserConfig.json")
+copy_if_does_not_exist("Resources/Shared/Common/ResourceData.json")
 
 # On Windows, copy the SDL2 DLLs into the build folder so we can run our executable.
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
