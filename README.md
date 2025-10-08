@@ -11,7 +11,7 @@ Repose is a cozy world, built around a large hedge maze. It serves three purpose
 Modern virtual worlds should inspire curiosity and wonder in players. They should provide truly fulfilling social experiences. They should also be easy and free to create. These are core philosophies behind the development of The Amalgam Engine, and Repose is our first milestone towards realizing these goals.
 
 ## Joining the demo world
-To join the demo world and play with other people, you can [download the latest release](https://github.com/Net5F/Repose/releases/latest) and follow the instructions in the README.
+To join the demo world and play with other people, you can [download the latest Client release](https://github.com/Net5F/Repose/releases/latest) and follow the instructions in the README.
 
 ## Building
 ### Windows
