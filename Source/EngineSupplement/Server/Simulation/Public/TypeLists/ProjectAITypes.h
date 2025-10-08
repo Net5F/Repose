@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RandomWalkerAI.h"
 #include "boost/mp11/list.hpp"
 
 namespace AM
@@ -12,7 +13,7 @@ namespace Server
  * 
  * Note: Every type in this list must be derived from AILogic.
  */
-using ProjectAITypes = boost::mp11::mp_list<>;
+using ProjectAITypes = boost::mp11::mp_list<RandomWalkerAI>;
 
 } // End namespace Server
 } // End namespace AM
