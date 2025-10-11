@@ -57,7 +57,7 @@ jobs:
 
       # In the repo, serverIP is set to localhost. Make the release point at our server.
       - name: Replace Server IP
-        run: sed -i 's/127.0.0.1/66.228.49.117/' Resources/Client/Common/UserConfig.json
+        run: sed -i 's/127.0.0.1/104.200.16.11/' Resources/Client/Common/UserConfig.json
 
       - name: (Linux) Download Dependencies
         if: ${{matrix.platformName == 'Linux'}}
