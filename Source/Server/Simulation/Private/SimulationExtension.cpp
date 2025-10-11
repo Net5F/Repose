@@ -227,7 +227,6 @@ bool SimulationExtension::isInBuildArea(const TileExtent& tileExtent) const
 
 bool SimulationExtension::isInBuildArea(const Position& position) const
 {
-    bool isInBuildArea{false};
     for (const TileExtent& buildAreaExtent : VALID_BUILD_AREA_EXTENTS) {
         if (buildAreaExtent.contains(TilePosition(position)))
         {

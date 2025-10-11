@@ -123,9 +123,13 @@ void DialogueWindow::clear()
 AUI::EventResult DialogueWindow::onMouseDown(AUI::MouseButtonType buttonType,
                                              const SDL_Point& cursorPosition)
 {
+    // Only respond to the left mouse button.
+    if (buttonType != AUI::MouseButtonType::Left) {
+        return AUI::EventResult{.wasHandled{false}};
+    }
     // If the choice area wasn't hit or we aren't processing a response, return
     // early.
-    if (!SDL_PointInRect(&cursorPosition, &(choiceContainer.getClippedExtent()))
+    else if (!SDL_PointInRect(&cursorPosition, &(choiceContainer.getClippedExtent()))
         || !processingResponse) {
         return AUI::EventResult{.wasHandled{false}};
     }

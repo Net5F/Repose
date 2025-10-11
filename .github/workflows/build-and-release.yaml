@@ -18,7 +18,7 @@ defaults:
 jobs:
   increment_tag:
     name: Increment Tag
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       newTagVersion: ${{steps.increment_tag.outputs.version}}
     steps:
@@ -35,12 +35,12 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [windows-2022, ubuntu-22.04]
+        os: [windows-2022, ubuntu-24.04]
         include:
           - os: windows-2022
             platformName: Windows
             cmakeFlags: -DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             platformName: Linux
             cmakeFlags: ""
     env:
@@ -106,7 +106,7 @@ jobs:
   #  so we need to make our own)
   archive_full_source:
     name: Archive Full Source
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: increment_tag
     env:
       FOLDER_NAME: Repose_${{needs.increment_tag.outputs.newTagVersion}}

@@ -14,7 +14,7 @@ struct NoEdit {
 };
 
 template<typename S>
-void serialize(S& serializer, NoEdit&)
+void serialize(S&, NoEdit&)
 {
 }
 
