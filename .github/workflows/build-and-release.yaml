@@ -50,7 +50,7 @@ jobs:
       SERVER_ZIP_NAME: Server_${{matrix.platformName}}.zip
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           submodules: 'recursive'
           lfs: 'true'
