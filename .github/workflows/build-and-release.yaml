@@ -95,7 +95,7 @@ jobs:
           7z a ${{env.SERVER_ZIP_NAME}} ${{env.SERVER_FOLDER_NAME}}
 
       - name: Release
-        uses: softprops/action-gh-release@v0.1.15
+        uses: softprops/action-gh-release@v2.4.1
         with:
           files: |
             ${{env.CLIENT_ZIP_NAME}}
@@ -125,7 +125,7 @@ jobs:
           7z a ${{env.ZIP_NAME}} ${{env.FOLDER_NAME}}
 
       - name: Release
-        uses: softprops/action-gh-release@v0.1.15
+        uses: softprops/action-gh-release@v2.4.1
         with:
           files: ${{env.ZIP_NAME}}
           tag_name: ${{needs.increment_tag.outputs.newTagVersion}}
