@@ -8,7 +8,7 @@
 #include "Paths.h"
 #include "BuildModeDefs.h"
 #include "SharedConfig.h"
-#include "SdlHelpers.h"
+#include "SDLHelpers.h"
 #include "AUI/Core.h"
 #include "AUI/ScalingHelpers.h"
 #include "Log.h"
