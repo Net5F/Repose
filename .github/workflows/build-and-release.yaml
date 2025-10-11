@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Increment Tag Version
         id: increment_tag
-        uses: zwaldowski/semver-release-action@v3
+        uses: zwaldowski/semver-release-action@v4
         with:
           bump: ${{github.event.inputs.semver_update_type}}
           github_token: ${{secrets.GITHUB_TOKEN}}
