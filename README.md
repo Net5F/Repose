@@ -3,10 +3,10 @@
 
 ![ReposeMedium](https://user-images.githubusercontent.com/17211746/218555633-37cf85bc-1692-4c42-a33e-559187d43bac.png)
 
-Repose is a cozy world, built around a large hedge maze. It serves three purposes:
-1. Acts as a template project that anyone can base their own world off of.
-1. Showcases that, with The Amalgam Engine, users and systems can easily make live changes to the world.
-1. Serves as an example of an Amalgam Engine focus: making worlds that are dynamic and alive.
+Repose is a demo world. It serves three purposes:
+1. Act as a template project that anyone can base their own world off of.
+1. Showcase each major engine feature, and explain what it's capable of.
+1. Teach how to use The Amalgam Engine's Build Mode, using NPC "tutors" and example scripts.
 
 Modern virtual worlds should inspire curiosity and wonder in players. They should provide truly fulfilling social experiences. They should also be easy and free to create. These are core philosophies behind the development of The Amalgam Engine, and Repose is our first milestone towards realizing these goals.
 
