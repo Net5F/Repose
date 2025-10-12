@@ -6,7 +6,7 @@
 Repose is a demo world. It serves three purposes:
 1. Act as a template project that anyone can base their own world off of.
 1. Showcase each major engine feature, and explain what it's capable of.
-1. Teach how to use The Amalgam Engine's Build Mode, using NPC "tutors" and example scripts.
+1. Teach how to use Build Mode, using NPC "tutors" and example scripts.
 
 Modern virtual worlds should inspire curiosity and wonder in players. They should provide truly fulfilling social experiences. They should also be easy and free to create. These are core philosophies behind the development of The Amalgam Engine, and Repose is our first milestone towards realizing these goals.
 
