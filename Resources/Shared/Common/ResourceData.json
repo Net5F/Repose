@@ -1455,7 +1455,7 @@
                     0,
                     0,
                     0,
-                    2147483649,
+                    2,
                     0,
                     0,
                     0
@@ -1569,7 +1569,57 @@
             "numericID": 1
         }
     ],
-    "iconSheets": [],
+    "iconSheets": [
+        {
+            "icons": [
+                {
+                    "displayName": "Item0",
+                    "numericID": 1,
+                    "stringID": "item0",
+                    "textureExtent": {
+                        "h": 58,
+                        "w": 58,
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "displayName": "Item1",
+                    "numericID": 2,
+                    "stringID": "item1",
+                    "textureExtent": {
+                        "h": 58,
+                        "w": 58,
+                        "x": 58,
+                        "y": 0
+                    }
+                },
+                {
+                    "displayName": "Item2",
+                    "numericID": 3,
+                    "stringID": "item2",
+                    "textureExtent": {
+                        "h": 58,
+                        "w": 58,
+                        "x": 0,
+                        "y": 58
+                    }
+                },
+                {
+                    "displayName": "Item3",
+                    "numericID": 4,
+                    "stringID": "item3",
+                    "textureExtent": {
+                        "h": 58,
+                        "w": 58,
+                        "x": 58,
+                        "y": 58
+                    }
+                }
+            ],
+            "relPath": "IconSheets/TestItems.png"
+        }
+    ],
     "objects": [
         {
             "displayName": "Ghost",

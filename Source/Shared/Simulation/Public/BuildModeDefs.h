@@ -36,7 +36,8 @@ const std::vector<ItemID> PROTECTED_ITEMS{
     1, // TestItem
     2, // CombineItem1
     3, // CombineItem2
-    4  // ResultItem
+    4, // ResultItem
+    5  // EntityHandlerItem
 };
 
 } // End namespace AM
