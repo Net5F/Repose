@@ -1020,9 +1020,9 @@
         },
         {
             "collisionEnabled": false,
-            "displayName": "FireballE",
+            "displayName": "FireballN",
             "fps": 10,
-            "frameCount": 14,
+            "frameCount": 15,
             "frameNumbers": [
                 0,
                 1,
@@ -1037,7 +1037,8 @@
                 10,
                 11,
                 12,
-                13
+                13,
+                14
             ],
             "loopStartFrame": 0,
             "modelBounds": {
@@ -1051,6 +1052,9 @@
             "modelBoundsID": 0,
             "numericID": 27,
             "spriteIDs": [
+                31,
+                32,
+                33,
                 258,
                 259,
                 260,
@@ -1062,16 +1066,14 @@
                 266,
                 267,
                 268,
-                269,
-                270,
-                271
+                269
             ]
         },
         {
             "collisionEnabled": false,
-            "displayName": "FireballN",
+            "displayName": "FireballW",
             "fps": 10,
-            "frameCount": 14,
+            "frameCount": 15,
             "frameNumbers": [
                 0,
                 1,
@@ -1086,7 +1088,8 @@
                 10,
                 11,
                 12,
-                13
+                13,
+                14
             ],
             "loopStartFrame": 0,
             "modelBounds": {
@@ -1100,6 +1103,8 @@
             "modelBoundsID": 0,
             "numericID": 28,
             "spriteIDs": [
+                270,
+                271,
                 272,
                 273,
                 274,
@@ -1112,15 +1117,14 @@
                 281,
                 282,
                 283,
-                284,
-                285
+                284
             ]
         },
         {
             "collisionEnabled": false,
-            "displayName": "FireballNE",
+            "displayName": "FireballE",
             "fps": 10,
-            "frameCount": 14,
+            "frameCount": 15,
             "frameNumbers": [
                 0,
                 1,
@@ -1135,7 +1139,8 @@
                 10,
                 11,
                 12,
-                13
+                13,
+                14
             ],
             "loopStartFrame": 0,
             "modelBounds": {
@@ -1149,6 +1154,7 @@
             "modelBoundsID": 0,
             "numericID": 29,
             "spriteIDs": [
+                285,
                 286,
                 287,
                 288,
@@ -1167,9 +1173,9 @@
         },
         {
             "collisionEnabled": false,
-            "displayName": "FireballNW",
+            "displayName": "FireballS",
             "fps": 10,
-            "frameCount": 14,
+            "frameCount": 15,
             "frameNumbers": [
                 0,
                 1,
@@ -1184,7 +1190,8 @@
                 10,
                 11,
                 12,
-                13
+                13,
+                14
             ],
             "loopStartFrame": 0,
             "modelBounds": {
@@ -1211,203 +1218,8 @@
                 310,
                 311,
                 312,
-                313
-            ]
-        },
-        {
-            "collisionEnabled": false,
-            "displayName": "FireballS",
-            "fps": 10,
-            "frameCount": 14,
-            "frameNumbers": [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11,
-                12,
-                13
-            ],
-            "loopStartFrame": 0,
-            "modelBounds": {
-                "maxX": 9.0,
-                "maxY": 9.0,
-                "maxZ": 10.0,
-                "minX": 7.0,
-                "minY": 7.0,
-                "minZ": 0.0
-            },
-            "modelBoundsID": 0,
-            "numericID": 31,
-            "spriteIDs": [
-                314,
-                315,
-                316,
-                317,
-                318,
-                319,
-                320,
-                321,
-                322,
-                323,
-                324,
-                325,
-                326,
-                327
-            ]
-        },
-        {
-            "collisionEnabled": false,
-            "displayName": "FireballSE",
-            "fps": 10,
-            "frameCount": 14,
-            "frameNumbers": [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11,
-                12,
-                13
-            ],
-            "loopStartFrame": 0,
-            "modelBounds": {
-                "maxX": 20.0,
-                "maxY": 20.0,
-                "maxZ": 20.0,
-                "minX": 0.0,
-                "minY": 0.0,
-                "minZ": 0.0
-            },
-            "modelBoundsID": 0,
-            "numericID": 32,
-            "spriteIDs": [
-                328,
-                329,
-                330,
-                331,
-                332,
-                333,
-                334,
-                335,
-                336,
-                337,
-                338,
-                339,
-                340,
-                341
-            ]
-        },
-        {
-            "collisionEnabled": false,
-            "displayName": "FireballSW",
-            "fps": 10,
-            "frameCount": 14,
-            "frameNumbers": [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11,
-                12,
-                13
-            ],
-            "loopStartFrame": 0,
-            "modelBounds": {
-                "maxX": 20.0,
-                "maxY": 20.0,
-                "maxZ": 20.0,
-                "minX": 0.0,
-                "minY": 0.0,
-                "minZ": 0.0
-            },
-            "modelBoundsID": 0,
-            "numericID": 33,
-            "spriteIDs": [
-                342,
-                343,
-                344,
-                345,
-                346,
-                347,
-                348,
-                349,
-                350,
-                351,
-                352,
-                353,
-                354,
-                355
-            ]
-        },
-        {
-            "collisionEnabled": false,
-            "displayName": "FireballW",
-            "fps": 10,
-            "frameCount": 14,
-            "frameNumbers": [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11,
-                12,
-                13
-            ],
-            "loopStartFrame": 0,
-            "modelBounds": {
-                "maxX": 20.0,
-                "maxY": 20.0,
-                "maxZ": 20.0,
-                "minX": 0.0,
-                "minY": 0.0,
-                "minZ": 0.0
-            },
-            "modelBoundsID": 0,
-            "numericID": 34,
-            "spriteIDs": [
-                356,
-                357,
-                358,
-                359,
-                360,
-                361,
-                362,
-                363,
-                364,
-                365,
-                366,
-                367,
-                368,
-                369
+                313,
+                314
             ]
         }
     ],
@@ -1504,14 +1316,14 @@
             ],
             "graphicIDValues": [
                 [
-                    2147483679,
-                    2147483681,
-                    2147483682,
                     2147483678,
+                    0,
                     2147483676,
-                    2147483677,
+                    0,
                     2147483675,
-                    2147483680
+                    0,
+                    2147483677,
+                    0
                 ]
             ],
             "numericID": 3
@@ -7763,342 +7575,6 @@
             "sprites": [
                 {
                     "collisionEnabled": false,
-                    "displayName": "FireballE_0",
-                    "imagePath": "Effects\\Fireball\\FireballE_0.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 258,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 0,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_1",
-                    "imagePath": "Effects\\Fireball\\FireballE_1.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 259,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 98,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_2",
-                    "imagePath": "Effects\\Fireball\\FireballE_2.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 260,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 196,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_3",
-                    "imagePath": "Effects\\Fireball\\FireballE_3.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 261,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 294,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_4",
-                    "imagePath": "Effects\\Fireball\\FireballE_4.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 262,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 392,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_5",
-                    "imagePath": "Effects\\Fireball\\FireballE_5.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 263,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 490,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_6",
-                    "imagePath": "Effects\\Fireball\\FireballE_6.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 264,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 588,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_7",
-                    "imagePath": "Effects\\Fireball\\FireballE_7.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 265,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 686,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_8",
-                    "imagePath": "Effects\\Fireball\\FireballE_8.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 266,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 784,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_9",
-                    "imagePath": "Effects\\Fireball\\FireballE_9.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 267,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 882,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_10",
-                    "imagePath": "Effects\\Fireball\\FireballE_10.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 268,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 980,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_11",
-                    "imagePath": "Effects\\Fireball\\FireballE_11.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 269,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1078,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_12",
-                    "imagePath": "Effects\\Fireball\\FireballE_12.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 270,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1176,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballE_13",
-                    "imagePath": "Effects\\Fireball\\FireballE_13.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 271,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1274,
-                        "y": 0
-                    }
-                },
-                {
-                    "collisionEnabled": false,
                     "displayName": "FireballN_0",
                     "imagePath": "Effects\\Fireball\\FireballN_0.png",
                     "modelBounds": {
@@ -8110,14 +7586,14 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 272,
+                    "numericID": 31,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1372,
+                        "h": 256,
+                        "w": 256,
+                        "x": 0,
                         "y": 0
                     }
                 },
@@ -8134,14 +7610,14 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 273,
+                    "numericID": 32,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1470,
+                        "h": 256,
+                        "w": 256,
+                        "x": 258,
                         "y": 0
                     }
                 },
@@ -8158,14 +7634,14 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 274,
+                    "numericID": 33,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1568,
+                        "h": 256,
+                        "w": 256,
+                        "x": 516,
                         "y": 0
                     }
                 },
@@ -8182,14 +7658,14 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 275,
+                    "numericID": 258,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1666,
+                        "h": 256,
+                        "w": 256,
+                        "x": 774,
                         "y": 0
                     }
                 },
@@ -8206,14 +7682,14 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 276,
+                    "numericID": 259,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1764,
+                        "h": 256,
+                        "w": 256,
+                        "x": 1032,
                         "y": 0
                     }
                 },
@@ -8230,14 +7706,14 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 277,
+                    "numericID": 260,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1862,
+                        "h": 256,
+                        "w": 256,
+                        "x": 1290,
                         "y": 0
                     }
                 },
@@ -8254,15 +7730,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 278,
+                    "numericID": 261,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 0,
-                        "y": 98
+                        "h": 256,
+                        "w": 256,
+                        "x": 1548,
+                        "y": 0
                     }
                 },
                 {
@@ -8278,15 +7754,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 279,
+                    "numericID": 262,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 98,
-                        "y": 98
+                        "h": 256,
+                        "w": 256,
+                        "x": 1806,
+                        "y": 0
                     }
                 },
                 {
@@ -8302,15 +7778,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 280,
+                    "numericID": 263,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 196,
-                        "y": 98
+                        "h": 256,
+                        "w": 256,
+                        "x": 2064,
+                        "y": 0
                     }
                 },
                 {
@@ -8326,15 +7802,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 281,
+                    "numericID": 264,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 294,
-                        "y": 98
+                        "h": 256,
+                        "w": 256,
+                        "x": 2322,
+                        "y": 0
                     }
                 },
                 {
@@ -8350,15 +7826,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 282,
+                    "numericID": 265,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 392,
-                        "y": 98
+                        "h": 256,
+                        "w": 256,
+                        "x": 2580,
+                        "y": 0
                     }
                 },
                 {
@@ -8374,15 +7850,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 283,
+                    "numericID": 266,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 490,
-                        "y": 98
+                        "h": 256,
+                        "w": 256,
+                        "x": 2838,
+                        "y": 0
                     }
                 },
                 {
@@ -8398,15 +7874,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 284,
+                    "numericID": 267,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 588,
-                        "y": 98
+                        "h": 256,
+                        "w": 256,
+                        "x": 3096,
+                        "y": 0
                     }
                 },
                 {
@@ -8422,21 +7898,21 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 285,
+                    "numericID": 268,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 686,
-                        "y": 98
+                        "h": 256,
+                        "w": 256,
+                        "x": 3354,
+                        "y": 0
                     }
                 },
                 {
                     "collisionEnabled": false,
-                    "displayName": "FireballNE_0",
-                    "imagePath": "Effects\\Fireball\\FireballNE_0.png",
+                    "displayName": "FireballN_14",
+                    "imagePath": "Effects\\Fireball\\FireballN_14.png",
                     "modelBounds": {
                         "maxX": 20.0,
                         "maxY": 20.0,
@@ -8446,1671 +7922,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 286,
+                    "numericID": 269,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 190,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 784,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_1",
-                    "imagePath": "Effects\\Fireball\\FireballNE_1.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 287,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 882,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_2",
-                    "imagePath": "Effects\\Fireball\\FireballNE_2.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 288,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 980,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_3",
-                    "imagePath": "Effects\\Fireball\\FireballNE_3.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 289,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1078,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_4",
-                    "imagePath": "Effects\\Fireball\\FireballNE_4.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 290,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1176,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_5",
-                    "imagePath": "Effects\\Fireball\\FireballNE_5.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 291,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1274,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_6",
-                    "imagePath": "Effects\\Fireball\\FireballNE_6.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 292,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1372,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_7",
-                    "imagePath": "Effects\\Fireball\\FireballNE_7.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 293,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1470,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_8",
-                    "imagePath": "Effects\\Fireball\\FireballNE_8.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 294,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1568,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_9",
-                    "imagePath": "Effects\\Fireball\\FireballNE_9.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 295,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1666,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_10",
-                    "imagePath": "Effects\\Fireball\\FireballNE_10.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 296,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1764,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_11",
-                    "imagePath": "Effects\\Fireball\\FireballNE_11.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 297,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1862,
-                        "y": 98
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_12",
-                    "imagePath": "Effects\\Fireball\\FireballNE_12.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 298,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 0,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNE_13",
-                    "imagePath": "Effects\\Fireball\\FireballNE_13.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 299,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 98,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_0",
-                    "imagePath": "Effects\\Fireball\\FireballNW_0.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 300,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 196,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_1",
-                    "imagePath": "Effects\\Fireball\\FireballNW_1.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 301,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 294,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_2",
-                    "imagePath": "Effects\\Fireball\\FireballNW_2.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 302,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 392,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_3",
-                    "imagePath": "Effects\\Fireball\\FireballNW_3.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 303,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 490,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_4",
-                    "imagePath": "Effects\\Fireball\\FireballNW_4.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 304,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 588,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_5",
-                    "imagePath": "Effects\\Fireball\\FireballNW_5.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 305,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 686,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_6",
-                    "imagePath": "Effects\\Fireball\\FireballNW_6.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 306,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 784,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_7",
-                    "imagePath": "Effects\\Fireball\\FireballNW_7.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 307,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 882,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_8",
-                    "imagePath": "Effects\\Fireball\\FireballNW_8.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 308,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 980,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_9",
-                    "imagePath": "Effects\\Fireball\\FireballNW_9.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 309,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1078,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_10",
-                    "imagePath": "Effects\\Fireball\\FireballNW_10.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 310,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1176,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_11",
-                    "imagePath": "Effects\\Fireball\\FireballNW_11.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 311,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1274,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_12",
-                    "imagePath": "Effects\\Fireball\\FireballNW_12.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 312,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1372,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballNW_13",
-                    "imagePath": "Effects\\Fireball\\FireballNW_13.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 313,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1470,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_0",
-                    "imagePath": "Effects\\Fireball\\FireballS_0.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 314,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1568,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_1",
-                    "imagePath": "Effects\\Fireball\\FireballS_1.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 315,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1666,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_2",
-                    "imagePath": "Effects\\Fireball\\FireballS_2.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 316,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1764,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_3",
-                    "imagePath": "Effects\\Fireball\\FireballS_3.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 317,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1862,
-                        "y": 196
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_4",
-                    "imagePath": "Effects\\Fireball\\FireballS_4.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 318,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 0,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_5",
-                    "imagePath": "Effects\\Fireball\\FireballS_5.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 319,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 98,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_6",
-                    "imagePath": "Effects\\Fireball\\FireballS_6.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 320,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 196,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_7",
-                    "imagePath": "Effects\\Fireball\\FireballS_7.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 321,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 294,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_8",
-                    "imagePath": "Effects\\Fireball\\FireballS_8.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 322,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 392,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_9",
-                    "imagePath": "Effects\\Fireball\\FireballS_9.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 323,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 490,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_10",
-                    "imagePath": "Effects\\Fireball\\FireballS_10.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 324,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 588,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_11",
-                    "imagePath": "Effects\\Fireball\\FireballS_11.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 325,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 686,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_12",
-                    "imagePath": "Effects\\Fireball\\FireballS_12.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 326,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 784,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballS_13",
-                    "imagePath": "Effects\\Fireball\\FireballS_13.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 327,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 882,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_0",
-                    "imagePath": "Effects\\Fireball\\FireballSE_0.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 328,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 980,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_1",
-                    "imagePath": "Effects\\Fireball\\FireballSE_1.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 329,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1078,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_2",
-                    "imagePath": "Effects\\Fireball\\FireballSE_2.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 330,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1176,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_3",
-                    "imagePath": "Effects\\Fireball\\FireballSE_3.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 331,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1274,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_4",
-                    "imagePath": "Effects\\Fireball\\FireballSE_4.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 332,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1372,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_5",
-                    "imagePath": "Effects\\Fireball\\FireballSE_5.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 333,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1470,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_6",
-                    "imagePath": "Effects\\Fireball\\FireballSE_6.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 334,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1568,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_7",
-                    "imagePath": "Effects\\Fireball\\FireballSE_7.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 335,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1666,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_8",
-                    "imagePath": "Effects\\Fireball\\FireballSE_8.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 336,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1764,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_9",
-                    "imagePath": "Effects\\Fireball\\FireballSE_9.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 337,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1862,
-                        "y": 294
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_10",
-                    "imagePath": "Effects\\Fireball\\FireballSE_10.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 338,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 0,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_11",
-                    "imagePath": "Effects\\Fireball\\FireballSE_11.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 339,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 98,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_12",
-                    "imagePath": "Effects\\Fireball\\FireballSE_12.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 340,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 196,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSE_13",
-                    "imagePath": "Effects\\Fireball\\FireballSE_13.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 341,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 294,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_0",
-                    "imagePath": "Effects\\Fireball\\FireballSW_0.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 342,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 392,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_1",
-                    "imagePath": "Effects\\Fireball\\FireballSW_1.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 343,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 490,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_2",
-                    "imagePath": "Effects\\Fireball\\FireballSW_2.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 344,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 588,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_3",
-                    "imagePath": "Effects\\Fireball\\FireballSW_3.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 345,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 686,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_4",
-                    "imagePath": "Effects\\Fireball\\FireballSW_4.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 346,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 784,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_5",
-                    "imagePath": "Effects\\Fireball\\FireballSW_5.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 347,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 882,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_6",
-                    "imagePath": "Effects\\Fireball\\FireballSW_6.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 348,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 980,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_7",
-                    "imagePath": "Effects\\Fireball\\FireballSW_7.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 349,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1078,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_8",
-                    "imagePath": "Effects\\Fireball\\FireballSW_8.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 350,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1176,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_9",
-                    "imagePath": "Effects\\Fireball\\FireballSW_9.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 351,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1274,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_10",
-                    "imagePath": "Effects\\Fireball\\FireballSW_10.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 352,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1372,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_11",
-                    "imagePath": "Effects\\Fireball\\FireballSW_11.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 353,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1470,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_12",
-                    "imagePath": "Effects\\Fireball\\FireballSW_12.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 354,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1568,
-                        "y": 392
-                    }
-                },
-                {
-                    "collisionEnabled": false,
-                    "displayName": "FireballSW_13",
-                    "imagePath": "Effects\\Fireball\\FireballSW_13.png",
-                    "modelBounds": {
-                        "maxX": 20.0,
-                        "maxY": 20.0,
-                        "maxZ": 20.0,
-                        "minX": 0.0,
-                        "minY": 0.0,
-                        "minZ": 0.0
-                    },
-                    "modelBoundsID": 0,
-                    "numericID": 355,
-                    "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
-                    "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1666,
-                        "y": 392
+                        "h": 256,
+                        "w": 256,
+                        "x": 3612,
+                        "y": 0
                     }
                 },
                 {
@@ -10126,15 +7946,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 356,
+                    "numericID": 270,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1764,
-                        "y": 392
+                        "h": 256,
+                        "w": 256,
+                        "x": 0,
+                        "y": 258
                     }
                 },
                 {
@@ -10150,15 +7970,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 357,
+                    "numericID": 271,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1862,
-                        "y": 392
+                        "h": 256,
+                        "w": 256,
+                        "x": 258,
+                        "y": 258
                     }
                 },
                 {
@@ -10174,15 +7994,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 358,
+                    "numericID": 272,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 0,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 516,
+                        "y": 258
                     }
                 },
                 {
@@ -10198,15 +8018,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 359,
+                    "numericID": 273,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 98,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 774,
+                        "y": 258
                     }
                 },
                 {
@@ -10222,15 +8042,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 360,
+                    "numericID": 274,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 196,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 1032,
+                        "y": 258
                     }
                 },
                 {
@@ -10246,15 +8066,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 361,
+                    "numericID": 275,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 294,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 1290,
+                        "y": 258
                     }
                 },
                 {
@@ -10270,15 +8090,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 362,
+                    "numericID": 276,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 392,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 1548,
+                        "y": 258
                     }
                 },
                 {
@@ -10294,15 +8114,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 363,
+                    "numericID": 277,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 490,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 1806,
+                        "y": 258
                     }
                 },
                 {
@@ -10318,15 +8138,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 364,
+                    "numericID": 278,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 588,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 2064,
+                        "y": 258
                     }
                 },
                 {
@@ -10342,15 +8162,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 365,
+                    "numericID": 279,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 686,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 2322,
+                        "y": 258
                     }
                 },
                 {
@@ -10366,15 +8186,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 366,
+                    "numericID": 280,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 784,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 2580,
+                        "y": 258
                     }
                 },
                 {
@@ -10390,15 +8210,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 367,
+                    "numericID": 281,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 882,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 2838,
+                        "y": 258
                     }
                 },
                 {
@@ -10414,15 +8234,15 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 368,
+                    "numericID": 282,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 980,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 3096,
+                        "y": 258
                     }
                 },
                 {
@@ -10438,20 +8258,764 @@
                         "minZ": 0.0
                     },
                     "modelBoundsID": 0,
-                    "numericID": 369,
+                    "numericID": 283,
                     "premultiplyAlpha": true,
-                    "stageX": 48,
-                    "stageY": 48,
+                    "stageX": 66,
+                    "stageY": 110,
                     "textureExtent": {
-                        "h": 96,
-                        "w": 96,
-                        "x": 1078,
-                        "y": 490
+                        "h": 256,
+                        "w": 256,
+                        "x": 3354,
+                        "y": 258
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballW_14",
+                    "imagePath": "Effects\\Fireball\\FireballW_14.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 284,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 110,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 3612,
+                        "y": 258
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_0",
+                    "imagePath": "Effects\\Fireball\\FireballE_0.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 285,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 0,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_1",
+                    "imagePath": "Effects\\Fireball\\FireballE_1.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 286,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 258,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_2",
+                    "imagePath": "Effects\\Fireball\\FireballE_2.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 287,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 516,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_3",
+                    "imagePath": "Effects\\Fireball\\FireballE_3.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 288,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 774,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_4",
+                    "imagePath": "Effects\\Fireball\\FireballE_4.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 289,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 1032,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_5",
+                    "imagePath": "Effects\\Fireball\\FireballE_5.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 290,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 1290,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_6",
+                    "imagePath": "Effects\\Fireball\\FireballE_6.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 291,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 1548,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_7",
+                    "imagePath": "Effects\\Fireball\\FireballE_7.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 292,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 1806,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_8",
+                    "imagePath": "Effects\\Fireball\\FireballE_8.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 293,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 2064,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_9",
+                    "imagePath": "Effects\\Fireball\\FireballE_9.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 294,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 2322,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_10",
+                    "imagePath": "Effects\\Fireball\\FireballE_10.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 295,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 2580,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_11",
+                    "imagePath": "Effects\\Fireball\\FireballE_11.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 296,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 2838,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_12",
+                    "imagePath": "Effects\\Fireball\\FireballE_12.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 297,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 3096,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_13",
+                    "imagePath": "Effects\\Fireball\\FireballE_13.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 298,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 3354,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballE_14",
+                    "imagePath": "Effects\\Fireball\\FireballE_14.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 299,
+                    "premultiplyAlpha": true,
+                    "stageX": 190,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 3612,
+                        "y": 516
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_0",
+                    "imagePath": "Effects\\Fireball\\FireballS_0.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 300,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 0,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_1",
+                    "imagePath": "Effects\\Fireball\\FireballS_1.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 301,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 258,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_2",
+                    "imagePath": "Effects\\Fireball\\FireballS_2.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 302,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 516,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_3",
+                    "imagePath": "Effects\\Fireball\\FireballS_3.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 303,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 774,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_4",
+                    "imagePath": "Effects\\Fireball\\FireballS_4.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 304,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 1032,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_5",
+                    "imagePath": "Effects\\Fireball\\FireballS_5.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 305,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 1290,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_6",
+                    "imagePath": "Effects\\Fireball\\FireballS_6.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 306,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 1548,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_7",
+                    "imagePath": "Effects\\Fireball\\FireballS_7.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 307,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 1806,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_8",
+                    "imagePath": "Effects\\Fireball\\FireballS_8.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 308,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 2064,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_9",
+                    "imagePath": "Effects\\Fireball\\FireballS_9.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 309,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 2322,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_10",
+                    "imagePath": "Effects\\Fireball\\FireballS_10.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 310,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 2580,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_11",
+                    "imagePath": "Effects\\Fireball\\FireballS_11.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 311,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 2838,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_12",
+                    "imagePath": "Effects\\Fireball\\FireballS_12.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 312,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 3096,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_13",
+                    "imagePath": "Effects\\Fireball\\FireballS_13.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 313,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 3354,
+                        "y": 774
+                    }
+                },
+                {
+                    "collisionEnabled": false,
+                    "displayName": "FireballS_14",
+                    "imagePath": "Effects\\Fireball\\FireballS_14.png",
+                    "modelBounds": {
+                        "maxX": 20.0,
+                        "maxY": 20.0,
+                        "maxZ": 20.0,
+                        "minX": 0.0,
+                        "minY": 0.0,
+                        "minZ": 0.0
+                    },
+                    "modelBoundsID": 0,
+                    "numericID": 314,
+                    "premultiplyAlpha": true,
+                    "stageX": 66,
+                    "stageY": 156,
+                    "textureExtent": {
+                        "h": 256,
+                        "w": 256,
+                        "x": 3612,
+                        "y": 774
                     }
                 }
             ],
-            "textureHeight": 1024,
-            "textureWidth": 2048
+            "textureHeight": 2048,
+            "textureWidth": 4096
         }
     ],
     "terrain": [

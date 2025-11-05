@@ -23,7 +23,7 @@ public:
             Castable fireballCastable{
                 .castableID{SpellType::Fireball},
                 .targetType{Castable::TargetType::Entity},
-                .range{64},
+                .range{100},
                 .castTime{1},
                 .cooldownTime{2},
                 .triggersGCD{true},
@@ -43,7 +43,7 @@ public:
                 .graphicSetID{
                     graphicData.getEntityGraphicSet("Fireball").numericID},
                 .behavior{AVEntity::Behavior::MoveToEntity},
-                .movementSpeed{5.f}};
+                .movementSpeed{8.f}};
             AVEntity::Phase phase2{
                 .graphicSetID{
                     graphicData.getEntityGraphicSet("Explosion").numericID},
