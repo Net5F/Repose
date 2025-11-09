@@ -56,7 +56,7 @@ private:
      * Sets the given item as our requested item and sends a request to the
      * server for the item's latest definition.
      */
-    void trySelectItem(std::string_view displayName);
+    void trySelectItem(std::string_view stringID);
 
     /**
      * If we have a pending requested item and this matches it, finishes
@@ -132,6 +132,9 @@ private:
     /** The display name of the item that we currently have selected. */
     std::string selectedItemDisplayName;
 
+    /** The string ID of the item that we currently have selected. */
+    std::string selectedItemStringID;
+
     /** The icon of the item that we currently have selected. */
     IconID selectedItemIconID;
 
@@ -154,6 +157,9 @@ private:
 
     /** Used for entering an item name. */
     AUI::TextInput nameInput;
+
+    /** Used for entering an item string ID. */
+    AUI::TextInput stringIDInput;
 
     /** Used for displaying the currently selected item's icon. */
     AUI::Image itemIconImage;

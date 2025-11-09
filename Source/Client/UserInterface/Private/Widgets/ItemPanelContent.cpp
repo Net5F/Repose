@@ -36,22 +36,24 @@ ItemPanelContent::ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
 , requestedItemStringID{}
 , selectedItemID{NULL_ITEM_ID}
 , selectedItemDisplayName{}
+, selectedItemStringID{}
 , selectedItemIconID{NULL_ICON_ID}
 , selectedItemInitScript{}
 , initScriptReceived{false}
 , itemErrorQueue{inNetwork.getEventDispatcher()}
 , itemInitScriptQueue{inNetwork.getEventDispatcher()}
 // Note: These dimensions are based on the top left that BuildPanel gives us.
-, nameLabel{{464, 8, 260, 36}, "NameLabel"}
-, nameInput{{464, 53, 260, 42}, "NameInput"}
+, nameLabel{{464, 8, 360, 36}, "NameLabel"}
+, nameInput{{386, 53, 204, 42}, "NameInput"}
+, stringIDInput{{598, 53, 204, 42}, "StringIDInput"}
 , itemIconImage{{554, 108, 80, 80}, "ItemIconImage"}
 , centerButton{{524, 117, 140, 36}, "Init", "CenterButton"}
 , errorLabel{{232, 165, 722, 36}, "ErrorLabel"}
-, viewCacheButton{{311, 53, 140, 36}, "View Cache", "ViewCacheButton"}
-, createNewButton{{311, 99, 140, 36}, "Create New", "CreateNewButton"}
-, rightButton1{{738, 53, 140, 36}, "", "RightButton1"}
-, rightButton2{{738, 99, 140, 36}, "", "RightButton2"}
-, rightButton3{{738, 145, 140, 36}, "", "RightButton3"}
+, viewCacheButton{{232, 53, 140, 36}, "View Cache", "ViewCacheButton"}
+, createNewButton{{232, 99, 140, 36}, "Create New", "CreateNewButton"}
+, rightButton1{{816, 53, 140, 36}, "", "RightButton1"}
+, rightButton2{{816, 99, 140, 36}, "", "RightButton2"}
+, rightButton3{{816, 145, 140, 36}, "", "RightButton3"}
 , itemNotFoundLabel{{464, 113, 260, 36}, "ItemNotFoundLabel"}
 , itemCacheContainer{{0, 0, logicalExtent.w, logicalExtent.h},
                      "ItemCacheContainer"}
@@ -60,6 +62,7 @@ ItemPanelContent::ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
     // Add our children so they're included in rendering, etc.
     children.push_back(nameLabel);
     children.push_back(nameInput);
+    children.push_back(stringIDInput);
     children.push_back(itemIconImage);
     children.push_back(centerButton);
     children.push_back(errorLabel);
@@ -85,17 +88,25 @@ ItemPanelContent::ItemPanelContent(Simulation& inSimulation, Network& inNetwork,
     itemNotFoundLabel.setText("Item not found.");
 
     /* Text input */
-    nameInput.normalImage.setNineSliceImage(
-        (Paths::TEXTURE_DIR + "TextInput/Normal.png"), {8, 8, 8, 8});
-    nameInput.hoveredImage.setNineSliceImage(
-        (Paths::TEXTURE_DIR + "TextInput/Hovered.png"), {8, 8, 8, 8});
-    nameInput.focusedImage.setNineSliceImage(
-        (Paths::TEXTURE_DIR + "TextInput/Focused.png"), {8, 8, 8, 8});
-    nameInput.setTextFont(((Paths::FONT_DIR + "Cagliostro-Regular.ttf")), 20);
-    nameInput.setTextColor({255, 255, 255, 255});
-    nameInput.setPadding({0, 14, 0, 14});
-    nameInput.setCursorWidth(2);
-    nameInput.setCursorColor({255, 255, 255, 255});
+    auto setTextInputStyle = [](AUI::TextInput& input) {
+        input.normalImage.setNineSliceImage(
+            (Paths::TEXTURE_DIR + "TextInput/Normal.png"), {8, 8, 8, 8});
+        input.hoveredImage.setNineSliceImage(
+            (Paths::TEXTURE_DIR + "TextInput/Hovered.png"), {8, 8, 8, 8});
+        input.focusedImage.setNineSliceImage(
+            (Paths::TEXTURE_DIR + "TextInput/Focused.png"), {8, 8, 8, 8});
+        input.disabledImage.setNineSliceImage(
+            (Paths::TEXTURE_DIR + "TextInput/Normal.png"), {8, 8, 8, 8});
+        input.setTextFont(((Paths::FONT_DIR + "Cagliostro-Regular.ttf")), 20);
+        input.setTextColor({255, 255, 255, 255});
+        input.setPadding({0, 14, 0, 14});
+        input.setCursorWidth(2);
+        input.setCursorColor({255, 255, 255, 255});
+    };
+    setTextInputStyle(nameInput);
+    nameInput.setHintText("Display Name");
+    setTextInputStyle(stringIDInput);
+    stringIDInput.setHintText("String ID");
 
     /* Buttons */
     viewCacheButton.setOnPressed([this]() { changeView(ViewType::ItemCache); });
@@ -148,7 +159,7 @@ void ItemPanelContent::onTick(double)
                   || (currentView == ViewType::Edit)
                   || (currentView == ViewType::Duplicate))
                  && (itemError.errorType == ItemError::StringIDInUse)) {
-            errorLabel.setText("Error: Name already in use.");
+            errorLabel.setText("Error: String ID already in use.");
             errorLabel.setIsVisible(true);
         }
         else if (currentView == ViewType::Edit) {
@@ -183,26 +194,32 @@ void ItemPanelContent::onTick(double)
     }
 }
 
-void ItemPanelContent::trySelectItem(std::string_view displayName)
+void ItemPanelContent::trySelectItem(std::string_view stringID)
 {
-    // If the given name is empty, do nothing.
-    if (displayName == "") {
-        return;
-    }
-
     // Deselect any current selection.
+    nameInput.setText("");
     selectedItemID = NULL_ITEM_ID;
     selectedItemDisplayName = "";
+    selectedItemStringID = "";
     selectedItemIconID = NULL_ICON_ID;
     selectedItemInitScript = "";
 
+    // If the given string ID is empty, reset our relevant widget state and
+    // don't request a definition.
+    if (stringID.empty()) {
+        itemIconImage.setIsVisible(false);
+        rightButton1.setIsVisible(false);
+        rightButton2.setIsVisible(false);
+        rightButton3.setIsVisible(false);
+        itemNotFoundLabel.setIsVisible(false);
+        return;
+    }
+
     // Track that we're requesting this item.
-    std::string stringID{};
-    StringTools::deriveStringID(displayName, stringID);
     requestedItemStringID = stringID;
 
     // Ask the server for the latest definition for this item.
-    network.serializeAndSend(ItemDataRequest{stringID});
+    network.serializeAndSend(ItemDataRequest{std::string{stringID}});
 }
 
 void ItemPanelContent::onItemUpdate(ItemID itemID)
@@ -217,6 +234,7 @@ void ItemPanelContent::onItemUpdate(ItemID itemID)
         // Select the item.
         selectedItemID = item->numericID;
         selectedItemDisplayName = item->displayName;
+        selectedItemStringID = item->stringID;
         selectedItemIconID = item->iconID;
 
         // Update the UI.
@@ -273,9 +291,9 @@ void ItemPanelContent::sendItemChangeRequest()
             buffer << scriptFile.rdbuf();
 
             const std::string& initScript{buffer.str()};
-            network.serializeAndSend(
-                ItemChangeRequest{selectedItemID, nameInput.getText(),
-                                  selectedItemIconID, initScript});
+            network.serializeAndSend(ItemChangeRequest{
+                selectedItemID, nameInput.getText(), stringIDInput.getText(),
+                selectedItemIconID, initScript});
         }
         else {
             LOG_INFO("Failed to open ItemInitScript.lua");
@@ -288,6 +306,7 @@ void ItemPanelContent::changeView(ViewType newView)
     // Hide everything.
     nameLabel.setIsVisible(false);
     nameInput.setIsVisible(false);
+    stringIDInput.setIsVisible(false);
     itemIconImage.setIsVisible(false);
     centerButton.setIsVisible(false);
     errorLabel.setIsVisible(false);
@@ -299,6 +318,9 @@ void ItemPanelContent::changeView(ViewType newView)
     itemNotFoundLabel.setIsVisible(false);
     itemCacheContainer.setIsVisible(false);
     iconContainer.setIsVisible(false);
+
+    // Enable the display name input (most views want it enabled).
+    nameInput.enable();
 
     // Show the new view's widgets.
     switch (newView) {
@@ -353,11 +375,19 @@ void ItemPanelContent::refreshItemCacheThumbnails()
 
         // When this thumbnail is selected, select the associated item and
         // switch back to the home view.
-        thumbnail.setOnSelected(
-            [&, itemName{item.displayName}](AUI::Thumbnail*) {
-                trySelectItem(itemName);
+        thumbnail.setOnMouseDown(
+            [&, itemStringID{item.stringID}](AUI::Thumbnail* thumbnail,
+                                             AUI::MouseButtonType buttonType) {
+                if (buttonType == AUI::MouseButtonType::Left) {
+                    trySelectItem(itemStringID);
 
-                changeView(ViewType::Home);
+                    changeView(ViewType::Home);
+
+                    return true;
+                }
+                else {
+                    return false;
+                }
             });
 
         itemCacheContainer.push_back(std::move(thumbnailPtr));
@@ -385,7 +415,7 @@ void ItemPanelContent::addIconThumbnails()
         // When this thumbnail is selected, select the associated icon and
         // switch back to the edit view.
         thumbnail.setOnMouseDown(
-            [&, iconID{icon.numericID}](AUI::Thumbnail*,
+            [&, iconID{icon.numericID}](AUI::Thumbnail* thumbnail,
                                         AUI::MouseButtonType buttonType) {
                 if (buttonType == AUI::MouseButtonType::Left) {
                     // Set the new icon and request the server update the item.
@@ -410,7 +440,9 @@ void ItemPanelContent::showHomeView()
     // Set our widget behaviors.
     nameLabel.setText("Item Search");
 
-    nameInput.setOnTextCommitted([&]() { trySelectItem(nameInput.getText()); });
+    nameInput.disable();
+    stringIDInput.setOnTextCommitted(
+        [&]() { trySelectItem(stringIDInput.getText()); });
 
     rightButton1.text.setText("Edit");
     rightButton1.setOnPressed([this]() { changeView(ViewType::Edit); });
@@ -436,6 +468,7 @@ void ItemPanelContent::showHomeView()
     // If we have an item selected, show it.
     if (selectedItemID != NULL_ITEM_ID) {
         nameInput.setText(selectedItemDisplayName);
+        stringIDInput.setText(selectedItemStringID);
         itemIconImage.setIsVisible(true);
         rightButton1.setIsVisible(true);
         rightButton2.setIsVisible(true);
@@ -444,6 +477,7 @@ void ItemPanelContent::showHomeView()
     else {
         // No selection, reset our state.
         nameInput.setText("");
+        stringIDInput.setText("");
         itemIconImage.setIsVisible(false);
         itemNotFoundLabel.setIsVisible(false);
     }
@@ -451,6 +485,7 @@ void ItemPanelContent::showHomeView()
     // Make the proper widgets visible.
     nameLabel.setIsVisible(true);
     nameInput.setIsVisible(true);
+    stringIDInput.setIsVisible(true);
     viewCacheButton.setIsVisible(true);
     createNewButton.setIsVisible(true);
 }
@@ -460,20 +495,30 @@ void ItemPanelContent::showCreateView()
     // Set our widget behaviors.
     nameLabel.setText("Create Item");
     nameInput.setText("");
+    stringIDInput.setText("");
 
     // Do nothing when text is committed (we'll read the committed name when
     // the "Create" button is pressed).
     nameInput.setOnTextCommitted([]() {});
+    stringIDInput.setOnTextCommitted([]() {});
 
     centerButton.text.setText("Create");
     centerButton.setOnPressed([this]() {
-        // Ask the server to create a blank item with the given name.
+        // If either field is empty, display an error.
+        const std::string& name{nameInput.getText()};
+        const std::string& stringID{stringIDInput.getText()};
+        if (name.empty() || stringID.empty()) {
+            errorLabel.setText(
+                "Error: Display name and string ID must be provided.");
+            errorLabel.setIsVisible(true);
+            return;
+        }
+
+        // Ask the server to create a blank item with the given name and ID.
         network.serializeAndSend(
-            ItemInitRequest{nameInput.getText(), NULL_ICON_ID, ""});
+            ItemInitRequest{name, stringID, NULL_ICON_ID, ""});
 
         // Track that we're requesting this item.
-        std::string stringID{};
-        StringTools::deriveStringID(nameInput.getText(), stringID);
         requestedItemStringID = stringID;
     });
 
@@ -485,8 +530,7 @@ void ItemPanelContent::showCreateView()
     // Make the proper widgets visible.
     nameLabel.setIsVisible(true);
     nameInput.setIsVisible(true);
-    centerButton.setIsVisible(true);
-    nameInput.setIsVisible(true);
+    stringIDInput.setIsVisible(true);
     centerButton.setIsVisible(true);
 }
 
@@ -498,6 +542,12 @@ void ItemPanelContent::showEditView()
     nameInput.setOnTextCommitted([this]() {
         // Only update if the name actually changed.
         if (nameInput.getText() != selectedItemDisplayName) {
+            sendItemChangeRequest();
+        }
+    });
+    stringIDInput.setOnTextCommitted([this]() {
+        // Only update if the string ID actually changed.
+        if (stringIDInput.getText() != selectedItemStringID) {
             sendItemChangeRequest();
         }
     });
@@ -522,6 +572,7 @@ void ItemPanelContent::showEditView()
     // Make the proper widgets visible.
     nameLabel.setIsVisible(true);
     nameInput.setIsVisible(true);
+    stringIDInput.setIsVisible(true);
     itemIconImage.setIsVisible(true);
     rightButton1.setIsVisible(true);
     rightButton2.setIsVisible(true);
@@ -534,22 +585,32 @@ void ItemPanelContent::showDuplicateView()
               "Somehow reached Duplicate view without a selected item.");
 
     // Set our widget behaviors.
-    nameLabel.setText("New Name");
-    nameInput.setText("");
+    nameLabel.setText("New Display Name/String ID");
+    nameInput.setText(selectedItemDisplayName);
+    stringIDInput.setText("");
 
     // Do nothing when text is committed (we'll read the committed name when
     // the "Duplicate" button is pressed).
     nameInput.setOnTextCommitted([]() {});
+    stringIDInput.setOnTextCommitted([]() {});
 
     centerButton.text.setText("Duplicate");
     centerButton.setOnPressed([this]() {
-        // Ask the server to create a duplicate item with the given name.
+        // If either field is empty, display an error.
+        const std::string& name{nameInput.getText()};
+        const std::string& stringID{stringIDInput.getText()};
+        if (name.empty() || stringID.empty()) {
+            errorLabel.setText(
+                "Error: Display name and string ID must be provided.");
+            errorLabel.setIsVisible(true);
+            return;
+        }
+
+        // Ask the server to create a duplicate item with the given name/ID.
         network.serializeAndSend(ItemInitRequest{
-            nameInput.getText(), selectedItemIconID, selectedItemInitScript});
+            name, stringID, selectedItemIconID, selectedItemInitScript});
 
         // Track that we're requesting this item.
-        std::string stringID{};
-        StringTools::deriveStringID(nameInput.getText(), stringID);
         requestedItemStringID = stringID;
     });
 
@@ -561,6 +622,7 @@ void ItemPanelContent::showDuplicateView()
     // Make the proper widgets visible.
     nameLabel.setIsVisible(true);
     nameInput.setIsVisible(true);
+    stringIDInput.setIsVisible(true);
     centerButton.setIsVisible(true);
 }
 
